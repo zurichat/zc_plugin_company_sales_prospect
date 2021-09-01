@@ -17,7 +17,7 @@ jobs:
     - name: Install Dependencies
       run: |
         pwd
-        cd /var/www/zc_plugin_company_sales_prospect/
+        #cd /var/www/zc_plugin_company_sales_prospect/
         git pull origin dev
         source venv/bin/activate
         
