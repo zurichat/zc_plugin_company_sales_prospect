@@ -14,7 +14,7 @@ def sidebar(request):
                 "url": f"{get_current_site(request)}/prospect/"
             },
             "sales":{
-                "name": "sales",
+                "name": "deals",
                 "url": f"{get_current_site(request)}/sales/"
             }
         }
