@@ -19,7 +19,7 @@ jobs:
         pwd
         #cd /var/www/zc_plugin_company_sales_prospect/
         git pull origin dev
-        source venv/bin/activate
+        #source venv/bin/activate
         
 
         pip install -r requirements.txt
