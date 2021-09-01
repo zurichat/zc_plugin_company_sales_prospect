@@ -11,7 +11,7 @@ class Prospect(models.Model):
     email = models.EmailField()
     title = models.CharField(max_length=50)
     company = models.CharField(max_length=50)
-    phone_number = models.CharField(max_length=255)
+    phone_number = models.CharField(max_length=255, default='0000000')
 
 
     # uncomment one the deal model is done
