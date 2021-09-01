@@ -6,4 +6,4 @@ __pycache__
 prospectapp/__pycache__
 venv/
 db.sqlite3
-
+venv
