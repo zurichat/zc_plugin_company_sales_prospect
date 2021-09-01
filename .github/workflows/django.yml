@@ -20,6 +20,8 @@ jobs:
  
     - name: Install Dependencies
       run: |
+        cd /var/www/zc_plugin_company_sales_prospects/
+        git pull origin dev
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         python manage.py migrate
