@@ -1,7 +1,6 @@
 **/.vscode/
 .env
-.DS_Store
-<<<<<<< HEAD
+".DS_Store"
 venv
 __pycache__
 prospectapp/__pycache__
