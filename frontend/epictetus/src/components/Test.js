@@ -12,7 +12,7 @@ export default function Test() {
     return (
        <>
            <h2  className="text-4xl font-bold pb-10 m-10" >Svg Icons exported from figma</h2> 
-           <div class="flex justify-around ...">
+           <div className="flex justify-around ...">
                 <ChevronDown/>
                 <ChevronUp/>
                 <ChevronRight/>

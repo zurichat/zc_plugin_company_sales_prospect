@@ -9,7 +9,7 @@ export default function ChevronDown() {
             fill="none" 
             xmlns="http://www.w3.org/2000/svg"
         >
-            <path d="M1.5 0.75L6 5.25L10.5 0.75" stroke="#999999" stroke-width="1.22693" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M1.5 0.75L6 5.25L10.5 0.75" stroke="#999999" strokeWidth="1.22693" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>
 
     )
