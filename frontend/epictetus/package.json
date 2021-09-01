@@ -2,6 +2,7 @@
   "name": "epictetus",
   "version": "0.1.0",
   "private": true,
+  "pluginDomain": "https://sales.zuri.chat",
   "dependencies": {
     "@craco/craco": "^6.2.0",
     "@testing-library/jest-dom": "^5.11.10",
@@ -14,7 +15,7 @@
   },
   "scripts": {
     "start": "craco start",
-    "build": "craco build",
+    "build": "node build-plugin",
     "test": "craco test",
     "eject": "react-scripts eject"
   },
@@ -39,6 +40,7 @@
   "devDependencies": {
     "autoprefixer": "^9.8.6",
     "postcss": "^7.0.36",
+    "shelljs": "^0.8.4",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.9"
   }
 }
