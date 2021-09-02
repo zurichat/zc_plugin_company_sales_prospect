@@ -2,8 +2,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 from .serializers import ProspectSerializer
-import requests
-import json
+import requests, json
 
 from rest_framework import filters
 from rest_framework import generics
@@ -34,8 +33,7 @@ class ProspectsListView(APIView):
             serializer = ProspectSerializer(data=r['data'], many=True)
             serializer.is_valid(raise_exception=True)
             return Response(data=serializer.data, status=status.HTTP_200_OK)
-        return Response(data={"message": "Try again later"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
+        return Response(data={"message":"Try again later"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 def SearchProspects(request, search):
     import requests
@@ -43,11 +41,9 @@ def SearchProspects(request, search):
     response = requests.request("GET", url)
     r = response.json()
     print(response.status_code)
-    if response.status_code == 200:
-        liste = []
-        for i in r['data']:
-            if (search in i['first_name']) or (search in i['last_name']) or (search in i['email']) or (search in i['company']):
+    if response.status_code == 200:    
+        liste=[]
+        for i  in r['data']:
+            if (search in i['first_name']) or (search in i['last_name']) or (search in i['email']) or  (search in i['company']):
                 liste.append(i)
-        return JsonResponse(liste, safe=False)
-
-
+        return JsonResponse(liste,safe=False)
