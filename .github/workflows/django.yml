@@ -5,27 +5,30 @@ on:
     branches: [ dev ]
   pull_request:
     branches: [ dev ]
+    types: [ closed ]
 
 jobs:
   build:
 
     runs-on: ubuntu-latest
-    strategy:
-      max-parallel: 4
-      matrix:
-        python-version: [ 3.8 ]
 
     steps:
     - uses: actions/checkout@v2
- 
-    - name: Install Dependencies
-      run: |
-        cd /var/www/zc_plugin_company_sales_prospects/
-        git pull origin dev
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-        python manage.py migrate
-        python manage.py runserver
-    - name: Run Tests
-      run: |
-        python manage.py test
+     
+        # Runs a single command using the runners shell
+    - name: Executing remote commands via SSH
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USER }}
+        password: ${{ secrets.SSH_PASS }}
+        script: |
+          cd /var/www/zc_plugin_company_sales_prospect
+          git checkout dev
+          git pull
+          pip install -r requirements.txt
+          #python manage.py migrate
+          #python manage.py runserver
+          #- name: Run Tests
+          #run: |
+          #python manage.py test

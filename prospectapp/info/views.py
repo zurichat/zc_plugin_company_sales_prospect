@@ -6,16 +6,16 @@ from django.contrib.sites.shortcuts import get_current_site
 
 
 @api_view(['GET'])
-def sidebar(request):
+def info(request):
     if request.method == 'GET':
         data = {
-            "prospect":{
-                "name": "prospect",
-                "url": f"{get_current_site(request)}/prospect/"
+            "info":{
+                "name": "info",
+                "url": f"{get_current_site(request)}/info/"
             },
-            "sales":{
-                "name": "deals",
-                "url": f"{get_current_site(request)}/sales/"
+            "about":{
+                "name": "about",
+                "url": f"{get_current_site(request)}/about/"
             }
         }
         return Response(data, status=status.HTTP_200_OK)
