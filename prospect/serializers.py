@@ -1,5 +1,9 @@
 from rest_framework import serializers
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream/main
 class ProspectSerializer(serializers.Serializer):
     _id = serializers.CharField(max_length=100)
     first_name = serializers.CharField(max_length=100)
