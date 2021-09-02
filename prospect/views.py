@@ -94,8 +94,8 @@ class ProspectsCreateView(APIView):
         title = request.data['title']
         email = request.data['email']
         data = {
-                "plugin_id": PLUGIN_ID,
-                "organization_id": ORGANISATION_ID,
+                "plugin_id": "000000000000000000000000",
+                "organization_id": "612a3a914acf115e685df8e3",
                 "collection_name": "prospects",
                 "bulk_write": False,
                 "payload": {
@@ -114,6 +114,7 @@ class ProspectsCreateView(APIView):
             return Response(data={'message':'successful'}, status=status.HTTP_201_CREATED)
         return Response(data={"message":"Try again later"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+
       
       
 def welcome(request):
@@ -124,11 +125,35 @@ def welcome(request):
     """
     send_mail(
         subject = f'Welcome {request.user}',
-        message = f'Hello {request.user} your account was successfully created'
-,
+        message = f'Hello {request.user} your account was successfully created',
         from_email = settings.EMAIL_HOST_USER,
         recipient_list = ['test1@dummy.com']
             )
     return JsonResponse({"message":"welcome mail has been sent successfully"})      
     
    
+
+class ProspectsUpdateView(APIView):
+    serializer_class = ProspectSerializer
+    queryset = None
+
+    def put(self, request, *args, **kwargs):
+        url = "https://zccore.herokuapp.com/data/write"
+        serializer = ProspectSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        data = {
+                "plugin_id": "000000000000000000000000",
+                "organization_id": "612a3a914acf115e685df8e3",
+                "collection_name": "prospects",
+                "bulk_write": False,
+                "object_id":serializer.data.get("_id"),
+                "payload": serializer.data
+            }
+        response = requests.request("POST", url,data=json.dumps(data))
+        print(response.status_code)
+        print(r)
+        if response.status_code == 201:
+            r = response.json()
+            return Response(data={'message':'successful'}, status=status.HTTP_201_CREATED)
+        return Response(data={"message":"Try again later"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
