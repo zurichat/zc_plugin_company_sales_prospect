@@ -19,10 +19,14 @@ from django.views.generic import TemplateView
 
 from .sidebar.views import *
 from .info import views
+# from prospect import views
+# from deals import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("",TemplateView.as_view(template_name='index.html')),
     path("sidebar/", sidebar),
     path('api/info', views.info)
+    #path('prospect/', views.prospect),
+    #path('deals/', views.deals),
 ]
