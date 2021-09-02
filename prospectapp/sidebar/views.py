@@ -3,19 +3,23 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.sites.shortcuts import get_current_site
+from django.conf import settings
 
 
 @api_view(['GET'])
 def sidebar(request):
     if request.method == 'GET':
         data = {
+            "pluginId": settings.PLUGIN_ID,
+            "pluginName": settings.PLUGIN_NAME,
+            "organisationId": settings.ORGANIZATION_ID,
             "prospect":{
                 "name": "prospect",
-                "url": f"{get_current_site(request)}/prospect/"
+                "url": "https://sales.zuri.chat/prospect/"
             },
-            "sales":{
+            "deals":{
                 "name": "deals",
-                "url": f"{get_current_site(request)}/sales/"
+                "url": "https://sales.zuri.chat/deals/"
             }
         }
         return Response(data, status=status.HTTP_200_OK)
