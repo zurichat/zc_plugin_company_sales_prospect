@@ -4,7 +4,7 @@ from django.conf import settings
 from django.views import generic
 from .models import Deal
 
-class DetailedListView(generic):
+class DealUpdateView(generic.UpdateView):
     template_name = 'edit.html'
     model = Deal
     fields = ()
