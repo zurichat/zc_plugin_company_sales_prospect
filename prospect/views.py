@@ -68,7 +68,7 @@ def SearchProspects(request, search):
     url = "https://zccore.herokuapp.com/data/read/000000000000000000000000/prospects/612a3a914acf115e685df8e3/"
     response = requests.request("GET", url)
     r = response.json()
-    print(response.status_code)
+    # response code should be 200
     if response.status_code == 200:    
         liste=[]
         for i  in r['data']:
