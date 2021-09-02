@@ -8,6 +8,7 @@ from rest_framework import status
 from .serializers import ProspectSerializer
 import requests, json
 import pandas as pd
+
 # Create your views here.
 
 class ProspectsListView(APIView):
@@ -66,6 +67,7 @@ def SearchProspects(request, search):
             if (search in i['first_name']) or (search in i['last_name']) or (search in i['email']) or  (search in i['company']):
                 liste.append(i)
         return JsonResponse(liste,safe=False)
+
 
 
 class ProspectsCreateView(APIView):
