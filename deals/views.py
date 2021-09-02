@@ -12,3 +12,6 @@ class DealUpdateView(generic.UpdateView):
 PLUGIN_ID = settings.PLUGIN_ID
 ORGANISATION_ID = settings.ORGANISATION_ID
 PLUGIN_NAME = settings.PLUGIN_NAME
+PLUGIN_ID = settings.PLUGIN_ID
+ORGANISATION_ID = settings.ORGANISATION_ID
+PLUGIN_NAME = settings.PLUGIN_NAME
