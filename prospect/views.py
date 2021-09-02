@@ -86,8 +86,8 @@ class ProspectsCreateView(APIView):
         title = request.data['title']
         email = request.data['email']
         data = {
-                "plugin_id": PLUGIN_ID,
-                "organization_id": ORGANISATION_ID,
+                "plugin_id": "000000000000000000000000",
+                "organization_id": 612a3a914acf115e685df8e3,
                 "collection_name": "prospects",
                 "bulk_write": False,
                 "payload": {
