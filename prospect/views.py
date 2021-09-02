@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from rest_framework import filters
 from rest_framework import generics
-
 from django.http import JsonResponse
+from django.conf import settings
 
 def SearchProspects(request, search):
     import requests
@@ -16,3 +16,11 @@ def SearchProspects(request, search):
             if (search in i['first_name']) or (search in i['last_name']) or (search in i['email']) or  (search in i['company']):
                 liste.append(i)
         return JsonResponse(liste,safe=False)
+
+
+# Create your views here.
+
+PLUGIN_ID = settings.PLUGIN_ID
+ORGANISATION_ID = settings.ORGANISATION_ID
+PLUGIN_NAME = settings.PLUGIN_NAME
+
