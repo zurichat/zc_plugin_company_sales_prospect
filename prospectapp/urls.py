@@ -26,7 +26,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("",TemplateView.as_view(template_name='index.html')),
     path("sidebar/", sidebar),
-    path('api/info', views.info)
+    path('info/', views.info)
     #path('prospect/', views.prospect),
     #path('deals/', views.deals),
 ]
