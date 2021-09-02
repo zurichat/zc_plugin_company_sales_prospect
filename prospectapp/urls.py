@@ -24,10 +24,9 @@ from .info import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',include('prospect.urls'))
     path("",TemplateView.as_view(template_name='index.html')),
     path("sidebar/", sidebar),
-    path('info/', views.info)
-    #path('prospect/', views.prospect),
-    #path('deals/', views.deals),
+    path('api/info', views.info),
+    path('prospects/', include('prospect.urls')),
+    path('api/info', views.info)
 ]
