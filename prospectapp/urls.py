@@ -19,6 +19,8 @@ from django.views.generic import TemplateView
 
 from .sidebar.views import *
 from .info import views
+# from prospect import views
+# from deals import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
