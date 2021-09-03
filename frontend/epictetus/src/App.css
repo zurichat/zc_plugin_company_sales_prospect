@@ -6,6 +6,11 @@
   text-align: center;
   margin-top: 200px ;
 }
+
+
+.modal {
+  background-color: rgba(0, 0, 0, 0.4);
+}
 .btn {
   border: 1px solid #2F80ED;
   border-radius: 3px;
