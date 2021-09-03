@@ -7,6 +7,8 @@ from rest_framework import status
 from .serializers import ProspectSerializer
 import requests, json
 import pandas as pd
+from django.http import HttpResponse
+import requests
 
 from django.core.mail import send_mail
 
@@ -44,12 +46,9 @@ def plugin_registration(request):
 
 
 
-
 PLUGIN_ID = settings.PLUGIN_ID
 ORGANISATION_ID = settings.ORGANISATION_ID
 PLUGIN_NAME = settings.PLUGIN_NAME
-
-
 
 class ProspectsListView(APIView):
     """
@@ -146,9 +145,6 @@ class ProspectsCreateView(APIView):
         if response.status_code == 201:
             return Response(data={'message':'successful'}, status=status.HTTP_201_CREATED)
         return Response(data={"message":"Try again later"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-
-
       
       
 def welcome(request):
