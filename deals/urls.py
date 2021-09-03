@@ -1,5 +1,5 @@
 from django.urls import path
-from deals.views import DealCreateView, DealUpdateView
+from deals.views import DealCreateView, DealUpdateView, DealsListView
 
 urlpatterns = [
   path("create/", DealCreateView.as_view()),
