@@ -4,10 +4,6 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-django-rest-swagger = "*"
-pandas = "*"
-coreapi = "*"
-pyyaml = "*"
 
 [dev-packages]
 
