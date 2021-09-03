@@ -8,6 +8,7 @@ from .serializers import ProspectSerializer
 import requests, json
 import pandas as pd
 from django.http import HttpResponse
+import requests
 
 from django.core.mail import send_mail
 
@@ -45,9 +46,9 @@ def plugin_registration(request):
 
 
 
-# PLUGIN_ID = settings.PLUGIN_ID
-# ORGANISATION_ID = settings.ORGANISATION_ID
-# PLUGIN_NAME = settings.PLUGIN_NAME
+PLUGIN_ID = settings.PLUGIN_ID
+ORGANISATION_ID = settings.ORGANISATION_ID
+PLUGIN_NAME = settings.PLUGIN_NAME
 
 class ProspectsListView(APIView):
     """
