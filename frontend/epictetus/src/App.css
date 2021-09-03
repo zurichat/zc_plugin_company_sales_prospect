@@ -6,3 +6,7 @@
   text-align: center;
   margin-top: 200px ;
 }
+
+.modal {
+  background-color: rgba(0, 0, 0, 0.4);
+}
