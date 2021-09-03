@@ -8,6 +8,6 @@ urlpatterns = [
     path('', ProspectsListView.as_view(), name="prospects"),
     path('welcome/',welcome,name='welcome_mail'),
     path('<str:id>/', ProspectsDetailView.as_view(), name="detail prospects"),
-    path('update/', ProspectsUpdateView.as_view()),
+    path('update/<str:id>', ProspectsUpdateView.as_view()),
 ] 
 

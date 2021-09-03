@@ -8,10 +8,43 @@ from rest_framework import status
 from .serializers import ProspectSerializer
 import requests, json
 import pandas as pd
+
 from django.core.mail import send_mail
 
 
+from django.http import HttpResponse
+import requests
+
+
 # Create your views here.
+"""
+This view shows how the plugin was registered
+"""
+def plugin_registration(request):
+    url = "https://zccore.herokuapp.com/plugin/register"
+
+    payload = {
+    "name": "sales_prospects",
+    "description": "A Sales Prospects Plugin",
+    "template_url": "https://sales.zuri.chat",
+    "sidebar_url": "https://sales.zuri.chat/sidebar",
+    "install_url":  "https://sales.zuri.chat/install",
+    "icon_url": "icon.png",
+    "developer_email":"azeezsodiqkayode@gmail.com",
+    "developer_name":"Sodiq Azeez"
+    }
+    working =True
+    if working:
+        return JsonResponse(data={
+                'Message': 'This plugin has been registered on the marketplace',
+                "plugin_id": "000000000000000000000000",
+                "organization_id": "612a3a914acf115e685df8e3",
+                "collection_name": "prospects",
+                
+            })
+
+
+
 
 PLUGIN_ID = settings.PLUGIN_ID
 ORGANISATION_ID = settings.ORGANISATION_ID
@@ -115,6 +148,7 @@ class ProspectsCreateView(APIView):
         return Response(data={"message":"Try again later"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
+
       
       
 def welcome(request):
@@ -132,6 +166,8 @@ def welcome(request):
     return JsonResponse({"message":"welcome mail has been sent successfully"})      
     
    
+
+
 
 class ProspectsUpdateView(APIView):
     serializer_class = ProspectSerializer
