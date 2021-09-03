@@ -27,7 +27,6 @@ urlpatterns = [
     path("sidebar/", sidebar),
     path('api/info', views.info),
     path('prospects/', include('prospect.urls')),
-    path('api/info/', views.info),
     path('register/', plugin_registration, name='register'),
     path("deals/", include("deals.urls")),
 ]
