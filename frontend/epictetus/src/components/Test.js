@@ -7,8 +7,12 @@ import DotIcon from './svg/DotIcon'
 import FilterIcon from './svg/FilterIcon'
 import SearchIcon from './svg/SearchIcon'
 import SettingsIcon from './svg/SettingsIcon'
+<<<<<<< Updated upstream
 import CustomButton from './CustomButton'
 import CreateDealForm from './CreateDealForm'
+=======
+import DealStageColor from '../DealStageColor'
+>>>>>>> Stashed changes
 
 export default function Test() {
     return (
@@ -23,6 +27,7 @@ export default function Test() {
                 <FilterIcon/>
                 <SearchIcon/>
                 <SettingsIcon/> 
+                <DealStageColor/>
             </div>
             <h2  className="text-4xl font-bold pb-10 m-10" >Custom Buttons</h2> 
             <div className="button-box">
