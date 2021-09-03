@@ -8,8 +8,13 @@ from rest_framework import status
 from .serializers import ProspectSerializer
 import requests, json
 import pandas as pd
+
+from django.core.mail import send_mail
+
+
 from django.http import HttpResponse
 import requests
+
 
 # Create your views here.
 """
@@ -38,6 +43,12 @@ def plugin_registration(request):
                 
             })
 
+
+
+
+PLUGIN_ID = settings.PLUGIN_ID
+ORGANISATION_ID = settings.ORGANISATION_ID
+PLUGIN_NAME = settings.PLUGIN_NAME
 
 
 
@@ -138,6 +149,26 @@ class ProspectsCreateView(APIView):
 
 
 
+      
+      
+def welcome(request):
+    """
+    this functions sends a welcome email to new leads
+    still in development stage
+    would configure it properly during production
+    """
+    send_mail(
+        subject = f'Welcome {request.user}',
+        message = f'Hello {request.user} your account was successfully created',
+        from_email = settings.EMAIL_HOST_USER,
+        recipient_list = ['test1@dummy.com']
+            )
+    return JsonResponse({"message":"welcome mail has been sent successfully"})      
+    
+   
+
+
+
 class ProspectsUpdateView(APIView):
     serializer_class = ProspectSerializer
     queryset = None
@@ -161,3 +192,4 @@ class ProspectsUpdateView(APIView):
         if response.status_code == 201:
             return Response(data={'message':'successful'}, status=status.HTTP_201_CREATED)
         return Response(data={"message":"Try again later"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
