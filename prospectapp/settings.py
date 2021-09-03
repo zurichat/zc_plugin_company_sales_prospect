@@ -15,6 +15,9 @@ from decouple import config
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+PLUGIN_ID = "000000000000000000000000"
+ORGANISATION_ID="612a3a914acf115e685df8e3"
+PLUGIN_NAME = "sale prospect plugin"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -127,3 +130,9 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR,'frontend/epictetus/build/static')
 ] 
+
+
+############### plugin details #######################
+PLUGIN_ID = "000000000000000000000000"
+PLUGIN_NAME = "sale prospect plugin"
+ORGANIZATION_ID = "612a3a914acf115e685df8e3"
