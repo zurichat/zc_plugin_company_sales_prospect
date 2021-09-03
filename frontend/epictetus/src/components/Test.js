@@ -9,10 +9,12 @@ import SearchIcon from './svg/SearchIcon'
 import SettingsIcon from './svg/SettingsIcon'
 import CustomButton from './CustomButton'
 import CreateDealForm from './CreateDealForm'
+import CreateSalesProspectButton from './CreateSalesProspectButton'
 
 export default function Test() {
     return (
        <>
+            <CreateSalesProspectButton/>
            <h2  className="text-4xl font-bold pb-10 m-10" >Svg Icons exported from figma</h2> 
            <div className="flex justify-around ...">
                 <ChevronDown/>
