@@ -53,7 +53,7 @@ class DealCreateView(APIView):
 class DealUpdateView(APIView):
     """
     An endpoint to update a deal, takes in prospect_id, status, title, and amount.
-    The endpoint is https://sales.zuri.chat/deals/update/<int:id>/
+    The endpoint is https://sales.zuri.chat/deals/update/<str:id>/
     """
     serializer_class = DealSerializer
     queryset = None
