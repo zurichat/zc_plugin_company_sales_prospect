@@ -50,3 +50,24 @@ class DealCreateView(APIView):
         if response.status_code == 201:
             return Response(data={'message':'Created deal object successfully!'}, status=status.HTTP_201_CREATED)
         return Response(data={"message":"Creation of deals failed... Try again later."}, status=st.HTTP_500_INTERNAL_SERVER_ERROR)
+
+class DealsListView(APIView):
+    """
+    Documentation here.
+    """
+
+    serializer_class = DealSerializer
+    queryset = None
+
+    def get(self, request, *args, **kwargs):
+
+        url = "https://zccore.herokuapp.com/data/read/000000000000000000000000/deals/612a3a914acf115e685df8e3/"
+        response = requests.request("GET", url)
+        r = response.json()
+        print(response.status_code)
+        print(response) #new
+        if response.status_code == 200:
+            serializer = DealSerializer(data=r['data'], many=True)
+            serializer.is_valid(raise_exception=True)
+            return Response(data=serializer.data, status=status.HTTP_200_OK)
+        return Response(data={"message":"Try again later"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)  
