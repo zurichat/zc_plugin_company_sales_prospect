@@ -8,6 +8,7 @@ import FilterIcon from './svg/FilterIcon'
 import SearchIcon from './svg/SearchIcon'
 import SettingsIcon from './svg/SettingsIcon'
 import CustomButton from './CustomButton'
+import CreateDealForm from './CreateDealForm'
 
 export default function Test() {
     return (
@@ -27,6 +28,9 @@ export default function Test() {
             <div className="button-box">
             <CustomButton value="custom1" />
             <CustomButton value="custom2" />
+            </div>
+            <div>
+                <CreateDealForm/>
             </div>
         </>
     )
