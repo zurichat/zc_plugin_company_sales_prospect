@@ -1,27 +1,37 @@
-import './App.css';
-import Test from './components/Test';
-import Home from './components/Home';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import CreateDealForm from './components/CreateDealForm';
-import EditProspectSales from './components/EditProspectSales';
+import "./App.css";
+import Test from "./components/Test";
+import Home from "./components/Home";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import CreateDealForm from "./components/CreateDealForm";
+import EditProspectSales from "./components/EditProspectSales";
+import Card from "./components/Card/Card";
 
 function App() {
-    return (
-        <Router>
-            <div className="App">
-                <Switch>
-                    <Route exact path="/"
-                        component={Home} />
-                    <Route exact path="/test"
-                        component={Test} />
-                    <Route exact path="/"
-                        component={CreateDealForm} />
-                    <Route exact path="/prospect"
-                        component={EditProspectSales} />
-                </Switch>
-            </div>
-        </Router>
-    );
+  return (
+    <Router>
+      <div className="App">
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/test" component={Test} />
+          <Route exact path="/" component={CreateDealForm} />
+          <Route exact path="/prospect" component={EditProspectSales} />
+          <Route
+            exact
+            path="/dealcard"
+            render={(props) => (
+              <Card
+                dealName="Jane's deal"
+                companyName="NNPC"
+                dealWorth="500,000"
+                customerEmail="janecooper@nnpc.com"
+                customerFullName="Jane Cooper"
+              />
+            )}
+          />
+        </Switch>
+      </div>
+    </Router>
+  );
 }
 
 export default App;
