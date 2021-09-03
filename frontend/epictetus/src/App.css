@@ -14,12 +14,6 @@ table{
 .modal {
   background-color: rgba(0, 0, 0, 0.4);
 }
-
-.modal input, select {
-  border: 1px solid #ccc;
-  outline: none;
-}
-
 .btn {
   border: 1px solid #2F80ED;
   border-radius: 3px;
