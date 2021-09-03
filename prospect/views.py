@@ -1,4 +1,3 @@
-from rest_framework import filters
 from rest_framework import generics
 from django.http import JsonResponse
 from django.conf import settings
@@ -88,7 +87,6 @@ class ProspectsDetailView(APIView):
             dataframe.set_index('_id', inplace=True)
             detail_prospect_data = json.loads(dataframe.loc[kwargs["id"], :].to_json())
             detail_prospect_data['_id'] = kwargs["id"]
-
             serializer = ProspectSerializer(data=detail_prospect_data, many=False)
             serializer.is_valid(raise_exception=True)
             return Response(data=serializer.data, status=status.HTTP_200_OK)
@@ -184,9 +182,8 @@ class ProspectsUpdateView(APIView):
                 "payload": serializer.data
             }
         response = requests.request("POST", url,data=json.dumps(data))
-        r = response.json()
         print(response.status_code)
-        print(r)
+
         if response.status_code == 201:
             return Response(data={'message':'successful'}, status=status.HTTP_201_CREATED)
         return Response(data={"message":"Try again later"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
