@@ -4,9 +4,9 @@
 venv
 __pycache__
 prospectapp/__pycache__
-prospect/migrations/__pycache__/
-propectapp/sidebar/__pycache__/
-deals/migrations/__pycache__/
+"prospect/migrations/__pycache__/"
+"propectapp/sidebar/__pycache__/"
+"deals/migrations/__pycache__/"
 venv/
 "db.sqlite3"
 venv
