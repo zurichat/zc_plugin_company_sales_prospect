@@ -1,6 +1,7 @@
 from django.urls import path
-from deals.views import DealCreateView
+from deals.views import DealCreateView, DealUpdateView
 
 urlpatterns = [
   path("create/", DealCreateView.as_view()),
+  path("update/<int:id>/", DealUpdateView.as_view())
 ]
