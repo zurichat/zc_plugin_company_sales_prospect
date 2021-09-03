@@ -1,4 +1,3 @@
-from rest_framework import filters
 from rest_framework import generics
 from django.http import JsonResponse
 from django.conf import settings
@@ -89,7 +88,6 @@ class ProspectsDetailView(APIView):
             dataframe.set_index('_id', inplace=True)
             detail_prospect_data = json.loads(dataframe.loc[kwargs["id"], :].to_json())
             detail_prospect_data['_id'] = kwargs["id"]
-
             serializer = ProspectSerializer(data=detail_prospect_data, many=False)
             serializer.is_valid(raise_exception=True)
             return Response(data=serializer.data, status=status.HTTP_200_OK)
