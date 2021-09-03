@@ -9,3 +9,4 @@ venv/
 venv
 duovenv/
 env
+Pipenv.lock
