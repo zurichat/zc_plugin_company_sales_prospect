@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "https://sales.zuri.chat/static/css/main.d5a9ad75.chunk.css",
-    "main.js": "https://sales.zuri.chat/static/js/main.a7543e89.chunk.js",
-    "main.js.map": "https://sales.zuri.chat/static/js/main.a7543e89.chunk.js.map",
-    "runtime-main.js": "https://sales.zuri.chat/static/js/runtime-main.fc8d5f01.js",
-    "runtime-main.js.map": "https://sales.zuri.chat/static/js/runtime-main.fc8d5f01.js.map",
-    "static/js/2.a3cd9f90.chunk.js": "https://sales.zuri.chat/static/js/2.a3cd9f90.chunk.js",
-    "static/js/2.a3cd9f90.chunk.js.map": "https://sales.zuri.chat/static/js/2.a3cd9f90.chunk.js.map",
-    "static/js/3.1f71c646.chunk.js": "https://sales.zuri.chat/static/js/3.1f71c646.chunk.js",
-    "static/js/3.1f71c646.chunk.js.map": "https://sales.zuri.chat/static/js/3.1f71c646.chunk.js.map",
+    "main.css": "https://sales.zuri.chat/static/css/main.cbb94e4a.chunk.css",
+    "main.js": "https://sales.zuri.chat/static/js/main.91f54b32.chunk.js",
+    "main.js.map": "https://sales.zuri.chat/static/js/main.91f54b32.chunk.js.map",
+    "runtime-main.js": "https://sales.zuri.chat/static/js/runtime-main.22a97c5d.js",
+    "runtime-main.js.map": "https://sales.zuri.chat/static/js/runtime-main.22a97c5d.js.map",
+    "static/js/2.fddb4f19.chunk.js": "https://sales.zuri.chat/static/js/2.fddb4f19.chunk.js",
+    "static/js/2.fddb4f19.chunk.js.map": "https://sales.zuri.chat/static/js/2.fddb4f19.chunk.js.map",
+    "static/js/3.9bf4a899.chunk.js": "https://sales.zuri.chat/static/js/3.9bf4a899.chunk.js",
+    "static/js/3.9bf4a899.chunk.js.map": "https://sales.zuri.chat/static/js/3.9bf4a899.chunk.js.map",
     "index.html": "https://sales.zuri.chat/index.html",
-    "static/css/main.d5a9ad75.chunk.css.map": "https://sales.zuri.chat/static/css/main.d5a9ad75.chunk.css.map",
-    "static/js/2.a3cd9f90.chunk.js.LICENSE.txt": "https://sales.zuri.chat/static/js/2.a3cd9f90.chunk.js.LICENSE.txt"
+    "static/css/main.cbb94e4a.chunk.css.map": "https://sales.zuri.chat/static/css/main.cbb94e4a.chunk.css.map",
+    "static/js/2.fddb4f19.chunk.js.LICENSE.txt": "https://sales.zuri.chat/static/js/2.fddb4f19.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.fc8d5f01.js",
-    "static/js/2.a3cd9f90.chunk.js",
-    "static/css/main.d5a9ad75.chunk.css",
-    "static/js/main.a7543e89.chunk.js"
+    "static/js/runtime-main.22a97c5d.js",
+    "static/js/2.fddb4f19.chunk.js",
+    "static/css/main.cbb94e4a.chunk.css",
+    "static/js/main.91f54b32.chunk.js"
   ]
 }
