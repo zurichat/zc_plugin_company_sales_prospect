@@ -1,8 +1,4 @@
 from django.shortcuts import render
-<<<<<<< HEAD
-
-# Create your views here.
-=======
 from django.conf import settings
 from deals.serializers import DealSerializer
 from rest_framework.views import APIView
@@ -129,4 +125,3 @@ class DealsDetailView(APIView):
             serializer.is_valid(raise_exception=True)
             return Response(data=serializer.data, status=st.HTTP_200_OK)
         return Response(data={"message":"Try again later"}, status=st.HTTP_500_INTERNAL_SERVER_ERROR)
->>>>>>> 95848032103447b45a2b0a91e2d086f86e9a6416

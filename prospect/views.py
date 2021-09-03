@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-from django.shortcuts import render
-
-# Create your views here.
-=======
 from rest_framework import generics
 from django.http import JsonResponse
 from django.conf import settings
@@ -51,9 +46,9 @@ def plugin_registration(request):
 
 
 
-PLUGIN_ID = settings.PLUGIN_ID
-ORGANISATION_ID = settings.ORGANISATION_ID
-PLUGIN_NAME = settings.PLUGIN_NAME
+# PLUGIN_ID = settings.PLUGIN_ID
+# ORGANISATION_ID = settings.ORGANISATION_ID
+# PLUGIN_NAME = settings.PLUGIN_NAME
 
 class ProspectsListView(APIView):
     """
@@ -193,4 +188,3 @@ class ProspectsUpdateView(APIView):
             return Response(data={'message':'successful'}, status=status.HTTP_201_CREATED)
         return Response(data={"message":"Try again later"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
->>>>>>> 95848032103447b45a2b0a91e2d086f86e9a6416
