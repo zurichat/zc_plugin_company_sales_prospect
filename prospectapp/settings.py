@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     #third party apps
     'rest_framework',    
-    'rest_framework_swagger',
+    'drf_spectacular',
     #local apps
     "deals",
     "prospect",
@@ -143,3 +143,15 @@ ORGANIZATION_ID = "612a3a914acf115e685df8e3"
 #email config
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' 
 EMAIL_HOST_USER = 'support@test.com'
+
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+# API DOCS SETTINGS
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'SalesProspects API',
+    'DESCRIPTION': 'SalesProspects Backend',
+    'VERSION': '1.0.0',
+    'SCHEMA_PATH_PREFIX': '/api',
+}
