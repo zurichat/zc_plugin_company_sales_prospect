@@ -7,6 +7,9 @@
   margin-top: 200px ;
 }
 
+table{
+  border-collapse: collapse;
+}
 
 .modal {
   background-color: rgba(0, 0, 0, 0.4);

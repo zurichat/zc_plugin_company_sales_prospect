@@ -1,8 +1,8 @@
+
 import "./App.css";
 import Test from "./components/Test";
 import Home from "./components/Home";
 import Header from "./components/Header";
-
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import CreateDealForm from "./components/CreateDealForm";
 import EditProspectSales from "./components/EditProspectSales";
@@ -21,6 +21,7 @@ function App() {
       </div>
     </Router>
   );
+
 }
 
 export default App;
