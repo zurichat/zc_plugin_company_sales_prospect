@@ -6,17 +6,10 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 from .serializers import ProspectSerializer
+from django.core.mail import send_mail
+from django.http import HttpResponse
 import requests, json
 import pandas as pd
-from django.http import HttpResponse
-import requests
-
-from django.core.mail import send_mail
-
-
-from django.http import HttpResponse
-import requests
-
 
 # Create your views here.
 """
@@ -148,22 +141,27 @@ class ProspectsCreateView(APIView):
             return Response(data={'message':'successful'}, status=status.HTTP_201_CREATED)
         return Response(data={"message":"Try again later"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
       
-      
-def welcome(request):
+              
+class WelcomeEmailView(APIView):
     """
-    this functions sends a welcome email to new leads
+    This view sends a welcome email to new leads
     still in development stage
     would configure it properly during production
-    """
-    send_mail(
-        subject = f'Welcome {request.user}',
-        message = f'Hello {request.user} your account was successfully created',
+    """    
+    serializer_class = ProspectSerializer
+    queryset = None
+    def get(self, request, *args, **kwargs):
+        url = "https://sales.zuri.chat/prospects/6130a8153fe58f9029ffaba1/"    
+        response = requests.get(url)   
+        data = response.json() 
+        
+        send_mail(
+        subject = f"Welcome! {data['first_name']} {data['last_name']}",
+        message = f"Hello {data['first_name']}! your account was successfully created",
         from_email = settings.EMAIL_HOST_USER,
-        recipient_list = ['test1@dummy.com']
+        recipient_list = [data['email']]
             )
-    return JsonResponse({"message":"welcome mail has been sent successfully"})      
-    
-   
+        return Response({"message":"welcome mail was sent successfully"})     
 
 
 
