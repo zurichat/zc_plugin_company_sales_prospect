@@ -9,7 +9,48 @@ from .serializers import ProspectSerializer
 import requests, json
 import pandas as pd
 
+from django.core.mail import send_mail
+
+
+from django.http import HttpResponse
+import requests
+
+
 # Create your views here.
+"""
+This view shows how the plugin was registered
+"""
+def plugin_registration(request):
+    url = "https://zccore.herokuapp.com/plugin/register"
+
+    payload = {
+    "name": "sales_prospects",
+    "description": "A Sales Prospects Plugin",
+    "template_url": "https://sales.zuri.chat",
+    "sidebar_url": "https://sales.zuri.chat/sidebar",
+    "install_url":  "https://sales.zuri.chat/install",
+    "icon_url": "icon.png",
+    "developer_email":"azeezsodiqkayode@gmail.com",
+    "developer_name":"Sodiq Azeez"
+    }
+    working =True
+    if working:
+        return JsonResponse(data={
+                'Message': 'This plugin has been registered on the marketplace',
+                "plugin_id": "000000000000000000000000",
+                "organization_id": "612a3a914acf115e685df8e3",
+                "collection_name": "prospects",
+                
+            })
+
+
+
+
+PLUGIN_ID = settings.PLUGIN_ID
+ORGANISATION_ID = settings.ORGANISATION_ID
+PLUGIN_NAME = settings.PLUGIN_NAME
+
+
 
 class ProspectsListView(APIView):
     """
@@ -108,6 +149,28 @@ class ProspectsCreateView(APIView):
             return Response(data={'message':'successful'}, status=status.HTTP_201_CREATED)
         return Response(data={"message":"Try again later"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+
+
+      
+      
+def welcome(request):
+    """
+    this functions sends a welcome email to new leads
+    still in development stage
+    would configure it properly during production
+    """
+    send_mail(
+        subject = f'Welcome {request.user}',
+        message = f'Hello {request.user} your account was successfully created',
+        from_email = settings.EMAIL_HOST_USER,
+        recipient_list = ['test1@dummy.com']
+            )
+    return JsonResponse({"message":"welcome mail has been sent successfully"})      
+    
+   
+
+
+
 class ProspectsUpdateView(APIView):
     serializer_class = ProspectSerializer
     queryset = None
@@ -125,9 +188,10 @@ class ProspectsUpdateView(APIView):
                 "payload": serializer.data
             }
         response = requests.request("POST", url,data=json.dumps(data))
+        r = response.json()
         print(response.status_code)
         print(r)
         if response.status_code == 201:
-            r = response.json()
             return Response(data={'message':'successful'}, status=status.HTTP_201_CREATED)
         return Response(data={"message":"Try again later"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
