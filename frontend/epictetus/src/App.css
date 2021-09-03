@@ -1,7 +1,31 @@
 .app{
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
   margin-top: 200px ;
+}
+
+
+.modal {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.btn {
+  border: 1px solid #2F80ED;
+  border-radius: 3px;
+  text-align: center;
+  background-color: #fff;
+  padding: 10px 12px;
+  color: #2F80ED;
+  max-width: 100px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.button-box {
+  width: 300px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-top: 5vh;
 }

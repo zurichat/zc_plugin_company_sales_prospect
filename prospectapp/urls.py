@@ -14,15 +14,33 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+<<<<<<< HEAD
 from django.urls import path
+=======
+from django.urls import path, include, re_path
+>>>>>>> 95848032103447b45a2b0a91e2d086f86e9a6416
 from django.views.generic import TemplateView
+from prospect.views import plugin_registration
 
 from .sidebar.views import *
 from .info import views
+<<<<<<< HEAD
+=======
+
+>>>>>>> 95848032103447b45a2b0a91e2d086f86e9a6416
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("",TemplateView.as_view(template_name='index.html')),
     path("sidebar/", sidebar),
+<<<<<<< HEAD
     path('api/info', views.info)
+=======
+    path('api/info', views.info),
+    path('prospects/', include('prospect.urls')),
+    path('api/info/', views.info),
+    path('register/', plugin_registration, name='register'),
+    path("deals/", include("deals.urls")),
+>>>>>>> 95848032103447b45a2b0a91e2d086f86e9a6416
 ]
+urlpatterns += [re_path(r'^.*', TemplateView.as_view(template_name='index.html'))]
+

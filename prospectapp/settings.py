@@ -126,4 +126,14 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR,'frontend/epictetus/build/static')
-] 
+]
+
+
+############### plugin details #######################
+PLUGIN_ID = "000000000000000000000000"
+PLUGIN_NAME = "sale prospect plugin"
+ORGANIZATION_ID = "612a3a914acf115e685df8e3"
+
+#email config
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' 
+EMAIL_HOST_USER = 'support@test.com'
