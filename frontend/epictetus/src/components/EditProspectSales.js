@@ -49,7 +49,7 @@ const EditProspectSales = () => {
 							</label>
 							<select className=" border border-gray-100 w-100% h-10 rounded-sm pl-3">
 								<option value="Done">Done</option>
-								<option value="Unfinished">Unfinished</option>
+								<option value="Unfinished">Unfinished Deal</option>
 								<option selected value="Negotiation">
 									Negotiation
 								</option>
