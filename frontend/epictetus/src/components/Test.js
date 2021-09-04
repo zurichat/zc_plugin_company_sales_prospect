@@ -10,6 +10,7 @@ import SettingsIcon from "./svg/SettingsIcon";
 import CustomButton from "./CustomButton";
 import CreateDealForm from "./CreateDealForm";
 import Input from "./input";
+import CheckBox from "./CheckBox";
 
 import { FaUserTie } from "react-icons/fa";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
@@ -37,6 +38,12 @@ export default function Test() {
         <CustomButton value="custom1" />
         <CustomButton value="custom2" />
       </div>
+
+        <div className="button-box text-center">
+        <CheckBox name="checkbox" label="my checkbox"/>
+    
+        </div>
+
       <div>
         <CreateDealForm />
       </div>
