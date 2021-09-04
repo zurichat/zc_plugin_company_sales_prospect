@@ -2,21 +2,15 @@ import '../App.css';
 import avatar from "../avatar.svg";
 export default function Header() {
   return (
-    <header className=" header">
-      <div className="">
+    <header className="p-4 w-full flex justify-between items-center">
+      <div className="font-bold text-2xl">
         <h1>Sales Prospect</h1>
       </div>
-      
-      <div className="search">
-        <input type="text" placeholder="Search ZURI" className="w-72 h-8 px-3 rounded-sm"/>
-       
 
-        </div>
-
-        <div className="avatar">
-          <img src={avatar} alt="avatar" />
-        </div>
-    
+      <div className="flex justify-between">
+        <input type="text" className="border-gray-400 mr-4 p-3 hidden sm:block sm:w-96" placeholder="Search ZURI" />
+        <img src={avatar} alt="avatar" />
+      </div>
 
     </header>
   );

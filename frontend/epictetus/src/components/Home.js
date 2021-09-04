@@ -49,7 +49,7 @@ export default function Home() {
                     </Select>
 
                     <Select title="role" label="What is your position?">
-                        <option disabled>Select position</option>
+                        <option disabled selected>Select position</option>
                         <option>Executive</option>
                         <option>Sales Man</option>
                         <option>Sales woman</option>

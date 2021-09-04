@@ -11,7 +11,7 @@ import Header from "./components/Header";
 function App() {
   return (
     <Router>
-      <div className="App font-lato">
+      <div className="app font-lato">
         {/* lato font class added */}
         <Header />
         <Switch>
