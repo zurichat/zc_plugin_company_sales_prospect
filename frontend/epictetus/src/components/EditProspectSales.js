@@ -66,7 +66,7 @@ const EditProspectSales = () => {
 
 						<button
 							type="submit"
-							className="w-36 h-10 border-0 rounded-sm self-end bg-green-500 text-white mt-4 text-base hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
+							className="w-36 h-10 border-0 rounded-sm self-end bg-primary text-white mt-4 text-base hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
 						>
 							Done
 						</button>
