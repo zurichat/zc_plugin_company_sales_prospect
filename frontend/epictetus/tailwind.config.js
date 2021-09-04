@@ -15,10 +15,13 @@ module.exports = {
       red: colors.rose,
       yellow: colors.amber,
       green: colors.green,
-      primary:"#00B87C"
+      primary: {
+        DEFAULT: "#00B87C",
+        light: "#E2FFF5"
+      }
     },
     fontFamily: {
-      lato:["'Lato', sans-serif"]
+      lato: ["'Lato', sans-serif"]
     },
     fontSizes: {
       'xxs':'.688rem',
