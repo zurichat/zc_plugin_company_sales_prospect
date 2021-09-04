@@ -20,6 +20,8 @@ export default function Test() {
       <h2 className="text-4xl font-bold pb-10 m-10">
         Svg Icons exported from figma
       </h2>
+      <div className="bg-green-400 h-48 border-8 border-gray-700"></div>
+      <input type="text" name="" id="" />
       <div className="flex justify-around ...">
         <ChevronDown />
         <ChevronUp />

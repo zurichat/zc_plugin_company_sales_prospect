@@ -20,10 +20,10 @@ function Prospects() {
 
             <div className="py-2">
                 <ProspectsTable people={people} />
-                <ul className="flex list-none justify-end">
+                <ul className="flex list-none justify-end mt-5">
                     <li className="py-2 px-3">{"<"}</li>
                     <li className="py-2 px-3">Prev</li>
-                    <li className="bg-green-400 py-2 px-3">2</li>
+                    <li className="bg-primary text-white rounded-sm py-2 px-4">2</li>
                     <li className="py-2 px-3">Next</li>
                     <li className="py-2 px-3">{">"}</li>
                 </ul>
