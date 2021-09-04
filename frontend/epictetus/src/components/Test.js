@@ -9,6 +9,7 @@ import SearchIcon from './svg/SearchIcon'
 import SettingsIcon from './svg/SettingsIcon'
 import CustomButton from './CustomButton'
 import CreateDealForm from './CreateDealForm'
+import Input from './input'
 
 export default function Test() {
     return (
@@ -32,6 +33,8 @@ export default function Test() {
             <div>
                 <CreateDealForm/>
             </div>
+
+            <Input title="name" label="Name" placeholder="enter your name"/>
         </>
     )
 }

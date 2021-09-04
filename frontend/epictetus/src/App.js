@@ -9,13 +9,11 @@ import Prospects from './containers/Prospects';
 function App() {
     return (
         <Router>
-            <div className="App">
+            <div className="App font-lato">{/* lato font class added */}
                 <Switch>
                     <Route exact path="/" component={Home} />
                     <Route exact path="/prospects" component={Prospects} />
                     <Route exact path="/test" component={Test} />
-                    <Route exact path="/" component={CreateDealForm} />
-                    <Route exact path="/prospect" component={EditProspectSales} />
                 </Switch>
             </div>
         </Router>
