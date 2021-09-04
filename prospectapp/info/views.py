@@ -11,11 +11,11 @@ def info(request):
         data = {
             "info":{
                 "name": "info",
-                "url": f"{get_current_site(request)}/info/"
+                "url": "https://sales.zuri.chat/api/info"
             },
             "about":{
                 "name": "about",
-                "url": f"{get_current_site(request)}/about/"
+                "url": "https://sales.zuri.chat/api/info"
             }
         }
         return Response(data, status=status.HTTP_200_OK)
