@@ -5,6 +5,12 @@ table{
 .modal {
   background-color: rgba(0, 0, 0, 0.4);
 }
+
+.modal input, select {
+  width: 100%;
+}
+
+
 .btn {
   border: 1px solid #2F80ED;
   border-radius: 3px;
@@ -28,6 +34,8 @@ table{
 button{
   outline-style: none;
   border:1px solid;
+  width:374px;
+  height:54px;
 }
 
 button:hover{
@@ -35,6 +43,8 @@ button:hover{
 }
 
 input, select{
+  width:374px;
+  height:54px;
   outline-style: none;
   border: 1px solid #1a1a1a;
 }
@@ -59,7 +69,7 @@ input{
 #loader{
   display:block;
   margin: auto;
-  margin-top: 40vh;
+  margin-top: 30vh;
   margin-bottom: 50px;
   width:100px;
   height:100px;

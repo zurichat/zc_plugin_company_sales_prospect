@@ -30,7 +30,7 @@ export default function Home() {
         </div>) :
         (<div>
             { pageOne ? 
-            (<form className="flex flex-col w-6/7 mx-auto md:w-1/3 p-5 my-32 ">
+            (<form className="flex flex-col w-6/7 mx-auto md:w-1/3 p-5 my-12 ">
                 <h2 className="font-medium text-2xl text-black-500 text-center" >Lets Personalize your Experience!</h2>
                 <p className="text-base text-gray-400 text-center">Start by setting up your company’s personal details on Zuri Sales Prospect Plugin</p>
                 
@@ -65,7 +65,7 @@ export default function Home() {
                 </div>
             </form>)
             :
-            (<div className="md:flex flex-col w-4/5 mx-auto p-5 my-16 hidden">
+            (<div className="md:flex flex-col w-4/5 mx-auto p-5 my-12 hidden">
                 <h2 className="font-medium text-2xl text-black-500 text-center" >What do you do at Zuri?</h2>
                 <p className="text-base text-gray-400 text-center">We will use this to personalize your Sales Prospect experience</p>
                 <div className="flex flex-row flex-wrap justify-around content-start w-6/7">
@@ -104,6 +104,7 @@ export default function Home() {
                         text="Others"
                         handleClick={handleClick}
                     />
+                    <div className="homeCard invisible"></div>
                 </div>
 
             </div>)
