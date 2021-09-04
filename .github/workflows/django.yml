@@ -24,9 +24,9 @@ jobs:
           git checkout dev
           git pull
           pip install -r requirements.txt
-          #cd frontend/epictetus
-          #yarn install
-          #yarn run build
+          cd frontend/epictetus
+          yarn install
+          yarn build
           #python manage.py migrate
           #python manage.py runserver
           #- name: Run Tests
