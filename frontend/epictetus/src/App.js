@@ -21,6 +21,7 @@ function App() {
           <Route exact path="/Editprospectsales" component={EditProspectSales} />
           <Route exact path="/test" component={Test} />
           <Route exact path="/DragDrop" component={DragDrop} />
+          <Route exact path="/DealsForm" component={CreateDealForm} />
           <Route
             exact
             path="/deals"
