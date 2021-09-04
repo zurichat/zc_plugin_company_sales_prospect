@@ -8,7 +8,7 @@ import FilterIcon from "./svg/FilterIcon";
 import SearchIcon from "./svg/SearchIcon";
 import SettingsIcon from "./svg/SettingsIcon";
 import CustomButton from "./CustomButton";
-// import CreateDealForm from "./CreateDealForm";
+import CreateDealForm from "./CreateDealForm";
 import Input from "./input";
 import CheckBox from "./CheckBox";
 
@@ -44,9 +44,9 @@ export default function Test() {
     
         </div>
 
-      {/* <div>
+      <div>
         <CreateDealForm />
-      </div> */}
+      </div>
 
       <Input title="name" label="Name" placeholder="enter your name" />
     </>
