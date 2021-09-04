@@ -32,3 +32,57 @@ table{
   align-items: center;
   margin-top: 5vh;
 }
+button{
+  outline-style: none;
+  border:1px solid;
+}
+
+button:hover{
+  cursor: pointer;
+}
+
+input, select{
+  outline-style: none;
+  border: 1px solid #1a1a1a;
+}
+
+input{
+  width:90% ;
+}
+
+.homeCard{
+  min-width:187px;
+   min-height:141px;
+   border: 1px solid #a1a1a1;
+   margin: 20px;
+  border-radius: 5px;
+}
+
+.homeCard:hover{
+  background-color: #F7FFFC;
+  cursor:pointer;
+}
+
+#loader{
+  display:block;
+  margin: auto;
+  margin-top: 40vh;
+  margin-bottom: 50px;
+  width:100px;
+  height:100px;
+}
+
+#role{
+  display: none;
+}
+
+@media only screen and (max-width: 600px) {
+  input{
+    width:85% ;
+  }
+
+  #role{
+    display: block;
+  }
+}
+
