@@ -14,7 +14,7 @@ function App() {
                     <Route exact path="/" component={Home} />
                     <Route exact path="/prospects" component={Prospects} />
                     <Route exact path="/test" component={Test} />
-                    <Route exact path="/" component={CreateDealForm} />
+                    <Route exact path="/deals" component={CreateDealForm} />
                     <Route exact path="/prospect" component={EditProspectSales} />
                 </Switch>
             </div>
