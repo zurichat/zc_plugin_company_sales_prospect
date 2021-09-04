@@ -14,6 +14,12 @@ table{
 .modal {
   background-color: rgba(0, 0, 0, 0.4);
 }
+
+.modal input, select {
+  width: 100%;
+}
+
+
 .btn {
   border: 1px solid #2F80ED;
   border-radius: 3px;
@@ -25,6 +31,47 @@ table{
   font-size: 12px;
   font-weight: 600;
 }
+
+.header{
+  display: flex;
+  justify-content: space-between;
+}
+
+h1{
+  position: absolute;
+  left: 5%;
+  top: 5%;
+font-family: Lato;
+font-style: normal;
+font-weight: 900;
+font-size: 25px;
+line-height: 30px;
+color: #393939;
+
+}
+
+.search{
+  flex: 0 0 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 15%;
+  margin-top: 3%;
+}
+
+.search input{
+  border-radius: 4px;
+  border: 1px solid #A1A1A1;
+box-sizing: border-box;
+}
+
+.avatar{
+  position: absolute;
+left: 93.32%;
+right: 3%;
+top: 4%;
+}
+
 .button-box {
   width: 300px;
   display: flex;
@@ -35,6 +82,8 @@ table{
 button{
   outline-style: none;
   border:1px solid;
+  width:374px;
+  height:54px;
 }
 
 button:hover{
@@ -42,6 +91,8 @@ button:hover{
 }
 
 input, select{
+  width:374px;
+  height:54px;
   outline-style: none;
   border: 1px solid #1a1a1a;
 }
@@ -66,7 +117,7 @@ input{
 #loader{
   display:block;
   margin: auto;
-  margin-top: 40vh;
+  margin-top: 30vh;
   margin-bottom: 50px;
   width:100px;
   height:100px;

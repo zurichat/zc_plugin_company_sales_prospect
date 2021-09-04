@@ -5,7 +5,7 @@ function ProspectsTable() {
     return (
         <div className="text-center shadow-lg overflow-x-scroll border-b border-gray-200 rounded-md">
             <table className="border-1 border-gray-100 w-full">
-                <thead className="bg-green-600 text-white font-bold w-100">
+                <thead className="bg-primary text-white font-bold w-100">
                     <tr className="">
                         <th scope="col"
                             className="px-6 py-3 font-medium tracking-wide">

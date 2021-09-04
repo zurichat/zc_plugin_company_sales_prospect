@@ -15,6 +15,7 @@ module.exports = {
       red: colors.rose,
       yellow: colors.amber,
       green: colors.green,
+      primary:"#00B87C"
     },
     fontFamily: {
       lato:["'Lato', sans-serif"]
@@ -22,9 +23,6 @@ module.exports = {
     variants: {
       extend: {},
     },
-    plugins: []
-  },
-  corePlugins: {
-    preflight: false,
+    plugins: [require('@tailwindcss/forms')]
   }
 }

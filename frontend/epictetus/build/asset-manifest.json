@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "https://sales.zuri.chat/static/css/main.b4bbd2df.chunk.css",
-    "main.js": "https://sales.zuri.chat/static/js/main.78784983.chunk.js",
-    "main.js.map": "https://sales.zuri.chat/static/js/main.78784983.chunk.js.map",
-    "runtime-main.js": "https://sales.zuri.chat/static/js/runtime-main.5ae4981a.js",
-    "runtime-main.js.map": "https://sales.zuri.chat/static/js/runtime-main.5ae4981a.js.map",
-    "static/js/2.4d836d36.chunk.js": "https://sales.zuri.chat/static/js/2.4d836d36.chunk.js",
-    "static/js/2.4d836d36.chunk.js.map": "https://sales.zuri.chat/static/js/2.4d836d36.chunk.js.map",
-    "static/js/3.4ff8eb6d.chunk.js": "https://sales.zuri.chat/static/js/3.4ff8eb6d.chunk.js",
-    "static/js/3.4ff8eb6d.chunk.js.map": "https://sales.zuri.chat/static/js/3.4ff8eb6d.chunk.js.map",
+    "main.css": "https://sales.zuri.chat/static/css/main.09824b89.chunk.css",
+    "main.js": "https://sales.zuri.chat/static/js/main.810baf20.chunk.js",
+    "main.js.map": "https://sales.zuri.chat/static/js/main.810baf20.chunk.js.map",
+    "runtime-main.js": "https://sales.zuri.chat/static/js/runtime-main.d809e828.js",
+    "runtime-main.js.map": "https://sales.zuri.chat/static/js/runtime-main.d809e828.js.map",
+    "static/js/2.ed9cee76.chunk.js": "https://sales.zuri.chat/static/js/2.ed9cee76.chunk.js",
+    "static/js/2.ed9cee76.chunk.js.map": "https://sales.zuri.chat/static/js/2.ed9cee76.chunk.js.map",
+    "static/js/3.a6c1eebe.chunk.js": "https://sales.zuri.chat/static/js/3.a6c1eebe.chunk.js",
+    "static/js/3.a6c1eebe.chunk.js.map": "https://sales.zuri.chat/static/js/3.a6c1eebe.chunk.js.map",
     "index.html": "https://sales.zuri.chat/index.html",
-    "static/css/main.b4bbd2df.chunk.css.map": "https://sales.zuri.chat/static/css/main.b4bbd2df.chunk.css.map",
-    "static/js/2.4d836d36.chunk.js.LICENSE.txt": "https://sales.zuri.chat/static/js/2.4d836d36.chunk.js.LICENSE.txt",
+    "static/css/main.09824b89.chunk.css.map": "https://sales.zuri.chat/static/css/main.09824b89.chunk.css.map",
+    "static/js/2.ed9cee76.chunk.js.LICENSE.txt": "https://sales.zuri.chat/static/js/2.ed9cee76.chunk.js.LICENSE.txt",
     "static/media/Businessman _Flatline.86d2857d.svg": "https://sales.zuri.chat/static/media/Businessman _Flatline.86d2857d.svg",
     "static/media/Businessmen _Flatline.3521ff55.svg": "https://sales.zuri.chat/static/media/Businessmen _Flatline.3521ff55.svg",
     "static/media/Businesswoman_Flatline.609d8a64.svg": "https://sales.zuri.chat/static/media/Businesswoman_Flatline.609d8a64.svg",
@@ -19,12 +19,13 @@
     "static/media/Manager _Flatline.9ef2dfc3.svg": "https://sales.zuri.chat/static/media/Manager _Flatline.9ef2dfc3.svg",
     "static/media/Salesman_Flatline.41eb80c8.svg": "https://sales.zuri.chat/static/media/Salesman_Flatline.41eb80c8.svg",
     "static/media/Startup_Flatline.30c7533e.svg": "https://sales.zuri.chat/static/media/Startup_Flatline.30c7533e.svg",
-    "static/media/Watermelon_Flatline.417704a4.svg": "https://sales.zuri.chat/static/media/Watermelon_Flatline.417704a4.svg"
+    "static/media/Watermelon_Flatline.417704a4.svg": "https://sales.zuri.chat/static/media/Watermelon_Flatline.417704a4.svg",
+    "static/media/avatar.dea10c62.svg": "https://sales.zuri.chat/static/media/avatar.dea10c62.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.5ae4981a.js",
-    "static/js/2.4d836d36.chunk.js",
-    "static/css/main.b4bbd2df.chunk.css",
-    "static/js/main.78784983.chunk.js"
+    "static/js/runtime-main.d809e828.js",
+    "static/js/2.ed9cee76.chunk.js",
+    "static/css/main.09824b89.chunk.css",
+    "static/js/main.810baf20.chunk.js"
   ]
 }
