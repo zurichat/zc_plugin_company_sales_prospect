@@ -72,10 +72,6 @@ right: 3%;
 top: 4%;
 }
 
-.input{
-
-}
-
 .button-box {
   width: 300px;
   display: flex;
@@ -86,6 +82,8 @@ top: 4%;
 button{
   outline-style: none;
   border:1px solid;
+  width:374px;
+  height:54px;
 }
 
 button:hover{
@@ -93,6 +91,8 @@ button:hover{
 }
 
 input, select{
+  width:374px;
+  height:54px;
   outline-style: none;
   border: 1px solid #1a1a1a;
 }
@@ -117,7 +117,7 @@ input{
 #loader{
   display:block;
   margin: auto;
-  margin-top: 40vh;
+  margin-top: 30vh;
   margin-bottom: 50px;
   width:100px;
   height:100px;

@@ -8,7 +8,7 @@ export default function Select({title, label, children}) {
                {label}
             </label>
     
-            <select className=" w-full rounded-sm  h-10 px-5">
+            <select className="rounded-sm px-5">
                 {children}
             </select>
         </div>
