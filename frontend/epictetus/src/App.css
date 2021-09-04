@@ -14,6 +14,12 @@ table{
 .modal {
   background-color: rgba(0, 0, 0, 0.4);
 }
+
+.modal input, select {
+  width: 100%;
+}
+
+
 .btn {
   border: 1px solid #2F80ED;
   border-radius: 3px;
