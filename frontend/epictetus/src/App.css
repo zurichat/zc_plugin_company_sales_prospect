@@ -34,8 +34,6 @@ table{
 button{
   outline-style: none;
   border:1px solid;
-  width:374px;
-  height:54px;
 }
 
 button:hover{
@@ -43,14 +41,8 @@ button:hover{
 }
 
 input, select{
-  width:374px;
-  height:54px;
   outline-style: none;
   border: 1px solid #1a1a1a;
-}
-
-input{
-  width:90% ;
 }
 
 .homeCard{
@@ -69,8 +61,8 @@ input{
 #loader{
   display:block;
   margin: auto;
-  margin-top: 30vh;
-  margin-bottom: 50px;
+  margin-top: 20vh;
+  margin-bottom: 70px;
   width:100px;
   height:100px;
 }
@@ -80,9 +72,6 @@ input{
 }
 
 @media only screen and (max-width: 600px) {
-  input{
-    width:85% ;
-  }
 
   #role{
     display: block;

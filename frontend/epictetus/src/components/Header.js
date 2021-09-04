@@ -1,4 +1,4 @@
-
+import '../App.css';
 import avatar from "../avatar.svg";
 export default function Header() {
   return (
