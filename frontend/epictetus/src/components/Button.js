@@ -1,9 +1,9 @@
 import React from 'react'
 
-function Button({children}) {
+function Button({children, onClick}) {
     return (
         <div>
-            <button className="bg-primary text-white outline-none border-0 py-2 px-4 rounded-sm">
+            <button onClick={onClick} className="bg-primary text-white outline-none border-0 py-2 px-4 rounded-sm">
             {children}
             </button>
         </div>

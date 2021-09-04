@@ -59,9 +59,9 @@ export default function Home() {
                         <option>Others</option>
                     </Select>
 
-                    <button className="hidden w-full bg-green-400 p-3 text-white rounded-sm border-green-400 md:block" onClick={showPageTwo}>Continue</button>
+                    <button className="hidden w-full bg-primary p-3 text-white rounded-sm border-primary md:block" onClick={showPageTwo}>Continue</button>
 
-                    <button className=" block w-full bg-green-400 p-3 text-white rounded-sm border-green-400 md:hidden" onClick={handleClick}>Setup</button>
+                    <button className=" block w-full bg-primary p-3 text-white rounded-sm border-primary md:hidden" onClick={handleClick}>Setup</button>
                 </div>
             </form>)
             :
