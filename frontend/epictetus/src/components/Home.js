@@ -104,6 +104,7 @@ export default function Home() {
                         text="Others"
                         handleClick={handleClick}
                     />
+                    <div className="homeCard invisible"></div>
                 </div>
 
             </div>)

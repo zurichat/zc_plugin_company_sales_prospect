@@ -2,8 +2,8 @@ import './App.css';
 import Test from './components/Test';
 import Home from './components/Home';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import CreateDealForm from './components/CreateDealForm';
-import EditProspectSales from './components/EditProspectSales';
+//import CreateDealForm from './components/CreateDealForm';
+//import EditProspectSales from './components/EditProspectSales';
 import Prospects from './containers/Prospects';
 
 function App() {
