@@ -7,12 +7,14 @@ import CreateDealForm from "./components/CreateDealForm";
 import EditProspectSales from "./components/EditProspectSales";
 import Prospects from "./containers/Prospects";
 import DealCard from "./components/svg/DealCard/DealCard";
+import Header from "./components/Header";
 
 function App() {
   return (
     <Router>
       <div className="App font-lato">
         {/* lato font class added */}
+        <Header />
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/prospects" component={Prospects} />
