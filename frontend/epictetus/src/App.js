@@ -1,6 +1,6 @@
 
 import "./App.css";
-import Test, {DragDrop} from “components/Test”;
+import Test, {DragDrop} from “./components/Test”;
 import Home from "./components/Home";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import CreateDealForm from "./components/CreateDealForm";
