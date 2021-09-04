@@ -1,10 +1,11 @@
 **/.vscode/
 .env
-".DS_Store"
-venv
+.DS_Store
+db.sqlite3
 __pycache__
 prospectapp/__pycache__
 venv/
 "db.sqlite3"
 venv
+env
 duovenv/
