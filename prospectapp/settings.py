@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     #third party apps
-    'rest_framework',
+    'rest_framework',    
+    'drf_spectacular',
     #local apps
     "deals",
     "prospect",
@@ -54,6 +55,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+REST_FRAMEWORK = {'DEFAULT_SCHEMA_CLASS':'rest_framework.schemas.coreapi.AutoSchema' }
+
 ROOT_URLCONF = 'prospectapp.urls'
 
 TEMPLATES = [
@@ -68,6 +71,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries': {  
+                'staticfiles': 'django.templatetags.static',
+            },
         },
     },
 ]
@@ -126,4 +132,26 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR,'frontend/epictetus/build/static')
-] 
+]
+
+
+############### plugin details #######################
+PLUGIN_ID = "000000000000000000000000"
+PLUGIN_NAME = "sale prospect plugin"
+ORGANIZATION_ID = "612a3a914acf115e685df8e3"
+
+#email config
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' 
+EMAIL_HOST_USER = 'support@test.com'
+
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+# API DOCS SETTINGS
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'SalesProspects API',
+    'DESCRIPTION': 'SalesProspects Backend',
+    'VERSION': '1.0.0',
+    'SCHEMA_PATH_PREFIX': '/api',
+}
