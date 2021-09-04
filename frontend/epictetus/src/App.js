@@ -3,11 +3,12 @@ import "./App.css";
 import Test, {DragDrop} from "./components/Test";
 import Home from "./components/Home";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import CreateDealForm from "./components/CreateDealForm";
+// import CreateDealForm from "./components/CreateDealForm";
 import EditProspectSales from "./components/EditProspectSales";
 import Prospects from "./containers/Prospects";
 import DealCard from "./components/svg/DealCard/DealCard";
 import Header from "./components/Header";
+import NoDealFound from "./components/NoDealFound";
 
 function App() {
   return (
@@ -21,7 +22,7 @@ function App() {
           <Route exact path="/Editprospectsales" component={EditProspectSales} />
           <Route exact path="/test" component={Test} />
           <Route exact path="/DragDrop" component={DragDrop} />
-          <Route exact path="/DealsForm" component={CreateDealForm} />
+          {/* <Route exact path="/DealsForm" component={CreateDealForm} /> */}
           <Route
             exact
             path="/deals"
@@ -35,6 +36,7 @@ function App() {
               />
             )}
           />
+            <Route exact path="/NoDealFound" component={NoDealFound} />
         </Switch>
       </div>
     </Router>
