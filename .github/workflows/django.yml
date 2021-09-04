@@ -22,13 +22,15 @@ jobs:
         script: |
           cd /var/www/zc_plugin_company_sales_prospect
           git checkout dev
-          git pull
+          git pull origin dev
           pip install -r requirements.txt
-          #cd frontend/epictetus
-          #yarn install
-          #yarn run build
-          #python manage.py migrate
-          #python manage.py runserver
+          cd frontend/epictetus
+          yarn install
+          yarn  build
+          cd /var/www/zc_plugin_company_sales_prospect
+          python manage.py collectstatic --no-input
+          python manage.py migrate
+          python manage.py runserver
           #- name: Run Tests
           #run: |
           #python manage.py test
