@@ -40,5 +40,5 @@ At this point, your react application has been integrated with your backend to f
 
 All API endpoints must end with a  `/` (e.g `/prospects/` unless they'll be pointing to the frontend 's react routing). <br/>
 
-The link to the documenation of APIs can be found in `https://sales.zuri.chat/swagger_docs/`
+The link to the documenation of APIs can be found in https://sales.zuri.chat/swagger_docs/
 
