@@ -63,7 +63,7 @@ export default function CreateProspectModal({open=false, closeModal}) {
                     </div>
                     <div>
                     <Select title="stage" label="Deal stage">
-                        <option>Select a stage</option>
+                        <option disabled selected>Select a stage</option>
                         <option>Active</option>
                         <option>Closed</option>
                         <option>Negotiation</option>

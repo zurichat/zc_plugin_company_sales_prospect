@@ -2,14 +2,15 @@ import React from "react";
 import Cancel from "./svg/Cancel";
 import "../App.css";
 
-const EditProspectSales = () => {
+const EditProspectSales = ({openEdit=false, handleClick}) => {
+
 	return (
-		<div className=" fixed inset-0 modal">
+		<div className={`fixed inset-0 modal ${openEdit ? 'hidden' : ''}`}>
 			<div className="flex justify-center items-center h-screen">
 				<div className="w-2/6 h-5/6 bg-white rounded-sm shadow-md flex flex-col px-6 py-5">
 					<div className="flex justify-between items-center h-12">
 						<h1 className="font-bold text-black text-2xl">Edit Deal</h1>
-						<Cancel />
+						<Cancel onClick={handleClick}/>
 					</div>
 					<h5 className="text-base my-4 font-medium text-gray-500">
 						Edit deal information
