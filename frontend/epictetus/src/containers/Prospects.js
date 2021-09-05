@@ -18,12 +18,14 @@ function Prospects() {
     const [open, setOpen] = useState(false)
     const handleOpenModal = () => setOpen(true)
     const handleCloseModal = () => setOpen(false)
+    
+
     return (
         <div className="p-10">
             <Button onClick={handleOpenModal}>Create Prospect</Button>
             <CreateProspectModal open={open} closeModal={handleCloseModal}/>
             <div className="py-2">
-                <ProspectsTable people={people} />
+                <ProspectsTable people={people}/>
                 <ul className="flex list-none justify-end mt-5">
                     <li className="py-2 px-3">{"<"}</li>
                     <li className="py-2 px-3">Prev</li>
