@@ -8,6 +8,7 @@ import Prospects from "./containers/Prospects";
 import DealCard from "./components/svg/DealCard/DealCard";
 import Header from "./components/Header";
 import DeleteProspect from "./components/DeleteProspect";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 function App() {
     return ( 
