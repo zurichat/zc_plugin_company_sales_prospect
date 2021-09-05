@@ -128,23 +128,30 @@ class DealsDetailView(APIView):
         return Response(data={"message":"Try again later"}, status=st.HTTP_500_INTERNAL_SERVER_ERROR)
 
 # Added deleted view
+class DealsDeleteView(APIView):
+    """
+    An endpoint to delete a deal.
+    The endpoint is https://sales.zuri.chat/deals/delete/<str:id>/
+    """
+    serializer_class = DealSerializer
+    queryset = None
 
-def delete_deal(request,id):
-    url = "https://zccore.herokuapp.com/read/delete/id"
+    def delete_deal(self, request, *args, **kwargs):
+        url = "https://zccore.herokuapp.com/read/delete/id"
 
-    data = {
-                "plugin_id": "000000000000000000000000",
-                "organization_id": "612a3a914acf115e685df8e3",
-                "collection_name": "prospects",
-                "bulk_write": False,
-                "object_id": 'data.get("_id")',
-                "payload": 'data'
-            }
+        data = {
+                    "plugin_id": "000000000000000000000000",
+                    "organization_id": "612a3a914acf115e685df8e3",
+                    "collection_name": "prospects",
+                    "bulk_write": False,
+                    "object_id": 'data.get("_id")',
+                    "payload": 'data'
+                }
 
-    working =True
-    if working:
-        return JsonResponse(data={
-                'Message': 'This deal has been successfully deleted',
-                
-            })
+        working =True
+        if working:
+            return JsonResponse(data={
+                    'Message': 'This deal has been successfully deleted',
+                    
+                })
 
