@@ -14,8 +14,10 @@ import CheckBox from "./CheckBox";
 
 import { FaUserTie } from "react-icons/fa";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import ProspectsOptions from "./ProspectsOptions";
 
 export default function Test() {
+  
   return (
     <>
       <h2 className="text-4xl font-bold pb-10 m-10">
@@ -35,8 +37,10 @@ export default function Test() {
       </div>
       <h2 className="text-4xl font-bold pb-10 m-10">Custom Buttons</h2>
       <div className="button-box">
-        <CustomButton value="custom1" />
-        <CustomButton value="custom2" />
+        <CustomButton value="custom1"  />
+        <CustomButton value="custom2" />  
+             
+       <div className="bg-red-400"><ProspectsOptions /></div> 
       </div>
 
         <div className="button-box text-center">

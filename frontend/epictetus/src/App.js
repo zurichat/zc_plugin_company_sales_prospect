@@ -7,7 +7,7 @@ import EditProspectSales from "./components/EditProspectSales";
 import Prospects from "./containers/Prospects";
 import DealCard from "./components/svg/DealCard/DealCard";
 import Header from "./components/Header";
-import NoDealFound from "./components/NoDealFound";
+import NoProspectsFound from './components/NoProspectsFound';
 
 
 function App() {
@@ -35,7 +35,7 @@ function App() {
                       )
                       }
                   /> 
-                <Route exact path = "/NoDealFound" component = { NoDealFound }/>
+                <Route exact path = "/NoProspectsFound" component = { NoProspectsFound }/>
               </Switch>
                
         </div> 
