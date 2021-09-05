@@ -30,7 +30,7 @@ export default function Home() {
         </div>) :
         (<div>
             { pageOne ? 
-            (<form className="flex flex-col w-6/7 mx-auto md:w-1/3 p-5 my-12 ">
+            (<form className="flex flex-col w-6/7 mx-auto md:w-1/3 p-5 mt-8 ">
                 <h2 className="font-medium text-2xl text-black-500 text-center" >Lets Personalize your Experience!</h2><br/>
                 <p className="text-base text-gray-400 text-center">Start by setting up your company’s personal details on Zuri Sales Prospect Plugin</p><br/>
                 
@@ -59,13 +59,13 @@ export default function Home() {
                         <option>Others</option>
                     </Select>
 
-                    <button className="hidden w-full bg-green-400 p-3 text-white rounded-sm border-green-400 md:block" onClick={showPageTwo}>Continue</button>
+                    <button className="hidden w-full bg-primary p-3 text-white rounded-sm border-green-400 md:block hover:bg-green-300" onClick={showPageTwo}>Continue</button>
 
-                    <button className=" block w-full bg-green-400 p-3 text-white rounded-sm border-green-400 md:hidden" onClick={handleClick}>Setup</button>
+                    <button className=" block w-full bg-primary p-3 text-white rounded-sm border-green-400 md:hidden  hover:bg-green-300" onClick={handleClick}>Setup</button>
                 </div>
             </form>)
             :
-            (<div className="md:flex flex-col w-4/5 mx-auto p-5 my-12 hidden">
+            (<div className="md:flex flex-col w-4/5 mx-auto p-5 mt-8 hidden">
                 <h2 className="font-medium text-2xl text-black-500 text-center" >What do you do at Zuri?</h2><br/>
                 <p className="text-base text-gray-400 text-center">We will use this to personalize your Sales Prospect experience</p><br/>
                 <div className="flex flex-row flex-wrap justify-around content-start w-6/7">

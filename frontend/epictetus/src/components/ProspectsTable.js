@@ -2,6 +2,7 @@ import React from 'react'
 import ProspectRow from './ProspectRow'
 
 function ProspectsTable() {
+    
     return (
         <div className="shadow-xl rounded-md bg-primary">
             <table className="min-w-full text-center border-gray-100">
@@ -29,7 +30,7 @@ function ProspectsTable() {
                     </tr>
                 </thead>
 
-                <tbody className="bg-white">
+                <tbody className="bg-white divide-y divide-gray-300">
                     {Array(10).fill(null).map(() => (
                         <ProspectRow />
                     ))}
