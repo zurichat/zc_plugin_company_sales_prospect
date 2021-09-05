@@ -8,6 +8,9 @@ import Prospects from "./containers/Prospects";
 import DealCard from "./components/svg/DealCard/DealCard";
 import Header from "./components/Header";
 import NoProspectsFound from './components/NoProspectsFound';
+import DeleteProspect from "./components/DeleteProspect";
+//import { DragDrop } from "./components/Test";
+//import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 
 function App() {
@@ -36,11 +39,13 @@ function App() {
                       }
                   /> 
                 <Route exact path = "/NoProspectsFound" component = { NoProspectsFound }/>
+                <Route exact path = "/DeleteProspect" component = { DeleteProspect }/>
               </Switch>
                
         </div> 
         </ Router >
     );
+
 }
 
 export default App
