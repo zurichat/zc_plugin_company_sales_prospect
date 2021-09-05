@@ -8,6 +8,7 @@ import Prospects from "./containers/Prospects";
 import DealCard from "./components/svg/DealCard/DealCard";
 import Header from "./components/Header";
 import NoDealFound from "./components/NoDealFound";
+import DeleteDeal from "./components/DeleteDeal";
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
                   <   Route exact path = "/test"   component = { Test }    />
                   <   Route exact path = "/DragDrop"  component = { DragDrop }    /> 
                  <  Route exact path = "/DealsForm"   component = { CreateDealForm } />
+                 <Route exact path = "/DeleteDeal"component = {DeleteDeal} />
                  <   Route exact path = "/deals"
                   render = {
                       (props) => ( <

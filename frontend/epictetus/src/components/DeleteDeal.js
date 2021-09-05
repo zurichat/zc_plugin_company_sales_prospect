@@ -1,13 +1,14 @@
 import React from 'react'
 import { confirmAlert } from 'react-confirm-alert'; // Import
-import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+import DeleteDealForm from './DeleteDealForm';
+
 
 function App() {
 
   const submit = () => {
 
-    confirmAlert({
-      title: 'Delete  Deaal',
+    confirmAlert ({
+      title: 'Delete  Deal',
       message: 'This Deal will be Deleted. this action cannot be undone.',
       buttons: [
         {
@@ -25,8 +26,10 @@ function App() {
   return (
       <div className='container'>
         <button onClick={submit}>Delete Deal</button>
+        <DeleteDealForm/>
       </div>
   );
+  
 
 }
 
