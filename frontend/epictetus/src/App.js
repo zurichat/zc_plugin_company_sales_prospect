@@ -7,7 +7,7 @@ import EditProspectSales from "./components/EditProspectSales";
 import Prospects from "./containers/Prospects";
 import DealCard from "./components/svg/DealCard/DealCard";
 import Header from "./components/Header";
-
+import DeleteProspect from "./components/DeleteProspect";
 
 function App() {
     return ( <
@@ -48,7 +48,9 @@ function App() {
             )
         }
         /> < /
-        Switch > <
+        Switch >
+        <DeleteProspect/>
+        <
         /div> < /
         Router >
     );
