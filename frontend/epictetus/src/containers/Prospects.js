@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Button from '../components/Button'
+import EditProspectModal from '../components/EditModal'
 import CreateProspectModal from '../components/Modal'
 import ProspectsTable from '../components/ProspectsTable'
 
@@ -18,14 +19,19 @@ function Prospects() {
     const [open, setOpen] = useState(false)
     const handleOpenModal = () => setOpen(true)
     const handleCloseModal = () => setOpen(false)
+
+    const [open2, setOpen2] = useState(false)
+    const handleOpenModal2 = () => setOpen2(true)
+    const handleCloseModal2 = () => setOpen2(false)
     
 
     return (
         <div className="p-10">
             <Button onClick={handleOpenModal}>Create Prospect</Button>
             <CreateProspectModal open={open} closeModal={handleCloseModal}/>
+            <EditProspectModal  open={open2} closeModal ={handleCloseModal2}/>
             <div className="py-2">
-                <ProspectsTable people={people}/>
+                <ProspectsTable people={people} setOpen={handleOpenModal2}/>
                 <ul className="flex list-none justify-end mt-5">
                     <li className="py-2 px-3">{"<"}</li>
                     <li className="py-2 px-3">Prev</li>
