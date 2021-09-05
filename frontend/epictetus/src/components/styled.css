@@ -1,0 +1,25 @@
+table {
+    padding: 10px;
+    margin-top: 20px;
+    border-left: 1px solid grey;
+    border-right: 1px solid grey;
+    margin-left: 20px;
+
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+}
+
+thead {
+    border: 1px solid grey;
+    background-color: rgb(233, 227, 227, 0.3);
+    color: black;
+    
+}
+
+th {
+    border-left: 1px solid grey;
+    
+}

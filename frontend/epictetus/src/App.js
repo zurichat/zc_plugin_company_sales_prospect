@@ -9,6 +9,7 @@ import DealCard from "./components/svg/DealCard/DealCard";
 import Header from "./components/Header";
 import NoProspectsFound from './components/NoProspectsFound';
 import DeleteProspect from "./components/DeleteProspect";
+import DealTable from "./components/DealTable";
 
 
 function App() {
@@ -37,6 +38,17 @@ function App() {
           />
           <Route exact path="/NoProspectsFound" component={NoProspectsFound} />
           <Route exact path="/DeleteProspect" component={DeleteProspect} />
+          <Route exact path="/DealTable" component={DealTable} 
+            render={(props) => (
+                <DealCard
+                  dealName="Jane's deal"
+                  companyName="NNPC"
+                  dealWorth="500,000"
+                  customerEmail="janecooper@nnpc.com"
+                  customerFullName="Jane Cooper"
+                />
+              )} 
+              /> 
         </Switch>
 
       </div>
