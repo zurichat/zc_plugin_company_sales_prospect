@@ -7,7 +7,7 @@ export default function Input({title, label, placeholder}) {
             <label className=" mb-2 block font-normal text-base" for={title}>
                {label}
             </label>
-            <input className="rounded-sm h-10 px-5" id={title} type="text" placeholder={placeholder}/>
+            <input className="rounded-sm h-12  w-full px-5" id={title} type="text" placeholder={placeholder}/>
         </div>
     )
 }
