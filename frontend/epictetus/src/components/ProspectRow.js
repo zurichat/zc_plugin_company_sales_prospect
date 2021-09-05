@@ -1,9 +1,11 @@
 import React from 'react'
+import ProspectsOptions from './ProspectsOptions'
 import StagePill from './StagePill'
 
 function ProspectRow() {
+
     return (
-        <tr>
+        <tr className="hover:bg-gray-100 cursor-pointer ">
             <td className="px-3 py-4 text-sm text-gray-900">
                 <input type="checkbox" name="" id="" />
             </td>
@@ -23,8 +25,9 @@ function ProspectRow() {
             </td>
 
             <td className="px-3 py-4 text-sm font-medium">
-                <b>:</b>
+                <b><ProspectsOptions/></b>
             </td>
+            
         </tr>
     )
 }
