@@ -38,7 +38,7 @@ python manage.py runserver
 ```
 At this point, your react application has been integrated with your backend to form a fullstack application.
 
-All API endpoints must end with a  `/` (e.g `/propscts/` unless they'll be pointing to the frontend 's react routing). <br/>
+All API endpoints must end with a  `/` (e.g `/prospects/` unless they'll be pointing to the frontend 's react routing). <br/>
 
-The link to the documenation of APIs can be found in `http://localhost:8200/swagger_docs/`
+The link to the documenation of APIs can be found in `http://sales.zuri.chat/swagger_docs/`
 
