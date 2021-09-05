@@ -1,7 +1,7 @@
 import React from 'react'
 import ProspectRow from './ProspectRow'
 
-function ProspectsTable() {
+function ProspectsTable({setOpen}) {
     
     return (
         <div className="shadow-xl rounded-md bg-primary">
@@ -32,7 +32,7 @@ function ProspectsTable() {
 
                 <tbody className="bg-white divide-y divide-gray-300">
                     {Array(10).fill(null).map(() => (
-                        <ProspectRow />
+                        <ProspectRow  setOpen={setOpen}/>
                     ))}
                 </tbody>
             </table>

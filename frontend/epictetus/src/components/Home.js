@@ -12,7 +12,8 @@ import Others from './svg/Watermelon_Flatline.svg';
 import Supervisor from './svg/Startup_Flatline.svg';
 import Loader from './svg/Loader.svg';
 
-export default function Home() {
+function Home(props) {
+    console.log(props)
     const [pageOne, setpageOne] = useState(true)
     const [showLoader, setshowLoader] = useState(false)
     const showPageTwo = ()=> {
@@ -20,6 +21,9 @@ export default function Home() {
     }
     const handleClick=()=>{
         setshowLoader(true)
+        setTimeout(() => {
+            props.history.push("/NoProspectsFound")
+        }, 3000);
     }
     return (
         showLoader ? 
@@ -113,3 +117,5 @@ export default function Home() {
         </div>)
     )
 }
+
+export default (Home)

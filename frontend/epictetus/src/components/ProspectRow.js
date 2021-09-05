@@ -2,7 +2,7 @@ import React from 'react'
 import ProspectsOptions from './ProspectsOptions'
 import StagePill from './StagePill'
 
-function ProspectRow() {
+function ProspectRow({setOpen}) {
 
     return (
         <tr className="hover:bg-gray-100 cursor-pointer ">
@@ -25,7 +25,7 @@ function ProspectRow() {
             </td>
 
             <td className="px-3 py-4 text-sm font-medium">
-                <b><ProspectsOptions/></b>
+                <b><ProspectsOptions setOpen={setOpen}/></b>
             </td>
             
         </tr>
