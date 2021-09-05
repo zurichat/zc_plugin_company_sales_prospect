@@ -35,7 +35,7 @@ function App() {
                       )
                       }
                   /> 
-                <Route exact path = "/NoFoundDeal" component = { NoDealFound }/>
+                <Route exact path = "/NoDealFound" component = { NoDealFound }/>
               </Switch>
                
         </div> 
