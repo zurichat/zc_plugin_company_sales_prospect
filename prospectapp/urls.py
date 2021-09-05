@@ -14,15 +14,26 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include, re_path
 from django.views.generic import TemplateView
+from prospect.views import plugin_registration
 
 from .sidebar.views import *
 from .info import views
+from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("",TemplateView.as_view(template_name='index.html')),
     path("sidebar/", sidebar),
-    path('api/info', views.info)
+    path('api/info', views.info),
+    path('prospects/', include('prospect.urls')),
+    path('register/', plugin_registration, name='register'),
+    path("deals/", include("deals.urls")),
+
+    # DOCUMENTATION
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('swagger_docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    path('redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
 ]
+urlpatterns += [re_path(r'^.*', TemplateView.as_view(template_name='index.html'))]
+

@@ -1,7 +1,133 @@
 .app{
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
   margin-top: 200px ;
 }
+
+table{
+  border-collapse: collapse;
+}
+
+.modal {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.btn {
+  border: 1px solid #2F80ED;
+  border-radius: 3px;
+  text-align: center;
+  background-color: #fff;
+  padding: 10px 12px;
+  color: #2F80ED;
+  max-width: 100px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.header{
+  display: flex;
+  justify-content: space-between;
+}
+
+h1{
+  position: absolute;
+  left: 5%;
+  top: 5%;
+font-family: Lato;
+font-style: normal;
+font-weight: 900;
+font-size: 25px;
+line-height: 30px;
+color: #393939;
+
+}
+
+.search{
+  flex: 0 0 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 15%;
+  margin-top: 3%;
+}
+
+.search input{
+  border-radius: 4px;
+  border: 1px solid #A1A1A1;
+box-sizing: border-box;
+}
+
+.avatar{
+  position: absolute;
+left: 93.32%;
+right: 3%;
+top: 4%;
+}
+
+.input{
+
+}
+
+.button-box {
+  width: 300px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-top: 5vh;
+}
+button{
+  outline-style: none;
+  border:1px solid;
+}
+
+button:hover{
+  cursor: pointer;
+}
+
+input, select{
+  outline-style: none;
+  border: 1px solid #1a1a1a;
+}
+
+input{
+  width:90% ;
+}
+
+.homeCard{
+  min-width:187px;
+   min-height:141px;
+   border: 1px solid #a1a1a1;
+   margin: 20px;
+  border-radius: 5px;
+}
+
+.homeCard:hover{
+  background-color: #F7FFFC;
+  cursor:pointer;
+}
+
+#loader{
+  display:block;
+  margin: auto;
+  margin-top: 40vh;
+  margin-bottom: 50px;
+  width:100px;
+  height:100px;
+}
+
+#role{
+  display: none;
+}
+
+@media only screen and (max-width: 600px) {
+  input{
+    width:85% ;
+  }
+
+  #role{
+    display: block;
+  }
+}
+

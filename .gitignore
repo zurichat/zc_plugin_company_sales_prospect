@@ -1,11 +1,10 @@
 **/.vscode/
 .env
-.DS_Store
-db.sqlite3
-__pycache__
-prospectapp/__pycache__
-venv/
-"db.sqlite3"
-venv
 env
+.DS_Store
+__pycache__/
+venv/
+db.sqlite3
 duovenv/
+Pipenv.lock
+
