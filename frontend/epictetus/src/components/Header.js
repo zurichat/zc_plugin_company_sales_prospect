@@ -8,7 +8,7 @@ export default function Header() {
       </div>
 
       <div className="flex justify-between">
-        <input type="text" className="border-gray-400 mr-4 p-3 hidden sm:block sm:w-96" placeholder="Search ZURI" />
+        <input type="text" className="border border-gray-300 rounded-md outline-none mr-4 p-3 hidden sm:block sm:w-96" placeholder="Search ZURI" />
         <img src={avatar} alt="avatar" />
       </div>
 

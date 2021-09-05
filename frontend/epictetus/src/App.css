@@ -10,6 +10,15 @@ table{
   width: 100%;
 }
 
+.h-screen2{
+  height: 60vh;
+}
+
+.deals-grid{
+  width: 100%;
+  overflow-x: auto;
+  z-index: 200;
+}
 
 .btn {
   border: 1px solid #2F80ED;
@@ -40,10 +49,6 @@ button:hover{
   cursor: pointer;
 }
 
-input, select{
-  outline-style: none;
-  border: 1px solid #1a1a1a;
-}
 
 .homeCard{
   min-width:187px;
