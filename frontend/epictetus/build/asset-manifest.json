@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "https://sales.zuri.chat/static/css/main.902aea81.chunk.css",
-    "main.js": "https://sales.zuri.chat/static/js/main.8700da7e.chunk.js",
-    "main.js.map": "https://sales.zuri.chat/static/js/main.8700da7e.chunk.js.map",
+    "main.js": "https://sales.zuri.chat/static/js/main.32c90a6f.chunk.js",
+    "main.js.map": "https://sales.zuri.chat/static/js/main.32c90a6f.chunk.js.map",
     "runtime-main.js": "https://sales.zuri.chat/static/js/runtime-main.80307ddb.js",
     "runtime-main.js.map": "https://sales.zuri.chat/static/js/runtime-main.80307ddb.js.map",
     "static/js/2.201a86fc.chunk.js": "https://sales.zuri.chat/static/js/2.201a86fc.chunk.js",
@@ -26,6 +26,6 @@
     "static/js/runtime-main.80307ddb.js",
     "static/js/2.201a86fc.chunk.js",
     "static/css/main.902aea81.chunk.css",
-    "static/js/main.8700da7e.chunk.js"
+    "static/js/main.32c90a6f.chunk.js"
   ]
 }
