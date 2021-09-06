@@ -40,6 +40,7 @@ urlpatterns = [
     path('api/v1/add-to-room/', AddUserToRoom.as_view()),
     path('api/v1/rooms/', RoomsListView.as_view()),
     path('api/v1/leave-room/', RemoveUserFromRoom.as_view()),
+    path("deals/", include("deals.urls")),
 
     # DOCUMENTATION
     # path('api/v1/schema/', SpectacularAPIView.as_view(), name='schema'),
