@@ -37,30 +37,3 @@ class Prospect(models.Model):
         """Unicode representation of Prospect."""
         pass
 
-position_choices = (
-    ("executive", "Executive"),
-    ("sale man", "Sales Man"),
-    ("sales woman", "Sales Woman"),
-    ("founder", "Founder"),
-    ("manager", "Manager"),
-    ("supervisor", "Supervisor"),
-)
-sector_choices =(
-    ("technology", "Technology"),
-    ("education", "Education"),
-    ("engineering", "Engineering"),
-    ("art","Art"),
-    ("business", "Business"),
-    ("real estate", "Real Estate")
-)
-class Onboarding(models.Model):
-    """"Model definition for Onboarding"""
-    company = models.CharField(max_length=50)
-    sector = models.CharField( max_length = 100, choices = sector_choices, default= 'select sector')
-    position = models.CharField(max_length = 100, choices= position_choices, default= 'select position')
-
-    class Meta:
-        """Meta definition for Prospect."""
-
-        verbose_name = 'Prospect'
-        verbose_name_plural = 'Prospects'

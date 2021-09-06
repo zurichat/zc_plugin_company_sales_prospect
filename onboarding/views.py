@@ -30,8 +30,6 @@ class OnboardingCreateView(APIView):
         
         response = requests.request("POST", url,data=json.dumps(data))
         r = response.json()
-        print(response.status_code)
-        print(r)
         if response.status_code == 201:
             return Response(data={'message':'successful'}, status=status.HTTP_201_CREATED)
         return Response(data={"message":"Try again later"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

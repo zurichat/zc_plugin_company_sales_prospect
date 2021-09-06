@@ -1,4 +1,3 @@
-from prospect.models import Onboarding
 from django.urls import path
 from .views import ProspectsDetailView, ProspectsUpdateView, SearchProspects,ProspectsCreateView,welcome,ProspectsListView
 
