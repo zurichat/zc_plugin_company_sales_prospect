@@ -6,4 +6,4 @@ venv/
 db.sqlite3
 duovenv/
 Pipenv.lock
-
+frontend/epictetus/build/
