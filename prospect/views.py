@@ -1,4 +1,3 @@
-from django.db.models.query import QuerySet
 from rest_framework import generics
 from django.http import JsonResponse
 from django.conf import settings
@@ -15,8 +14,6 @@ from django.core.mail import send_mail
 
 from django.http import HttpResponse
 import requests
-
-from prospect import serializers
 
 
 # Create your views here.
@@ -178,7 +175,7 @@ class ProspectsUpdateView(APIView):
         data = {
                 "plugin_id": "000000000000000000000000",
                 "organization_id": "612a3a914acf115e685df8e3",
-                "collection_name": "prospect",
+                "collection_name": "prospects",
                 "bulk_write": False,
                 "object_id":serializer.data.get("_id"),
                 "payload": serializer.data
