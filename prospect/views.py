@@ -17,9 +17,6 @@ from django.core.mail import send_mail
 from django.http import HttpResponse
 import requests
 
-from rest_framework import serializers as sz
-from prospect import serializers
-
 
 # Create your views here.
 
