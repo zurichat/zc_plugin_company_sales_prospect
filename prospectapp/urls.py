@@ -29,6 +29,8 @@ urlpatterns = [
     path('prospects/', include('prospect.urls')),
     path('register/', plugin_registration, name='register'),
     path("deals/", include("deals.urls")),
+    path('api-auth/', include('rest_framework.urls')),
+    path('onboarding/', include('onboarding.urls')),
 
     # DOCUMENTATION
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
