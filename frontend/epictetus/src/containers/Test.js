@@ -1,61 +1,6 @@
 import React, { useState } from "react";
-import ChevronDown from "./svg/ChevronDown";
-import ChevronLeft from "./svg/ChevronLeft";
-import ChevronRight from "./svg/ChevronRight";
-import ChevronUp from "./svg/ChevronUp";
-import DotIcon from "./svg/DotIcon";
-import FilterIcon from "./svg/FilterIcon";
-import SearchIcon from "./svg/SearchIcon";
-import SettingsIcon from "./svg/SettingsIcon";
-import CustomButton from "./CustomButton";
-import CreateDealForm from "./CreateDealForm";
-import Input from "./input";
-import CheckBox from "./CheckBox";
-
-import { FaUserTie } from "react-icons/fa";
+import { User } from "react-feather";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import ProspectsOptions from "./ProspectsOptions";
-
-export default function Test() {
-  
-  return (
-    <>
-      <h2 className="text-4xl font-bold pb-10 m-10">
-        Svg Icons exported from figma
-      </h2>
-      <div className="bg-green-400 h-48 border-8 border-gray-700"></div>
-      <input type="text" name="" id="" />
-      <div className="flex justify-around ...">
-        <ChevronDown />
-        <ChevronUp />
-        <ChevronRight />
-        <ChevronLeft />
-        <DotIcon color="#7F7A00" />
-        <FilterIcon />
-        <SearchIcon />
-        <SettingsIcon />
-      </div>
-      <h2 className="text-4xl font-bold pb-10 m-10">Custom Buttons</h2>
-      <div className="button-box">
-        <CustomButton value="custom1"  />
-        <CustomButton value="custom2" />  
-             
-       <div className="bg-red-400"><ProspectsOptions /></div> 
-      </div>
-
-        <div className="button-box text-center">
-        <CheckBox name="checkbox" label="my checkbox"/>
-    
-        </div>
-
-      <div>
-        <CreateDealForm />
-      </div>
-
-      <Input title="name" label="Name" placeholder="enter your name" />
-    </>
-  );
-}
 
 const droperItems = [
   {
@@ -63,7 +8,7 @@ const droperItems = [
     title: "Alberts deal",
     name: "Albert Mae",
     desc: "The deal was closed on the bases of completion",
-    image: { FaUserTie },
+    image: { User },
     email: "aaaaaaaa@slotmail.za",
   },
   {
@@ -100,14 +45,13 @@ const droperItems = [
   },
 ];
 
-export const DragDrop = () => {
+export default function Test() {
   const [characters, updateCharacters] = useState(droperItems);
 
   function handleOnDragEnd(result) {
     const items = Array.from(characters);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
-
     updateCharacters(items);
   }
 
@@ -140,7 +84,7 @@ export const DragDrop = () => {
                           <p>Paid: NGN5,000,000</p>
                           <p className="font-medium text-base">{email}</p>
                           <div className="flex flex-col items-end">
-                            <FaUserTie className=" from-green-500 text-2xl" />
+                            <User className=" from-green-500 text-2xl" />
                             <p className="font-medium text-base">{name}</p>
                           </div>
                         </div>
