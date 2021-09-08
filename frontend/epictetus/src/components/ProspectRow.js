@@ -2,32 +2,31 @@ import React from 'react'
 import ProspectsOptions from './ProspectsOptions'
 import StagePill from './StagePill'
 
-function ProspectRow({setOpen}) {
+function ProspectRow({ openEditModal, openDeleteModal, prospect }) {
 
     return (
-        <tr className="hover:bg-gray-100 cursor-pointer ">
-            <td className="px-3 py-4 text-sm text-gray-900">
+        <tr className="hover:bg-gray-100 cursor-pointer">
+            <td className="px-3 text-sm text-gray-900">
                 <input type="checkbox" name="" id="" />
             </td>
-            <td className="px-3 py-4 text-sm font-medium text-gray-900">
-                Jane Cooper
+            <td className="px-3 text-sm font-medium text-gray-900">
+                {prospect.name}
             </td>
 
-            <td className="px-3 py-4 text-sm text-gray-900">
-                jane.cooper@example.com
+            <td className="px-3 text-sm text-gray-900">
+                {prospect.email}
             </td>
-            <td className="px-3 py-4 text-sm text-gray-900">
-                09093527277
-            </td>
-
-            <td className="px-3 py-4">
-                <StagePill>Active</StagePill>
+            <td className="px-3 text-sm text-gray-900">
+                {prospect.phone}
             </td>
 
-            <td className="px-3 py-4 text-sm font-medium">
-                <b><ProspectsOptions setOpen={setOpen}/></b>
+            <td className="px-3">
+                <StagePill>{prospect.status}</StagePill>
             </td>
-            
+
+            <td className="px-3 text-sm font-medium">
+                <ProspectsOptions openEditModal={openEditModal} openDeleteModal={openDeleteModal} />
+            </td>
         </tr>
     )
 }

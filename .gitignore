@@ -6,4 +6,5 @@ venv/
 db.sqlite3
 duovenv/
 Pipenv.lock
-
+/node_modules
+node_modules/
