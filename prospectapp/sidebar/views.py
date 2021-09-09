@@ -31,39 +31,31 @@ def sidebar(request):
                 data = {
                     "name": settings.PLUGIN_NAME,
                     "plugin_id": settings.PLUGIN_ID,
-                    "organisation_id": settings.ORGANIZATION_ID,
+                    "description": settings.DESCRIPTION,
+                    "organisation_id": org,
+                    "group_name": "Company Sales Prospects",
                     "user_id": f"{user_id}",
-                    "group_name": "Sales Prospect",
                     "show_group": False,
-                    "joined_rooms": [
-                        {
-                        "title": "general",
-                        "id": "DFGHH-EDDDDS-DFDDF",
-                        "unread": 2,
-                        "members": 23,
-                        "icon" : "shovel",
-                        "action": "open"
-                        },
-                        {
-                        "title": "announcements",
-                        "id": "DFGfH-EDDDDS-DFDDF",
-                        "unread": 0,
-                        "badge_type": "info",
-                        "members": 132,
-                        "parent_id": "DFGHH-EDDDDS-DFDDF",
-                        "icon" : "spear",
-                        "action" : "open"
-                        },
-                    ],
+                    "joined_rooms": [],
                     "public_rooms": [
                         {
-                        "title": "jokes",
-                        "id": "DFGfH-EDDDDS-DFDDF",
-                        "unread": 342,
-                        "members": 32,
-                        "icon" : "cdn.cloudflare.com/445345453345/hello.jpeg",
-                        "action" : "open",
-                        "auto-join" : True
+                            "title": "prospects",
+                            "id": "DFGfH-EDDDDS-DFDDF",
+                            "unread": 0,
+                            "members": 32,
+                            "icon" : "https://i.pinimg.com/564x/98/8e/ba/988eba187975cb426cd5226c1bd54e65.jpg",
+                            "action" : "open",
+                            "auto-join" : True
+                        },
+
+                        {
+                            "title": "deals",
+                            "id": "DFGfH-EDDDDS-DFDDF",
+                            "unread": 0,
+                            "members": 32,
+                            "icon" : "https://i.pinimg.com/564x/98/8e/ba/988eba187975cb426cd5226c1bd54e65.jpg",
+                            "action" : "open",
+                            "auto-join" : True
                         },
                     ]
                 }
