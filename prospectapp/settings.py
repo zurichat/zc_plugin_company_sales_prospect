@@ -137,7 +137,7 @@ STATICFILES_DIRS = [
 
 
 ############### plugin details #######################
-PLUGIN_ID = "000000000000000000000000"
+PLUGIN_ID = "6138ad498aa1cea0e6aa5b9e"
 PLUGIN_NAME = "sale prospect plugin"
 ORGANIZATION_ID = "612a3a914acf115e685df8e3"
 
