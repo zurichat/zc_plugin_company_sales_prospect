@@ -24,7 +24,7 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, Spec
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("sidebar/", sidebar),
+    path("api/v1/sidebar", sidebar),
     path('api/info', views.info),
     path('prospects/', include('prospect.urls')),
     path('register/', plugin_registration, name='register'),
