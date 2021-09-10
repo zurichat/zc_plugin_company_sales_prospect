@@ -1,33 +1,37 @@
-import React from 'react'
-import { confirmAlert } from 'react-confirm-alert'; // Import
-import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
-function App() {
+// import React from 'react'
+// import { confirmAlert } from 'react-confirm-alert'; // Import
+// import 'react-confirm-alert/src/react-confirm-alert.css'; // Import CSS
+// import DeleteDealForm from './DeleteDealForm';
 
-  const submit = () => {
+// // function DeleteDeal() {
 
-    confirmAlert({
-      title: 'Delete  Deaal',
-      message: 'This Deal will be Deleted. this action cannot be undone.',
-      buttons: [
-        {
-          label: 'No, keep ',
-          onClick: () => alert('Click No, keep')
-        },
-        {
-          label: 'Yes, Delete',
-          onClick: () => alert('Click Yes, Delete')
-        }
-      ]
-    });
-  }
+// //   const submit = () => {
 
-  return (
-      <div className='container'>
-        <button onClick={submit}>Delete Deal</button>
-      </div>
-  );
+//     confirmAlert({
+//       title: 'Delete  Deal',
+//       message: 'This Deal will be Deleted. this action cannot be undone.',
+//       buttons: [
+//         {
+//           label: 'No, keep ',
+//           onClick: () => alert('Click No, keep')
+//         },
+//         {
+//           label: 'Yes, Delete',
+//           onClick: () => alert('Click Yes, Delete')
+//         }
+//       ]
+//     });
+//   }
 
-}
+//   return (
+//       <div className='container'>
+//         <button onClick={submit}>Delete Deal</button>
+//         <DeleteDealForm/>
+//       </div>
+//   );
 
-export default App; 
+// // }
+
+
+// // export default DeleteDeal; 
