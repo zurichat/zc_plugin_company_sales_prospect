@@ -142,7 +142,7 @@ class AddUserToRoom(APIView):
 #         return Response(data={"message": "failed"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 @api_view(['GET'])
-def ListRooms(request):
+def SearchRooms(request):
     # url to fetch all rooms
     get_url = "https://api.zuri.chat/data/read/613b677d41f5856617552f1e/sales_room/613a495f59842c7444fb0246"
     
