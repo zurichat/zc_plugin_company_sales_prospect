@@ -37,6 +37,9 @@ def info(request):
 
 
 class AddUserToRoom(APIView):
+    """This view creates a room and adds users to the room. 
+    Also checks if a user is already in a room to avoid duplication."""
+    
     serializer_class = RoomSerializer
 
     def post(self, request, *args, **kwargs):
