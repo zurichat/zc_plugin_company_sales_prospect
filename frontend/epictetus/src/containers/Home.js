@@ -1,18 +1,18 @@
 import React, { useState } from 'react'
-import Input from './input'
-import Select from './Select'
-import '../App.css'
-import HomeCard from './HomeCard';
-import Founder from './svg/Manager _Flatline.svg';
-import Salesman from './svg/Salesman_Flatline.svg';
-import Executive from './svg/Businessman _Flatline.svg';
-import Saleswoman from './svg/Businesswoman_Flatline.svg';
-import Manager from './svg/Businessmen _Flatline.svg';
-import Others from './svg/Watermelon_Flatline.svg';
-import Supervisor from './svg/Startup_Flatline.svg';
-import Loader from './svg/Loader.svg';
+import Input from '../components/Input'
+import Select from '../components/Select'
+import HomeCard from '../components/HomeCard';
+import Founder from '../components/svg/Manager _Flatline.svg';
+import Salesman from '../components/svg/Salesman_Flatline.svg';
+import Executive from '../components/svg/Businessman _Flatline.svg';
+import Saleswoman from '../components/svg/Businesswoman_Flatline.svg';
+import Manager from '../components/svg/Businessmen _Flatline.svg';
+import Others from '../components/svg/Watermelon_Flatline.svg';
+import Supervisor from '../components/svg/Startup_Flatline.svg';
+import Loader from '../components/svg/Loader.svg';
 
-export default function Home() {
+function Home(props) {
+    console.log(props)
     const [pageOne, setpageOne] = useState(true)
     const [showLoader, setshowLoader] = useState(false)
     const showPageTwo = ()=> {
@@ -20,6 +20,9 @@ export default function Home() {
     }
     const handleClick=()=>{
         setshowLoader(true)
+        setTimeout(() => {
+            props.history.push("/NoProspectsFound")
+        }, 3000);
     }
     return (
         showLoader ? 
@@ -113,3 +116,5 @@ export default function Home() {
         </div>)
     )
 }
+
+export default (Home)

@@ -18,7 +18,8 @@ module.exports = {
       primary: {
         DEFAULT: "#00B87C",
         light: "#E2FFF5"
-      }
+      },
+      error:"#F40101"
     },
     fontFamily: {
       lato: ["'Lato', sans-serif"]
