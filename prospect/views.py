@@ -96,7 +96,7 @@ class ProspectsDetailView(APIView):
 
 
 def SearchProspects(request, search):
-    import requests
+    # import requests
     url = "https://zccore.herokuapp.com/data/read/000000000000000000000000/prospects/612a3a914acf115e685df8e3/"
     response = requests.request("GET", url)
     r = response.json()
