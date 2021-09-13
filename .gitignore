@@ -1,9 +1,12 @@
 **/.vscode/
 .env
+env
 .DS_Store
 __pycache__/
 venv/
 db.sqlite3
 duovenv/
+env/
 Pipenv.lock
-
+/node_modules
+node_modules/

@@ -1,3 +1,4 @@
+from django.db.models.query import QuerySet
 from rest_framework import generics
 from django.http import JsonResponse
 from django.conf import settings
@@ -14,6 +15,8 @@ from django.core.mail import send_mail
 
 from django.http import HttpResponse
 import requests
+
+from prospect import serializers
 
 
 # Create your views here.
@@ -93,7 +96,7 @@ class ProspectsDetailView(APIView):
 
 
 def SearchProspects(request, search):
-    import requests
+    # import requests
     url = "https://zccore.herokuapp.com/data/read/000000000000000000000000/prospects/612a3a914acf115e685df8e3/"
     response = requests.request("GET", url)
     r = response.json()
@@ -175,7 +178,7 @@ class ProspectsUpdateView(APIView):
         data = {
                 "plugin_id": "000000000000000000000000",
                 "organization_id": "612a3a914acf115e685df8e3",
-                "collection_name": "prospects",
+                "collection_name": "prospect",
                 "bulk_write": False,
                 "object_id":serializer.data.get("_id"),
                 "payload": serializer.data
