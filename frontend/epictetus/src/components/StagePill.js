@@ -1,9 +1,16 @@
 import React from 'react'
 
-function StagePill({ children }) {
+const stages = {
+    "Negotiation": "text-green-800",
+    "Prospect": "text-error",
+    "Closed": "text-secondary",
+    "Proposal": "text-yellow-400"
+}
+
+function StagePill({ status, md=false }) {
     return (
-        <span className="px-2 text-sm rounded-full bg-green-100 text-green-800">
-            {children}
+        <span className={`inline-block pill ${md && 'ml-2'}`}>
+            <li className={`list-disc text-xs md:text-sm ${stages[status]}`}> <span className="-ml-3 md:-ml-2">{status}</span></li>
         </span>
     )
 }
