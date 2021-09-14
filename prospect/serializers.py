@@ -11,7 +11,7 @@ class ProspectSerializer(serializers.Serializer):
     name = serializers.CharField(max_length=100)
     email = serializers.CharField(max_length=100)
     phone_number = serializers.CharField(max_length=15)
-    deal_stages = serializers.ChoiceField(choices=deal_stages_choices, default="prospect")
+    deal_stage = serializers.ChoiceField(choices=deal_stages_choices, default="prospect")
 
 
 

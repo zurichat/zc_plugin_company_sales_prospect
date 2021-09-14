@@ -124,7 +124,7 @@ class ProspectsCreateView(APIView):
         name = request.data['name']
         email = request.data['email']
         phone_number = request.data['phone_number']
-        deal_stages = request.data['deal_stages']
+        deal_stage = request.data['deal_stage']
         data = {
                 "plugin_id": "614105b66173056af01b4cca",
                 "organization_id": "613a495f59842c7444fb0246",
@@ -134,7 +134,7 @@ class ProspectsCreateView(APIView):
                     "name":name,
                     "phone_number":phone_number,
                     "email":email,
-                    "deal_stages":deal_stages
+                    "deal_stage":deal_stage
                 }
             }
         response = requests.request("POST", url,data=json.dumps(data))
