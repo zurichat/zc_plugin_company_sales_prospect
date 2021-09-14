@@ -64,18 +64,18 @@ class DealUpdateView(APIView):
     queryset = None
 
     def put(self, request, *args, **kwargs):
-        url = "https://zccore.herokuapp.com/data/write"
+        url = "https://api.zuri.chat/data/write"
         serializer = DealSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         data = {
-                "plugin_id": "000000000000000000000000",
-                "organization_id": "612a3a914acf115e685df8e3",
+                "plugin_id": "613b677d41f5856617552f1e",
+                "organization_id": "613a495f59842c7444fb0246",
                 "collection_name": "deals",
                 "bulk_write": False,
                 "object_id":serializer.data.get("_id"),
                 "payload": serializer.data
             }
-        response = requests.request("POST", url,data=json.dumps(data))
+        response = requests.request("PUT", url,data=json.dumps(data))
         r = response.json()
         print(response.status_code)
         print(r)
