@@ -1,7 +1,7 @@
 from django.urls import path
-from .views import OnboardingCreateView
+from .views import OnboardingCreateView, OnboardingListView
 
-
-urlpatterns =[
-    path('', OnboardingCreateView.as_view()),
+urlpatterns = [
+    path('create/', OnboardingCreateView.as_view()),
+    path('', OnboardingListView.as_view(), name="user_profile"),
 ]

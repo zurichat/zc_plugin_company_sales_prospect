@@ -3,17 +3,17 @@ import Button from '../components/Button'
 import Input from '../components/Input'
 import Modal from '../components/Modal'
 import ProspectRow from '../components/ProspectRow'
-import { MoreVertical, ChevronLeft, ChevronRight } from "react-feather";
+import { ChevronLeft, ChevronRight } from "react-feather";
 import Select from '../components/Select'
 
 function Prospects() {
     const prospects = [
-        { name: "Jane Cooper", email: "jane.cooper@example.com", phone: "09093527277", status: "Active" },
-        { name: "Jane Cooper", email: "jane.cooper@example.com", phone: "09093527277", status: "Active" },
-        { name: "Jane Cooper", email: "jane.cooper@example.com", phone: "09093527277", status: "Active" },
-        { name: "Jane Cooper", email: "jane.cooper@example.com", phone: "09093527277", status: "Active" },
-        { name: "Jane Cooper", email: "jane.cooper@example.com", phone: "09093527277", status: "Active" },
-        { name: "Jane Cooper", email: "jane.cooper@example.com", phone: "09093527277", status: "Active" }
+        { name: "Jane Cooper", email: "jane.cooper@example.com", phone: "09093527277", status: "Prospect" },
+        { name: "Jane Cooper", email: "jane.cooper@example.com", phone: "09093527277", status: "Closed" },
+        { name: "Jane Cooper", email: "jane.cooper@example.com", phone: "09093527277", status: "Negotiation" },
+        { name: "Jane Cooper", email: "jane.cooper@example.com", phone: "09093527277", status: "Proposal" },
+        { name: "Jane Cooper", email: "jane.cooper@example.com", phone: "09093527277", status: "Negotiation" },
+        { name: "Jane Cooper", email: "jane.cooper@example.com", phone: "09093527277", status: "Prospect" }
     ]
 
     const [open, setOpen] = useState(false)
@@ -34,7 +34,10 @@ function Prospects() {
 
     return (
         <div className="p-10 w-screen">
+            <div className="flex justify-between items-center">
+            <h3 className="text-2xl font-bold">Prospects</h3> 
             <Button onClick={handleOpenModal}>Create New</Button>
+            </div>
             {/* CREATE MODAL */}
             <Modal
                 title="Create a Prospect"
@@ -163,21 +166,21 @@ function Prospects() {
 
             <div className="mt-4">
 
-                <div className="overflow-x-auto overflow-y-hidden shadow-xl rounded-md">
-                    <table className="text-center border-gray-100 w-full">
-                        <thead className="bg-primary text-white cursor-pointer">
+                <div className="overflow-x-auto overflow-y-hidden rounded-md">
+                    <table className="text-left border-gray-100 w-full">
+                        <thead className="border-b cursor-pointer">
                             <tr>
-                                <th className="px-3 py-4">
-                                    <input className="" type="checkbox" name="" id="" />
+                                <th className="px-3 py-4 flex items-center">
+                                    <input className="mr-4" type="checkbox" name="" id="all" />
+                                    <label htmlFor="all">Name</label>
                                 </th>
-                                <th className="px-3 py-4">Name</th>
                                 <th className="px-3 py-4">Email</th>
                                 <th className="px-3 py-4">Phone Number</th>
                                 <th className="px-3 py-4">All stages</th>
-                                <th className="px-3 py-4"> <MoreVertical /> </th>
+                                <th className="px-3 py-4"> Actions </th>
                             </tr>
                         </thead>
-                        <tbody className="bg-white divide-y divide-gray-300">
+                        <tbody className="bg-white">
                             {prospects.map((prospect, i) => (
                                 <ProspectRow key={i}
                                     openEditModal={handleOpenModal2}

@@ -1,31 +1,40 @@
 import React from 'react'
-import ProspectsOptions from './ProspectsOptions'
 import StagePill from './StagePill'
+import { Trash2, Edit } from "react-feather";
 
 function ProspectRow({ openEditModal, openDeleteModal, prospect }) {
 
     return (
         <tr className="hover:bg-gray-100 cursor-pointer">
-            <td className="px-3 text-sm text-gray-900">
-                <input type="checkbox" name="" id="" />
-            </td>
-            <td className="px-3 text-sm font-medium text-gray-900">
-                {prospect.name}
+            <td className="p-3 text-sm font-medium text-gray-900 flex items-center">
+                <input type="checkbox" className="form-checkbox mr-4" name="" id="check" />
+                <label htmlFor="check">{prospect.name}</label>
+                {/* <span>
+                    <label htmlFor="check">{prospect.name}</label>
+                    <span className="sm:hidden block">
+                    <span className="block">
+                    {prospect.email}
+                    </span> 
+                    {prospect.phone} <StagePill md status={prospect.status} />
+                    </span>
+                </span> */}
             </td>
 
-            <td className="px-3 text-sm text-gray-900">
+            <td className="p-3 text-sm text-gray-900">
                 {prospect.email}
             </td>
-            <td className="px-3 text-sm text-gray-900">
+            <td className="p-3 text-sm text-gray-900">
                 {prospect.phone}
             </td>
 
-            <td className="px-3">
-                <StagePill>{prospect.status}</StagePill>
+            <td className="p-3">
+                <StagePill status={prospect.status} />
             </td>
 
-            <td className="px-3 text-sm font-medium">
-                <ProspectsOptions openEditModal={openEditModal} openDeleteModal={openDeleteModal} />
+            <td className="p-3 text-sm font-medium">
+
+                <span><Edit className="inline-block mr-1 md:mr-5 text-gray-500" onClick={openEditModal} strokeWidth={1} /></span>
+                <span><Trash2 className="inline-block text-gray-500" onClick={openDeleteModal} strokeWidth={1} /></span>
             </td>
         </tr>
     )

@@ -17,20 +17,23 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 from django.views.generic import TemplateView
 from prospect.views import plugin_registration
-
+from .info.views import AddUserToRoom, RoomsListView, RemoveUserFromRoom
 from .sidebar.views import *
 from .info import views
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("sidebar/", sidebar),
+    path("api/v1/sidebar", sidebar),
     path('api/info', views.info),
     path('prospects/', include('prospect.urls')),
     path('register/', plugin_registration, name='register'),
     path("deals/", include("deals.urls")),
     path('api-auth/', include('rest_framework.urls')),
     path('onboarding/', include('onboarding.urls')),
+    path('api/v1/add-to-room/', AddUserToRoom.as_view()),
+    path('api/v1/rooms/', RoomsListView.as_view()),
+    path('api/v1/leave-room/', RemoveUserFromRoom.as_view()),
 
     # DOCUMENTATION
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
