@@ -27,7 +27,6 @@ class DealCreateView(APIView):
 
     serializer_class = DealSerializer
     queryset = None
-
     def post(self, request, *args, **kwargs):
         url = "https://zccore.herokuapp.com/data/write"
         prospect_id = request.data['prospect_id']
@@ -58,7 +57,7 @@ class DealCreateView(APIView):
 class DealUpdateView(APIView):
     """
     An endpoint to update a deal, takes in prospect_id, status, title, and amount.
-    The endpoint is https://sales.zuri.chat/deals/update/<str:id>/
+    The endpoint is https://sales.zuri.chat/api/v1/deals/update/{id}/
     """
     serializer_class = DealSerializer
     queryset = None
@@ -73,7 +72,12 @@ class DealUpdateView(APIView):
                 "collection_name": "deals",
                 "bulk_write": False,
                 "object_id":serializer.data.get("_id"),
-                "payload": serializer.data
+                "payload": {
+                    "prospect_id": serializer.data.get("prospect_id"),
+                    "status": serializer.data.get("status"),
+                    "amount": serializer.data.get("amount"),
+                    "title": serializer.data.get("title")
+                }
             }
         response = requests.request("PUT", url,data=json.dumps(data))
         r = response.json()
