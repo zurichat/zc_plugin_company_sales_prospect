@@ -63,7 +63,7 @@ class ProspectsListView(APIView):
 
     def get(self, request, *args, **kwargs):
 
-        url = "https://zccore.herokuapp.com/data/read/000000000000000000000000/prospects/612a3a914acf115e685df8e3/"
+        url = "https://api.zuri.chat/data/read/614105b66173056af01b4cca/prospects/613a495f59842c7444fb0246"
         response = requests.request("GET", url)
         print(response.status_code)
         if response.status_code == 200:
@@ -110,6 +110,7 @@ def SearchProspects(request, search):
 
 
 
+
 class ProspectsCreateView(APIView):
     """
     Documentation here.
@@ -119,23 +120,19 @@ class ProspectsCreateView(APIView):
     queryset = None
 
     def post(self, request, *args, **kwargs):
-        url = "https://zccore.herokuapp.com/data/write"
-        first_name = request.data['first_name']
-        last_name = request.data['last_name']
-        company = request.data['company']
-        title = request.data['title']
+        url = "https://api.zuri.chat/data/write"
+        name = request.data['name']
         email = request.data['email']
+        phone_number = request.data['phone_number']
         deal_stages = request.data['deal_stages']
         data = {
-                "plugin_id": "000000000000000000000000",
-                "organization_id": "612a3a914acf115e685df8e3",
+                "plugin_id": "614105b66173056af01b4cca",
+                "organization_id": "613a495f59842c7444fb0246",
                 "collection_name": "prospects",
                 "bulk_write": False,
                 "payload": {
-                    "first_name":first_name,
-                    "last_name":last_name,
-                    "company":company,
-                    "title":title,
+                    "name":name,
+                    "phone_number":phone_number,
                     "email":email,
                     "deal_stages":deal_stages
                 }
@@ -145,9 +142,10 @@ class ProspectsCreateView(APIView):
         print(response.status_code)
         print(r)
         if response.status_code == 201:
-            return Response(data={'message':'successful'}, status=status.HTTP_201_CREATED)
+            return Response(data=r, status=status.HTTP_201_CREATED)
         return Response(data={"message":"Try again later"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
       
+
       
 def welcome(request):
     """
