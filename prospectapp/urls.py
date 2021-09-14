@@ -25,12 +25,14 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, Spec
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("api/v1/sidebar", sidebar),
-    path('api/info', views.info),
-    path('prospects/', include('prospect.urls')),
+    path('api/v1/info', views.info),
     path('register/', plugin_registration, name='register'),
-    path("deals/", include("deals.urls")),
     path('api-auth/', include('rest_framework.urls')),
-    path('onboarding/', include('onboarding.urls')),
+
+    path('api/v1/onboarding/', include('onboarding.urls')),
+    path("api/v1/deals/", include("deals.urls")),
+    path('api/v1/prospects/', include('prospect.urls')),
+
     path('api/v1/add-to-room/', AddUserToRoom.as_view()),
     path('api/v1/rooms/', RoomsListView.as_view()),
     path('api/v1/leave-room/', RemoveUserFromRoom.as_view()),
