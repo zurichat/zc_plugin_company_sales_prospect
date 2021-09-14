@@ -22,9 +22,10 @@ from .sidebar.views import *
 from .info import views
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("api/v1/sidebar", sidebar),
+    re_path(r'api/v1/sidebar/?$', sidebar),
     path('api/info', views.info),
     path('prospects/', include('prospect.urls')),
     path('register/', plugin_registration, name='register'),
@@ -40,5 +41,6 @@ urlpatterns = [
     path('swagger_docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
     path('redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
 ]
+
 urlpatterns += [re_path(r'^.*', TemplateView.as_view(template_name='index.html'))]
 
