@@ -37,7 +37,7 @@ urlpatterns = [
 
     # DOCUMENTATION
     path('api/v1/schema/', SpectacularAPIView.as_view(), name='schema'),
-    path('api/v1/swagger_docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    path('api/v1/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
     path('api/v1/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
 ]
 urlpatterns += [re_path(r'^.*', TemplateView.as_view(template_name='index.html'))]
