@@ -97,7 +97,7 @@ function Home(props) {
                         text="Manager"
                         handleClick={handleClick}
                     />
-                    <HomeCard 
+                    <HomeCard
                         src={Supervisor}
                         text="Supervisor"
                         handleClick={handleClick}
