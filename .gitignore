@@ -10,5 +10,5 @@ env/
 Pipfile*
 /node_modules
 node_modules/
-*_docs*
+
 openapi.yaml
