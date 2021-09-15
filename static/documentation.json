@@ -1,0 +1,771 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Sales Prospects API",
+    "description": "Sales prospects is a plugin that lets you to keep track of your organization’s prospects and deals.",
+    "version": "1.0.0",
+    "contact": {
+      "email": "developer@zuri.chat"
+    }
+  },
+  
+  "paths": {
+
+    "/api/v1/prospects/": {
+      "get": {
+        "tags": [
+          "Prospects"
+        ],
+        "summary": "Reads data from ZuriCore DB and return list of available prospects.",
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/prospect"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/prospect/_id"
+          },
+          {
+            "$ref": "#/components/parameters/prospect/first_name"
+          },
+          {
+            "$ref": "#/components/parameters/prospect/last_name"
+          },
+          {
+            "$ref": "#/components/parameters/prospect/company"
+          },
+          {
+            "$ref": "#/components/parameters/prospect/title"
+          },
+          {
+            "$ref": "#/components/parameters/prospect/email"
+          },
+          {
+            "$ref": "#/components/parameters/prospect/deal_stages"
+          }
+        ]
+      }
+    },
+    "/api/v1/prospects/{id}/": {
+      "get": {
+        "tags": [
+          "Prospects"
+        ],
+        "summary": "Fetches prospect with the specified id from the DB",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of prospect to fetch",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/prospect"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/prospects/create/": {
+      "post": {
+        "tags": [
+          "Prospects"
+        ],
+        "summary": "Creates a new prospect",
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/prospect"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "title": "Prospect",
+                "type": "object",
+                "properties": {
+                  "first_name": {
+                    "type": "string",
+                    "default": "John"
+                  },
+                  "last_name": {
+                    "type": "string",
+                    "default": "Doe"
+                  },
+                  "company": {
+                    "type": "string",
+                    "default": "Zuri"
+                  },
+                  "title": {
+                    "type": "string",
+                    "default": "CEO"
+                  },
+                  "email": {
+                    "type": "string",
+                    "default": "example@mail.com"
+                  },
+                  "deal_stages": {
+                    "type": "string",
+                    "enum": [
+                      "prospect",
+                      "proposal",
+                      "negotiation",
+                      "closed"
+                    ],
+                    "default": "proposal"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/prospects/update/{id}/": {
+      "put": {
+        "tags": [
+          "Prospects"
+        ],
+        "summary": "Edits a prospect with specified id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of prospect to be edited",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/prospect"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+
+    "/api/v1/deals/list/": {
+      "get": {
+        "tags": [
+          "Deals"
+        ],
+        "summary": "Reads data from ZuriCore DB and return list of available deals.",
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/deal"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/deal/_id"
+          },
+          {
+            "$ref": "#/components/parameters/deal/prospect_id"
+          },
+          {
+            "$ref": "#/components/parameters/deal/status"
+          },
+          {
+            "$ref": "#/components/parameters/deal/amount"
+          }
+        ]
+      }
+    },
+    "/api/v1/deals/{id}/": {
+      "get": {
+        "tags": [
+          "Deals"
+        ],
+        "summary": "Fetches prospect with the specified id from the DB",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of deal to fetch",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/deal"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/deals/create/": {
+      "post": {
+        "tags": [
+          "Deals"
+        ],
+        "summary": "Creates a new deal",
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/deal"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "title": "Deal",
+                "type": "object",
+                "properties": {
+                  "prospect_id": {
+                    "type": "string",
+                    "default": "123abc456def789ghi"
+                  },
+                  "status": {
+                    "type": "string",
+                    "default": "Open"
+                  },
+                  "amount": {
+                    "type": "string",
+                    "default": 123456789
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/deals/update/{id}/": {
+      "put": {
+        "tags": [
+          "Deals"
+        ],
+        "summary": "Edits a deal with specified id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of prospect to be edited",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/deal"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+
+
+    "/api/v1/onboarding/": {
+      "get": {
+        "tags": [
+          "Onboarding"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "apllication/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/onboarding"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/onboarding/create/": {
+      "post": {
+        "tags": [
+          "Onboarding"
+        ],
+        "requestBody": {
+          "content": {
+            "apllication/json": {
+              "schema": {
+                "$ref": "#/components/schemas/onboarding"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "apllication/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/onboarding"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+
+    "/api/v1/add-to-room/": {
+      "post": {
+        "tags": [
+          "Room"
+        ],
+        "summary": "Adds users to a room.",
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/room"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/room/_id"
+          },
+          {
+            "$ref": "#/components/parameters/room/room_name"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "title": "Room",
+                "type": "object",
+                "properties": {
+                  "user": {
+                    "type": "integer",
+                    "default": 1
+                  },
+                  "room_name": {
+                    "type": "string",
+                    "default": "prospects"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/room/": {
+      "get": {
+        "tags": [
+          "Room"
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/leave-room/": {
+      "post": {
+        "tags": [
+          "Room"
+        ],
+        "summary": "Deletes users from a room.",
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/room"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/room/_id"
+          },
+          {
+            "$ref": "#/components/parameters/room/room_name"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "title": "Room",
+                "type": "object",
+                "properties": {
+                  "user": {
+                    "type": "integer",
+                    "default": 1
+                  },
+                  "room_name": {
+                    "type": "string",
+                    "default": "prospects"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/api/v1/sidebar/": {
+      "get": {
+        "tags": [
+          "Sidebar"
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "app_id": []
+    }
+  ],
+  "components": {
+    "schemas": {
+
+      "prospect": {
+        "title": "Prospect",
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "title": "id",
+            "default": "123abc456def"
+          },
+          "first_name": {
+            "type": "string",
+            "default": "John"
+          },
+          "last_name": {
+            "type": "string",
+            "default": "Doe"
+          },
+          "company": {
+            "type": "string",
+            "default": "Zuri"
+          },
+          "title": {
+            "type": "string",
+            "default": "CEO"
+          },
+          "email": {
+            "type": "string",
+            "default": "example@mail.com"
+          },
+          "deal_stages": {
+            "type": "string",
+            "enum": [
+              "prospect",
+              "proposal",
+              "negotiation",
+              "closed"
+            ],
+            "default": "proposal"
+          }
+        }
+      },
+
+      "deal": {
+        "title": "Deal",
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "title": "id",
+            "default": "123abc456def"
+          },
+          "prospect_id": {
+            "type": "string",
+            "default": "123abc456def789ghi"
+          },
+          "status": {
+            "type": "string",
+            "default": "Open"
+          },
+          "amount": {
+            "type": "string",
+            "default": 123456789
+          }
+        }
+      },
+
+      "onboarding": {
+        "title": "Onboarding",
+        "type": "object",
+        "properties": {
+          "company": {
+            "type": "string",
+            "default": "Zuri"
+          },
+          "sector": {
+            "type": "string",
+            "default": "technology"
+          },
+          "position": {
+            "type": "string",
+            "default": "executive"
+          }
+        }
+      },
+
+
+      "room": {
+        "title": "Room",
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "integer",
+            "default": 1
+          },
+          "room_name": {
+            "type": "string",
+            "default": "prospects"
+          }
+        }
+      }
+    },
+
+    "parameters": {
+
+      "prospect": {
+        "_id": {
+          "name": "_id",
+          "in": "query",
+          "description": "**_id**. *Example: 23142dfdwr432*. You can fetch prospects by their id.",
+          "schema": {
+            "type": "string",
+            "default": "123abc456def"
+          },
+          "required": true
+        },
+        "first_name": {
+          "name": "first_name",
+          "in": "query",
+          "description": "**First name**. *Example: John*. This contains the first name of the prospect",
+          "schema": {
+            "type": "string",
+            "default": "John"
+          },
+          "required": true
+        },
+        "last_name": {
+          "name": "last_name",
+          "in": "query",
+          "description": "**Last name**. *Example: Doe*. This contains the last name of the prospect",
+          "schema": {
+            "type": "string",
+            "default": "Doe"
+          },
+          "required": true
+        },
+        "company": {
+          "name": "company",
+          "in": "query",
+          "description": "**Company**. *Example: Zui*. This contains the name of the prospect company",
+          "schema": {
+            "type": "string",
+            "default": "Zuri"
+          },
+          "required": true
+        },
+        "title": {
+          "name": "title",
+          "in": "query",
+          "description": "**Title**. *Example: Mr./Miss/Mrs.*. This is the title of the propsect",
+          "schema": {
+            "type": "string",
+            "default": "CEO"
+          },
+          "required": true
+        },
+        "email": {
+          "name": "email",
+          "in": "query",
+          "description": "**Email**. *Example: example@email.com*. This is the email of the propsect",
+          "schema": {
+            "type": "string",
+            "default": "example@mail.com"
+          },
+          "required": true
+        },
+        "deal_stages": {
+          "name": "deals_stages",
+          "in": "query",
+          "description": "**Deal stages**. *Example: prospect*. This is the stage of a prospect deal",
+          "schema": {
+            "type": "string",
+            "enum": [
+              "prospect",
+              "proposal",
+              "negotiation",
+              "closed"
+            ],
+            "default": "proposal"
+          },
+          "required": true
+        }
+      },
+
+
+      "deal": {
+        "_id": {
+          "name": "_id",
+          "in": "query",
+          "description": "**_id**. *Example: 23142dfdwr432*. You can fetch deals by their id.",
+          "schema": {
+            "type": "string",
+            "default": "123abc456def"
+          },
+          "required": true
+        },
+        "prospect_id": {
+          "name": "prospect_id",
+          "in": "query",
+          "description": "**Prospect ID**. *Example: 123abc456def789ghi*. This contains the id of the corresponding prospect",
+          "schema": {
+            "type": "string",
+            "default": "123abc456def789ghi"
+          },
+          "required": true
+        },
+        "status": {
+          "name": "status",
+          "in": "query",
+          "description": "**Status**. *Example: Open*. This contains the status",
+          "schema": {
+            "type": "string",
+            "default": "Open"
+          },
+          "required": true
+        },
+        "amount": {
+          "name": "amount",
+          "in": "query",
+          "description": "**Amount**. *Example: 1234567*. This contains the of the deal",
+          "schema": {
+            "type": "string",
+            "default": 123456789
+          },
+          "required": true
+        }
+      },
+
+
+      "room": {
+        "_id": {
+          "name": "user_id",
+          "in": "query",
+          "description": "**user_id**. *Example: 1*. You can fetch users by their id.",
+          "schema": {
+            "type": "integer",
+            "default": 1
+          },
+          "required": true
+        },
+        "room_name": {
+          "name": "room_name",
+          "in": "query",
+          "description": "**Room Name**. *Example: Prospect*. This is the name of the room",
+          "schema": {
+            "type": "string",
+            "default": "Prospect"
+          },
+          "required": true
+        }
+      }
+    },
+    "securitySchemes": {
+      "app_id": {
+        "type": "apiKey",
+        "description": "API key to authorize requests.",
+        "name": "Session",
+        "in": "cookie"
+      }
+    }
+  },
+  "servers": [
+    {
+      "description": "Sales Prospects API",
+      "url": "https://sales.zuri.chat/"
+    }
+  ]
+}

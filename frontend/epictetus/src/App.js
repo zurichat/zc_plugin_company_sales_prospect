@@ -3,7 +3,6 @@ import Test from "./containers/Test";
 import Home from "./containers/Home";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Prospects from "./containers/Prospects";
-import Header from "./components/Header";
 import NoProspectsFound from './containers/NoProspectsFound';
 import Deals from "./containers/Deals";
 import Intro from "./containers/Intro";
@@ -13,7 +12,7 @@ function App() {
     <Router >
       <div className="App font-lato" >
         
-        <Header />
+        
         <Switch >
           <Route exact path="/" component={Home} />
           <Route exact path="/prospects" component={Prospects} />

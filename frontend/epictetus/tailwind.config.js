@@ -2,7 +2,7 @@ const colors = require('tailwindcss/colors')
 
 module.exports = {
   purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
-  darkMode: false, // or 'media' or 'class'
+  darkMode: 'media', // or 'media' or 'class'
   theme: {
     extend: {},
     colors: {
@@ -19,6 +19,7 @@ module.exports = {
         DEFAULT: "#00B87C",
         light: "#E2FFF5"
       },
+      secondary:"#1264A3",
       error:"#F40101"
     },
     fontFamily: {
@@ -61,6 +62,6 @@ module.exports = {
     variants: {
       extend: {},
     },
-    plugins: [require('@tailwindcss/forms')]
+    plugins: [require('@tailwindcss/custom-forms')]
   }
 }
