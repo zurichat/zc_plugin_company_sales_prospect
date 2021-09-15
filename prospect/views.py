@@ -9,6 +9,7 @@ from .serializers import ProspectSerializer
 import requests, json
 import pandas as pd
 from django.http import HttpResponse
+from drf_spectacular.utils import OpenApiExample, extend_schema
 
 from django.core.mail import send_mail
 
@@ -16,13 +17,15 @@ from django.core.mail import send_mail
 from django.http import HttpResponse
 import requests
 
+from rest_framework import serializers as sz
 from prospect import serializers
 
 
 # Create your views here.
-"""
-This view shows how the plugin was registered
-"""
+
+@extend_schema(
+    description="This view shows how the plugin was registered"
+)
 def plugin_registration(request):
     url = "https://zccore.herokuapp.com/plugin/register"
 
@@ -47,20 +50,24 @@ def plugin_registration(request):
             })
 
 
-
 # PLUGIN_ID = settings.PLUGIN_ID
 # ORGANISATION_ID = settings.ORGANISATION_ID
 # PLUGIN_NAME = settings.PLUGIN_NAME
 
-class ProspectsListView(APIView):
-    """
-    This view reads data from ZuriCore API and returns a list of available 
-    prospects
-    """
+class ExampleSerializer(sz.Serializer):
+    _id = "plugin id"
+    first_name = "John"
+    last_name= "Doe"
+    company= "Zuri"
+    title= "Chat"
+    email= "example@email.com"
+    deal_stages= "proposal"
 
+
+class ProspectsListView(APIView):
     serializer_class = ProspectSerializer
     queryset = None
-
+    
     def get(self, request, *args, **kwargs):
 
         url = "https://api.zuri.chat/data/read/614105b66173056af01b4cca/prospects/613a495f59842c7444fb0246"
@@ -118,7 +125,6 @@ class ProspectsCreateView(APIView):
 
     serializer_class = ProspectSerializer
     queryset = None
-
     def post(self, request, *args, **kwargs):
         url = "https://api.zuri.chat/data/write"
         name = request.data['name']
