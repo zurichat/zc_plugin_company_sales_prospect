@@ -1,5 +1,12 @@
 from django.urls import path
-from .views import ProspectsDetailView, ProspectsUpdateView, SearchProspects,ProspectsCreateView,welcome,ProspectsListView
+from .views import ( 
+    ProspectsDetailView, 
+    ProspectsUpdateView, 
+    SearchProspects,
+    ProspectsCreateView,
+    welcome,
+    ProspectsListView,
+)
 
 
 urlpatterns = [
@@ -9,5 +16,4 @@ urlpatterns = [
     path('welcome/',welcome,name='welcome_mail'),
     path('<str:id>/', ProspectsDetailView.as_view(), name="detail prospects"),
     path('update/<str:id>/', ProspectsUpdateView.as_view()),
-] 
-
+]
