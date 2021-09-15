@@ -111,14 +111,30 @@ button:hover {
   box-shadow:  0px 1px 44px rgba(64, 64, 64, 0.12);
 }
 
+.relative{
+  position: relative;
+}
+
+.absolute{
+  position: absolute;
+  top: 190px;
+  left: 260px;
+}
+
 .mar {
   margin-left: 550px;
 }
 
 @media only screen and (max-width:1024px) {
-
+  .relative{
+    position: unset;
+  }
   .mar{
     margin-left: initial;
+  }
+
+  .absolute {
+    position: unset;
   }
 }
 

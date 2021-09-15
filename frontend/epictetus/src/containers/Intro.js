@@ -4,23 +4,17 @@ import EditDeal from "../components/svg/EditDeal.svg";
 import ActiveProspectMobile from "../components/svg/ActiveProspectMobile.svg";
 import ActiveDealMobile from "../components/svg/ActiveDealMobile.svg";
 import "../App.css"
-function Intro(props) {
-    const handleClick=()=>{
-        props.history.push("/onboarding");
-    }
-
-    if(window)
+function Intro() {
     return (
-        <div className="flex  flex-col justify-center items-center mt-16 w-full px-5 md:px-10"  >
-            <section className=" w-full md:w-5/6">
-               <div className="text-center bg-transparent px-14  md:bg-primary md:text-white text-black py-7 rounded-t-xl h-52 w-full lg:px-7" >
-                    <h2 className=" md:text-center text-left font-bold text-xl tracking-wide" >Sales Prospect Plugin</h2>
-                    <h6 className=" md:text-center text-left text-gray-400 md:text-white  md:font-bold">Redefining Sales </h6>
+        <div className="flex  flex-col justify-center items-center" >
+            <section>
+               <div className="text-center bg-primary text-white  lg:px-96 relative md:px-64 py-7 rounded-t-xl h-52 w-full px-32" >
+                    <h2 className="font-bold text-xl tracking-wide" >Sales Prospect Plugin</h2>
+                    <h6 className="font-bold">Redefining Sales </h6>
                </div>
-
-               <div className="md:flex flex-col  justify-center hidden md:flex-row z-9 -mt-24 px-5 md:px-10 md:transform md:scale-75  lg:scale-100">
-                   <img src={ActiveProspect} alt="screen" className="shadow-md"/>
-                   <img src={EditDeal} alt="screen" className="shadow-md"/>
+               <div className="flex flex-col justify-center lg:flex-row absolute lg:top-13.5 lg:left-40">
+                   <img src={ActiveProspect} alt=""/>
+                   <img src={EditDeal} alt=""/>
                </div>
                  
                 <div className="flex gap-3  -mt-16  mb-16 justify-center md:hidden">
@@ -28,18 +22,8 @@ function Intro(props) {
                  <img src={ActiveDealMobile} alt="screen"  className="shadow-md" />
                 </div>
             </section>
-
-                <section className="md:hidden  text-left">
-                    <p className="text-gray-400 my-2.5 leading-4"> 
-                            This is a work space that redefines sales and  <br/>  customer relationship management. 
-                            It helps you  <br/> track your customer's journey easily and helps your  <br/> team  track thier sales goals efficiently. 
-                            It also  helps  <br/> your company focus more on what matters most  <br/> which is your customers.
-                    </p>
-                    <button className="w-36 bg-primary my-5 p-3 text-white rounded-sm border-primary hover:bg-green-300" onClick={handleClick}>Get Started</button>
-                </section>
-
-            <section className=" w-5/6 md:w-4/6 lg:w-1/2 text-left mx-auto mt-12 hidden  md:block ">
-                    <h2 className="text-black text-lg my-2.5 font-semibold">
+            <section className="text-center w-full lg:text-left mar lg:my-60">
+                    <h2 className="text-black text-lg my-2.5">
                       Redefining sales management in your work space
                     </h2>
 
@@ -49,7 +33,7 @@ function Intro(props) {
                     </p>
 
                     <p className="text-gray-400 my-2.5">
-                        This integraion will trigger post -notification when a deal has been <br/> achieved and a deal has been won.
+                        This integraion will post -notification when a deal has been <br/> achieved and a deal has been won.
                     </p>
 
                     <p className="text-gray-400 my-2.5">
@@ -59,7 +43,7 @@ function Intro(props) {
                     <p className="text-gray-400 my-5">
                         -it is well organised and easy to understand.
                     </p>
-                    <button className="w-36 bg-primary my-5 p-3 text-white rounded-sm border-primary hover:bg-green-300" onClick={handleClick}>Get Started</button>
+                    <button className="w-36 bg-primary my-5 p-3 text-white rounded-sm border-primary hover:bg-green-300">Get Started</button>
                 </section>
         </div>
     )

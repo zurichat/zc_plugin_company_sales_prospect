@@ -7,6 +7,7 @@ import NoProspectsFound from './containers/NoProspectsFound';
 import Deals from "./containers/Deals";
 import SubHeader from "./components/SubHeader";
 import MobileHeader from "./components/MobileHeader";
+import Intro from "./containers/Intro";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route exact path="/test" component={Test} />
           <Route exact path="/NoProspectsFound" component={NoProspectsFound} />
           <Route exact path="/onboarding" component={Home} />
+          <Route exact path="/Intro" component={Intro} />
         </Switch>
 
       </div>
