@@ -10,6 +10,7 @@ import Manager from '../components/svg/Businessmen _Flatline.svg';
 import Others from '../components/svg/Watermelon_Flatline.svg';
 import Supervisor from '../components/svg/Startup_Flatline.svg';
 import Loader from '../components/svg/Loader.svg';
+import "../App.css";
 
 function Home(props) {
     console.log(props)
@@ -24,6 +25,7 @@ function Home(props) {
             props.history.push("/NoProspectsFound")
         }, 3000);
     }
+
     return (
         showLoader ? 
         (<div>
@@ -33,16 +35,16 @@ function Home(props) {
         </div>) :
         (<div>
             { pageOne ? 
-            (<form className="flex flex-col w-6/7 mx-auto md:w-1/3 p-5 mt-8 ">
-                <h2 className="font-medium text-2xl text-black-500 text-center" >Lets Personalize your Experience!</h2><br/>
-                <p className="text-base text-gray-400 text-center">Start by setting up your company’s personal details on Zuri Sales Prospect Plugin</p><br/>
+            (<form className="flex flex-col w-6/7 mx-auto md:w-1/3 p-5 mt-8 box-xs">
+                <h2 className="font-bold text-2xl text-black-500 text-left" >Sales Managment Just Got Easier!</h2><br/>
+                <p className="text-base text-gray-400 text-left">Start by setting up your company’s personal details on Zuri Sales Prospect Plugin</p><br/>
                 
                 
                 <div>
-                    <Input title="companyName" label="Company Name" placeholder="Enter your company's name"/>
+                    <Input title="companyName" label="Company Name" placeholder="Type your company name"/>
 
                     <Select title="sector" label="What sector is your company into?">
-                        <option disabled selected>Select sector</option>
+                        <option disabled selected>Select</option>
                         <option>Technology</option>
                         <option>Education</option>
                         <option>Engineering</option>
@@ -62,9 +64,11 @@ function Home(props) {
                         <option>Others</option>
                     </Select>
 
-                    <button className="hidden w-full bg-primary p-3 text-white rounded-sm border-green-400 md:block hover:bg-green-300" onClick={showPageTwo}>Continue</button>
+                  <div className="flex justify-end">
+                    <button className="hidden w-36 bg-primary p-3 text-white rounded-sm border-primary md:block hover:bg-green-300" onClick={showPageTwo}>Continue</button>
 
-                    <button className=" block w-full bg-primary p-3 text-white rounded-sm border-green-400 md:hidden  hover:bg-green-300" onClick={handleClick}>Setup</button>
+                     <button className=" block w-36 bg-primary p-3 text-white rounded-sm border-primary md:hidden  hover:bg-green-300" onClick={handleClick}>Setup</button>
+                  </div>
                 </div>
             </form>)
             :
