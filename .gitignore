@@ -7,6 +7,8 @@ venv/
 db.sqlite3
 duovenv/
 env/
-Pipenv.lock
+Pipfile*
 /node_modules
 node_modules/
+
+openapi.yaml
