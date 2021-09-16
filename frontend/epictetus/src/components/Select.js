@@ -4,7 +4,7 @@ import '../App.css'
 export default function Select({ title, label, children }) {
     return (
         <div className="mb-6" id={title}>
-            <label className=" mb-2 block font-normal text-base" for={title}>
+            <label className=" mb-2 block font-normal text-base" htmlFor={title}>
                 {label}
             </label>
 

@@ -15,19 +15,22 @@ function Home(props) {
     console.log(props)
     const [pageOne, setpageOne] = useState(true)
     const [showLoader, setshowLoader] = useState(false)
+
     const showPageTwo = ()=> {
         setpageOne(false);
     }
-    const handleClick=()=>{
+
+    const handleClick = ()=>{
         setshowLoader(true)
         setTimeout(() => {
             props.history.push("/NoProspectsFound")
-        }, 3000);
+        }, 3000);   
     }
+
     return (
         showLoader ? 
         (<div>
-            <img src={Loader} alt="loader" className="animate-ping" id="loader"/>
+            <img src={Loader} alt="loader" className="animate-spin" id="loader"/>
             <h2 className="font-medium text-2xl text-black-500 text-center" >Setting up your account</h2><br/>
                 <p className="text-base text-gray-400 text-center">Please wait a while</p>
         </div>) :
@@ -68,46 +71,49 @@ function Home(props) {
                 </div>
             </form>)
             :
-            (<div className="md:flex flex-col w-4/5 mx-auto p-5 mt-8 hidden">
+            (<div className="md:flex flex-col w-4/5 mx-auto p-5 mt-5 hidden">
                 <h2 className="font-medium text-2xl text-black-500 text-center" >What do you do at Zuri?</h2><br/>
                 <p className="text-base text-gray-400 text-center">We will use this to personalize your Sales Prospect experience</p><br/>
                 <div className="flex flex-row flex-wrap justify-around content-start w-6/7">
                     <HomeCard 
                         src={Executive}
                         text="Executive"
-                        handleClick={handleClick}
+                        id="Executive"
                     />
                     <HomeCard 
                         src={Salesman}
                         text="Sales Man"
-                        handleClick={handleClick}
+                        id="Salesman"
                     />
                     <HomeCard 
                         src={Saleswoman}
                         text="Sales Woman"
-                        handleClick={handleClick}
+                        id="Saleswoman"
                     />
                     <HomeCard 
                         src={Founder}
                         text="Founder"
-                        handleClick={handleClick}
+                        id="Founder"
                     />
                     <HomeCard 
                         src={Manager}
                         text="Manager"
-                        handleClick={handleClick}
+                        id="Manager"
                     />
                     <HomeCard
                         src={Supervisor}
                         text="Supervisor"
-                        handleClick={handleClick}
+                        id="Supervisor"
                     />
                     <HomeCard 
                         src={Others}
                         text="Others"
-                        handleClick={handleClick}
+                        id="Others"
                     />
-                    <div className="homeCard invisible"></div>
+                    <div className="others-box">
+                        <input className="border  border-none mt-20 outline-none h-12  w-full" type="text" placeholder="Type in your position" id="others-input"/>
+                        <hr className="border-gray-500" id="others-line"/>
+                    </div>
                 </div>
 
             </div>)

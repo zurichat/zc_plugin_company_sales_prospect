@@ -51,8 +51,7 @@ button:hover {
 
 .homeCard {
     min-width: 187px;
-    min-height: 141px;
-    border: 1px solid #a1a1a1;
+    min-height: 130px;
     margin: 25px;
     border-radius: 5px;
 }
@@ -60,6 +59,17 @@ button:hover {
 .homeCard:hover {
     background-color: #f7fffc;
     cursor: pointer;
+}
+
+.others-box{
+    min-width: 187px;
+    min-height: 130px;
+    margin: 25px;
+}
+
+#others-input,
+#others-line{
+    display: none;
 }
 
 #loader {
