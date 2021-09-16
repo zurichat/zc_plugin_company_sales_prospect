@@ -7,16 +7,15 @@ import NoProspectsFound from './containers/NoProspectsFound';
 import Deals from "./containers/Deals";
 import SubHeader from "./components/SubHeader";
 import MobileHeader from "./components/MobileHeader";
-import Header from "./components/Header";
-import Intro from "./containers/Intro";
 
 function App() {
   return (
     <Router >
-      <div className="App font-lato" >  
+      <div className="App font-lato" >
+        
         <Header />
         <SubHeader/>
-        <MobileHeader/>  
+        <MobileHeader/>
         <Switch >
           <Route exact path="/" component={Intro} />
           <Route exact path="/prospects" component={Prospects} />

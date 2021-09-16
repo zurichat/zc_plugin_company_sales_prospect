@@ -54,8 +54,8 @@ button:hover {
 }
 
 .homeCard {
-    min-width: 170px;
-    min-height: 120px;
+    min-width: 187px;
+    min-height: 130px;
     margin: 25px;
     border-radius: 5px;
 }
@@ -75,6 +75,17 @@ button:hover {
 .others-box{
     min-width: 170px;
     min-height: 120px;
+    margin: 25px;
+}
+
+#others-input,
+#others-line{
+    display: none;
+}
+
+.others-box{
+    min-width: 187px;
+    min-height: 130px;
     margin: 25px;
 }
 
