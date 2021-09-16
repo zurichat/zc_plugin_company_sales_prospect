@@ -14,7 +14,7 @@ function App() {
     <Router >
       <div className="App font-lato" >
         
-        {/* <Header /> */}
+        <Header />
         <SubHeader/>
         <MobileHeader/>
         <Switch >
