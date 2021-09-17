@@ -113,25 +113,17 @@
                 "title": "Prospect",
                 "type": "object",
                 "properties": {
-                  "first_name": {
+                  "name": {
                     "type": "string",
-                    "default": "John"
-                  },
-                  "last_name": {
-                    "type": "string",
-                    "default": "Doe"
-                  },
-                  "company": {
-                    "type": "string",
-                    "default": "Zuri"
-                  },
-                  "title": {
-                    "type": "string",
-                    "default": "CEO"
+                    "default": "John Doe"
                   },
                   "email": {
                     "type": "string",
                     "default": "example@mail.com"
+                  },
+                  "phone_number": {
+                    "type": "integer",
+                    "default": 1234567890
                   },
                   "deal_stages": {
                     "type": "string",
@@ -198,21 +190,9 @@
             "title": "id",
             "default": "123abc456def"
           },
-          "first_name": {
+          "name": {
             "type": "string",
-            "default": "John"
-          },
-          "last_name": {
-            "type": "string",
-            "default": "Doe"
-          },
-          "company": {
-            "type": "string",
-            "default": "Zuri"
-          },
-          "title": {
-            "type": "string",
-            "default": "CEO"
+            "default": "John Doe"
           },
           "email": {
             "type": "string",
@@ -242,43 +222,13 @@
         },
         "required": true
       },
-      "first_name": {
-        "name": "first_name",
-        "in": "query",
-        "description": "**First name**. *Example: John*. This contains the first name of the prospect",
-        "schema": {
-          "type": "string",
-          "default": "John"
-        },
-        "required": true
-      },
-      "last_name": {
+      "name": {
         "name": "last_name",
         "in": "query",
-        "description": "**Last name**. *Example: Doe*. This contains the last name of the prospect",
+        "description": "**Name Last name**. *Example: John Doe*. This contains the name of the prospect",
         "schema": {
           "type": "string",
           "default": "Doe"
-        },
-        "required": true
-      },
-      "company": {
-        "name": "company",
-        "in": "query",
-        "description": "**Company**. *Example: Zui*. This contains the name of the prospect company",
-        "schema": {
-          "type": "string",
-          "default": "Zuri"
-        },
-        "required": true
-      },
-      "title": {
-        "name": "title",
-        "in": "query",
-        "description": "**Title**. *Example: Mr./Miss/Mrs.*. This is the title of the propsect",
-        "schema": {
-          "type": "string",
-          "default": "CEO"
         },
         "required": true
       },
