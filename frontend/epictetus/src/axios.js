@@ -1,6 +1,9 @@
 import axios from "axios";
 
-export const API_ENDPOINT = "https://sales.zuri.chat"
+const DEBUG = false
+let API_ENDPOINT = "https://sales.zuri.chat"
+
+if (DEBUG) { API_ENDPOINT = "http://127.0.0.1:8200/api/v1" }
 
 export const prospectsURL = `${API_ENDPOINT}/prospects/`
 export const createProspectURL = `${API_ENDPOINT}/prospects/create/`
