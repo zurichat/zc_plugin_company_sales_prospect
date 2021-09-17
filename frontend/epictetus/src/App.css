@@ -85,6 +85,26 @@ button:hover {
     display: none;
 }
 
+.box-xs {
+  box-shadow:  0px 1px 44px rgba(64, 64, 64, 0.12);
+}
+
+.mar {
+  margin-left: 550px;
+}
+
+@media only screen and (max-width:1024px) {
+
+  .mar{
+    margin-left: initial;
+  }
+}
+
+@media only screen and (max-width:600px) {
+  .box-xs {
+    box-shadow: none;
+  }
+}
 @media only screen and (max-width: 600px) {
     #role {
         display: block;

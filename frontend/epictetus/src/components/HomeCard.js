@@ -15,7 +15,8 @@ export default function HomeCard({ src, text, id, }) {
             if(id==="Others"&& Selected===true){
                 document.getElementById("others-input").style.display= "block";
                 document.getElementById("others-line").style.display= "block"
-            } else{
+            } 
+            else{
                 document.getElementById("others-input").style.display= "none";
                 document.getElementById("others-line").style.display= "none"
             }
@@ -28,7 +29,7 @@ export default function HomeCard({ src, text, id, }) {
         <div className={`homeCard relative border ${Selected ? " border-primary" : "border-gray-500"} `} onClick={toggleSelect} id={id}>
             <img src={src} alt="job-roles" className="block mx-auto" />
             <p className="text-sm text-center">{text}</p>
-            <Check size="20px" className={`${Selected ? "": "hidden"} text-primary absolute top-3 right-3 border-2 border-primary rounded-full `}/>
+            <Check size="20px" className={`absolute top-3 right-3 ${Selected ? "": "hidden"} text-primary border-2 border-primary rounded-full `}/>
         </div>
     )
 }
