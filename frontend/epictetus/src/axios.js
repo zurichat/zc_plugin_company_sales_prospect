@@ -7,6 +7,7 @@ if (DEBUG) { API_ENDPOINT = "http://127.0.0.1:8200/api/v1" }
 
 export const prospectsURL = `${API_ENDPOINT}/prospects/`
 export const createProspectURL = `${API_ENDPOINT}/prospects/create/`
+export const editProspectURL = `${API_ENDPOINT}/prospects/update/`
 export const dealsURL = `${API_ENDPOINT}/deals/`
 export const onboardingURL = `${API_ENDPOINT}/onboarding/`
 
