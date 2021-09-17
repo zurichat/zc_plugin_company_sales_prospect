@@ -99,7 +99,7 @@
                     "type": "string",
                     "default": "+2348012345678"
                   },
-                  "deal_stages": {
+                  "deal_stage": {
                     "type": "string",
                     "enum": [
                       "prospect",
@@ -229,13 +229,25 @@
                     "type": "string",
                     "default": "123abc456def789ghi"
                   },
-                  "status": {
+                  "name": {
+                    "type": "string",
+                    "default": "John Doe"
+                  },
+                  "deal_stage": {
                     "type": "string",
                     "default": "Open"
                   },
                   "amount": {
                     "type": "string",
-                    "default": "123456"
+                    "default": "$123456"
+                  },
+                  "activity": {
+                    "type": "string",
+                    "default": "Coffee meeting"
+                  },
+                  "description": {
+                    "type": "string",
+                    "default": "Do something for the prospect"
                   }
                 }
               }
@@ -473,7 +485,7 @@
             "type": "string",
             "default": "example@mail.com"
           },
-          "deal_stages": {
+          "deal_stage": {
             "type": "string",
             "enum": [
               "prospect",
