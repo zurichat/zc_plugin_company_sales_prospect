@@ -20,6 +20,8 @@ import requests
 from rest_framework import serializers as sz
 from prospect import serializers
 
+from .authcheck import isAuthorized
+
 
 # Create your views here.
 
@@ -69,6 +71,9 @@ class ProspectsListView(APIView):
     queryset = None
     
     def get(self, request, *args, **kwargs):
+        # check authentication
+        if not isAuthorized(request):
+            return Response(data={"message":"No Authorization or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
 
         url = "https://api.zuri.chat/data/read/614105b66173056af01b4cca/prospects/613a495f59842c7444fb0246"
         response = requests.request("GET", url)
