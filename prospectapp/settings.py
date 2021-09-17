@@ -34,7 +34,7 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.sessions',
+    # 'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     #third party apps
@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     #local apps
     "deals",
     "prospect",
+    "onboarding",
 ]
 
 MIDDLEWARE = [
@@ -62,7 +63,7 @@ ROOT_URLCONF = 'prospectapp.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR,'frontend/epictetus/build')],
+        'DIRS': [os.path.join(BASE_DIR,'frontend/epictetus/build'), os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -131,14 +132,16 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR,'frontend/epictetus/build/static')
+    os.path.join(BASE_DIR,'frontend/epictetus/build/static'),
+    os.path.join(BASE_DIR, 'static')
 ]
 
 
 ############### plugin details #######################
-PLUGIN_ID = "000000000000000000000000"
-PLUGIN_NAME = "sale prospect plugin"
-ORGANIZATION_ID = "612a3a914acf115e685df8e3"
+PLUGIN_ID = "6138ad498aa1cea0e6aa5b9e"
+PLUGIN_NAME = "company sales prospect"
+ORGANIZATION_ID = "6138ad498aa1cea0e6aa5b9e"
+DESCRIPTION = "we provide a list of potential clients for your business"
 
 #email config
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' 

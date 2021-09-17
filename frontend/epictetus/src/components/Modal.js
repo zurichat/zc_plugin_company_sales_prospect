@@ -1,9 +1,8 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
-import Input from './input'
-import Select from './Select'
+import { X } from "react-feather";
 
-export default function CreateProspectModal({open=false, closeModal}) {
+export default function Modal({ open = false, closeModal, title, children, description }) {
 
   return (
     <>
@@ -25,7 +24,7 @@ export default function CreateProspectModal({open=false, closeModal}) {
             >
               <Dialog.Overlay className="fixed inset-0 bg-gray-900 bg-opacity-75 transition-opacity" />
             </Transition.Child>
-            
+
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -40,47 +39,15 @@ export default function CreateProspectModal({open=false, closeModal}) {
                   as="h3"
                   className="text-lg font-medium leading-6 text-gray-900 flex justify-between"
                 >
-                  <span>Create a Prospect</span>
-                  <span className="cursor-pointer" onClick={closeModal}>x</span>
+                  <span>{title}</span>
+                  <span className="cursor-pointer" onClick={closeModal}> <X /> </span>
                 </Dialog.Title>
                 <div className="mt-2">
                   <p className="text-sm text-gray-500">
-                  Provide information about your prospects 
+                    {description}
                   </p>
                 </div>
-                <div className="mt-2">
-                    <div>
-                        <label className="block">Name</label>
-                        <Input placeholder="Enter Full Name"/>
-                    </div>
-                    <div>
-                        <label className="block">Email</label>
-                        <Input placeholder="Enter Email"/>
-                    </div>
-                    <div>
-                        <label className="block">Phone Number</label>
-                        <Input placeholder="Enter Phone Number"/>
-                    </div>
-                    <div>
-                    <Select title="stage" label="Deal stage">
-                        <option disabled selected>Select a stage</option>
-                        <option>Active</option>
-                        <option>Closed</option>
-                        <option>Negotiation</option>
-                        <option>Prospect</option>
-                    </Select>
-                    </div>
-                </div>
-
-                <div className="mt-4 flex justify-end">
-                  <button
-                    type="button"
-                    className="bg-primary text-white px-10 py-2"
-                    onClick={closeModal}
-                  >
-                    Create
-                  </button>
-                </div>
+                {children}
               </div>
             </Transition.Child>
           </div>
