@@ -34,14 +34,16 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.sessions',
+    # 'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     #third party apps
-    'rest_framework',
+    'rest_framework',    
+    'drf_spectacular',
     #local apps
     "deals",
     "prospect",
+    "onboarding",
 ]
 
 MIDDLEWARE = [
@@ -54,12 +56,14 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+REST_FRAMEWORK = {'DEFAULT_SCHEMA_CLASS':'rest_framework.schemas.coreapi.AutoSchema' }
+
 ROOT_URLCONF = 'prospectapp.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR,'frontend/epictetus/build')],
+        'DIRS': [os.path.join(BASE_DIR,'frontend/epictetus/build'), os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -68,6 +72,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries': {  
+                'staticfiles': 'django.templatetags.static',
+            },
         },
     },
 ]
@@ -125,5 +132,29 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR,'frontend/epictetus/build/static')
-] 
+    os.path.join(BASE_DIR,'frontend/epictetus/build/static'),
+    os.path.join(BASE_DIR, 'static')
+]
+
+
+############### plugin details #######################
+PLUGIN_ID = "6138ad498aa1cea0e6aa5b9e"
+PLUGIN_NAME = "company sales prospect"
+ORGANIZATION_ID = "6138ad498aa1cea0e6aa5b9e"
+DESCRIPTION = "we provide a list of potential clients for your business"
+
+#email config
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' 
+EMAIL_HOST_USER = 'support@test.com'
+
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+# API DOCS SETTINGS
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'SalesProspects API',
+    'DESCRIPTION': 'SalesProspects Backend',
+    'VERSION': '1.0.0',
+    'SCHEMA_PATH_PREFIX': '/api',
+}

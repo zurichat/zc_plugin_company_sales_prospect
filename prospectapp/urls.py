@@ -14,15 +14,38 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include, re_path
 from django.views.generic import TemplateView
-
+from prospect.views import plugin_registration
+from .info.views import AddUserToRoom, RoomsListView, RemoveUserFromRoom
 from .sidebar.views import *
 from .info import views
+from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("",TemplateView.as_view(template_name='index.html')),
-    path("sidebar/", sidebar),
-    path('api/info', views.info)
+    re_path(r'api/v1/sidebar/?$', sidebar),
+    path('api/v1/info', views.info),
+
+    path('register/', plugin_registration, name='register'),
+
+    path('api/v1/onboarding/', include('onboarding.urls')),
+    path("api/v1/deals/", include("deals.urls")),
+    path('api/v1/prospects/', include('prospect.urls')),
+
+    path('api/v1/api-auth/', include('rest_framework.urls')),
+  
+    path('api/v1/add-to-room/', AddUserToRoom.as_view()),
+    path('api/v1/rooms/', RoomsListView.as_view()),
+    path('api/v1/leave-room/', RemoveUserFromRoom.as_view()),
+
+    # DOCUMENTATION
+    # path('api/v1/schema/', SpectacularAPIView.as_view(), name='schema'),
+    # path('api/v1/swagger-docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    # path('api/v1/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
+    path('api/v1/docs/', TemplateView.as_view(template_name='swagger.html', extra_context={'schema_url':'openapi-schema'}), name='swagger-ui'),
 ]
+
+urlpatterns += [re_path(r'^.*', TemplateView.as_view(template_name='index.html'))]
+

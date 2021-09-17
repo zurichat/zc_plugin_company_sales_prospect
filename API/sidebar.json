@@ -1,0 +1,51 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Sales Prospects API (Rooms endpoints)",
+    "description": "Sales prospects is a plugin that lets you to keep track of your organization’s prospects and deals.",
+    "version": "1.0.0",
+    "contact": {
+      "email": "developer@zuri.chat"
+    }
+  },
+  "tags": [
+    {
+      "name": "Sidebar"
+    }
+  ],
+  "paths": {
+    "/api/v1/sidebar/": {
+      "get": {
+        "tags": [
+          "Sidebar"
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "app_id": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "app_id": {
+        "type": "apiKey",
+        "description": "API key to authorize requests.",
+        "name": "Session",
+        "in": "cookie"
+      }
+    }
+  },
+  "servers": [
+    {
+      "description": "Sales Prospects API",
+      "url": "https://sales.zuri.chat/"
+    }
+  ]
+}

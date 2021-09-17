@@ -5,15 +5,23 @@
   "pluginDomain": "https://sales.zuri.chat",
   "dependencies": {
     "@craco/craco": "^6.2.0",
+    "@headlessui/react": "^1.4.1",
+    "@tailwindcss/forms": "^0.3.3",
     "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^11.2.6",
     "@testing-library/user-event": "^12.8.3",
     "craco": "0.0.3",
     "react": "^17.0.2",
+    "react-beautiful-dnd": "^13.1.0",
     "react-dom": "^17.0.2",
+    "react-feather": "^2.0.9",
+    "react-hook-form": "^7.15.3",
+    "react-icons": "^4.2.0",
+    "react-redux": "^7.2.5",
     "react-router": "^5.2.1",
     "react-router-dom": "^5.2.1",
     "react-scripts": "4.0.3",
+    "redux": "^4.1.1",
     "web-vitals": "^1.1.1"
   },
   "scripts": {
@@ -41,6 +49,7 @@
     ]
   },
   "devDependencies": {
+    "@tailwindcss/custom-forms": "^0.2.1",
     "autoprefixer": "^9.8.6",
     "postcss": "^7.0.36",
     "shelljs": "^0.8.4",

@@ -2,9 +2,16 @@ from django.db import models
 
 # Create your models here.
 
+deal_stages_choices = (
+    ("prospect", "Prospect"),
+    ("proposal", "Proposal"),
+    ("negotiation", "Negotiation"),
+    ("closed", "Closed"),
+)
+
 class Prospect(models.Model):
     """Model definition for Prospect."""
-   
+
     # TODO: Define fields here
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
@@ -14,6 +21,7 @@ class Prospect(models.Model):
     phone_number = models.CharField(max_length=255, default='NA')
     handler= models.CharField(max_length=200,default="Rosita")
     updated = models.DateTimeField(auto_now=True)
+    deal_stages = models.CharField(max_length=50,choices=deal_stages_choices,default='prospect')
 
 
     # uncomment one the deal model is done
@@ -29,6 +37,3 @@ class Prospect(models.Model):
         """Unicode representation of Prospect."""
         pass
 
-
-
-    
