@@ -1,4 +1,6 @@
 **/.vscode/
+*.pyc
+*.chunk.js*
 .env
 env
 .DS_Store
@@ -10,5 +12,5 @@ env/
 Pipfile*
 /node_modules
 node_modules/
-
+dist
 openapi.yaml
