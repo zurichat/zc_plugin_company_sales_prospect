@@ -5,7 +5,7 @@ import Modal from '../components/Modal'
 import ProspectRow from '../components/ProspectRow'
 import { ChevronLeft, ChevronRight } from "react-feather";
 import Select from '../components/Select'
-import customAxios, { createProspectURL, prospectsURL } from '../axios';
+import customAxios, { createProspectURL, editProspectURL, prospectsURL } from '../axios';
 import FileIcon from '../components/svg/FileIcon'
 import { Link } from 'react-router-dom'
 import { doesProspectExist, formatPropsects } from '../utils'
@@ -24,7 +24,10 @@ function Prospects() {
     const handleOpenModal = () => setOpen(true)
 
     const [open2, setOpen2] = useState(false)
-    const handleOpenModal2 = () => setOpen2(true)
+    const handleOpenModal2 = (e, propsect) => {
+        setProspect(propsect)
+        setOpen2(true)
+    }
 
     const [open3, setOpen3] = useState(false)
     const handleOpenModal3 = () => setOpen3(true)
@@ -39,7 +42,12 @@ function Prospects() {
     const [prospects, setProspects] = useState([]);
 
 
-    const [prospect, setProspect] = useState(null);
+    const [prospect, setProspect] = useState({
+        id: "",
+        name: "",
+        phone: "",
+        status: ""
+    });
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -70,6 +78,20 @@ function Prospects() {
         } else {
             alert("Prospect already exists")
         }
+    }
+
+
+    const handleUpdate = e => {
+        e.preventDefault()
+        customAxios.put(editProspectURL, prospect)
+            .catch(r => {
+                alert("prospects edited succesfully")
+                handleCloseModal()
+                customAxios.get(prospectsURL)
+                    .then(r => setProspects(formatPropsects(r.data)))
+                    .catch(e => console.log(e.response))
+            })
+            // .catch(e => console.log(e))
     }
 
     const handleChange = ({ target }) => {
@@ -129,37 +151,36 @@ function Prospects() {
                 title="Edit Prospect"
                 description="Provide information about your prospects."
                 open={open2} closeModal={handleCloseModal}>
-                <div className="mt-2">
+                <form className="mt-2" onSubmit={handleUpdate}>
                     <div>
                         <label className="block">Name</label>
-                        <Input placeholder="Jane Cooper" />
+                        <Input placeholder="Jane Cooper" id="name" value={prospect.name} onChange={handleChange} />
                     </div>
                     <div>
                         <label className="block">Email</label>
-                        <Input placeholder="jane.cooper@example.com" />
+                        <Input placeholder="jane.cooper@example.com" id="email" value={prospect.email} onChange={handleChange} />
                     </div>
                     <div>
                         <label className="block">Phone Number</label>
-                        <Input placeholder="09093527277" />
+                        <Input placeholder="09093527277" id="phone_number" value={prospect.phone} onChange={handleChange} />
                     </div>
                     <div>
-                        <Select title="stage" label="Deal stage">
+                        <Select title="stage" label="Deal stage" id="deal_stage" value={prospect.status}>
                             <option>Active</option>
                             <option>Closed</option>
                             <option>Negotiation</option>
                             <option>Prospect</option>
                         </Select>
                     </div>
-                </div>
+                    <div className="mt-4 flex justify-end">
+                        <button
+                            type="submit"
+                            className="bg-primary text-white px-10 py-2">
+                            Edit
+                        </button>
+                    </div>
+                </form>
 
-                <div className="mt-4 flex justify-end">
-                    <button
-                        type="button"
-                        className="bg-primary text-white px-10 py-2"
-                        onClick={handleCloseModal}>
-                        Edit
-                    </button>
-                </div>
 
             </Modal>
 
