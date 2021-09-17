@@ -11,20 +11,6 @@ from .json_data import *
 
 @api_view(['GET'])
 def sidebar(request):
-    if request.GET.get('token') and request.GET.get('user') and request.GET.get('org')  :
-        token = request.GET.get('token')
-        user_id = request.GET.get('user')
-        org = request.GET.get('user')
-        data = success_query(user_id, org, token)
-        if data == 501:
-            data = no_query_params()
-            return Response(data, status=status.HTTP_200_OK)
-        else:
-            return Response(data, status=status.HTTP_200_OK)
-    else:
-        data = no_query_params()
-        return Response(data, status=status.HTTP_200_OK)
-        
-        
-
-
+    data = success_query()
+    return Response(data, status=status.HTTP_200_OK)
+    
