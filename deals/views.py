@@ -51,7 +51,7 @@ class DealCreateView(APIView):
         print(response.status_code)
         # print(r)
         if response.status_code == 201:
-            return Response(data={'message':'Created deal object successfully!'}, status=st.HTTP_201_CREATED)
+            return Response(data={'message':'Created deal object successfully!',"deal_created":r['data']}, status=st.HTTP_201_CREATED)
         return Response(data={"message":"Creation of deals failed... Try again later."}, status=st.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class DealUpdateView(APIView):
