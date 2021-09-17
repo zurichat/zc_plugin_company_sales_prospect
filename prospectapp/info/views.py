@@ -24,17 +24,25 @@ def is_valid(param):
 def info(request):
     if request.method == 'GET':
         data = {
-            "info":{
-                "name": "info",
-                "url": "https://sales.zuri.chat/api/info"
-            },
-            "about":{
-                "name": "about",
-                "url": "https://sales.zuri.chat/api/info"
-            }
+            "message": "Plugin Information Retrieved",
+            "data": {
+                "type": "Plugin Information",
+                "plugin_info": {
+                "name": "Sales Prospects Plugin",
+                "description": [
+                "Zuri.chat plugin",
+                "A plugin for Zuri Chat that enables the users to get prospects for their respective businesses "
+                ]
+                },
+                "scaffold_structure": "Monolith",
+                "team": "HNG 8.0/Team plugin sales-crm",
+                "sidebar_url": "https://sales.zuri.chat/api/v1/sidebar",
+                "ping_url": "https://sales.zuri.chat/api/v1/ping",
+                "homepage_url": "https://sales.zuri.chat/"
+                },
+                "success": True
         }
         return Response(data, status=status.HTTP_200_OK)
-
 
 class AddUserToRoom(APIView):
     serializer_class = RoomSerializer
