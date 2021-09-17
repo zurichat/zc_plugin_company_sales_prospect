@@ -1,5 +1,5 @@
 {
-  "name": "@zuri/epictetus",
+  "name": "@zuri/zuri-plugin-company-sales-prospects",
   "scripts": {
     "start": "webpack serve --port 8500 --env isLocal",
     "start:standalone": "webpack serve --env standalone",

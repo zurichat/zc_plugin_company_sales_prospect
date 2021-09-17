@@ -8,7 +8,7 @@ import Deals from "./containers/Deals";
 
 function App() {
   return (
-    <Router >
+    <Router basename="/sales">
       <div className="App font-lato" >
         <Switch>
           <Route exact path="/" component={Home} />

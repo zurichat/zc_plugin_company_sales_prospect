@@ -9,13 +9,13 @@ import { registerApplication, start } from "single-spa";
 //   activeWhen: ["/"],
 // });
 
-// registerApplication(
-//   "@single-spa/welcome",
-//   () =>
-//     System.import("https://unpkg.com/single-spa-welcome/dist/single-spa-welcome.js"
-//     ),
-//   (location) => location.pathname.endsWith('/'),
-// );
+registerApplication(
+  "@single-spa/welcome",
+  () =>
+    System.import("https://unpkg.com/single-spa-welcome/dist/single-spa-welcome.js"
+    ),
+  (location) => location.pathname.endsWith('/'),
+);
 
 // registerApplication({
 //   name: "@zuri/navbar",
@@ -24,9 +24,9 @@ import { registerApplication, start } from "single-spa";
 // });
 
 registerApplication({
-  name: "@zuri/epictetus",
-  app: () => System.import("@zuri/epictetus"),
-  activeWhen: ["/"]
+  name: "@zuri/zuri-plugin-company-sales-prospects",
+  app: () => System.import("@zuri/zuri-plugin-company-sales-prospects"),
+  activeWhen: ["/sales"]
 });
 
 start({
