@@ -9,6 +9,7 @@ from .serializers import ProspectSerializer
 import requests, json
 import pandas as pd
 from django.http import HttpResponse
+from drf_spectacular.utils import OpenApiExample, extend_schema
 
 from django.core.mail import send_mail
 
@@ -16,13 +17,15 @@ from django.core.mail import send_mail
 from django.http import HttpResponse
 import requests
 
+from rest_framework import serializers as sz
 from prospect import serializers
 
 
 # Create your views here.
-"""
-This view shows how the plugin was registered
-"""
+
+@extend_schema(
+    description="This view shows how the plugin was registered"
+)
 def plugin_registration(request):
     url = "https://zccore.herokuapp.com/plugin/register"
 
@@ -47,23 +50,27 @@ def plugin_registration(request):
             })
 
 
-
 # PLUGIN_ID = settings.PLUGIN_ID
 # ORGANISATION_ID = settings.ORGANISATION_ID
 # PLUGIN_NAME = settings.PLUGIN_NAME
 
-class ProspectsListView(APIView):
-    """
-    This view reads data from ZuriCore API and returns a list of available 
-    prospects
-    """
+class ExampleSerializer(sz.Serializer):
+    _id = "plugin id"
+    first_name = "John"
+    last_name= "Doe"
+    company= "Zuri"
+    title= "Chat"
+    email= "example@email.com"
+    deal_stages= "proposal"
 
+
+class ProspectsListView(APIView):
     serializer_class = ProspectSerializer
     queryset = None
-
+    
     def get(self, request, *args, **kwargs):
 
-        url = "https://zccore.herokuapp.com/data/read/000000000000000000000000/prospects/612a3a914acf115e685df8e3/"
+        url = "https://api.zuri.chat/data/read/614105b66173056af01b4cca/prospects/613a495f59842c7444fb0246"
         response = requests.request("GET", url)
         print(response.status_code)
         if response.status_code == 200:
@@ -110,6 +117,7 @@ def SearchProspects(request, search):
 
 
 
+
 class ProspectsCreateView(APIView):
     """
     Documentation here.
@@ -117,27 +125,22 @@ class ProspectsCreateView(APIView):
 
     serializer_class = ProspectSerializer
     queryset = None
-
     def post(self, request, *args, **kwargs):
-        url = "https://zccore.herokuapp.com/data/write"
-        first_name = request.data['first_name']
-        last_name = request.data['last_name']
-        company = request.data['company']
-        title = request.data['title']
+        url = "https://api.zuri.chat/data/write"
+        name = request.data['name']
         email = request.data['email']
-        deal_stages = request.data['deal_stages']
+        phone_number = request.data['phone_number']
+        deal_stage = request.data['deal_stage']
         data = {
-                "plugin_id": "000000000000000000000000",
-                "organization_id": "612a3a914acf115e685df8e3",
+                "plugin_id": "614105b66173056af01b4cca",
+                "organization_id": "613a495f59842c7444fb0246",
                 "collection_name": "prospects",
                 "bulk_write": False,
                 "payload": {
-                    "first_name":first_name,
-                    "last_name":last_name,
-                    "company":company,
-                    "title":title,
+                    "name":name,
+                    "phone_number":phone_number,
                     "email":email,
-                    "deal_stages":deal_stages
+                    "deal_stage":deal_stage
                 }
             }
         response = requests.request("POST", url,data=json.dumps(data))
@@ -145,9 +148,10 @@ class ProspectsCreateView(APIView):
         print(response.status_code)
         print(r)
         if response.status_code == 201:
-            return Response(data={'message':'successful'}, status=status.HTTP_201_CREATED)
+            return Response(data=r, status=status.HTTP_201_CREATED)
         return Response(data={"message":"Try again later"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
       
+
       
 def welcome(request):
     """

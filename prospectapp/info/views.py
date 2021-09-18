@@ -1,5 +1,5 @@
 import json
-
+from drf_spectacular.utils import extend_schema
 import requests
 from django.http import Http404
 from django.shortcuts import render
@@ -24,28 +24,35 @@ def is_valid(param):
 def info(request):
     if request.method == 'GET':
         data = {
-            "info":{
-                "name": "info",
-                "url": "https://sales.zuri.chat/api/info"
-            },
-            "about":{
-                "name": "about",
-                "url": "https://sales.zuri.chat/api/info"
-            }
+            "message": "Plugin Information Retrieved",
+            "data": {
+                "type": "Plugin Information",
+                "plugin_info": {
+                "name": "Sales Prospects Plugin",
+                "description": [
+                "Zuri.chat plugin",
+                "A plugin for Zuri Chat that enables the users to get prospects for their respective businesses "
+                ]
+                },
+                "scaffold_structure": "Monolith",
+                "team": "HNG 8.0/Team plugin sales-crm",
+                "sidebar_url": "https://sales.zuri.chat/api/v1/sidebar",
+                "ping_url": "https://sales.zuri.chat/api/v1/ping",
+                "homepage_url": "https://sales.zuri.chat/"
+                },
+                "success": True
         }
         return Response(data, status=status.HTTP_200_OK)
 
-
 class AddUserToRoom(APIView):
-    """
-    Room Name (str) : The name of the room
-    User Id (int): The id of the user to be added to the rooom\n
-    This view creates a room if there isn't a room that has the specified name\n
-    If there's a room with the name specified, the room's members are merely updated
-    in the sense that the userId supplied is added to the room.\n
-    """
     serializer_class = RoomSerializer
-
+    @extend_schema(
+        description = "Room Name (str) : The name of the room\
+            User Id (int): The id of the user to be added to the rooom\n\
+            This view creates a room if there isn't a room that has the specified name\n\
+            If there's a room with the name specified, the room's members are merely updated\
+            in the sense that the userId supplied is added to the room.\n"
+    )
     def post(self, request, *args, **kwargs):
 
         room_name = request.data.get('room_name')
@@ -156,52 +163,52 @@ class RoomsListView(APIView):
 class RemoveUserFromRoom(APIView):
  
          
- serializer_class = RoomSerializer
- def post(self, request, *args, **kwargs):
+    serializer_class = RoomSerializer
+    def post(self, request, *args, **kwargs):
         
     # url to fetch all rooms
-    get_url = "https://api.zuri.chat/data/read/613b677d41f5856617552f1e/sales_room/613a495f59842c7444fb0246"
-    
-    # make a get request to the url to fetch all existing rooms 
-    
-    user_to_remove = request.data.get('user')
-    room_name = request.data.get('room_name')
-    
-    res = requests.request("GET", url=get_url)
-    if res.status_code != 200:
-        return Response(data={"message": "error occur while retrieving data for all rooms"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-#    extract rooms from the response
-    rooms = res.json()['data']
-    
-    current_room = filter(lambda room: room['name'] == room_name, rooms)
-    current_room = list(current_room)
-    print(current_room)
-    if len(current_room) == 0:
-     return Response(data={"message": "Room does not exist"}, status=status.HTTP_404_NOT_FOUND)
-    method = "PUT"
-    object_id = current_room[0]['_id']
-    current_users = current_room[0]['users']
-    print(user_to_remove , current_users)
-    
-    if (user_to_remove in current_users):
-    #  return Response(data={"message": "This user does not belong to this room"}, status=status.HTTP_404_NOT_FOUND)
-      current_users.remove(user_to_remove)
-      print(current_users)
-    #   current_users = set(current_users)
-      put_url = 'https://api.zuri.chat/data/write'
-      data = {
-            "plugin_id": "613b677d41f5856617552f1e",
-            "organization_id": "613a495f59842c7444fb0246",
-            "collection_name": "sales_room",
-            "object_id": object_id,
-            "bulk_write": False,
-            "payload": {
-                "name": room_name,
-                "users": current_users
-            }
-        }
-      res = requests.request(method, url=put_url, data=json.dumps(data))
-      if res.status_code in [201, 200]:
-       return Response(data={"message":"user "+ user_to_remove + " has been removed from room "+ room_name}, status=status.HTTP_200_OK)
-      return Response(data={"message": "failed"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-    return Response(data={"message": "This user does not exist to this room"}, status=status.HTTP_404_NOT_FOUND)
+        get_url = "https://api.zuri.chat/data/read/613b677d41f5856617552f1e/sales_room/613a495f59842c7444fb0246"
+        
+        # make a get request to the url to fetch all existing rooms 
+        
+        user_to_remove = request.data.get('user')
+        room_name = request.data.get('room_name')
+        
+        res = requests.request("GET", url=get_url)
+        if res.status_code != 200:
+            return Response(data={"message": "error occur while retrieving data for all rooms"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    #    extract rooms from the response
+        rooms = res.json()['data']
+        
+        current_room = filter(lambda room: room['name'] == room_name, rooms)
+        current_room = list(current_room)
+        print(current_room)
+        if len(current_room) == 0:
+            return Response(data={"message": "Room does not exist"}, status=status.HTTP_404_NOT_FOUND)
+        method = "PUT"
+        object_id = current_room[0]['_id']
+        current_users = current_room[0]['users']
+        print(user_to_remove , current_users)
+        
+        if (user_to_remove in current_users):
+            #  return Response(data={"message": "This user does not belong to this room"}, status=status.HTTP_404_NOT_FOUND)
+            current_users.remove(user_to_remove)
+            print(current_users)
+            #   current_users = set(current_users)
+            put_url = 'https://api.zuri.chat/data/write'
+            data = {
+                    "plugin_id": "613b677d41f5856617552f1e",
+                    "organization_id": "613a495f59842c7444fb0246",
+                    "collection_name": "sales_room",
+                    "object_id": object_id,
+                    "bulk_write": False,
+                    "payload": {
+                        "name": room_name,
+                        "users": current_users
+                    }
+                }
+            res = requests.request(method, url=put_url, data=json.dumps(data))
+            if res.status_code in [201, 200]:
+                return Response(data={"message":"user "+ user_to_remove + " has been removed from room "+ room_name}, status=status.HTTP_200_OK)
+            return Response(data={"message": "failed"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return Response(data={"message": "This user does not exist to this room"}, status=status.HTTP_404_NOT_FOUND)

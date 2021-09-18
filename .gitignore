@@ -1,4 +1,6 @@
 **/.vscode/
+*.pyc
+*.chunk.js*
 .env
 env
 .DS_Store
@@ -7,6 +9,8 @@ venv/
 db.sqlite3
 duovenv/
 env/
-Pipenv.lock
+Pipfile*
 /node_modules
 node_modules/
+dist
+openapi.yaml

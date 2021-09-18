@@ -27,55 +27,59 @@ class DealCreateView(APIView):
 
     serializer_class = DealSerializer
     queryset = None
-
     def post(self, request, *args, **kwargs):
-        url = "https://zccore.herokuapp.com/data/write"
-        prospect_id = request.data['prospect_id']
-        status = request.data['status']
-        title = request.data['title']
-        amount = request.data['amount']
+        url = "https://api.zuri.chat/data/write"
+        
+        serializer = DealSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
         data = {
-                "plugin_id": settings.PLUGIN_ID,
-                "organization_id": settings.ORGANISATION_ID,
+                "plugin_id": "613b677d41f5856617552f1e",
+                "organization_id": "613a495f59842c7444fb0246",
                 "collection_name": "deals",
                 "bulk_write": False,
                 "payload": {
-                    #"_id": _id,
-                    "prospect_id":prospect_id,
-                    "status":status,
-                    "amount":amount,
-                    "title":title,
+                    "prospect_id":serializer.data.get("prospect_id"),
+                    "name":serializer.data.get("name"),
+                    "deal_stage": serializer.data.get("deal_stage"),
+                    "amount":serializer.data.get("amount"),
+                    "activity":serializer.data.get("activity"),
+                    "description":serializer.data.get("description"),
                 }
             }
         response = requests.request("POST", url,data=json.dumps(data))
         r = response.json()
         print(response.status_code)
-        print(r)
+        # print(r)
         if response.status_code == 201:
-            return Response(data={'message':'Created deal object successfully!'}, status=st.HTTP_201_CREATED)
+            return Response(data={'message':'Created deal object successfully!',"deal_created":r['data']}, status=st.HTTP_201_CREATED)
         return Response(data={"message":"Creation of deals failed... Try again later."}, status=st.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class DealUpdateView(APIView):
     """
     An endpoint to update a deal, takes in prospect_id, status, title, and amount.
-    The endpoint is https://sales.zuri.chat/deals/update/<str:id>/
+    The endpoint is https://sales.zuri.chat/api/v1/deals/update/{id}/
     """
     serializer_class = DealSerializer
     queryset = None
 
     def put(self, request, *args, **kwargs):
-        url = "https://zccore.herokuapp.com/data/write"
+        url = "https://api.zuri.chat/data/write"
         serializer = DealSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         data = {
-                "plugin_id": "000000000000000000000000",
-                "organization_id": "612a3a914acf115e685df8e3",
+                "plugin_id": "613b677d41f5856617552f1e",
+                "organization_id": "613a495f59842c7444fb0246",
                 "collection_name": "deals",
                 "bulk_write": False,
                 "object_id":serializer.data.get("_id"),
-                "payload": serializer.data
+                "payload": {
+                    "prospect_id": serializer.data.get("prospect_id"),
+                    "status": serializer.data.get("status"),
+                    "amount": serializer.data.get("amount"),
+                    "title": serializer.data.get("title")
+                }
             }
-        response = requests.request("POST", url,data=json.dumps(data))
+        response = requests.request("PUT", url,data=json.dumps(data))
         r = response.json()
         print(response.status_code)
         print(r)
