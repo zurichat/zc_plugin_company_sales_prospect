@@ -212,4 +212,4 @@ class ProspectsDeleteView(APIView):
         print(response.status_code)
         if response.status_code == 201:
             return Response(data={'message': 'successful'}, status=status.HTTP_201_CREATED)
-        return Response(data={"message": "Try again later"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(data={"message": "Try again later"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
