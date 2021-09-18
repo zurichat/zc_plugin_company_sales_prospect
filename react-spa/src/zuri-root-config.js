@@ -12,9 +12,10 @@ import { registerApplication, start } from "single-spa";
 registerApplication(
   "@single-spa/welcome",
   () =>
-    System.import("https://unpkg.com/single-spa-welcome/dist/single-spa-welcome.js"
+    System.import(
+      "https://unpkg.com/single-spa-welcome/dist/single-spa-welcome.js"
     ),
-  (location) => location.pathname.endsWith('/'),
+  (location) => location.pathname.endsWith("/")
 );
 
 // registerApplication({
@@ -26,7 +27,7 @@ registerApplication(
 registerApplication({
   name: "@zuri/zuri-plugin-company-sales-prospects",
   app: () => System.import("@zuri/zuri-plugin-company-sales-prospects"),
-  activeWhen: ["/sales"]
+  activeWhen: ["/sales"],
 });
 
 start({
