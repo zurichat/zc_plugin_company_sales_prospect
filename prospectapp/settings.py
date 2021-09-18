@@ -37,11 +37,11 @@ INSTALLED_APPS = [
     # 'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #third party apps
-    'rest_framework',    
+    # third party apps
+    'rest_framework',
     'drf_spectacular',
     "corsheaders",
-    #local apps
+    # local apps
     "deals",
     "prospect",
     "onboarding",
@@ -50,7 +50,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    "corsheaders.middleware.CorsMiddleware", # CORS
+    "corsheaders.middleware.CorsMiddleware",  # CORS
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -61,7 +61,8 @@ MIDDLEWARE = [
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 CORS_ALLOW_ALL_ORIGINS = True
 
-REST_FRAMEWORK = {'DEFAULT_SCHEMA_CLASS':'rest_framework.schemas.coreapi.AutoSchema' }
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'}
 
 ROOT_URLCONF = 'prospectapp.urls'
 
@@ -69,11 +70,11 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR,'frontend/epictetus/build'),
-            os.path.join(BASE_DIR,'react-spa/dist'),
-            os.path.join(BASE_DIR,'react-spa/epictetus/dist'),
+            os.path.join(BASE_DIR, 'frontend/epictetus/build'),
+            os.path.join(BASE_DIR, 'react-spa/dist'),
+            os.path.join(BASE_DIR, 'react-spa/epictetus/dist'),
             os.path.join(BASE_DIR, 'templates')
-            ],
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -82,7 +83,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
-            'libraries': {  
+            'libraries': {
                 'staticfiles': 'django.templatetags.static',
             },
         },
@@ -142,7 +143,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR,'frontend/epictetus/build/static'),
+    os.path.join(BASE_DIR, 'frontend/epictetus/build/static'),
     os.path.join(BASE_DIR, 'static')
 ]
 
@@ -153,8 +154,8 @@ PLUGIN_NAME = "company sales prospect"
 ORGANIZATION_ID = "6138ad498aa1cea0e6aa5b9e"
 DESCRIPTION = "we provide a list of potential clients for your business"
 
-#email config
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' 
+# email config
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST_USER = 'support@test.com'
 
 REST_FRAMEWORK = {
