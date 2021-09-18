@@ -6,7 +6,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 from .serializers import ProspectSerializer
-import requests, json
+import requests
+import json
 import pandas as pd
 from django.http import HttpResponse
 
@@ -23,29 +24,30 @@ from prospect import serializers
 """
 This view shows how the plugin was registered
 """
+
+
 def plugin_registration(request):
     url = "https://zccore.herokuapp.com/plugin/register"
 
     payload = {
-    "name": "sales_prospects",
-    "description": "A Sales Prospects Plugin",
-    "template_url": "https://sales.zuri.chat",
-    "sidebar_url": "https://sales.zuri.chat/sidebar",
-    "install_url":  "https://sales.zuri.chat/install",
-    "icon_url": "icon.png",
-    "developer_email":"azeezsodiqkayode@gmail.com",
-    "developer_name":"Sodiq Azeez"
+        "name": "sales_prospects",
+        "description": "A Sales Prospects Plugin",
+        "template_url": "https://sales.zuri.chat",
+        "sidebar_url": "https://sales.zuri.chat/sidebar",
+        "install_url":  "https://sales.zuri.chat/install",
+        "icon_url": "icon.png",
+        "developer_email": "azeezsodiqkayode@gmail.com",
+        "developer_name": "Sodiq Azeez"
     }
-    working =True
+    working = True
     if working:
         return JsonResponse(data={
-                'Message': 'This plugin has been registered on the marketplace',
-                "plugin_id": "000000000000000000000000",
-                "organization_id": "612a3a914acf115e685df8e3",
-                "collection_name": "prospects",
-                
-            })
+            'Message': 'This plugin has been registered on the marketplace',
+            "plugin_id": "000000000000000000000000",
+            "organization_id": "612a3a914acf115e685df8e3",
+            "collection_name": "prospects",
 
+        })
 
 
 # PLUGIN_ID = settings.PLUGIN_ID
@@ -71,7 +73,7 @@ class ProspectsListView(APIView):
             serializer = ProspectSerializer(data=r['data'], many=True)
             serializer.is_valid(raise_exception=True)
             return Response(data=serializer.data, status=status.HTTP_200_OK)
-        return Response(data={"message":"Try again later"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return Response(data={"message": "Try again later"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class ProspectsDetailView(APIView):
@@ -87,12 +89,14 @@ class ProspectsDetailView(APIView):
 
             dataframe = pd.DataFrame(r['data'])
             dataframe.set_index('_id', inplace=True)
-            detail_prospect_data = json.loads(dataframe.loc[kwargs["id"], :].to_json())
+            detail_prospect_data = json.loads(
+                dataframe.loc[kwargs["id"], :].to_json())
             detail_prospect_data['_id'] = kwargs["id"]
-            serializer = ProspectSerializer(data=detail_prospect_data, many=False)
+            serializer = ProspectSerializer(
+                data=detail_prospect_data, many=False)
             serializer.is_valid(raise_exception=True)
             return Response(data=serializer.data, status=status.HTTP_200_OK)
-        return Response(data={"message":"Try again later"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return Response(data={"message": "Try again later"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 def SearchProspects(request, search):
@@ -101,13 +105,12 @@ def SearchProspects(request, search):
     response = requests.request("GET", url)
     r = response.json()
     # response code should be 200
-    if response.status_code == 200:    
-        liste=[]
-        for i  in r['data']:
-            if (search in i['first_name']) or (search in i['last_name']) or (search in i['email']) or  (search in i['company']):
+    if response.status_code == 200:
+        liste = []
+        for i in r['data']:
+            if (search in i['first_name']) or (search in i['last_name']) or (search in i['email']) or (search in i['company']):
                 liste.append(i)
-        return JsonResponse(liste,safe=False)
-
+        return JsonResponse(liste, safe=False)
 
 
 class ProspectsCreateView(APIView):
@@ -127,28 +130,28 @@ class ProspectsCreateView(APIView):
         email = request.data['email']
         deal_stages = request.data['deal_stages']
         data = {
-                "plugin_id": "000000000000000000000000",
-                "organization_id": "612a3a914acf115e685df8e3",
-                "collection_name": "prospects",
-                "bulk_write": False,
-                "payload": {
-                    "first_name":first_name,
-                    "last_name":last_name,
-                    "company":company,
-                    "title":title,
-                    "email":email,
-                    "deal_stages":deal_stages
-                }
+            "plugin_id": "000000000000000000000000",
+            "organization_id": "612a3a914acf115e685df8e3",
+            "collection_name": "prospects",
+            "bulk_write": False,
+            "payload": {
+                "first_name": first_name,
+                "last_name": last_name,
+                "company": company,
+                "title": title,
+                "email": email,
+                "deal_stages": deal_stages
             }
-        response = requests.request("POST", url,data=json.dumps(data))
+        }
+        response = requests.request("POST", url, data=json.dumps(data))
         r = response.json()
         print(response.status_code)
         print(r)
         if response.status_code == 201:
-            return Response(data={'message':'successful'}, status=status.HTTP_201_CREATED)
-        return Response(data={"message":"Try again later"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-      
-      
+            return Response(data={'message': 'successful'}, status=status.HTTP_201_CREATED)
+        return Response(data={"message": "Try again later"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
 def welcome(request):
     """
     this functions sends a welcome email to new leads
@@ -156,15 +159,12 @@ def welcome(request):
     would configure it properly during production
     """
     send_mail(
-        subject = f'Welcome {request.user}',
-        message = f'Hello {request.user} your account was successfully created',
-        from_email = settings.EMAIL_HOST_USER,
-        recipient_list = ['test1@dummy.com']
-            )
-    return JsonResponse({"message":"welcome mail has been sent successfully"})      
-    
-   
-
+        subject=f'Welcome {request.user}',
+        message=f'Hello {request.user} your account was successfully created',
+        from_email=settings.EMAIL_HOST_USER,
+        recipient_list=['test1@dummy.com']
+    )
+    return JsonResponse({"message": "welcome mail has been sent successfully"})
 
 
 class ProspectsUpdateView(APIView):
@@ -176,17 +176,38 @@ class ProspectsUpdateView(APIView):
         serializer = ProspectSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         data = {
-                "plugin_id": "000000000000000000000000",
-                "organization_id": "612a3a914acf115e685df8e3",
-                "collection_name": "prospect",
-                "bulk_write": False,
-                "object_id":serializer.data.get("_id"),
-                "payload": serializer.data
-            }
-        response = requests.request("POST", url,data=json.dumps(data))
+            "plugin_id": "000000000000000000000000",
+            "organization_id": "612a3a914acf115e685df8e3",
+            "collection_name": "prospect",
+            "bulk_write": False,
+            "object_id": serializer.data.get("_id"),
+            "payload": serializer.data
+        }
+        response = requests.request("POST", url, data=json.dumps(data))
         print(response.status_code)
 
         if response.status_code == 201:
-            return Response(data={'message':'successful'}, status=status.HTTP_201_CREATED)
-        return Response(data={"message":"Try again later"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(data={'message': 'successful'}, status=status.HTTP_201_CREATED)
+        return Response(data={"message": "Try again later"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+
+class ProspectsDeleteView(APIView):
+
+    def post(self, request, *args, **kwargs):
+
+        plugin_id = request.data.get('plugin_id')
+        organization_id = request.data.get('organization_id')
+        object_id = request.data.get('_id')
+
+        url = f"https://api.zuri.chat/data/delete"
+        data = {
+            "plugin_id": plugin_id,
+            "organization_id": organization_id,
+            "collection_name": "prospects",
+            "object_id": object_id
+        }
+        response = requests.request("POST", url, data=json.dumps(data))
+        print(response.status_code)
+        if response.status_code == 201:
+            return Response(data={'message': 'successful'}, status=status.HTTP_201_CREATED)
+        return Response(data={"message": "Try again later"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
