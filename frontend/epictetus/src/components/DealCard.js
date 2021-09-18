@@ -15,42 +15,34 @@ const DealCard = ({
   const items = [
     {
       id: 1,
-      name: "",
-      company: "",
-      amount: "",
-      email: "",
+      name: "Crystal",
+      company: "Nigerian Brewery",
+      amount: "6700000",
+      email: "youcametowatch.@get.com",
       category: "prospect",
     },
     {
       id: 2,
-      name: "",
-      company: "",
-      amount: "",
-      email: "",
+      name: "Youhan",
+      company: "NNPC",
+      amount: "1B",
+      email: "youcametowatch.@get.com",
       category: "proposal",
     },
     {
       id: 3,
-      name: "",
-      email: "",
-      company: "",
-      amount: "",
+      name: "Frranks",
+      email: "youcametowatch.@get.com",
+      company: "JONSON'S INC",
+      amount: "500,000",
       category: "negotiation",
     },
     {
       id: 4,
-      name: "",
-      email: "",
-      company: "",
-      amount: "",
-      category: "closed",
-    },
-    {
-      id: 5,
-      name: "",
-      email: "",
-      company: "",
-      amount: "",
+      name: "Klly",
+      email: "youcametowatch.@get.com",
+      company: "Thytt trbi",
+      amount: "10,000",
       category: "closed",
     },
   ];
@@ -61,7 +53,7 @@ const DealCard = ({
       {items.map((item) => {
         const { id, name, company, amount, email, category } = item;
 
-        
+        if (data === category){
           return (
             <div
               key={id}
@@ -85,7 +77,9 @@ const DealCard = ({
               </div>
             </div>
           );
-        
+          } else {
+            return []
+          }
       })}
     </>
   );

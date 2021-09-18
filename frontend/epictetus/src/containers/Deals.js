@@ -1,118 +1,46 @@
-import React, { useState } from 'react'
-import Button from '../components/Button'
-import DealCard from '../components/DealCard'
-import Input from '../components/Input'
-import Modal from '../components/Modal'
-import Select from '../components/Select'
-import FilterDeal from '../components/FilterDeal'
-import FilterDeals from '../components/FilterDeals'
-import FilterButton from '../components/FilterButton'
-
-function Deals() {
-    const [open, setOpen] = useState(false)
-    const handleOpenModal = () => setOpen(true)
-    const handleCloseModal = () => setOpen(false)
-
-    const [toggle, setopen] = useState(false)
-    const OpenModal = () => setopen(true)
-    const CloseModal = () => setopen(false)
-
-    return (
-        <div className="p-6">
-
-             <div className="flex gap-2 justify-end">
-                  <FilterButton onClick={OpenModal}>Filter</FilterButton>
-                  <Button onClick={handleOpenModal}>Create New</Button>
-           </div>
-
-           <Modal
-            title="Filter deal"
-            description="Filter deal to quickly find your prospects on the deal pipeline. 
-            You can filter by one or more criteria."
-            open={toggle} closeModal={CloseModal}>
-            <div className="w-full mt-6">
-                <FilterDeals/>
-                <FilterDeal/>
-            </div>
-           
-            <form className=" relative top-72 z-50 flex justify-end">
-                <button
-                    type="reset"
-                    className="text-btngreen px-10 py-2 border-none"
-                    onClick={Modal}>
-                    Reset
-                </button>
-                <button
-                    type="submit"
-                    className="bg-primary text-white px-10 py-2 rounded"
-                    onClick={CloseModal}>
-                    Done
-                </button>
-            </form>
-            </Modal>
-
-            <Modal
-                title="Create a Deal"
-                description="Provide information about your deal."
-                open={open} closeModal={handleCloseModal}>
-                <div className="mt-2">
-                    <div>
-                        <label className="block">Name</label>
-                        <Input placeholder="Enter Full Name" />
-                    </div>
-                    <div>
-                        <label className="block">Company</label>
-                        <Input placeholder="Enter Company" />
-                    </div>
-                    <div>
-                        <Select title="stage" label="Deal stage">
-                            <option disabled selected>Select a stage</option>
-                            <option>Active</option>
-                            <option>Closed</option>
-                            <option>Negotiation</option>
-                            <option>Prospect</option>
-                        </Select>
-                    </div>
-                    <div>
-                        <label className="block">Amount</label>
-                        <Input placeholder="Enter Amount" />
-                    </div>
-                </div>
-import React, { useState} from "react";
+import React, { useState, useEffect } from "react";
 // import { X } from 'react-feather'
 import Button from "../components/Button";
 import DealCard from "../components/DealCard";
 import Input from "../components/Input";
 import Modal from "../components/Modal";
 import Select from "../components/Select";
+import {DragDropContext} from 'react-beautiful-dnd'
 
 
-const Deals = (items) => {
+
+const url = "https://sales.zuri.chat/api/v1/deals/create";
+
+const Deals = (data) => {
   const [open, setOpen] = useState(false);
   const handleOpenModal = () => setOpen(true);
-  const handleCloseModal = () => setOpen(false);
+  const [category, setCategory] = useState('');
   const [name, setName] = useState("");
   const [company, setCompany] = useState("");
   const [amount, setAmount] = useState("");
-  const [deals, setDeals] = useState(items)
 
-  const creatDealHandler = (z) => {
-    z.preventDefault()
-    {deals.map((item) => {
-      const {name, company, amount, category}= item
-      if (category === data) {
-        return(
-          setName(name),
-          setCompany(company),
-          setAmount(amount)
-        )
-      }
-    })}
-    setDeals(
-    )
-    console.log(z)
+  const getAddress = async () => {
+    
+    try {
+      const reply = await fetch(url);
+      const yesReply = await reply.json();
+      console.log(yesReply);
+      setName(name);
+      setCompany(company);
+      setAmount(amount);
+      setCategory(category);
+    } catch {
+      console.log(url);
+      setOpen(false);
+    }
   };
+const submitHandler = () => {
 
+}
+  useEffect(() => {
+    submitHandler();
+    
+  }, []);
 
   return (
     <div className="p-6">
@@ -121,56 +49,58 @@ const Deals = (items) => {
         title="Create a Deal"
         description="Provide information about your deal."
         open={open}
-        closeModal={handleCloseModal}
+        closeModal={getAddress}
       >
-        <div className="mt-2">
-          <div>
-            <label className="block">Name</label>
-            <Input
-              type="text"
-              value={name}
-              onChange={(event) => setName(event.target.value)}
-              placeholder="Enter Full Name"
-            />
+        <form onSubmit={getAddress}>
+          <div className="mt-2">
+            <div>
+              <label className="block">Name</label>
+              <Input
+                type="text"
+                value={name}
+                onChange={(event) => setName(event.target.value)}
+                placeholder="Enter Full Name"
+              />
+            </div>
+            <div>
+              <label className="block">Company</label>
+              <Input
+                type="text"
+                value={company}
+                onChange={(event) => setCompany(event.target.value)}
+                placeholder="Enter Company"
+              />
+            </div>
+            <div>
+              <Select title="stage" label="Deal stage">
+                <option>Select a stage</option>
+                <option>Proposal</option>
+                <option>Closed</option>
+                <option>Negotiation</option>
+                <option>Prospect</option>
+              </Select>
+            </div>
+            <div>
+              <label className="block">Amount</label>
+              <Input
+                type="number"
+                value={amount}
+                onChange={(event) => setAmount(event.target.value)}
+                placeholder="Enter Amount"
+              />
+            </div>
           </div>
-          <div>
-            <label className="block">Company</label>
-            <Input
-              type="text"
-              value={company}
-              onChange={(event) => setCompany(event.target.value)}
-              placeholder="Enter Company"
-            />
-          </div>
-          <div>
-            <Select title="stage" label="Deal stage">
-              <option>Select a stage</option>
-              <option>Proposal</option>
-              <option>Closed</option>
-              <option>Negotiation</option>
-              <option>Prospect</option>
-            </Select>
-          </div>
-          <div>
-            <label className="block">Amount</label>
-            <Input
-              type="number"
-              value={amount}
-              onChange={(event) => setAmount(event.target.value)}
-              placeholder="Enter Amount"
-            />
-          </div>
-        </div>
 
-        <div className="mt-4 flex justify-end">
-          <button
-            type="submit"
-            className="bg-primary text-white px-10 py-2"
-            onChange={creatDealHandler}
-          >
-            Create
-          </button>
-        </div>
+          <div className="mt-4 flex justify-end">
+            <button
+              type="submit"
+              className="bg-primary text-white px-10 py-2"
+              onChange={getAddress}
+            >
+              Create
+            </button>
+          </div>
+        </form>
       </Modal>
       <div className="deals-grid">
         <div className="w-max lg:w-full">
