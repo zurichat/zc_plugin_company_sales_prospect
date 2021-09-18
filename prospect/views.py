@@ -74,7 +74,7 @@ class ProspectsListView(APIView):
     def get(self, request, *args, **kwargs):
         # check authentication
         if not isAuthorized(request):
-            return Response(data={"message":"No Authorization or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response(data={"message":"Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
 
         url = "https://api.zuri.chat/data/read/614105b66173056af01b4cca/prospects/613a495f59842c7444fb0246"
         response = requests.request("GET", url)
@@ -133,6 +133,10 @@ class ProspectsCreateView(APIView):
     queryset = None
 
     def post(self, request, *args, **kwargs):
+        # check authentication
+        if not isAuthorized(request):
+            return Response(data={"message":"Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
+
         url = "https://api.zuri.chat/data/write"
         name = request.data['name']
         email = request.data['email']
@@ -201,6 +205,9 @@ class ProspectsUpdateView(APIView):
 class ProspectsDeleteView(APIView):
 
     def post(self, request, *args, **kwargs):
+        # check authentication
+        if not isAuthorized(request):
+            return Response(data={"message":"Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
 
         plugin_id = request.data.get('plugin_id')
         organization_id = request.data.get('organization_id')
