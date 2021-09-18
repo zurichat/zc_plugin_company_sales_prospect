@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     #third party apps
     'rest_framework',    
     'drf_spectacular',
+    "corsheaders",
     #local apps
     "deals",
     "prospect",
@@ -49,12 +50,16 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "corsheaders.middleware.CorsMiddleware", # CORS
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+CORS_ALLOW_ALL_ORIGINS = True
 
 REST_FRAMEWORK = {'DEFAULT_SCHEMA_CLASS':'rest_framework.schemas.coreapi.AutoSchema' }
 
@@ -63,7 +68,12 @@ ROOT_URLCONF = 'prospectapp.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR,'frontend/epictetus/build'), os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [
+            os.path.join(BASE_DIR,'frontend/epictetus/build'),
+            os.path.join(BASE_DIR,'react-spa/dist'),
+            os.path.join(BASE_DIR,'react-spa/epictetus/dist'),
+            os.path.join(BASE_DIR, 'templates')
+            ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
