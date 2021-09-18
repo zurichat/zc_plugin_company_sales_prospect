@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // import { X } from 'react-feather'
 import Button from "../components/Button";
 import DealCard from "../components/DealCard";
@@ -28,7 +28,13 @@ const Deals = (data, key, index) => {
 
     console.log(name);
   };
+const submitHandler = () => {
 
+}
+  useEffect(() => {
+    submitHandler();
+    
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
