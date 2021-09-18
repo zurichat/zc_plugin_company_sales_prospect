@@ -28,6 +28,7 @@ const Deals = (data, key, index) => {
 
     console.log(name);
   };
+const submitHandler = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
