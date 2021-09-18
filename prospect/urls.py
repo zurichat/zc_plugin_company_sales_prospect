@@ -6,7 +6,7 @@ from .views import (
     ProspectsCreateView,
     welcome,
     ProspectsListView,
-    ProspectsDeleteView
+    ProspectsDeleteView,
 )
 
 
