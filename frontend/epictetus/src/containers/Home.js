@@ -77,7 +77,7 @@ function Home(props) {
                 required: "Name of sector is required",
               })}
             >
-              <option disabled selected>
+              <option>
                 Select
               </option>
               <option>Technology</option>
@@ -95,7 +95,7 @@ function Home(props) {
                 required: "Name of role in company is required",
               })}
             >
-              <option disabled selected>
+              <option>
                 Select position
               </option>
               <option>Executive</option>

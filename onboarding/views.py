@@ -11,7 +11,7 @@ class OnboardingListView(APIView):
     queryset = None
 
     def get(self, request, *args, **kwargs):
-        url = "https://api.zuri.chat/data/read/613b677d41f5856617552f1e/user_profile/613a495f59842c7444fb0246"
+        url = "https://api.zuri.chat/data/read/613b677d41f5856617552f1e/users/613a495f59842c7444fb0246"
         response = requests.request("GET", url)
         print(response.status_code)
         if response.status_code == 200:
@@ -34,7 +34,7 @@ class OnboardingCreateView(APIView):
         data = {
             "plugin_id": "613b677d41f5856617552f1e",
             "organization_id": "613a495f59842c7444fb0246",
-            "collection_name": "user_profile",
+            "collection_name": "users",
             "bulk_write": False,
             "payload": {
                 "company": company,
