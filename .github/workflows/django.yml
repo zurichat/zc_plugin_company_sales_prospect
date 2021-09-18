@@ -1,8 +1,8 @@
 name: Django CI
 
 on:
-  #push:
-  #branches: [ dev ]
+  push:
+    branches: [ dev ]
   workflow_dispatch:
 
 
@@ -24,13 +24,18 @@ jobs:
         script: |
           cd /var/www/zc_plugin_company_sales_prospect
           git checkout dev
+          git stash
           git pull
           pip install -r requirements.txt
-          cd frontend/epictetus
+          cd react-spa/epictetus
           yarn install
           yarn build
-          #python manage.py migrate
-          #python manage.py runserver
+          cd ../../frontend/epictetus
+          yarn install
+          yarn build
+
+          python manage.py migrate
+          python manage.py runserver
           #- name: Run Tests
           #run: |
           #python manage.py test
