@@ -71,6 +71,7 @@ TEMPLATES = [
         'DIRS': [
             os.path.join(BASE_DIR,'frontend/epictetus/build'),
             os.path.join(BASE_DIR,'react-spa/dist'),
+            os.path.join(BASE_DIR,'react-spa/epictetus/dist'),
             os.path.join(BASE_DIR, 'templates')
             ],
         'APP_DIRS': True,
@@ -142,7 +143,6 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR,'frontend/epictetus/build/static'),
-    os.path.join(BASE_DIR,'react-spa/epictetus/dist'),
     os.path.join(BASE_DIR, 'static')
 ]
 
