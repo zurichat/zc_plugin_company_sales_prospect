@@ -28,12 +28,9 @@ const Deals = (data, key, index) => {
 
     console.log(name);
   };
-const submitHandler = () => {
-
-}
+  const submitHandler = () => {};
   useEffect(() => {
     submitHandler();
-    
   }, []);
 
   const handleSubmit = (e) => {
