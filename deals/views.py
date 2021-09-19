@@ -108,6 +108,25 @@ class DealsListView(APIView):
         return Response(data={"message":"Try again later"}, status=st.HTTP_500_INTERNAL_SERVER_ERROR) 
 
 
+class DealsStageListView(APIView):
+    """
+    Returns the available deals by the stage they are in the pipeline.
+    """
+
+    serializer_class = DealSerializer
+    queryset = None
+
+    def get(self, request, *args, **kwargs):
+
+        url = "https://api.zuri.chat/data/read/613b677d41f5856617552f1e/deals/613a495f59842c7444fb0246/"
+        response = requests.request("GET", url)
+        r = response.json()
+        if response.status_code == 200:
+            output_data = [data for data in r['data'] if data['deal_stage'] == kwargs['stage']]
+            return Response(data=output_data, status=st.HTTP_200_OK)
+        return Response(data={"message":"Try again later"}, status=st.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
 # Added detail view
 class DealsDetailView(APIView):
     serializer_class = DealSerializer
