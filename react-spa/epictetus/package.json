@@ -63,7 +63,11 @@
     "redux": "^4.1.1",
     "shelljs": "^0.8.4",
     "single-spa-react": "^4.3.1",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.9"
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.9",
+    "sweetalert2": "^11.1.5",
+    "react-hook-form": "^7.15.3",
+    "@hookform/resolvers": "^2.8.0",
+    "yup": "^0.32.9"
   },
   "pluginDomain": "https://sales.zuri.chat"
 }

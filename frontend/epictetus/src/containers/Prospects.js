@@ -1,15 +1,53 @@
 import React, { useEffect, useState } from 'react'
 import Button from '../components/Button'
-import Input from '../components/Input'
+// import Input from '../components/Input'
 import Modal from '../components/Modal'
 import ProspectRow from '../components/ProspectRow'
 import { ChevronLeft, ChevronRight } from "react-feather";
-import Select from '../components/Select'
+// import Select from '../components/Select'
 import customAxios, { createProspectURL, editProspectURL, prospectsURL } from '../axios';
 import FileIcon from '../components/svg/FileIcon'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 import { doesProspectExist, formatPropsects } from '../utils'
 import Loader from "../components/svg/Loader.svg";
+import Swal from 'sweetalert2'
+// import { useForm } from "react-hook-form";
+// import { yupResolver } from '@hookform/resolvers/yup';
+// import * as yup from "yup";
+
+// const schema = yup.object().shape({
+//   name: yup.string().required(),
+//   email: yup.string().required(),
+//   phone_number: yup.string().required(),
+//   deal_stage: yup.string().required(),
+// });
+// const { register,handleSubmit, formState: { errors }, } = useForm({resolver: yupResolver(schema)});
+
+function Input({ title, label, placeholder, required, disabled = false, id }) {
+    return (
+        <div className="mb-6">
+            <label className=" mb-2 block font-bold text-base" htmlFor={title}>
+                {label}
+            </label>
+            <input className="border border-gray-500 outline-none placeholder-gray-400 rounded-sm h-12  w-full px-5 focus:border-primary" id={id} type="text" placeholder={placeholder} disabled={disabled} />
+        </div>
+    )
+}
+
+function Select({ id, title, label, children, required, disabled }) {
+    return (
+        <div className="mb-6" id={title}>
+            <label className=" mb-2 block font-bold text-base" htmlFor={title}>
+                {label}
+            </label>
+
+            <select id={id} required className="border border-gray-500 text-gray-400 outline-none rounded-sm px-5 h-12 w-full  focus:border-primary" disabled={disabled}>
+                {children}
+            </select>
+        </div>
+    )
+}
+
 function Prospects() {
     // const prospects = [
     //     { id: "0", name: "Jane Cooper", email: "jane.cooper@example.com", phone: "09093527277", status: "Prospect" },
@@ -68,7 +106,8 @@ function Prospects() {
         if (!isProspect) {
             customAxios.post(createProspectURL, prospect)
                 .then(r => {
-                    alert("prospects created succesfully")
+                    // alert("prospects created succesfully")
+                    Swal.fire({ text: 'Contact created successfully', icon: 'success', showCancelButton: false, })
                     handleCloseModal()
                     customAxios.get(prospectsURL)
                         .then(r => setProspects(formatPropsects(r.data)))
@@ -76,7 +115,9 @@ function Prospects() {
                 })
                 .catch(e => console.log(e))
         } else {
-            alert("Prospect already exists")
+            // alert("Prospect already exists")
+
+            Swal.fire({ text: 'Contact created successfully', icon: 'warning', showCancelButton: false, })
         }
     }
 
@@ -91,7 +132,7 @@ function Prospects() {
                     .then(r => setProspects(formatPropsects(r.data)))
                     .catch(e => console.log(e.response))
             })
-            // .catch(e => console.log(e))
+        // .catch(e => console.log(e))
     }
 
     const handleChange = ({ target }) => {
@@ -105,13 +146,13 @@ function Prospects() {
     return (
         <div className="p-10 w-screen">
             <div className="flex justify-between items-center">
-                <h3 className="text-2xl font-bold">Prospects</h3>
+                <h3 className="text-2xl font-bold">Contact</h3>
                 <Button onClick={handleOpenModal}>Create New</Button>
             </div>
             {/* CREATE MODAL */}
             <Modal
-                title="Create a Prospect"
-                description="Provide information about your prospects."
+                title="Create a Contact"
+                description="Provide information about your contact."
                 open={open} closeModal={handleCloseModal}>
 
                 <form className="mt-2" onSubmit={handleSubmit}>
@@ -148,8 +189,8 @@ function Prospects() {
 
             {/* EDIT MODAL */}
             <Modal
-                title="Edit Prospect"
-                description="Provide information about your prospects."
+                title="Edit Contact"
+                description="Provide information about your contact."
                 open={open2} closeModal={handleCloseModal}>
                 <form className="mt-2" onSubmit={handleUpdate}>
                     <div>
@@ -278,15 +319,34 @@ function Prospects() {
                             <p className="text-base text-gray-400 text-center">Please wait a while</p>
                         </div>
                         :
-                        <div className="flex w-100 items-center justify-center flex-col text-center pt-32">
-                            <FileIcon />
-                            <p className="max-w-sm py-3 flex-wrap text-gray-400">
-                                Oops! no prospect has been added, create new prospect to view prospect here.
-                            </p>
-                            <div className="text-primary">
-                                <Link to="/test">Test | </Link>{' '}
-                                <Link to="/prospects">Prospects | </Link>{' '}
-                                <Link to="/deals">Deals</Link>
+                        <div className="mt-4">
+                            <div className="overflow-x-auto overflow-y-hidden rounded-md">
+                                <table className="text-left border-gray-100 w-full">
+                                    <thead className="border-b cursor-pointer">
+                                        <tr>
+                                            <th className="px-3 py-4 flex items-center">
+                                                <input className="mr-4" type="checkbox" name="" id="all" />
+                                                <label htmlFor="all">Name</label>
+                                            </th>
+                                            <th className="px-3 py-4">Email</th>
+                                            <th className="px-3 py-4">Phone Number</th>
+                                            <th className="px-3 py-4">All stages</th>
+                                            <th className="px-3 py-4"> Actions </th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                                <div className="flex w-100 items-center justify-center flex-col text-center pt-32">
+                                    <div className="shadow-lg w-96 justify-center flex p-10 flex-col items-center">
+                                        <FileIcon />
+                                        <p className="font-bold text-xl mt-5">You have no contact yet!</p>
+                                        <p className="max-w-sm py-3 flex-wrap text-gray-400">
+                                            Keep track of business transactions with all your contacts in an organised manner. Quickly add a contact to get started.</p>
+                                        <div className="flex">
+                                            <button className="border-primary px-4 rounded-sm text-primary mr-2" onClick={handleCloseModal}>Skip</button>
+                                            <Button outline className="" onClick={handleOpenModal}>Add Contact</Button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>}
                 </>
