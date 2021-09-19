@@ -6,6 +6,7 @@ import Input from "../components/Input";
 import Modal from "../components/Modal";
 import Select from "../components/Select";
 import axios from "axios";
+import Swal from "sweetalert2";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 
 const url = "https://sales.zuri.chat/api/v1/deals/create/";
@@ -30,7 +31,14 @@ const Deals = (data, key, index) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert("Deals Succefull created");
+    Swal.fire({
+      position: "bottom-right",
+      icon: "success",
+      title: "Deals created succefully",
+      showConfirmButton: false,
+      timer: 2000,
+    });
+
     const userInput = {
       id: "id",
       name: name,
@@ -61,7 +69,7 @@ const Deals = (data, key, index) => {
           <form onSubmit={handleSubmit}>
             <div className="mt-2">
               <div>
-                <label className="block">Name</label>
+                <label className="block font-bold">Name</label>
                 <Input
                   type="text"
                   value={name}

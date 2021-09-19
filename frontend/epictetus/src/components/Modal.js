@@ -39,11 +39,11 @@ export default function Modal({ open = false, closeModal, title, children, descr
                   as="h3"
                   className="text-lg font-medium leading-6 text-gray-900 flex justify-between"
                 >
-                  <span>{title}</span>
+                  <span className='font-bold text-2xl text-gray-600'>{title}</span>
                   <span className="cursor-pointer" onClick={closeModal}> <X /> </span>
                 </Dialog.Title>
                 <div className="mt-2">
-                  <p className="text-sm text-gray-500">
+                  <p className="sm mb-4 text-gray-500">
                     {description}
                   </p>
                 </div>
