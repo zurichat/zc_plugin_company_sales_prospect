@@ -28,7 +28,7 @@ const Deals = (data, key, index) => {
 
     console.log(name);
   };
-  const submitHandler = () => {};
+  
   useEffect(() => {
     const handleSubmit = async () => {
       const request = await axios.get(url);
@@ -41,31 +41,6 @@ const Deals = (data, key, index) => {
     handleSubmit()
     console.log(name)
   }, [url]);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    Swal.fire({
-      position: "bottom-right",
-      icon: "success",
-      title: "Deals created succefully",
-      showConfirmButton: false,
-      timer: 2000,
-    });
-
-    const userInput = {
-      id: "id",
-      name: name,
-      company: company,
-      amount: amount,
-      deal_stage: category,
-    };
-    axios.post(url, userInput).then((response) => {
-      return userStuff(response);
-    });
-    setOpen(false);
-  };
-
-  useEffect(() => {}, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -188,18 +163,7 @@ const Deals = (data, key, index) => {
               </div>
               <div className="grid grid-cols-4 border border-t-0 border-gray-300 rounded h-screen2">
                 <div className="text-center border-r border-gray-300 rounded py-2 overflow-x-auto">
-                  <DealCard data={"prospect"} />
-                  {/* <div className='grid items-center bg-green-300 h-40 text-2xl text-white rounded'>
-                    Deal created successfully!!!
-                    <img src='' alt='success icon'/>
-                  </div> */}
-                  <Modal
-                    title="Deal created Successfully"
-                    description={img}
-                    open={false}
-                  >
-                    <p>sucadklssssjjjjjjjjjj</p>
-                  </Modal>
+                  <DealCard data={"propects"} />
                 </div>
                 <div className="text-center border-r border-gray-300 rounded py-2 overflow-x-auto">
                   <DealCard data={"proposal"} />
