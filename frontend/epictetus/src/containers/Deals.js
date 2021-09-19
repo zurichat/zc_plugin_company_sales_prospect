@@ -5,6 +5,7 @@ import DealCard from "../components/DealCard";
 import Input from "../components/Input";
 import Modal from "../components/Modal";
 import Select from "../components/Select";
+import axios from "axios";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 
 const url = "https://sales.zuri.chat/api/v1/deals/create";
@@ -17,28 +18,27 @@ const Deals = (data, key, index) => {
   const [company, setCompany] = useState("");
   const [amount, setAmount] = useState("");
 
-  const getAddress = async () => {
-    try {
-      const reply = await fetch(url);
-      const yesReply = await reply.json();
-      console.log(yesReply);
-      setName(name);
-      setCompany(company);
-      setAmount(amount);
-      setCategory(category);
-    } catch {
-      console.log(url);
-      setOpen(false);
-    }
-  };
-  const submitHandler = () => {};
-  useEffect(() => {
-    submitHandler();
-  }, []);
+const handleSubmit = (z) => {
+  z.preventDefault()
+  setOpen(false)
+}
 
-  function handleOnDragEnd(result) {
-    
-  }
+  useEffect(() => {
+    const handleSubmit = async () => {
+      const request = await axios.get(url);
+      setName(request.name);
+       setCompany(request.company);
+      setAmount(request.amount);
+      setCategory(request.category)
+      return request
+    };
+    handleSubmit()
+    console.log(name)
+  }, [url]);
+
+
+
+  function handleOnDragEnd(result) {}
 
   return (
     <DragDropContext onDragEnd={handleOnDragEnd}>
@@ -48,9 +48,9 @@ const Deals = (data, key, index) => {
           title="Create a Deal"
           description="Provide information about your deal."
           open={open}
-          closeModal={getAddress}
+          closeModal={handleSubmit}
         >
-          <form onSubmit={getAddress}>
+          <form onSubmit={handleSubmit}>
             <div className="mt-2">
               <div>
                 <label className="block">Name</label>
@@ -94,7 +94,7 @@ const Deals = (data, key, index) => {
               <button
                 type="submit"
                 className="bg-primary text-white px-10 py-2"
-                onChange={getAddress}
+                onChange={handleSubmit}
               >
                 Create
               </button>

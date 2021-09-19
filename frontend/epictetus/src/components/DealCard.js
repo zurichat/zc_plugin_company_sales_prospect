@@ -3,11 +3,7 @@ import avatar from "../avatar.svg";
 import { FileText, MoreVertical } from "react-feather";
 import { Draggable } from "react-beautiful-dnd";
 
-const DealCard = ({
-  data,
-
-}) => {
-
+const DealCard = ({ data }) => {
   const items = [
     {
       id: "head 88",
