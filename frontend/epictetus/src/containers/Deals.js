@@ -8,7 +8,7 @@ import Select from "../components/Select";
 import axios from "axios";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 
-const url = "https://sales.zuri.chat/api/v1/deals/create";
+const url = "https://sales.zuri.chat/api/v1/deals/create/";
 
 const Deals = (data, key, index) => {
   const [open, setOpen] = useState(false);
@@ -17,29 +17,37 @@ const Deals = (data, key, index) => {
   const [name, setName] = useState("");
   const [company, setCompany] = useState("");
   const [amount, setAmount] = useState("");
+  // const [userInputId, setUserInputId] = useState(null);
 
-const handleSubmit = (z) => {
-  z.preventDefault()
-  setOpen(false)
-}
+  const userStuff = (response) => {
+    setName({ userInputId: response.name });
+    setCompany({ userInputId: response.company });
+    setAmount({ userInputId: response.amount });
+    setCategory({ userInputId: response.category });
 
-  useEffect(() => {
-    const handleSubmit = async () => {
-      const request = await axios.get(url);
-      setName(request.name);
-       setCompany(request.company);
-      setAmount(request.amount);
-      setCategory(request.category)
-      return request
+    console.log(name);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    alert("Deals Succefull created");
+    const userInput = {
+      id: "id",
+      name: name,
+      company: company,
+      amount: amount,
+      deal_stage: category,
     };
-    handleSubmit()
-    console.log(name)
-  }, [url]);
+    axios.post(url, userInput).then((response) => {
+      return userStuff(response), console.log(response);
+    });
+    setOpen(false);
+  };
 
-
+  useEffect(() => {}, []);
 
   function handleOnDragEnd(result) {}
-
+  const img = <image src="" />;
   return (
     <DragDropContext onDragEnd={handleOnDragEnd}>
       <div className="p-6">
@@ -94,7 +102,7 @@ const handleSubmit = (z) => {
               <button
                 type="submit"
                 className="bg-primary text-white px-10 py-2"
-                onChange={handleSubmit}
+                onClick={handleSubmit}
               >
                 Create
               </button>
@@ -137,6 +145,17 @@ const handleSubmit = (z) => {
               <div className="grid grid-cols-4 border border-t-0 border-gray-300 rounded h-screen2">
                 <div className="text-center border-r border-gray-300 rounded py-2 overflow-x-auto">
                   <DealCard data={"prospect"} />
+                  {/* <div className='grid items-center bg-green-300 h-40 text-2xl text-white rounded'>
+                    Deal created successfully!!!
+                    <img src='' alt='success icon'/>
+                  </div> */}
+                  <Modal
+                    title="Deal created Successfully"
+                    description={img}
+                    open={false}
+                  >
+                    <p>sucadklssssjjjjjjjjjj</p>
+                  </Modal>
                 </div>
                 <div className="text-center border-r border-gray-300 rounded py-2 overflow-x-auto">
                   <DealCard data={"proposal"} />
