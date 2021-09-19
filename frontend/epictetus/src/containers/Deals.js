@@ -44,7 +44,14 @@ const Deals = (data, key, index) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert("Deals Succefull created");
+    Swal.fire({
+      position: "bottom-right",
+      icon: "success",
+      title: "Deals created succefully",
+      showConfirmButton: false,
+      timer: 2000,
+    });
+
     const userInput = {
       id: "id",
       name: name,
