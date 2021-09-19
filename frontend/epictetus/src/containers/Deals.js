@@ -53,7 +53,7 @@ const Deals = (data, key, index) => {
       deal_stage: category,
     };
     axios.post(url, userInput).then((response) => {
-      return userStuff(response), console.log(response);
+      return userStuff(response);
     });
     setOpen(false);
   };
