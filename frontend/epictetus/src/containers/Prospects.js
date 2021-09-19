@@ -84,7 +84,8 @@ function Prospects() {
         id: "",
         name: "",
         phone: "",
-        status: ""
+        status: "",
+        email:""
     });
     const [loading, setLoading] = useState(true);
 
