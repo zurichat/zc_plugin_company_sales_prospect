@@ -72,9 +72,9 @@ class ProspectsListView(APIView):
     queryset = None
 
     def get(self, request, *args, **kwargs):
-        # check authentication
-        if not isAuthorized(request):
-            return Response(data={"message":"Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
+        # # check authentication
+        # if not isAuthorized(request):
+        #     return Response(data={"message":"Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
 
         url = "https://api.zuri.chat/data/read/614105b66173056af01b4cca/prospects/613a495f59842c7444fb0246"
         response = requests.request("GET", url)
@@ -133,9 +133,9 @@ class ProspectsCreateView(APIView):
     queryset = None
 
     def post(self, request, *args, **kwargs):
-        # check authentication
-        if not isAuthorized(request):
-            return Response(data={"message":"Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
+        # # check authentication
+        # if not isAuthorized(request):
+        #     return Response(data={"message":"Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
 
         url = "https://api.zuri.chat/data/write"
         name = request.data['name']
@@ -202,26 +202,24 @@ class ProspectsUpdateView(APIView):
         return Response(data={"message": "Try again later"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-class ProspectsDeleteView(APIView):
+class ProspectsDeleteView(APIView):     
+        
+    def delete(self, request, id):
+        # # check authentication
+        # if not isAuthorized(request):
+        #     return Response(data={"message":"Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
 
-    def post(self, request, *args, **kwargs):
-        # check authentication
-        if not isAuthorized(request):
-            return Response(data={"message":"Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
-
-        plugin_id = request.data.get('plugin_id')
-        organization_id = request.data.get('organization_id')
-        object_id = request.data.get('_id')
-
-        url = f"https://api.zuri.chat/data/delete"
+        url = "https://api.zuri.chat/data/delete"
         data = {
-            "plugin_id": plugin_id,
-            "organization_id": organization_id,
+            "plugin_id": "614105b66173056af01b4cca",
+            "organization_id": "613a495f59842c7444fb0246",
             "collection_name": "prospects",
-            "object_id": object_id
+            "object_id": id
         }
         response = requests.request("POST", url, data=json.dumps(data))
-        print(response.status_code)
-        if response.status_code == 201:
-            return Response(data={'message': 'successful'}, status=status.HTTP_201_CREATED)
+        r = response.json()
+        if response.status_code == 200:
+            if r["data"]["deleted_count"] == 0:
+                return Response(data={'message': 'There is no prospect with this object id you supplied'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(data={'message': 'successful'}, status=status.HTTP_200_OK)
         return Response(data={"message": "Try again later"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

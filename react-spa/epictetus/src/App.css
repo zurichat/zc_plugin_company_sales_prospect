@@ -49,10 +49,13 @@ button:hover {
     cursor: pointer;
 }
 
+.homeCardCheck{
+    visibility: hidden;
+}
+
 .homeCard {
-    min-width: 187px;
-    min-height: 141px;
-    border: 1px solid #a1a1a1;
+    min-width: 170px;
+    min-height: 120px;
     margin: 25px;
     border-radius: 5px;
 }
@@ -60,6 +63,24 @@ button:hover {
 .homeCard:hover {
     background-color: #f7fffc;
     cursor: pointer;
+}
+.card-input-element:checked + .homeCard {
+   border-color:#00B87C;
+}
+
+.card-input-element:checked + .homeCard .homeCardCheck {
+    visibility: visible;
+ }
+ 
+.others-box{
+    min-width: 170px;
+    min-height: 120px;
+    margin: 25px;
+}
+
+#others-input,
+#others-line{
+    display: none;
 }
 
 #loader {
@@ -71,12 +92,32 @@ button:hover {
     height: 100px;
 }
 
-#role {
+#position {
     display: none;
 }
 
+.box-xs {
+  box-shadow:  0px 1px 44px rgba(64, 64, 64, 0.12);
+}
+
+.mar {
+  margin-left: 550px;
+}
+
+@media only screen and (max-width:1024px) {
+
+  .mar{
+    margin-left: initial;
+  }
+}
+
+@media only screen and (max-width:600px) {
+  .box-xs {
+    box-shadow: none;
+  }
+}
 @media only screen and (max-width: 600px) {
-    #role {
+    #position {
         display: block;
     }
 }
@@ -114,4 +155,12 @@ input[type="checkbox"]:after {
 }
 input[type="checkbox"]:checked:after {
     display: block;
+}
+
+.swal2-validation-message{
+    color: #00B87C !important;
+}
+.swal2-confirm.swal2-styled{
+    background-color: #00B87C !important;
+    display: none !important
 }

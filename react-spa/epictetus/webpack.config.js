@@ -9,7 +9,7 @@ module.exports = (webpackConfigEnv, argv) => {
     argv,
   });
 
-  return  mergeWithRules({
+  return mergeWithRules({
     module: {
       rules: {
         test: "match",
@@ -18,21 +18,30 @@ module.exports = (webpackConfigEnv, argv) => {
     },
   })(defaultConfig, {
     // modify the webpack config however you'd like to by adding to this object
-    module: {
-      rules: [
-        {
-          test: /\.css$/i,
-          use: [
-            require.resolve("style-loader", {
-              paths: [require.resolve("webpack-config-single-spa")],
-            }),
-            require.resolve("css-loader", {
-              paths: [require.resolve("webpack-config-single-spa")],
-            }),
-            "postcss-loader",
-          ],
-        },
-      ],
+    devServer: {
+      historyApiFallback: true,
+      // allowedHosts: ['*'],
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+        "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
+      }
     },
-  });
+  module: {
+    rules: [
+      {
+        test: /\.css$/i,
+        use: [
+          require.resolve("style-loader", {
+            paths: [require.resolve("webpack-config-single-spa")],
+          }),
+          require.resolve("css-loader", {
+            paths: [require.resolve("webpack-config-single-spa")],
+          }),
+          "postcss-loader",
+        ],
+      },
+    ],
+    },
+});
 };

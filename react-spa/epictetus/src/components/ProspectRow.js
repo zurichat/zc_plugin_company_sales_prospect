@@ -4,6 +4,7 @@ import { Trash2, Edit } from "react-feather";
 
 function ProspectRow({ openEditModal, openDeleteModal, prospect }) {
 
+
     return (
         <tr className="hover:bg-gray-100 cursor-pointer">
             <td className="p-3 text-sm font-medium text-gray-900 flex items-center">
@@ -33,7 +34,7 @@ function ProspectRow({ openEditModal, openDeleteModal, prospect }) {
 
             <td className="p-3 text-sm font-medium">
 
-                <span><Edit className="inline-block mr-1 md:mr-5 text-gray-500" onClick={openEditModal} strokeWidth={1} /></span>
+                <span><Edit className="inline-block mr-1 md:mr-5 text-gray-500" onClick={(e)=>openEditModal(e, prospect)} strokeWidth={1} /></span>
                 <span><Trash2 className="inline-block text-gray-500" onClick={openDeleteModal} strokeWidth={1} /></span>
             </td>
         </tr>

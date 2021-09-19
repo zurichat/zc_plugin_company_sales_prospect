@@ -20,8 +20,8 @@ from prospect.views import plugin_registration
 from .info.views import AddUserToRoom, RoomsListView, RemoveUserFromRoom
 from .sidebar.views import *
 from .info import views
-from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
-
+# from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
