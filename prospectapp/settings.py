@@ -66,7 +66,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 
 CORS_ALLOW_HEADERS = default_headers + (
-    'Access-Control-Allow-Origin',
+    'access-control-allow-origin',
     '*'
 )
 
