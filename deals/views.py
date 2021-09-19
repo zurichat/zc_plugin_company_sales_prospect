@@ -118,7 +118,7 @@ class DealsStageListView(APIView):
 
     def get(self, request, *args, **kwargs):
 
-        url = "https://api.zuri.chat/data/read/613b677d41f5856617552f1e/deals/613a495f59842c7444fb0246/"
+        url = "https://api.zuri.chat/data/read/614105b66173056af01b4cca/deals/613a495f59842c7444fb0246"
         response = requests.request("GET", url)
         r = response.json()
         if response.status_code == 200:
@@ -137,11 +137,11 @@ class DealsFilterListView(APIView):
 
     def get(self, request, *args, **kwargs):
 
-        url = "https://api.zuri.chat/data/read/613b677d41f5856617552f1e/deals/613a495f59842c7444fb0246/"
+        url = "https://api.zuri.chat/data/read/614105b66173056af01b4cca/deals/613a495f59842c7444fb0246"
         response = requests.request("GET", url)
         r = response.json()
         if response.status_code == 200:
-            output_data = [data for data in r['data'] if data['name'] == kwargs['filter']]
+            output_data = [data for data in r['data'] if kwargs['filter'].lower() in data['name'].lower()]
             return Response(data=output_data, status=st.HTTP_200_OK)
         return Response(data={"message":"Try again later"}, status=st.HTTP_500_INTERNAL_SERVER_ERROR)
 
