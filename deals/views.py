@@ -127,6 +127,25 @@ class DealsStageListView(APIView):
         return Response(data={"message":"Try again later"}, status=st.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
+class DealsFilterListView(APIView):
+    """
+    Filters existing deals by the provided search criteria. For now, this is limited to just the name field.
+    """
+
+    serializer_class = DealSerializer
+    queryset = None
+
+    def get(self, request, *args, **kwargs):
+
+        url = "https://api.zuri.chat/data/read/613b677d41f5856617552f1e/deals/613a495f59842c7444fb0246/"
+        response = requests.request("GET", url)
+        r = response.json()
+        if response.status_code == 200:
+            output_data = [data for data in r['data'] if data['name'] == kwargs['filter']]
+            return Response(data=output_data, status=st.HTTP_200_OK)
+        return Response(data={"message":"Try again later"}, status=st.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
 # Added detail view
 class DealsDetailView(APIView):
     serializer_class = DealSerializer
