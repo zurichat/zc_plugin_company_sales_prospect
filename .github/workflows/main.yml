@@ -2,8 +2,8 @@ name: Company sales Deployment Pipeline
 
 on:
   # Triggers the workflow on push or pull request events but for the dev branch
-  # push:
-    # branches: [dev]
+  push:
+    branches: [dev]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -49,8 +49,8 @@ jobs:
           password: ${{ secrets.SSH_PASS }}
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
-          localPath: './react-spa/epictetus'
-          remotePath: '/var/www/zc_plugin_company_sales_prospect/react-spa/epictetus'
+          localPath: './react-spa/epictetus/dist/'
+          remotePath: '/var/www/zc_plugin_company_sales_prospect/react-spa/epictetus/dist/'
 
       - name: Copy epictetus folder to server
         uses: Creepios/sftp-action@v1.0.1
@@ -58,7 +58,7 @@ jobs:
           password: ${{ secrets.SSH_PASS }}
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
-          localPath: './frontend/epictetus/'
-          remotePath: '/var/www/zc_plugin_company_sales_prospect/frontend/epictetus/'
+          localPath: './frontend/epictetus/build/'
+          remotePath: '/var/www/zc_plugin_company_sales_prospect/frontend/epictetus/build/'
 
       
