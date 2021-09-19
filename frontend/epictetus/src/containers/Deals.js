@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 // import { X } from 'react-feather'
 import Button from "../components/Button";
 import DealCard from "../components/DealCard";
@@ -28,7 +28,7 @@ const Deals = (data, key, index) => {
 
     console.log(name);
   };
-const submitHandler = () => {
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -53,10 +53,8 @@ const submitHandler = () => {
     setOpen(false);
   };
 
-  useEffect(() => {}, []);
 
   function handleOnDragEnd(result) {}
-  const img = <image src="" />;
   return (
     <DragDropContext onDragEnd={handleOnDragEnd}>
       <div className="p-6">
@@ -173,5 +171,4 @@ const submitHandler = () => {
     </DragDropContext>
   );
 };
-}
 export default Deals;
