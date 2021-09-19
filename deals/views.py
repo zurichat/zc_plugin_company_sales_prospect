@@ -29,21 +29,18 @@ class DealCreateView(APIView):
     queryset = None
     def post(self, request, *args, **kwargs):
         url = "https://api.zuri.chat/data/write"
-        
-        serializer = DealSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
         data = {
                 "plugin_id": "614105b66173056af01b4cca",
                 "organization_id": "613a495f59842c7444fb0246",
                 "collection_name": "deals",
                 "bulk_write": False,
                 "payload": {
-                    "prospect_id":serializer.data.get("prospect_id"),
-                    "name":serializer.data.get("name"),
-                    "deal_stage": serializer.data.get("deal_stage"),
-                    "amount":serializer.data.get("amount"),
-                    "activity":serializer.data.get("activity"),
-                    "description":serializer.data.get("description"),
+                    "prospect_id":request.data.get("prospect_id"),
+                    "name":request.data.get("name"),
+                    "deal_stage": request.data.get("deal_stage"),
+                    "amount":request.data.get("amount"),
+                    "close_date":request.data.get("close_date"),
+                    "description":request.data.get("description"),
                 }
             }
         response = requests.request("POST", url,data=json.dumps(data))
@@ -77,7 +74,7 @@ class DealUpdateView(APIView):
                     "name":request.data.get("name"),
                     "deal_stage": request.data.get("deal_stage"),
                     "amount":request.data.get("amount"),
-                    "activity":request.data.get("activity"),
+                    "close_date":request.data.get("close_date"),
                     "description":request.data.get("description"),
                 }
             }
@@ -86,7 +83,7 @@ class DealUpdateView(APIView):
         print(response.status_code)
         print(r)
         if response.status_code == 200:
-            return Response(data={'message':'successful'}, status=st.HTTP_201_CREATED)
+            return Response(data={'message':'Deal Updated Successfully'}, status=st.HTTP_201_CREATED)
         return Response(data={"message":"Try again later"}, status=st.HTTP_500_INTERNAL_SERVER_ERROR)
       
 class DealsListView(APIView):

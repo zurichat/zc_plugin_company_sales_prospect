@@ -265,9 +265,9 @@
                     "type": "string",
                     "default": "$123456"
                   },
-                  "activity": {
+                  "close_date": {
                     "type": "string",
-                    "default": "Coffee meeting"
+                    "default": "dd-mm-yyyy"
                   },
                   "description": {
                     "type": "string",
@@ -568,9 +568,9 @@
             "type": "string",
             "default": "$123456"
           },
-          "activity": {
+          "close_date": {
             "type": "string",
-            "default": "Coffee metting"
+            "default": "dd-mm-yyyy"
           },
           "description": {
             "type": "string",
