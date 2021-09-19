@@ -49,7 +49,7 @@ function Home(props) {
 
   const onSubmit = (details) => {
     setshowLoader(true);
-    OnboardCompany.then((res)=>{
+    OnboardCompany(details).then((res)=>{
       console.log(res)
     })
       setTimeout(() => {
