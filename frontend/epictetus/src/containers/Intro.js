@@ -9,21 +9,22 @@ function Intro(props) {
         props.history.push("/onboarding");
     }
 
+
     if(window)
     return (
         <div className="flex  flex-col justify-center items-center mt-16 w-full px-5 md:px-10"  >
             <section className=" w-full md:w-5/6">
-               <div className="text-center bg-transparent px-14  md:bg-primary md:text-white text-black py-7 rounded-t-xl h-52 w-full lg:px-7" >
+               <div className="text-center bg-transparent px-14  md:bg-primary md:text-white text-black py-7 rounded-t-xl h-52  pb-24 w-full lg:px-7" >
                     <h2 className=" md:text-center text-left font-bold text-xl tracking-wide" >Sales Prospect Plugin</h2>
                     <h6 className=" md:text-center text-left text-gray-400 md:text-white  md:font-bold">Redefining Sales </h6>
                </div>
 
-               <div className="md:flex flex-col  justify-center hidden md:flex-row z-9 -mt-24 px-5 md:px-10 md:transform md:scale-75  lg:scale-100">
-                   <img src={ActiveProspect} alt="screen" className="shadow-md"/>
-                   <img src={EditDeal} alt="screen" className="shadow-md"/>
-               </div>
+               <div className=" hidden md:flex flex-col justify-center lg:flex-row z-9 -mt-24 md:px-10">
+                   <img src={ActiveProspect} alt="screen" className="m-3 border bg-white border-white shadow-md"/>
+                   <img src={EditDeal} alt="screen" className="m-3 border bg-white border-white shadow-md"/>
+                </div>
                  
-                <div className="flex gap-3  -mt-16  mb-16 justify-center md:hidden">
+                <div className="flex gap-3  mt-16  mb-16 justify-center md:hidden">
                  <img src={ActiveProspectMobile} alt="screen"  className="shadow-md" />
                  <img src={ActiveDealMobile} alt="screen"  className="shadow-md" />
                 </div>
