@@ -6,6 +6,7 @@ env
 .DS_Store
 **/__pycache__/
 venv/
+salesvenv/
 db.sqlite3
 duovenv/
 env/
