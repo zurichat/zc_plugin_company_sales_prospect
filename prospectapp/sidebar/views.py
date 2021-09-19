@@ -9,7 +9,7 @@ import json
 from .json_data import *
 ### api/v1/sidebar?org=5336&user=Devjoseph&token=FGEZJJ-ZFDGB-FDGG
 
-from django.views.static import serve as static_serve
+# from django.views.static import serve as static_serve
 
 @api_view(['GET'])
 def sidebar(request):

@@ -27,7 +27,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -63,12 +63,11 @@ MIDDLEWARE = [
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 
 CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ORIGIN_ALLOW_ALL = True
 
-
-CORS_ALLOW_HEADERS = default_headers + (
-    'access-control-allow-origin',
-    '*'
-)
+# CORS_ALLOW_HEADERS = default_headers + (
+#     'Access-Control-Allow-Origin',
+# )
 
 REST_FRAMEWORK = {'DEFAULT_SCHEMA_CLASS':'rest_framework.schemas.coreapi.AutoSchema' }
 
@@ -78,7 +77,8 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR,'frontend/epictetus/build'),
+            os.path.join(BASE_DIR,'react-spa/dist'), # rootApp
+            # os.path.join(BASE_DIR,'frontend/epictetus/build'),
             os.path.join(BASE_DIR, 'templates')
             ],
         'APP_DIRS': True,
@@ -149,10 +149,10 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR,'frontend/epictetus/build/static'),
-    os.path.join(BASE_DIR, 'static'),
-    os.path.join(BASE_DIR,'react-spa/dist'),
-    os.path.join(BASE_DIR,'react-spa/epictetus/dist'),
+    # os.path.join(BASE_DIR,'frontend/epictetus/build/static'),
+    # os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR,'react-spa/dist'), #root_DIST
+    os.path.join(BASE_DIR,'react-spa/epictetus/dist'), # main_DIST
 ]
 
 
