@@ -154,17 +154,6 @@ const submitHandler = () => {
               <div className="grid grid-cols-4 border border-t-0 border-gray-300 rounded h-screen2">
                 <div className="text-center border-r border-gray-300 rounded py-2 overflow-x-auto">
                   <DealCard data={"prospect"} />
-                  {/* <div className='grid items-center bg-green-300 h-40 text-2xl text-white rounded'>
-                    Deal created successfully!!!
-                    <img src='' alt='success icon'/>
-                  </div> */}
-                  <Modal
-                    title="Deal created Successfully"
-                    description={img}
-                    open={false}
-                  >
-                    <p>sucadklssssjjjjjjjjjj</p>
-                  </Modal>
                 </div>
                 <div className="text-center border-r border-gray-300 rounded py-2 overflow-x-auto">
                   <DealCard data={"proposal"} />
