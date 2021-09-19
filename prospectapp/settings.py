@@ -67,6 +67,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 CORS_ALLOW_HEADERS = default_headers + (
     'Access-Control-Allow-Origin',
+    '*'
 )
 
 REST_FRAMEWORK = {'DEFAULT_SCHEMA_CLASS':'rest_framework.schemas.coreapi.AutoSchema' }
