@@ -49,13 +49,9 @@ button:hover {
     cursor: pointer;
 }
 
-.homeCardCheck{
-    visibility: hidden;
-}
-
 .homeCard {
-    min-width: 170px;
-    min-height: 120px;
+    min-width: 187px;
+    min-height: 130px;
     margin: 25px;
     border-radius: 5px;
 }
@@ -64,17 +60,10 @@ button:hover {
     background-color: #f7fffc;
     cursor: pointer;
 }
-.card-input-element:checked + .homeCard {
-   border-color:#00B87C;
-}
 
-.card-input-element:checked + .homeCard .homeCardCheck {
-    visibility: visible;
- }
- 
 .others-box{
-    min-width: 170px;
-    min-height: 120px;
+    min-width: 187px;
+    min-height: 130px;
     margin: 25px;
 }
 
@@ -92,7 +81,7 @@ button:hover {
     height: 100px;
 }
 
-#position {
+#role {
     display: none;
 }
 
@@ -117,7 +106,7 @@ button:hover {
   }
 }
 @media only screen and (max-width: 600px) {
-    #position {
+    #role {
         display: block;
     }
 }

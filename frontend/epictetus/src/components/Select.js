@@ -1,14 +1,14 @@
 import React from 'react';
 import '../App.css'
 
-export default function Select({ title, label, children,register,required }) {
+export default function Select({ title, label, children, onChange, id, value }) {
     return (
         <div className="mb-6" id={title}>
             <label className=" mb-2 block font-bold text-base" htmlFor={title}>
                 {label}
             </label>
 
-            <select className="border border-gray-500 text-gray-400 outline-none rounded-sm px-5 h-12 w-full  focus:border-primary" {...register(title, { required })}>
+            <select value={value} required id={id} onChange={onChange} className="border border-gray-500 text-gray-400 outline-none rounded-sm px-5 h-12 w-full  focus:border-primary">
                 {children}
             </select>
         </div>

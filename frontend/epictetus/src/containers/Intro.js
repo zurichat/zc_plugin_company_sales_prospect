@@ -16,11 +16,11 @@ function Intro(props) {
                     <h6 className=" text-center font-bold">Redefining Sales </h6>
                </div>
                <div className="flex flex-col justify-center lg:flex-row z-9 -mt-24 px-5 md:px-10">
-                   <img src={ActiveProspect} alt="screen" className="m-3 border bg-white border-white shadow-md"/>
-                   <img src={EditDeal} alt="screen" className="m-3 border bg-white border-white shadow-md"/>
+                   <img src={ActiveProspect} alt="screen" className="shadow-md"/>
+                   <img src={EditDeal} alt="screen" className="shadow-md"/>
                </div>
             </section>
-            <section className=" w-5/6 md:w-4/6 lg:w-1/2 text-left mx-auto mt-8">
+            <section className=" w-5/6 md:w-4/6 lg:w-1/2 text-left mx-auto mt-12">
                     <h2 className="text-black text-lg my-2.5 font-semibold">
                       Redefining sales management in your work space
                     </h2>
