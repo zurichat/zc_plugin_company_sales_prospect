@@ -20,4 +20,4 @@ const customAxios = axios.create({
     baseURL: API_ENDPOINT
 })
 
-export default customAxios;
+export default customAxios
