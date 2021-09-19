@@ -15,7 +15,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import OnboardCompany from "../context/OnboardingContext";
-import { SkipBack } from "react-feather";
+import { ArrowLeft } from "react-feather";
 
 const schema = yup.object().shape({
   company: yup.string().required(),
@@ -234,9 +234,9 @@ function Home(props) {
           <p className="error text-red-500 text-xs mb-2 -mt-3 capitalize px-5">{errors.position?.message}</p>
           {(document.getElementsByClassName("error")) ? (<button
             onClick={showPageOne}
-            className="flex absolute right-96 bottom-5 block w-36 bg-primary p-3 text-white rounded-sm border-primary  hover:bg-green-300" 
+            className="flex absolute right-96 bottom-5 block w-36 bg-white p-3 text-primary rounded-sm border-primary  hover:bg-green-300 hover:text-white" 
           >
-           <SkipBack/>&nbsp; First page 
+           <ArrowLeft />&nbsp; Previous
           </button>) : null}
           <button
             type="submit"
