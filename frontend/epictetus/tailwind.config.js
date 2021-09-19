@@ -15,6 +15,10 @@ module.exports = {
       red: colors.rose,
       yellow: colors.amber,
       green: colors.green,
+      btngreen: "#00B87C",
+      phblack: "#535353",
+      graay:"#F6F6F6",
+      grey:"#A1A1A1",
       primary: {
         DEFAULT: "#00B87C",
         light: "#E2FFF5"
@@ -58,6 +62,12 @@ module.exports = {
       'leading-normal': '1.5rem',
       'leading-relaxed': '1.625rem',
       'leading-loose': '2rem',
+     },
+     height: {
+      sm: '8px',
+      lgcd: '208px',
+      lgx2: '660px',
+      xl: '57px',
      },
     variants: {
       extend: {},

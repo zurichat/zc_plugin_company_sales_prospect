@@ -11,7 +11,7 @@
     "check-format": "prettier --check .",
     "test": "cross-env BABEL_ENV=test jest",
     "watch-tests": "cross-env BABEL_ENV=test jest --watch",
-    "prepare": "husky install",
+    
     "coverage": "cross-env BABEL_ENV=test jest --coverage"
   },
   "devDependencies": {
@@ -31,7 +31,7 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-config-react-important-stuff": "^3.0.0",
     "eslint-plugin-prettier": "^3.4.1",
-    "husky": "^7.0.2",
+
     "identity-obj-proxy": "^3.0.0",
     "jest": "^27.0.6",
     "jest-cli": "^27.0.6",
@@ -63,7 +63,11 @@
     "redux": "^4.1.1",
     "shelljs": "^0.8.4",
     "single-spa-react": "^4.3.1",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.9"
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.9",
+    "sweetalert2": "^11.1.5",
+    "react-hook-form": "^7.15.3",
+    "@hookform/resolvers": "^2.8.0",
+    "yup": "^0.32.9"
   },
   "pluginDomain": "https://sales.zuri.chat"
 }

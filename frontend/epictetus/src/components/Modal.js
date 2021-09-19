@@ -34,7 +34,7 @@ export default function Modal({ open = false, closeModal, title, children, descr
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left transition-all transform bg-white">
+              <div className="block m-auto h-lgx2 w-full max-w-md p-6 my-8 overflow-hidden text-left transition-all transform bg-white">
                 <Dialog.Title
                   as="h3"
                   className="text-lg font-medium leading-6 text-gray-900 flex justify-between"
