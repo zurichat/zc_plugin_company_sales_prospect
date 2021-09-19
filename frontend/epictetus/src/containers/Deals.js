@@ -30,8 +30,19 @@ const Deals = (data, key, index) => {
   };
   const submitHandler = () => {};
   useEffect(() => {
-    submitHandler();
-  }, []);
+    const handleSubmit = async () => {
+      const request = await axios.get(url);
+      setName(request.name);
+       setCompany(request.company);
+      setAmount(request.amount);
+      setCategory(request.category)
+      return request
+    };
+    handleSubmit()
+    console.log(name)
+  }, [url]);
+
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
