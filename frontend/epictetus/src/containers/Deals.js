@@ -38,9 +38,8 @@ const Deals = (data, key, index) => {
       setCategory(request.category)
       return request
     };
-    handleSubmit()
-    console.log(name)
-  }, [url]);
+    handleSubmit();
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
