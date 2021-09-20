@@ -163,7 +163,7 @@ const Deals = (data, key, index) => {
               </div>
               <div className="grid grid-cols-4 border border-t-0 border-gray-300 rounded h-screen2">
                 <div className="text-center border-r border-gray-300 rounded py-2 overflow-x-auto">
-                  <DealCard data={"propects"} />
+                  <DealCard data={"prospects"} />
                 </div>
                 <div className="text-center border-r border-gray-300 rounded py-2 overflow-x-auto">
                   <DealCard data={"proposal"} />

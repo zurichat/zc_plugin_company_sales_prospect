@@ -11,7 +11,7 @@ const DealCard = ({ data }) => {
       company: "Nigerian Brewery",
       amount: "6700000",
       email: "youcametowatch.@get.com",
-      category: "prospect",
+      category: "prospects",
     },
     {
       id: "neck 88",
