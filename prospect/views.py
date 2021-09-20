@@ -72,9 +72,9 @@ class ProspectsListView(APIView):
         print(response.status_code)
         if response.status_code == 200:
             r = response.json()
-            serializer = ProspectSerializer(data=r['data'], many=True)
-            serializer.is_valid(raise_exception=True)
-            return Response(data=serializer.data, status=status.HTTP_200_OK)
+            # serializer = ProspectSerializer(data=r['data'], many=True)
+            # serializer.is_valid(raise_exception=True)
+            return Response(data=r['data'], status=status.HTTP_200_OK)
         return Response(data={"message": "Try again later"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
