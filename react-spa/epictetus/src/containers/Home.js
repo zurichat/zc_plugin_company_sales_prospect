@@ -50,7 +50,7 @@ function Home(props) {
   const onSubmit = (details) => {
     setshowLoader(true);
       setTimeout(() => {
-        props.history.push("/NoProspectsFound");
+        props.history.push("/prospects");
       }, 3000)
     OnboardCompany(details)
   };
