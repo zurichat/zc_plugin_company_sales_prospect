@@ -12,7 +12,7 @@ import Intro from "./containers/Intro";
 
 function App() {
   return (
-    <Router >
+    <Router basename="/sales">
       <div className="App font-lato" >  
         <Header />
         <SubHeader/>
