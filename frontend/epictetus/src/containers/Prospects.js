@@ -29,7 +29,7 @@ function Input({ title, label, placeholder, required, disabled = false, id }) {
             <label className=" mb-2 block font-bold text-base" htmlFor={title}>
                 {label}
             </label>
-            <input className="border border-gray-500 outline-none placeholder-gray-400 rounded-sm h-12  w-full px-5 focus:border-primary" id={id} type="text" placeholder={placeholder} disabled={disabled} />
+            <input className="border border-gray-500 outline-none placeholder-gray-400 rounded-sm h-xl  w-full px-5 focus:border-primary" id={id} type="text" placeholder={placeholder} disabled={disabled} />
         </div>
     )
 }
@@ -41,7 +41,7 @@ function Select({ id, title, label, children, required, disabled }) {
                 {label}
             </label>
 
-            <select id={id} required className="border border-gray-500 text-gray-400 outline-none rounded-sm px-5 h-12 w-full  focus:border-primary" disabled={disabled}>
+            <select id={id} required className="border border-gray-500 text-gray-400 outline-none rounded-sm px-5 h-xl w-full  focus:border-primary" disabled={disabled}>
                 {children}
             </select>
         </div>
