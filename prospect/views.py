@@ -1,4 +1,4 @@
-from rest_framework import generics
+from rest_framework import generics, serializers
 from django.http import JsonResponse
 from django.conf import settings
 from rest_framework.response import Response
@@ -51,7 +51,7 @@ def plugin_registration(request):
 # ORGANISATION_ID = settings.ORGANISATION_ID
 # PLUGIN_NAME = settings.PLUGIN_NAME
 
-class ExampleSerializer(sz.Serializer):
+class ExampleSerializer(serializers.Serializer):
     _id = "plugin id"
     first_name = "John"
     last_name = "Doe"
