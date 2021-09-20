@@ -43,13 +43,25 @@ class DealCreateView(APIView):
                     "description":request.data.get("description"),
                 }
             }
+        
+        urlprospect = "https://api.zuri.chat/data/read/614105b66173056af01b4cca/prospects/613a495f59842c7444fb0246"
+        responseprospect = requests.request("GET", urlprospect)
+        # print(responseprospect.status_code,'here')
+        if(responseprospect.status_code!='200'):
+            prospectdata = responseprospect.json()['data']
+            liste = []
+            prospectid = request.data.get("prospect_id")
+            for i in prospectdata:
+              if (prospectid == i["_id"]):
+                liste.append(i)
+            if len(liste) == 0:
+                 return Response(data={"message":"prospect id you supplied does not exist, please provide a valid prospect id"}, status=st.HTTP_200_OK)
         response = requests.request("POST", url,data=json.dumps(data))
         r = response.json()
-        print(response.status_code)
         # print(r)
         if response.status_code == 201:
             return Response(data={'message':'Created deal object successfully!',"deal_created":r['data']}, status=st.HTTP_201_CREATED)
-        return Response(data={"message":"Creation of deals failed... Try again later."}, status=st.HTTP_500_INTERNAL_SERVER_ERROR)
+        return Response(data={"message":"Creation of deals failed... Try again later."}, status=response.status_code)
 
 class DealUpdateView(APIView):
     """
