@@ -58,3 +58,7 @@ https://sales.zuri.chat/deals/update/{id}/
 ## OTHERS
 https://sales.zuri.chat/api/info/ <br/>
 https://sales.zuri.chat/sidebar
+
+
+<!-- Always toggle isLocal to be the opposite  -->
+<!-- isLocal should be !isLocal when in local -->
