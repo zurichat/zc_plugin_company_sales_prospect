@@ -29,24 +29,13 @@ function Intro(props) {
                  <img src={ActiveDealMobile} alt="screen"  className="shadow-md" />
                 </div>
             </section>
-
-                <section className="md:hidden  text-left">
-                    <p className="text-gray-400 my-2.5 leading-4"> 
-                            This is a work space that redefines sales and  <br/>  customer relationship management. 
-                            It helps you  <br/> track your customer's journey easily and helps your  <br/> team  track thier sales goals efficiently. 
-                            It also  helps  <br/> your company focus more on what matters most  <br/> which is your customers.
-                    </p>
-                    <button className="w-36 bg-primary my-5 p-3 text-white rounded-sm border-primary hover:bg-green-300" onClick={handleClick}>Get Started</button>
-                </section>
-
-            <section className=" w-5/6 md:w-4/6 lg:w-1/2 text-left mx-auto mt-12 hidden  md:block ">
+            <section className=" w-5/6 md:w-4/6 lg:w-1/2 text-left mx-auto mt-8">
                     <h2 className="text-black text-lg my-2.5 font-semibold">
                       Redefining sales management in your work space
                     </h2>
-
-                    <p className="text-gray-400 my-2.5   "> 
+                    <p className="text-gray-400 my-2.5"> 
                         This is a work space that redefines sales and customer relationship <br/> management. 
-                        It helps you track your customer's journey easily and <br/> helps your team track thier sales goals efficiently. 
+                        It helps you track your customer's journey easily and <br/> helps your team track thier sales goals efficiently.
                     </p>
 
                     <p className="text-gray-400 my-2.5">

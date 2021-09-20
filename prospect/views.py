@@ -1,5 +1,4 @@
-from django.db.models.query import QuerySet
-from rest_framework import generics
+from rest_framework import generics, serializers
 from django.http import JsonResponse
 from django.conf import settings
 from rest_framework.response import Response
@@ -17,9 +16,6 @@ from django.core.mail import send_mail
 
 from django.http import HttpResponse
 import requests
-
-from rest_framework import serializers as sz
-from prospect import serializers
 
 
 # Create your views here.
@@ -55,7 +51,7 @@ def plugin_registration(request):
 # ORGANISATION_ID = settings.ORGANISATION_ID
 # PLUGIN_NAME = settings.PLUGIN_NAME
 
-class ExampleSerializer(sz.Serializer):
+class ExampleSerializer(serializers.Serializer):
     _id = "plugin id"
     first_name = "John"
     last_name = "Doe"
@@ -178,14 +174,14 @@ class ProspectsUpdateView(APIView):
         serializer = ProspectSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         data = {
-            "plugin_id": "000000000000000000000000",
-            "organization_id": "612a3a914acf115e685df8e3",
-            "collection_name": "prospect",
-            "bulk_write": False,
-            "object_id": serializer.data.get("_id"),
-            "payload": serializer.data
-        }
-        response = requests.request("POST", url, data=json.dumps(data))
+                "plugin_id": "000000000000000000000000",
+                "organization_id": "612a3a914acf115e685df8e3",
+                "collection_name": "prospects",
+                "bulk_write": False,
+                "object_id":serializer.data.get("_id"),
+                "payload": serializer.data
+            }
+        response = requests.request("POST", url,data=json.dumps(data))
         print(response.status_code)
 
         if response.status_code == 201:
