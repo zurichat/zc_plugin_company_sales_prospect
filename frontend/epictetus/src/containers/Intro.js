@@ -1,24 +1,33 @@
 import React from 'react';
 import ActiveProspect from "../components/svg/ActivePage.svg";
 import EditDeal from "../components/svg/EditDeal.svg";
+import ActiveProspectMobile from "../components/svg/ActiveProspectMobile.svg";
+import ActiveDealMobile from "../components/svg/ActiveDealMobile.svg";
 import "../App.css"
 function Intro(props) {
     const handleClick=()=>{
         props.history.push("/onboarding");
     }
 
+
     if(window)
     return (
         <div className="flex  flex-col justify-center items-center mt-16 w-full px-5 md:px-10"  >
             <section className=" w-full md:w-5/6">
-               <div className="text-center bg-primary text-white py-7 rounded-t-xl h-52 w-full " >
-                    <h2 className=" text-center font-bold text-xl tracking-wide" >Sales Prospect Plugin</h2>
-                    <h6 className=" text-center font-bold">Redefining Sales </h6>
+               <div className="text-center bg-transparent px-14  md:bg-primary md:text-white text-black py-7 rounded-t-xl h-52 md:pb-24 w-full lg:px-7" >
+                    <h2 className=" md:text-center text-left font-bold text-xl tracking-wide" >Sales Prospect Plugin</h2>
+                    <h6 className=" md:text-center text-left text-gray-400 md:text-white  md:font-bold">Redefining Sales </h6>
                </div>
-               <div className="flex flex-col justify-center lg:flex-row z-9 -mt-24 px-5 md:px-10">
+
+               <div className=" hidden md:flex flex-col justify-center lg:flex-row z-9 -mt-24 md:px-10">
                    <img src={ActiveProspect} alt="screen" className="m-3 border bg-white border-white shadow-md"/>
                    <img src={EditDeal} alt="screen" className="m-3 border bg-white border-white shadow-md"/>
-               </div>
+                </div>
+                 
+                <div className="flex gap-3  mt-16  mb-16 justify-center md:hidden">
+                 <img src={ActiveProspectMobile} alt="screen"  className="shadow-md" />
+                 <img src={ActiveDealMobile} alt="screen"  className="shadow-md" />
+                </div>
             </section>
             <section className=" w-5/6 md:w-4/6 lg:w-1/2 text-left mx-auto mt-8">
                     <h2 className="text-black text-lg my-2.5 font-semibold">
