@@ -153,7 +153,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT =  os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [
     # os.path.join(BASE_DIR,'frontend/epictetus/build/static'),
-    # os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'static'),
     os.path.join(BASE_DIR,'react-spa/dist'), #root_DIST
     os.path.join(BASE_DIR,'react-spa/epictetus/dist'), # main_DIST
 ]
