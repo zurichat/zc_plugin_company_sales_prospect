@@ -23,25 +23,25 @@ import Swal from 'sweetalert2'
 // });
 // const { register,handleSubmit, formState: { errors }, } = useForm({resolver: yupResolver(schema)});
 
-function Input({ title, label, placeholder, required, disabled = false, id, onChange }) {
+function Input({ title, label, placeholder, required, disabled = false, id }) {
     return (
         <div className="mb-6">
             <label className=" mb-2 block font-bold text-base" htmlFor={title}>
                 {label}
             </label>
-            <input className="py-3 border border-gray-500 outline-none placeholder-gray-400 rounded-sm h-12  w-full px-5 focus:border-primary" id={id} type="text" placeholder={placeholder} disabled={disabled} onChange={onChange} />
+            <input className="border border-gray-500 outline-none placeholder-gray-400 rounded-sm h-xl  w-full px-5 focus:border-primary" id={id} type="text" placeholder={placeholder} disabled={disabled} />
         </div>
     )
 }
 
-function Select({ id, title, label, children, required, disabled, onChange }) {
+function Select({ id, title, label, children, required, disabled }) {
     return (
         <div className="mb-6" id={title}>
             <label className=" mb-2 block font-bold text-base" htmlFor={title}>
                 {label}
             </label>
 
-            <select id={id} required className="py-3 border border-gray-500 text-gray-400 outline-none rounded-sm px-5 h-12 w-full  focus:border-primary" disabled={disabled} onChange={onChange}>
+            <select id={id} required className="border border-gray-500 text-gray-400 outline-none rounded-sm px-5 h-xl w-full  focus:border-primary" disabled={disabled}>
                 {children}
             </select>
         </div>
@@ -84,8 +84,7 @@ function Prospects() {
         id: "",
         name: "",
         phone: "",
-        status: "",
-        email:""
+        status: ""
     });
     const [loading, setLoading] = useState(true);
 
@@ -118,7 +117,7 @@ function Prospects() {
         } else {
             // alert("Prospect already exists")
 
-            Swal.fire({ text: 'Contact created successfully', icon: 'warningpy-3 ', showCancelButton: false, })
+            Swal.fire({ text: 'Contact created successfully', icon: 'warning', showCancelButton: false, })
         }
     }
 
@@ -312,7 +311,7 @@ function Prospects() {
                 <>
                     {loading ?
                         <div>
-                            <img src={Loader} alt="loader" className="animate-ping" id="loader" />
+                            <img src={Loader} alt="loader" className="animate-spin" id="loader" />
                             <h2 className="font-medium text-2xl text-black-500 text-center">
                                 Loading available prospects
                             </h2>

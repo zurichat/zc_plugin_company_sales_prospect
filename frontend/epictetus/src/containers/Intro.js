@@ -9,43 +9,33 @@ function Intro(props) {
         props.history.push("/onboarding");
     }
 
+
     if(window)
     return (
         <div className="flex  flex-col justify-center items-center mt-16 w-full px-5 md:px-10"  >
             <section className=" w-full md:w-5/6">
-               <div className="text-center bg-transparent px-14  md:bg-primary md:text-white text-black py-7 rounded-t-xl h-52 w-full lg:px-7" >
+               <div className="text-center bg-transparent px-14  md:bg-primary md:text-white text-black py-7 rounded-t-xl h-52 md:pb-24 w-full lg:px-7" >
                     <h2 className=" md:text-center text-left font-bold text-xl tracking-wide" >Sales Prospect Plugin</h2>
                     <h6 className=" md:text-center text-left text-gray-400 md:text-white  md:font-bold">Redefining Sales </h6>
                </div>
 
-               <div className="md:flex flex-col  justify-center hidden md:flex-row z-9 -mt-24 px-5 md:px-10 md:transform md:scale-75  lg:scale-100">
-                   <img src={ActiveProspect} alt="screen" className="shadow-md"/>
-                   <img src={EditDeal} alt="screen" className="shadow-md"/>
-               </div>
+               <div className=" hidden md:flex flex-col justify-center lg:flex-row z-9 -mt-24 md:px-10">
+                   <img src={ActiveProspect} alt="screen" className="m-3 border bg-white border-white shadow-md"/>
+                   <img src={EditDeal} alt="screen" className="m-3 border bg-white border-white shadow-md"/>
+                </div>
                  
-                <div className="flex gap-3  -mt-16  mb-16 justify-center md:hidden">
+                <div className="flex gap-3  mt-16  mb-16 justify-center md:hidden">
                  <img src={ActiveProspectMobile} alt="screen"  className="shadow-md" />
                  <img src={ActiveDealMobile} alt="screen"  className="shadow-md" />
                 </div>
             </section>
-
-                <section className="md:hidden  text-left">
-                    <p className="text-gray-400 my-2.5 leading-4"> 
-                            This is a work space that redefines sales and  <br/>  customer relationship management. 
-                            It helps you  <br/> track your customer's journey easily and helps your  <br/> team  track thier sales goals efficiently. 
-                            It also  helps  <br/> your company focus more on what matters most  <br/> which is your customers.
-                    </p>
-                    <button className="w-36 bg-primary my-5 p-3 text-white rounded-sm border-primary hover:bg-green-300" onClick={handleClick}>Get Started</button>
-                </section>
-
-            <section className=" w-5/6 md:w-4/6 lg:w-1/2 text-left mx-auto mt-12 hidden  md:block ">
+            <section className=" w-5/6 md:w-4/6 lg:w-1/2 text-left mx-auto mt-8">
                     <h2 className="text-black text-lg my-2.5 font-semibold">
                       Redefining sales management in your work space
                     </h2>
-
-                    <p className="text-gray-400 my-2.5   "> 
+                    <p className="text-gray-400 my-2.5"> 
                         This is a work space that redefines sales and customer relationship <br/> management. 
-                        It helps you track your customer's journey easily and <br/> helps your team track thier sales goals efficiently. 
+                        It helps you track your customer's journey easily and <br/> helps your team track thier sales goals efficiently.
                     </p>
 
                     <p className="text-gray-400 my-2.5">
