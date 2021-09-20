@@ -29,7 +29,7 @@ function Input({ title, label, placeholder, required, disabled = false, id }) {
             <label className=" mb-2 block font-bold text-base" htmlFor={title}>
                 {label}
             </label>
-            <input className="border border-gray-500 outline-none placeholder-gray-400 rounded-sm h-12  w-full px-5 focus:border-primary" id={id} type="text" placeholder={placeholder} disabled={disabled} />
+            <input className="border border-gray-500 outline-none placeholder-gray-400 rounded-sm h-12  w-full px-5 focus:border-green" id={id} type="text" placeholder={placeholder} disabled={disabled} />
         </div>
     )
 }
@@ -41,7 +41,7 @@ function Select({ id, title, label, children, required, disabled }) {
                 {label}
             </label>
 
-            <select id={id} required className="border border-gray-500 text-gray-400 outline-none rounded-sm px-5 h-12 w-full  focus:border-primary" disabled={disabled}>
+            <select id={id} required className="border border-gray-500 text-gray-400 outline-none rounded-sm px-5 h-12 w-full  focus:border-green" disabled={disabled}>
                 {children}
             </select>
         </div>
@@ -179,7 +179,7 @@ function Prospects() {
                     </div>
 
                     <div className="mt-4 flex justify-end">
-                        <button type="submit" className="bg-primary text-white px-10 py-2">
+                        <button type="submit" className="bg-green text-white px-10 py-2">
                             Create
                         </button>
                     </div>
@@ -216,7 +216,7 @@ function Prospects() {
                     <div className="mt-4 flex justify-end">
                         <button
                             type="submit"
-                            className="bg-primary text-white px-10 py-2">
+                            className="bg-green text-white px-10 py-2">
                             Edit
                         </button>
                     </div>
@@ -257,7 +257,7 @@ function Prospects() {
                 <div className="mt-4 flex justify-end">
                     <button
                         type="button"
-                        className="text-primary px-10 py-2 mr-2"
+                        className="text-green px-10 py-2 mr-2"
                         onClick={handleCloseModal}>
                         No, Keep
                     </button>
@@ -302,7 +302,7 @@ function Prospects() {
                     <ul className="flex list-none justify-end mt-5">
                         <li className="py-2 px-3"> <ChevronLeft strokeWidth={1} /> </li>
                         <li className="py-2 px-3">Prev</li>
-                        <li className="bg-primary-light text-primary rounded-sm py-2 px-4">2</li>
+                        <li className="bg-green-light text-green rounded-sm py-2 px-4">2</li>
                         <li className="py-2 px-3">Next</li>
                         <li className="py-2 px-3"> <ChevronRight strokeWidth={1} /> </li>
                     </ul>
@@ -342,7 +342,7 @@ function Prospects() {
                                         <p className="max-w-sm py-3 flex-wrap text-gray-400">
                                             Keep track of business transactions with all your contacts in an organised manner. Quickly add a contact to get started.</p>
                                         <div className="flex">
-                                            <button className="border-primary px-4 rounded-sm text-primary mr-2" onClick={handleCloseModal}>Skip</button>
+                                            <button className="border-green px-4 rounded-sm text-green mr-2" onClick={handleCloseModal}>Skip</button>
                                             <Button outline className="" onClick={handleOpenModal}>Add Contact</Button>
                                         </div>
                                     </div>

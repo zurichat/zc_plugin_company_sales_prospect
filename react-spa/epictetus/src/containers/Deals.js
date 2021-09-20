@@ -43,7 +43,7 @@ function Deals() {
                 <div className="mt-4 flex justify-end">
                     <button
                         type="button"
-                        className="bg-primary text-white px-10 py-2"
+                        className="bg-green text-white px-10 py-2"
                         onClick={handleCloseModal}>
                         Create
                     </button>

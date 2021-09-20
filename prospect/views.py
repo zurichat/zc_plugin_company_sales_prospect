@@ -125,10 +125,10 @@ class ProspectsCreateView(APIView):
 
     def post(self, request, *args, **kwargs):
         url = "https://api.zuri.chat/data/write"
-        name = request.data['name']
-        email = request.data['email']
-        phone_number = request.data['phone_number']
-        deal_stage = request.data['deal_stage']
+        name = request.data.get('name')
+        email = request.data.get('email')
+        phone_number = request.data.get('phone_number')
+        deal_stage = request.data.get('deal_stage')
         data = {
             "plugin_id": "614105b66173056af01b4cca",
             "organization_id": "613a495f59842c7444fb0246",
