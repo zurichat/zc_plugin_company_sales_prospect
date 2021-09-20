@@ -14,7 +14,7 @@ function Intro(props) {
     return (
         <div className="flex  flex-col justify-center items-center mt-16 w-full px-5 md:px-10"  >
             <section className=" w-full md:w-5/6">
-               <div className="text-center bg-transparent px-14  md:bg-primary md:text-white text-black py-7 rounded-t-xl h-52  pb-24 w-full lg:px-7" >
+               <div className="text-center bg-transparent px-14  md:bg-primary md:text-white text-black py-7 rounded-t-xl h-52 md:pb-24 w-full lg:px-7" >
                     <h2 className=" md:text-center text-left font-bold text-xl tracking-wide" >Sales Prospect Plugin</h2>
                     <h6 className=" md:text-center text-left text-gray-400 md:text-white  md:font-bold">Redefining Sales </h6>
                </div>
