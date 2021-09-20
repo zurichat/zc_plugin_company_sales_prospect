@@ -26,6 +26,9 @@ jobs:
           cd react-spa/epictetus
           yarn install
           yarn build
+          cd react-spa
+          yarn install
+          yarn build
  
       - name: Copy Main react App folder to server
         uses: Creepios/sftp-action@v1.0.1
