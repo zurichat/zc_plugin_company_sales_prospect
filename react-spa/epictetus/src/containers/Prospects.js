@@ -23,25 +23,25 @@ import Swal from 'sweetalert2'
 // });
 // const { register,handleSubmit, formState: { errors }, } = useForm({resolver: yupResolver(schema)});
 
-function Input({ title, label, placeholder, required, disabled = false, id }) {
+function Input({ title, label, placeholder, required, disabled = false, id, onChange }) {
     return (
         <div className="mb-6">
             <label className=" mb-2 block font-bold text-base" htmlFor={title}>
                 {label}
             </label>
-            <input className="border border-gray-500 outline-none placeholder-gray-400 rounded-sm h-12  w-full px-5 focus:border-green" id={id} type="text" placeholder={placeholder} disabled={disabled} />
+            <input className="border border-gray-500 outline-none placeholder-gray-400 rounded-sm h-12  w-full px-5 focus:border-green" onChange={onChange} id={id} type="text" placeholder={placeholder} disabled={disabled} />
         </div>
     )
 }
 
-function Select({ id, title, label, children, required, disabled }) {
+function Select({ id, title, label, children, required, disabled, onChange }) {
     return (
         <div className="mb-6" id={title}>
             <label className=" mb-2 block font-bold text-base" htmlFor={title}>
                 {label}
             </label>
 
-            <select id={id} required className="border border-gray-500 text-gray-400 outline-none rounded-sm px-5 h-12 w-full  focus:border-green" disabled={disabled}>
+            <select id={id} required className="border border-gray-500 text-gray-400 outline-none rounded-sm px-5 h-12 w-full  focus:border-green" onChange={onChange} disabled={disabled}>
                 {children}
             </select>
         </div>
@@ -107,17 +107,21 @@ function Prospects() {
             customAxios.post(createProspectURL, prospect)
                 .then(r => {
                     // alert("prospects created succesfully")
-                    Swal.fire({ text: 'Contact created successfully', icon: 'success', showCancelButton: false, })
                     handleCloseModal()
-                    customAxios.get(prospectsURL)
-                        .then(r => setProspects(formatPropsects(r.data)))
-                        .catch(e => console.log(e.response))
+                    // customAxios.get(prospectsURL)
+                    //     .then(r => setProspects(formatPropsects(r.data)))
+                    //     .catch(e => console.log(e.response))
+                    setProspects(formatPropsects([...prospects, prospect]))
+                    Swal.fire({ text: 'Contact created successfully', icon: 'success', showCancelButton: false, })
                 })
-                .catch(e => console.log(e))
+                .catch(e => {
+                    console.log(e)
+                    setProspects([...prospects, prospect])
+                })
         } else {
-            // alert("Prospect already exists")
+            alert("Prospect already exists")
 
-            Swal.fire({ text: 'Contact created successfully', icon: 'warning', showCancelButton: false, })
+            // Swal.fire({ text: 'Contact created successfully', icon: 'warning', showCancelButton: false, })
         }
     }
 
