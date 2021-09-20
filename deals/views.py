@@ -141,8 +141,11 @@ class DealsFilterListView(APIView):
         response = requests.request("GET", url)
         r = response.json()
         if response.status_code == 200:
-            output_data = [data for data in r['data'] if kwargs['filter'].lower() in data['name'].lower()]
-            return Response(data=output_data, status=st.HTTP_200_OK)
+            output_data = [data for data in r['data'] if kwargs['filter'].lower() in str(data['name']).lower()]
+            if len(output_data) > 0:
+                return Response(data=output_data, status=st.HTTP_200_OK)
+            else:
+                return Response(data={"message":"There are no deals matching your search"}, status=st.HTTP_404_NOT_FOUND)
         return Response(data={"message":"Try again later"}, status=st.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
