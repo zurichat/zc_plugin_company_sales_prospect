@@ -1,6 +1,8 @@
 import React, {useState, useEffect, useContext} from "react";
 import Modal from "./Modal";
 import {DealsContext} from "../context/Deals/DealContext";
+import Input from "./Input";
+import Select from "./Select";
 
 const EditDeals = ({open, handleCloseModal, id, description, amount, name, stage}) => {
 
@@ -17,7 +19,7 @@ const EditDeals = ({open, handleCloseModal, id, description, amount, name, stage
                     <label className=" mb-2 block font-normal text-base" htmlFor="id">
                         Deal Stage
                     </label>
-                    <select
+                    <Select
                         id="stage"
                         className="border border-gray-500 text-gray-600 outline-none rounded-sm px-5 h-12 w-full mb-4"
                     >
@@ -26,14 +28,14 @@ const EditDeals = ({open, handleCloseModal, id, description, amount, name, stage
                         <option value="Proposal">Proposal</option>
                         <option value="Negotiation">Negotiation</option>
                         <option value="Closed">Closed</option>
-                    </select>
+                    </Select>
                 </div>
 
                 <div>
                     <label htmlFor="amount" className="block mb-2 font-normal text-base">
                         Amount
                     </label>
-                    <input
+                    <Input
                         className="border border-gray-500 outline-none rounded-sm h-12  w-full px-5 mb-4"
                         id="amount"
                         type="text"
@@ -44,7 +46,7 @@ const EditDeals = ({open, handleCloseModal, id, description, amount, name, stage
                     <label htmlFor="date" className="mb-2 block font-normal text-base">
                         Expected Close Date
                     </label>
-                    <input
+                    <Input
                         className="border border-gray-500 outline-none rounded-sm h-12  w-full px-5 mb-4"
                         id="date"
                         type="text"
@@ -56,7 +58,7 @@ const EditDeals = ({open, handleCloseModal, id, description, amount, name, stage
                     <label htmlFor="desc" className="mb-2 block font-normal text-base">
                         Description
                     </label>
-                    <input
+                    <Input
                         className="border border-gray-500 outline-none rounded-sm h-12  w-full px-5 mb-4"
                         id="desc"
                         type="text"

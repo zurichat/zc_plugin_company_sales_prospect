@@ -1,64 +1,118 @@
-import React, {useState, useContext} from 'react'
+import React, {useState} from "react";
 import avatar from "../avatar.svg";
 import { FileText, MoreVertical } from "react-feather";
+import { Draggable } from "react-beautiful-dnd";
+import DealOptions from "./DealOptions";
 import EditDeals from "./EditDeals";
-import DealsOptions from "./DealOptions";
-import {DealsContext} from "../context/Deals/DealContext";
 
+const DealCard = ({ data }) => {
 
-function DealCard({ key, draggableId, index }) {
+  const [open, setOpen] = useState(false);
+  const handleOpenModal = () => setOpen(true);
 
-    const {deals} = useContext(DealsContext);
+  const [open2, setOpen2] = useState(false);
+  const handleOpenModal2 = () => setOpen2(true);
 
-    const [open, setOpen] = useState(false);
-    const handleOpenModal = () => setOpen(true);
+  const handleCloseModal = () => {
+    setOpen(false);
+    setOpen2(false);
+  };
+  const items = [
+    {
+      id: "head 88",
+      name: "Crystal",
+      company: "Nigerian Brewery",
+      amount: "6700000",
+      email: "youcametowatch.@get.com",
+      category: "prospects",
+    },
+    {
+      id: "neck 88",
+      name: "Youhan",
+      company: "NNPC",
+      amount: "1B",
+      email: "youcametowatch.@get.com",
+      category: "proposal",
+    },
+    {
+      id: "k7",
+      name: "Frranks",
+      email: "youcametowatch.@get.com",
+      company: "JONSON'S INC",
+      amount: "500,000",
+      category: "negotiation",
+    },
+    {
+      id: "Ne 42",
+      name: "Naza",
+      email: "youcametowatch.@get.com",
+      company: "JBc LTD",
+      amount: "594540,000",
+      category: "negotiation",
+    },
+    {
+      id: "men 3",
+      name: "Klly",
+      email: "youcametowatch.@get.com",
+      company: "Thytt trbi",
+      amount: "10,000",
+      category: "closed",
+    },
+  ];
 
-    const [open2, setOpen2] = useState(false);
-    const handleOpenModal2 = () => setOpen2(true);
+  return (
+    <>
+      {items.map((item, index) => {
+        const { id, name, company, amount, email, category } = item;
 
-    const handleCloseModal = () => {
-        setOpen(false);
-        setOpen2(false);
-    };
-
-    return (
-
-        <div className="h-36 my-2 mx-4 text-left text-sm border cursor-pointer border-gray-400 p-2">
-            {/* Edit Deals */}
-            <EditDeals
-                open={open}
-                handleCloseModal={handleCloseModal}
-                deals={deals}
-            />
-
-            <div className="flex justify-between items-center">
-                <div className="flex">
-                    <FileText className="w-8 mr-4" strokeWidth={1} />
-                    <span className="font-bold text-lg">Frank's deal </span>
+        if (data === category) {
+          return (
+            <Draggable key={id} draggableId={id} index={index}>
+              {(provided) => (
+                <div
+                  ref={provided.innerRef}
+                  {...provided.draggableProps}
+                  {...provided.dragHandleProps}
+                >
+                  <div
+                    key={id}
+                    className="h-36 my-2 mx-4 text-left text-sm border shadow cursor-pointer border-gray-300 rounded p-2"
+                  >
+                    <div className="flex justify-between items-center">
+                      <div className="flex">
+                        <FileText className="w-8 mr-4" strokeWidth={1} />
+                        <span className="font-bold text-lg">{name} deal </span>
+                      </div>
+                      <DealOptions handleOpenModal={handleOpenModal}/>
+                      <EditDeals
+                          open={open}
+                          handleCloseModal={handleCloseModal}
+                      />
+                    </div>
+                    <div className="flex items-end">
+                      <img src={avatar} alt="avatar" className="w-8 mr-4" />
+                      <span className="mt-2">
+                        <p>{company}</p>
+                        <p className="mb-2">${amount}</p>
+                        <p>{email} </p>
+                        <p>{name}</p>
+                      </span>
+                    </div>
+                  </div>
+                  {provided.placeholder}
                 </div>
-                <DealsOptions
-                    handleOpenModal={handleOpenModal}
-                    handleCloseModal={handleCloseModal}
-                    handleOpenDeleteModal={handleOpenModal2}
-                    handleCloseDeleteModal={handleCloseModal}
-                />
-            </div>
-            <div className="flex items-end">
-                <img src={avatar} alt="avatar" className="w-8 mr-4" />
-                <span className="mt-2">
-                    <p>NNPC</p>
-                    <p className="mb-2">$ 500, 000</p>
-                    <p>frank.dnar@nnpc.com</p>
-                    <p>Frank Dnar</p>
-                </span>
-            </div>
-        </div>
-    )
-}
+              )}
+            </Draggable>
+          );
+        } else {
+          return [];
+        }
+      })}
+    </>
+  );
+};
 
-
-
-// import { Draggable } from 'react-beautiful-dnd';
+//;
 // function DealCard({ key, draggableId, index }) {
 //     return (
 //         <Draggable key={key} draggableId={draggableId} index={index}>
@@ -89,4 +143,4 @@ function DealCard({ key, draggableId, index }) {
 //         </Draggable>
 //     )
 // }
-export default DealCard
+export default DealCard;
