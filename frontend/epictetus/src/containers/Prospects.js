@@ -311,7 +311,7 @@ function Prospects() {
                 <>
                     {loading ?
                         <div>
-                            <img src={Loader} alt="loader" className="animate-ping" id="loader" />
+                            <img src={Loader} alt="loader" className="animate-spin" id="loader" />
                             <h2 className="font-medium text-2xl text-black-500 text-center">
                                 Loading available prospects
                             </h2>
