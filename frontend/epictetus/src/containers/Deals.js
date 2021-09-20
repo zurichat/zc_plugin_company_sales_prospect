@@ -4,12 +4,15 @@ import DealCard from '../components/DealCard'
 import Input from '../components/Input'
 import Modal from '../components/Modal'
 import Select from '../components/Select'
+import {DealsProvider} from "../context/Deals/DealContext";
+
 
 function Deals() {
     const [open, setOpen] = useState(false)
     const handleOpenModal = () => setOpen(true)
     const handleCloseModal = () => setOpen(false)
     return (
+        <DealsProvider>
         <div className="p-6">
             <Button onClick={handleOpenModal}>Create New</Button>
             <Modal
@@ -99,6 +102,7 @@ function Deals() {
                 </div>
             </div>
         </div>
+        </DealsProvider>
     )
 }
 
