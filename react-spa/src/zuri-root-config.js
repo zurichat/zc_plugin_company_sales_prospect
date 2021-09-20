@@ -9,14 +9,14 @@ import { registerApplication, start } from "single-spa";
 //   activeWhen: ["/"],
 // });
 
-registerApplication(
-  "@single-spa/welcome",
-  () =>
-    System.import(
-      "https://unpkg.com/single-spa-welcome/dist/single-spa-welcome.js"
-    ),
-  (location) => location.pathname.endsWith("/")
-);
+// registerApplication(
+//   "@single-spa/welcome",
+//   () =>
+//     System.import(
+//       "https://unpkg.com/single-spa-welcome/dist/single-spa-welcome.js"
+//     ),
+//   (location) => location.pathname.endsWith("/")
+// );
 
 // registerApplication({
 //   name: "@zuri/navbar",
@@ -24,11 +24,32 @@ registerApplication(
 //   activeWhen: ["/"]
 // });
 
-registerApplication({
-  name: "@zuri/zuri-plugin-company-sales-prospects",
-  app: () => System.import("@zuri/zuri-plugin-company-sales-prospects"),
-  activeWhen: ["/sales"],
-});
+// registerApplication({
+//   name: "@zuri/zuri-plugin-company-sales-prospects",
+//   app: () => System.import("//localhost:8200/static/zuri-zuri-plugin-company-sales-prospects.js"),
+//   activeWhen: ["/"],
+// });
+
+customRegister(window.isLocal ? "dev" : "prod");
+
+function customRegister(env) {
+  console.log({ isLocal: window.isLocal, env });
+
+  if (env === "dev") {
+    registerApplication({
+      name: "@zuri/zuri-plugin-company-sales-prospects",
+      app: () => System.import("//localhost:8200/static/zuri-zuri-plugin-company-sales-prospects.js"),
+      activeWhen: ["/"],
+    });
+  } else {
+    registerApplication({
+      name: "@zuri/zuri-plugin-company-sales-prospects",
+      app: () =>
+        System.import("https://sales.zuri.chat/static/zuri-zuri-plugin-company-sales-prospects.js"),
+      activeWhen: ["/"],
+    });
+  }
+}
 
 start({
   urlRerouteOnly: true,

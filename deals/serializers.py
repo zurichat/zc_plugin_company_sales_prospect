@@ -6,6 +6,6 @@ class DealSerializer(serializers.Serializer):
     name= serializers.CharField(max_length=100)
     deal_stage= serializers.CharField(max_length=100)
     amount= serializers.CharField(max_length=100)
-    activity= serializers.CharField(max_length=100)
+    close_date= serializers.CharField(max_length=100, help_text="dd-mm-yyyy")
     description= serializers.CharField(max_length=300)
 

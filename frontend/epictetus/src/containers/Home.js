@@ -49,10 +49,12 @@ function Home(props) {
 
   const onSubmit = (details) => {
     setshowLoader(true);
+    OnboardCompany(details).then((res)=>{
+      console.log(res)
+    })
       setTimeout(() => {
         props.history.push("/prospects");
       }, 3000)
-    OnboardCompany(details)
   };
 
   // const handlePageOne = () =>{
@@ -235,9 +237,9 @@ function Home(props) {
           
           {(document.getElementsByClassName("error")) ? (<button
             onClick={showPageOne}
-            className="flex absolute right-96 bottom-5 block w-36 bg-white p-3 text-primary rounded-sm border-primary  hover:bg-green-300 hover:text-white" 
+            className="flex absolute right-96 bottom-5 block w-36 bg-primary p-3 text-white rounded-sm border-primary  hover:bg-green-300" 
           >
-           <ArrowLeft />&nbsp; Previous
+           <ArrowLeft />&nbsp; Previous 
           </button>) : null}
           <button
             type="submit"

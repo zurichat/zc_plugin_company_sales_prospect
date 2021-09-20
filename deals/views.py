@@ -29,21 +29,18 @@ class DealCreateView(APIView):
     queryset = None
     def post(self, request, *args, **kwargs):
         url = "https://api.zuri.chat/data/write"
-        
-        serializer = DealSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
         data = {
-                "plugin_id": "613b677d41f5856617552f1e",
+                "plugin_id": "614105b66173056af01b4cca",
                 "organization_id": "613a495f59842c7444fb0246",
                 "collection_name": "deals",
                 "bulk_write": False,
                 "payload": {
-                    "prospect_id":serializer.data.get("prospect_id"),
-                    "name":serializer.data.get("name"),
-                    "deal_stage": serializer.data.get("deal_stage"),
-                    "amount":serializer.data.get("amount"),
-                    "activity":serializer.data.get("activity"),
-                    "description":serializer.data.get("description"),
+                    "prospect_id":request.data.get("prospect_id"),
+                    "name":request.data.get("name"),
+                    "deal_stage": request.data.get("deal_stage"),
+                    "amount":request.data.get("amount"),
+                    "close_date":request.data.get("close_date"),
+                    "description":request.data.get("description"),
                 }
             }
         response = requests.request("POST", url,data=json.dumps(data))
@@ -67,24 +64,26 @@ class DealUpdateView(APIView):
         serializer = DealSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         data = {
-                "plugin_id": "613b677d41f5856617552f1e",
+                "plugin_id": "614105b66173056af01b4cca",
                 "organization_id": "613a495f59842c7444fb0246",
                 "collection_name": "deals",
                 "bulk_write": False,
                 "object_id":serializer.data.get("_id"),
                 "payload": {
-                    "prospect_id": serializer.data.get("prospect_id"),
-                    "status": serializer.data.get("status"),
-                    "amount": serializer.data.get("amount"),
-                    "title": serializer.data.get("title")
+                    "prospect_id":request.data.get("prospect_id"),
+                    "name":request.data.get("name"),
+                    "deal_stage": request.data.get("deal_stage"),
+                    "amount":request.data.get("amount"),
+                    "close_date":request.data.get("close_date"),
+                    "description":request.data.get("description"),
                 }
             }
         response = requests.request("PUT", url,data=json.dumps(data))
         r = response.json()
         print(response.status_code)
         print(r)
-        if response.status_code == 201:
-            return Response(data={'message':'successful'}, status=st.HTTP_201_CREATED)
+        if response.status_code == 200:
+            return Response(data={'message':'Deal Updated Successfully'}, status=st.HTTP_201_CREATED)
         return Response(data={"message":"Try again later"}, status=st.HTTP_500_INTERNAL_SERVER_ERROR)
       
 class DealsListView(APIView):
@@ -97,7 +96,7 @@ class DealsListView(APIView):
 
     def get(self, request, *args, **kwargs):
 
-        url = "https://zccore.herokuapp.com/data/read/000000000000000000000000/deals/612a3a914acf115e685df8e3/"
+        url = "https://api.zuri.chat/data/read/614105b66173056af01b4cca/deals/613a495f59842c7444fb0246"
         response = requests.request("GET", url)
         r = response.json()
         print(response.status_code)
@@ -107,6 +106,25 @@ class DealsListView(APIView):
             serializer.is_valid(raise_exception=True)
             return Response(data=serializer.data, status=st.HTTP_200_OK)
         return Response(data={"message":"Try again later"}, status=st.HTTP_500_INTERNAL_SERVER_ERROR) 
+
+
+class DealsStageListView(APIView):
+    """
+    Returns the available deals by the stage they are in the pipeline.
+    """
+
+    serializer_class = DealSerializer
+    queryset = None
+
+    def get(self, request, *args, **kwargs):
+
+        url = "https://api.zuri.chat/data/read/613b677d41f5856617552f1e/deals/613a495f59842c7444fb0246/"
+        response = requests.request("GET", url)
+        r = response.json()
+        if response.status_code == 200:
+            output_data = [data for data in r['data'] if data['deal_stage'] == kwargs['stage']]
+            return Response(data=output_data, status=st.HTTP_200_OK)
+        return Response(data={"message":"Try again later"}, status=st.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 # Added detail view
@@ -144,7 +162,7 @@ class DealsDeleteView(APIView):
         url = "https://api.zuri.chat/data/delete" 
         data = {
             
-                "plugin_id": "613b677d41f5856617552f1e",
+                "plugin_id": "614105b66173056af01b4cca",
                 "organization_id": "613a495f59842c7444fb0246",
                 "collection_name": "deals",
                 "bulk_write": False,
@@ -167,10 +185,10 @@ class DealsDeleteView(APIView):
         return Response(data={"message":"deals deletion fails... Try again later."}, status=response.status_code)
         
         
-        response = requests.request("POST", url, data)
-        r = response.json()
-        print(r.status_code)
-        return Response(data=r.status_code)
+        # response = requests.request("POST", url, data)
+        # r = response.json()
+        # print(r.status_code)
+        # return Response(data=r.status_code)
         #print(response)
         #if response.status_code == 200:
             # serializer = DealSerializer(data=r['data'], many=True)

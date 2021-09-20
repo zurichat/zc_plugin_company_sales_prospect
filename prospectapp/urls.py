@@ -22,6 +22,7 @@ from .sidebar.views import *
 from .info import views
 # from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -39,6 +40,7 @@ urlpatterns = [
     path('api/v1/add-to-room/', AddUserToRoom.as_view()),
     path('api/v1/rooms/', RoomsListView.as_view()),
     path('api/v1/leave-room/', RemoveUserFromRoom.as_view()),
+    path("deals/", include("deals.urls")),
 
     # DOCUMENTATION
     # path('api/v1/schema/', SpectacularAPIView.as_view(), name='schema'),
@@ -47,5 +49,8 @@ urlpatterns = [
     path('api/v1/docs/', TemplateView.as_view(template_name='swagger.html', extra_context={'schema_url':'openapi-schema'}), name='swagger-ui'),
 ]
 
+# urlpatterns += static("zuri-root-config.js", document_root="react-spa/dist/zuri-root-config.js")
+# urlpatterns += static("/static/zuri-zuri-plugin-company-sales-prospects.js", document_root="react-spa/epictetus/dist/zuri-zuri-plugin-company-sales-prospects.js")
+# urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += [re_path(r'^.*', TemplateView.as_view(template_name='index.html'))]
 

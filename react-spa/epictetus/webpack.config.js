@@ -18,15 +18,15 @@ module.exports = (webpackConfigEnv, argv) => {
     },
   })(defaultConfig, {
     // modify the webpack config however you'd like to by adding to this object
-    devServer: {
-      historyApiFallback: true,
+    // devServer: {
+    //   historyApiFallback: true,
       // allowedHosts: ['*'],
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
-        "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
-      }
-    },
+      // headers: {
+      //   "Access-Control-Allow-Origin": "*",
+      //   "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+      //   "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
+      // }
+    // },
   module: {
     rules: [
       {
