@@ -34,16 +34,16 @@ export default function Modal({ open = false, closeModal, title, children, descr
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="block m-auto h-lgx2 w-full max-w-md p-6 my-8 overflow-hidden text-left transition-all transform bg-white">
+              <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left transition-all transform bg-white">
                 <Dialog.Title
                   as="h3"
                   className="text-lg font-medium leading-6 text-gray-900 flex justify-between"
                 >
-                  <span className='font-bold text-2xl text-gray-600'>{title}</span>
+                  <span>{title}</span>
                   <span className="cursor-pointer" onClick={closeModal}> <X /> </span>
                 </Dialog.Title>
                 <div className="mt-2">
-                  <p className="sm mb-4 text-gray-500">
+                  <p className="text-sm text-gray-500">
                     {description}
                   </p>
                 </div>

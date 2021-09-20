@@ -65,9 +65,6 @@ export default function Test() {
               ref={provided.innerRef}
               className="characters"
             >
-              <div className="flex justify-end h-15 w-30 bg-green-300">
-                the deal is successfully created
-              </div>
               {characters.map((z, index) => {
                 const { id, title, name, desc, email } = z;
                 return (

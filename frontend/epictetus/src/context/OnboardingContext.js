@@ -6,7 +6,7 @@ const OnboardCompany = ({body}) => {
     {
         headers: {
             'Origin': 'https://sales.zuri.chat',
-            
+            'Authorization': 'bearer <token>'
         }
     });
    

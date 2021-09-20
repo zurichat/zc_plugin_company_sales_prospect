@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const DEBUG = false
-let API_ENDPOINT = "https://sales.zuri.chat/api/v1"
+let API_ENDPOINT = "https://sales.zuri.chat"
 
 if (DEBUG) { API_ENDPOINT = "http://127.0.0.1:8200/api/v1" }
 
