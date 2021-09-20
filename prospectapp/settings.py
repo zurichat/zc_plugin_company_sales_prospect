@@ -49,7 +49,6 @@ INSTALLED_APPS = [
     #local apps
     "deals",
     "prospect",
-    "onboarding",
 ]
 
 MIDDLEWARE = [
