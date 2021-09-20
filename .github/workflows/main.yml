@@ -62,5 +62,6 @@ jobs:
             pip install -r requirements.txt
             python manage.py collectstatic --noinput
             cd react-spa/epictetus
-            yarn install    
+            yarn install
+            sudo systemctl daemon-reload
       
