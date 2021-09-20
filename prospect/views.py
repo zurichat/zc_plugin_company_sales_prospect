@@ -72,9 +72,9 @@ class ProspectsListView(APIView):
         print(response.status_code)
         if response.status_code == 200:
             r = response.json()
-            serializer = ProspectSerializer(data=r['data'], many=True)
-            serializer.is_valid(raise_exception=True)
-            return Response(data=serializer.data, status=status.HTTP_200_OK)
+            # serializer = ProspectSerializer(data=r['data'], many=True)
+            # serializer.is_valid(raise_exception=True)
+            return Response(data=r['data'], status=status.HTTP_200_OK)
         return Response(data={"message": "Try again later"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
@@ -125,10 +125,10 @@ class ProspectsCreateView(APIView):
 
     def post(self, request, *args, **kwargs):
         url = "https://api.zuri.chat/data/write"
-        name = request.data['name']
-        email = request.data['email']
-        phone_number = request.data['phone_number']
-        deal_stage = request.data['deal_stage']
+        name = request.data.get('name')
+        email = request.data.get('email')
+        phone_number = request.data.get('phone_number')
+        deal_stage = request.data.get('deal_stage')
         data = {
             "plugin_id": "614105b66173056af01b4cca",
             "organization_id": "613a495f59842c7444fb0246",
