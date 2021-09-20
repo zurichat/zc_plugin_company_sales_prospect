@@ -23,10 +23,10 @@ jobs:
           directory: react-spa
       - name: Install yarn dependencies and build react-spa project
         run: |
-          cd react-spa/epictetus
+          cd react-spa
           yarn install
           yarn build
-          cd react-spa
+          cd epictetus
           yarn install
           yarn build
  
@@ -63,5 +63,5 @@ jobs:
             python manage.py collectstatic --noinput
             cd react-spa/epictetus
             yarn install
-            systemctl daemon-reload
+            #systemctl daemon-reload
       
