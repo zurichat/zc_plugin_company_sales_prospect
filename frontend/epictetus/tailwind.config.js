@@ -66,7 +66,7 @@ module.exports = {
      height: {
       sm: '8px',
       lgcd: '208px',
-      lgx2: '660px',
+      lgx2: '650px',
       xl: '57px',
      },
     variants: {
