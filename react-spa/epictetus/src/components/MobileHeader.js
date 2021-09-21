@@ -4,7 +4,7 @@ import Logo from './svg/Zuri.svg';
 
 export default function MobileHeader() {
     return (
-        <header className="px-6 py-4 sm:w-full flex justify-between items-center bg-primary md:hidden ">
+        <header className="px-6 py-4 sm:w-full flex justify-between items-center bg-green md:hidden ">
             <div>
                 <img src={Logo} alt="logo"/>
             </div>
