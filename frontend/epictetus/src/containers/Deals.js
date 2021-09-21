@@ -102,7 +102,7 @@ const Deals = (data, key, index) => {
                 </button>
                 <button
                     type="button"
-                    className="bg-primary text-white px-10 py-2 rounded"
+                    className="bg-green text-white px-10 py-2 rounded"
                     onClick={CloseModal}>
                     Done
                 </button>
@@ -158,7 +158,7 @@ const Deals = (data, key, index) => {
             <div className="mt-4 flex justify-end">
               <button
                 type="submit"
-                className="bg-primary text-white px-10 py-2"
+                className="bg-green text-white px-10 py-2"
                 onClick={handleSubmit}
               >
                 Create
