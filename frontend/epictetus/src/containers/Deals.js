@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 // import { X } from 'react-feather'
 import Button from "../components/Button";
 import DealCard from "../components/DealCard";
@@ -10,7 +10,7 @@ import Swal from "sweetalert2";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 
 const urlpost = "https://sales.zuri.chat/api/v1/deals/create/";
-const urlget = "https://sales.zuri.chat/api/v1/deals/";
+// const urlget = "https://sales.zuri.chat/api/v1/deals/";
 
 const Deals = (data, key, index) => {
   const [open, setOpen] = useState(false);
@@ -22,25 +22,24 @@ const Deals = (data, key, index) => {
   // const [userInputId, setUserInputId] = useState(null);
 
   const userStuff = (response) => {
-    setName(response.name);
-    setCompany(response.company);
-    setAmount(response.amount);
-    setCategory(response.category);
-
-    console.log(name);
+    // setName(response.name);
+    // setCompany(response.company);
+    // setAmount(response.amount);
+    // setCategory(response.category);
+    console.log(response.data);
   };
 
-  useEffect(() => {
-    const handleSubmit = async () => {
-      const request = await axios.get(urlget);
-      setName(request.name);
-      setCompany(request.company);
-      setAmount(request.amount);
-      setCategory(request.category);
-      return request;
-    };
-    handleSubmit();
-  }, []);
+  // useEffect(() => {
+  //   const handleSubmit = async () => {
+  //     const request = await axios.get(urlget);
+  //     setName(request.name);
+  //     setCompany(request.company);
+  //     setAmount(request.amount);
+  //     setCategory(request.category);
+  //     return request;
+  //   };
+  //   handleSubmit();
+  // }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
