@@ -13,7 +13,6 @@ import {DealsProvider} from "../context/Deals/DealContext";
 const url = "https://sales.zuri.chat/api/v1/deals/create/";
 
 const Deals = (data, key, index) => {
-
     const [open, setOpen] = useState(false);
     const handleOpenModal = () => setOpen(true);
     const [category, setCategory] = useState("");

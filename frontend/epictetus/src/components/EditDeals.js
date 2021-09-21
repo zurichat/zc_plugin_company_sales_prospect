@@ -7,7 +7,7 @@ import Select from "./Select";
 const EditDeals = ({open, handleCloseModal, amount, stage, name, description, dealId, date}) => {
 
 
-    const {editDeal, data} = useContext(DealsContext)
+    const {editDeal, deals} = useContext(DealsContext)
 
 
     const [selectedUser, setSelectedUser] = useState({
@@ -20,11 +20,11 @@ const EditDeals = ({open, handleCloseModal, amount, stage, name, description, de
     });
 
     useEffect(() => {
-        const selectedUser = data.find(
+        const selectedUser = deals.find(
             (deal) => deal.id === Number(dealId)
         );
         setSelectedUser(selectedUser);
-    }, [dealId, data]);
+    }, [dealId, deals]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
