@@ -88,7 +88,7 @@ function Home(props) {
       
         <form  onSubmit={handleSubmit(onSubmit)}>
         {pageOne ? (
-          <div className="flex flex-col w-6/7 mx-auto md:w-1/3 p-5 mt-10 box-xs">
+          <div className="flex flex-col w-6/7 mx-auto md:w-1/2 p-5 mt-10 box-xs">
             <h2 className="font-bold text-xl md:text-2xl text-black-500 text-left">
               Sales Managment Just Got Easier!
             </h2>
@@ -167,7 +167,7 @@ function Home(props) {
             </div>
           </div>
       ) : (
-        <div className="md:flex flex-col w-4/5 mx-auto px-5 pt-5 hidden">
+        <div className="md:flex flex-col w-full mx-auto px-5 pt-5 hidden">
           <h2 className="font-medium text-xl md:text-2xl text-black-500 text-center mb-3">
             What do you do at Zuri?
           </h2>
@@ -178,7 +178,7 @@ function Home(props) {
           <p className="error text-red-500 text-xs mb-2 -mt-3 capitalize px-5 mb-3">{errors.company?.message}</p>
           <p className="error text-red-500 text-xs mb-2 -mt-3 capitalize px-5 mb-3">{errors.sector?.message}</p>
           <p className="error text-red-500 text-xs mb-2 -mt-3 capitalize px-5">{errors.position?.message}</p>
-          <div className="flex flex-row flex-wrap justify-around content-start w-6/7 relative">
+          <div className="flex flex-row flex-wrap justify-around content-start w-6/7 relative mb-10">
             <HomeCard
               src={Executive}
               text="Executive"
