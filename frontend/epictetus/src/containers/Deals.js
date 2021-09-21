@@ -9,7 +9,8 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 
-const url = "https://sales.zuri.chat/api/v1/deals/create/";
+const urlpost = "https://sales.zuri.chat/api/v1/deals/create/";
+const urlget = "https://sales.zuri.chat/api/v1/deals/";
 
 const Deals = (data, key, index) => {
   const [open, setOpen] = useState(false);
@@ -21,17 +22,17 @@ const Deals = (data, key, index) => {
   // const [userInputId, setUserInputId] = useState(null);
 
   const userStuff = (response) => {
-    setName({ userInputId: response.name });
-    setCompany({ userInputId: response.company });
-    setAmount({ userInputId: response.amount });
-    setCategory({ userInputId: response.category });
+    setName( response.name );
+    setCompany( response.company );
+    setAmount( response.amount );
+    setCategory( response.category );
 
     console.log(name);
   };
 
   useEffect(() => {
     const handleSubmit = async () => {
-      const request = await axios.get(url);
+      const request = await axios.get(urlget);
       setName(request.name);
       setCompany(request.company);
       setAmount(request.amount);
@@ -58,7 +59,7 @@ const Deals = (data, key, index) => {
       amount: amount,
       deal_stage: category,
     };
-    axios.post(url, userInput).then((response) => {
+    axios.post(urlpost, userInput).then((response) => {
       return userStuff(response);
     });
     setOpen(false);
