@@ -8,6 +8,10 @@ import Select from "../components/Select";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
+import FilterDeal from '../components/FilterDeal'
+import FilterDeals from '../components/FilterDeals'
+import FilterButton from '../components/FilterButton'
+
 
 const url = "https://sales.zuri.chat/api/v1/deals/create/";
 
@@ -18,6 +22,10 @@ const Deals = (data, key, index) => {
   const [name, setName] = useState("");
   const [company, setCompany] = useState("");
   const [amount, setAmount] = useState("");
+
+  const [toggle, setopen] = useState(false)
+  const OpenModal = () => setopen(true)
+  const CloseModal = () => setopen(false)
   // const [userInputId, setUserInputId] = useState(null);
 
   const userStuff = (response) => {
@@ -68,7 +76,39 @@ const Deals = (data, key, index) => {
   return (
     <DragDropContext onDragEnd={handleOnDragEnd}>
       <div className="p-6">
-        <Button onClick={handleOpenModal}>Create New</Button>
+
+         <div className="flex gap-2 justify-end">
+                  <FilterButton onClick={OpenModal}>Filter</FilterButton>
+                  <Button onClick={handleOpenModal}>Create New</Button>
+           </div>
+
+        <Modal
+            title="Filter deal"
+            description="Filter deal to quickly find your prospects on the deal pipeline. 
+            You can filter by one or more criteria."
+            open={toggle} closeModal={CloseModal}>
+            <div className="w-full mt-6">
+                <FilterDeals/>
+                <FilterDeal className="relative -top-28"/>
+           
+            </div>
+           
+            <form className=" relative top-72 z-50 flex justify-end">
+                <button
+                    type="reset"
+                    className="text-btngreen px-10 py-2 border-none"
+                    onClick={Modal}>
+                    Reset
+                </button>
+                <button
+                    type="button"
+                    className="bg-primary text-white px-10 py-2 rounded"
+                    onClick={CloseModal}>
+                    Done
+                </button>
+            </form>
+            </Modal>
+
         <Modal
           title="Create a Deal"
           description="Provide information about your deal."
