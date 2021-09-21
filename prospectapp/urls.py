@@ -51,6 +51,6 @@ urlpatterns = [
 
 # urlpatterns += static("zuri-root-config.js", document_root="react-spa/dist/zuri-root-config.js")
 # urlpatterns += static("/static/zuri-zuri-plugin-company-sales-prospects.js", document_root="react-spa/epictetus/dist/zuri-zuri-plugin-company-sales-prospects.js")
-# urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += [re_path(r'^.*', TemplateView.as_view(template_name='index.html'))]
 
