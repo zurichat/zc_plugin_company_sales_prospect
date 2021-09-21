@@ -1,38 +1,62 @@
-import React, {createContext, useReducer} from "react";
-import {dealsReducer} from "./DealsReducer";
+import React, {createContext, useState, useReducer} from "react";
+import DealReducer from "./DealReducer";
 
-const initialState = {
-    deals: [{id: "1", name: "Precious", deal_stage: "Prospect", amount: "230,000", date: "12-09-2021", description: "Buying"}],
-};
-
-export const DealsContext = createContext(initialState);
+export const DealsContext = createContext();
 
 export const DealsProvider = ({children}) => {
-    const [state, dispatch] = useReducer(dealsReducer, initialState);
 
-    const addDeal = (deals) => {
-        dispatch({
-            type: 'ADD_DEAL',
-            payload: deals
-        })
-    }
+    const [deals, setDeals] = useState([
+        {
+            id: 1,
+            name: "Deb",
+            deal_stage: "prospects",
+            amount: "230,000",
+            date: "12-09-2021",
+            description: "Buying"
+        },
+        {
+            id: 2,
+            name: "Sam",
+            deal_stage: "negotiation",
+            amount: "230,000",
+            date: "12-09-2021",
+            description: "Buying"
+        },
+        {
+            id: 3,
+            name: "Jim",
+            deal_stage: "proposal",
+            amount: "230,000",
+            date: "12-09-2021",
+            description: "Buying"
+        },
+        {
+            id: 4,
+            name: "Ann",
+            deal_stage: "closed",
+            amount: "230,000",
+            date: "12-09-2021",
+            description: "Buying"
+        }
+
+    ]);
+
+    const [state, dispatch] = useReducer(DealReducer, deals);
 
     const editDeal = (deal) => {
         dispatch({
-            type: "EDIT_DEAL",
-            payload: deal,
-        });
-    };
+            type: 'EDIT_DEAL',
+            payload: deal
+        })
+    }
 
-    const deleteDeal = (id) => {
-        dispatch({
-            type: "DELETE_DEAL",
-            payload: id,
-        });
-    };
+
+    const deleteDeal = id => {
+        setDeals(deals.filter(deal => deal.id !== id))
+    }
     return (
         <DealsContext.Provider
-            value={{deals: state.deals, editDeal, deleteDeal, addDeal}}
+            value={{data: state.deals, deals, editDeal, deleteDeal}}
         >
             {children}
         </DealsContext.Provider>

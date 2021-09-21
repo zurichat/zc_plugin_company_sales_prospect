@@ -9,22 +9,24 @@ import json
 from .json_data import *
 ### api/v1/sidebar?org=5336&user=Devjoseph&token=FGEZJJ-ZFDGB-FDGG
 
+# from django.views.static import serve as static_serve
+
 @api_view(['GET'])
 def sidebar(request):
-    if request.GET.get('token') and request.GET.get('user') and request.GET.get('org')  :
-        token = request.GET.get('token')
-        user_id = request.GET.get('user')
-        org = request.GET.get('user')
-        data = success_query(user_id, org, token)
-        if data == 501:
-            data = no_query_params()
-            return Response(data, status=status.HTTP_200_OK)
-        else:
-            return Response(data, status=status.HTTP_200_OK)
-    else:
-        data = no_query_params()
-        return Response(data, status=status.HTTP_200_OK)
-        
-        
+    data = success_query()
+    return Response(data, status=status.HTTP_200_OK)
+    
 
+# def serve(request, path, document_root=None, show_indexes=False):
+#     """
+#     An override to `django.views.static.serve` that will allow us to add our
+#     own headers for development.
 
+#     Like `django.views.static.serve`, this should only ever be used in
+#     development, and never in production.
+#     """
+#     response = static_serve(request, path, document_root=document_root,
+#         show_indexes=show_indexes)
+
+#     response['Access-Control-Allow-Origin'] = '*'
+#     return response
