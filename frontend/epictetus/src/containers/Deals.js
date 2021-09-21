@@ -22,10 +22,10 @@ const Deals = (data, key, index) => {
   // const [userInputId, setUserInputId] = useState(null);
 
   const userStuff = (response) => {
-    setName( response.name );
-    setCompany( response.company );
-    setAmount( response.amount );
-    setCategory( response.category );
+    setName(response.name);
+    setCompany(response.company);
+    setAmount(response.amount);
+    setCategory(response.category);
 
     console.log(name);
   };
