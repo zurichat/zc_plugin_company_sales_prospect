@@ -1,6 +1,6 @@
 import React from 'react'
 import StagePill from './StagePill'
-import { Trash2, Edit } from "react-feather";
+import { Trash2, Edit, PlusSquare } from "react-feather";
 
 function ProspectRow({ openEditModal, openDeleteModal, prospect }) {
 
@@ -34,7 +34,8 @@ function ProspectRow({ openEditModal, openDeleteModal, prospect }) {
 
             <td className="p-3 text-sm font-medium">
 
-                <span><Edit className="inline-block mr-1 md:mr-5 text-gray-500" onClick={(e)=>openEditModal(e, prospect)} strokeWidth={1} /></span>
+                <span><Edit className="inline-block mr-1 text-gray-500" onClick={(e)=>openEditModal(e, prospect)} strokeWidth={1} /></span>
+                <span><PlusSquare className="inline-block text-gray-500" strokeWidth={1} /></span>
                 <span><Trash2 className="inline-block text-gray-500" onClick={openDeleteModal} strokeWidth={1} /></span>
             </td>
         </tr>

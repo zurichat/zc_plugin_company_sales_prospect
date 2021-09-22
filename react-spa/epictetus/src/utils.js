@@ -5,13 +5,13 @@ export const capitalize = word => {
 
 export const formatPropsects = (prospects) => {
   return prospects.map(p => {
-    return {
-      id: p._id,
-      name: p.name,
-      email: p.email,
-      phone: p.phone_number,
-      status: capitalize(p.deal_stage)
-    }
+      return {
+        id: p._id,
+        name: p.name,
+        email: p.email,
+        phone: p.phone_number,
+        status: capitalize(p.deal_stage)
+      }
   })
 }
 
