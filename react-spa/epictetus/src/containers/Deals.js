@@ -2,9 +2,9 @@ import React, {useState} from "react";
 // import { X } from 'react-feather'
 import Button from "../components/Button";
 import DealCard from "../components/DealCard";
-import Input from "../components/Input";
+//import Input from "../components/Input";
 import Modal from "../components/Modal";
-import Select from "../components/Select";
+//import Select from "../components/Select";
 import axios from "axios";
 import Swal from "sweetalert2";
 import {DragDropContext, Droppable} from "react-beautiful-dnd";
@@ -16,6 +16,31 @@ import {DealsProvider} from "../context/Deal/DealContext";
 
 const urlpost = "https://sales.zuri.chat/api/v1/deals/create/";
 // const urlget = "https://sales.zuri.chat/api/v1/deals/";
+
+function Input({ title, label, placeholder, required, disabled = false, id }) {
+    return (
+        <div className="mb-6">
+            <label className=" mb-2 block font-bold text-base" htmlFor={title}>
+                {label}
+            </label>
+            <input className="border border-gray-500 outline-none placeholder-gray-400 rounded-sm h-12  w-full px-5 focus:border-green" id={id} type="text" placeholder={placeholder} disabled={disabled} />
+        </div>
+    )
+}
+
+function Select({ id, title, label, children, required, disabled }) {
+    return (
+        <div className="mb-6" id={title}>
+            <label className=" mb-2 block font-bold text-base" htmlFor={title}>
+                {label}
+            </label>
+
+            <select id={id} required className="border border-gray-500 text-gray-400 outline-none rounded-sm px-5 h-12 w-full  focus:border-green" disabled={disabled}>
+                {children}
+            </select>
+        </div>
+    )
+}
 
 const Deals = (data, key, index) => {
     const [open, setOpen] = useState(false);
