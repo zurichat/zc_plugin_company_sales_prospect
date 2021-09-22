@@ -131,24 +131,6 @@ class DealsListView(APIView):
         return Response(data={"message":"Try again later"}, status=st.HTTP_500_INTERNAL_SERVER_ERROR) 
 
 
-class DealsStageListView(APIView):
-    """
-    Returns the available deals by the stage they are in the pipeline.
-    """
-
-    serializer_class = DealSerializer
-    queryset = None
-
-    def get(self, request, *args, **kwargs):
-
-        url = "https://api.zuri.chat/data/read/614105b66173056af01b4cca/deals/613a495f59842c7444fb0246"
-        response = requests.request("GET", url)
-        r = response.json()
-        if response.status_code == 200:
-            output_data = [data for data in r['data'] if data['deal_stage'] == kwargs['stage']]
-            return Response(data=output_data, status=st.HTTP_200_OK)
-        return Response(data={"message":"Try again later"}, status=st.HTTP_500_INTERNAL_SERVER_ERROR)
-
 
 class DealsFilterListView(APIView):
     """
@@ -171,6 +153,25 @@ class DealsFilterListView(APIView):
                 return Response(data={"message":"There are no deals matching your search"}, status=st.HTTP_404_NOT_FOUND)
         return Response(data={"message":"Try again later"}, status=st.HTTP_500_INTERNAL_SERVER_ERROR)
 
+# a view to list deals by stages
+class DealsStageListView(APIView):
+    """
+    Returns the available deals by the stage they are in the pipeline.
+    """
+
+    serializer_class = DealSerializer
+    queryset = None
+
+    def get(self, request, *args, **kwargs):
+
+        url = "https://api.zuri.chat/data/read/614105b66173056af01b4cca/deals/613a495f59842c7444fb0246"
+        response = requests.request("GET", url)
+        r = response.json()
+        if response.status_code == 200:
+            for output_data in r['data']:
+                if output_data['deal_stage'] == kwargs['stage']:
+                    return Response(data=output_data, status=st.HTTP_200_OK)
+        return Response(data={"message":"Try again later"}, status=st.HTTP_500_INTERNAL_SERVER_ERROR)
 
 # Added detail view
 class DealsDetailView(APIView):
