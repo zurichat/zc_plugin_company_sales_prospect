@@ -183,7 +183,7 @@ class ProspectsUpdateView(APIView):
         serializer.is_valid(raise_exception=True)
         object_id = serializer.data.get("_id")
         try:
-            del serializer.data['_id']
+            del request.data['_id']
         except:
             pass
         data = {
@@ -192,7 +192,7 @@ class ProspectsUpdateView(APIView):
                 "collection_name": "prospects",
                 "bulk_write": False,
                 "object_id":object_id,
-                "payload": serializer.data
+                "payload": request.data
             }
         response = requests.put(url,data=json.dumps(data))
         print(response.status_code)
