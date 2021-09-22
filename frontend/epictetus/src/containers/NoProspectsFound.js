@@ -46,7 +46,7 @@ function NoProspectsFound() {
                 <div className="mt-4 flex justify-end">
                     <button
                         type="button"
-                        className="bg-primary text-white px-10 py-2"
+                        className="bg-green text-white px-10 py-2"
                         onClick={handleCloseModal}>
                         Create
                     </button>
@@ -59,7 +59,7 @@ function NoProspectsFound() {
                 <p className="max-w-sm py-3 flex-wrap text-gray-400">
                     Oops! no prospect has been added, create new prospect to view prospect here.
                 </p>
-                <div className="text-primary">
+                <div className="text-green">
                     <Link to="/test">Test | </Link>{' '}
                     <Link to="/prospects">Prospects | </Link>{' '}
                     <Link to="/deals">Deals</Link>

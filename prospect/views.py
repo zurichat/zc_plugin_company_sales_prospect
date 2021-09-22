@@ -12,7 +12,7 @@ from django.http import HttpResponse
 from drf_spectacular.utils import OpenApiExample, extend_schema
 
 from django.core.mail import send_mail
-
+from rest_framework.permissions import AllowAny
 
 from django.http import HttpResponse
 import requests
@@ -170,12 +170,12 @@ class ProspectsUpdateView(APIView):
     queryset = None
 
     def put(self, request, *args, **kwargs):
-        url = "https://zccore.herokuapp.com/data/write"
+        url = "https://api.zuri.chat/data/write"
         serializer = ProspectSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         data = {
-                "plugin_id": "000000000000000000000000",
-                "organization_id": "612a3a914acf115e685df8e3",
+                "plugin_id": "614105b66173056af01b4cca",
+                "organization_id": "613a495f59842c7444fb0246",
                 "collection_name": "prospects",
                 "bulk_write": False,
                 "object_id":serializer.data.get("_id"),
@@ -190,7 +190,8 @@ class ProspectsUpdateView(APIView):
 
 
 class ProspectsDeleteView(APIView):
-
+    permission_classes = [AllowAny]
+    authentication_classes = []
     def delete(self, request, id):
 
         url = "https://api.zuri.chat/data/delete"
