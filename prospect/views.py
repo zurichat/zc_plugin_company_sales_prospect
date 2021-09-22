@@ -16,6 +16,7 @@ from rest_framework.permissions import AllowAny
 
 from django.http import HttpResponse
 import requests
+from .authcheck import isAuthorized
 
 
 # Create your views here.
@@ -66,6 +67,9 @@ class ProspectsListView(APIView):
     queryset = None
 
     def get(self, request, *args, **kwargs):
+        # # check authentication
+        # if not isAuthorized(request):
+        #     return Response(data={"message":"Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
 
         url = "https://api.zuri.chat/data/read/614105b66173056af01b4cca/prospects/613a495f59842c7444fb0246"
         response = requests.request("GET", url)
@@ -124,6 +128,10 @@ class ProspectsCreateView(APIView):
     queryset = None
 
     def post(self, request, *args, **kwargs):
+        # # check authentication
+        # if not isAuthorized(request):
+        #     return Response(data={"message":"Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
+
         url = "https://api.zuri.chat/data/write"
         name = request.data.get('name')
         email = request.data.get('email')
@@ -193,6 +201,9 @@ class ProspectsDeleteView(APIView):
     permission_classes = [AllowAny]
     authentication_classes = []
     def delete(self, request, id):
+        # # check authentication
+        # if not isAuthorized(request):
+        #     return Response(data={"message":"Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
 
         url = "https://api.zuri.chat/data/delete"
         data = {
