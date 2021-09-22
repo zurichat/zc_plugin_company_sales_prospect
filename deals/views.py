@@ -63,7 +63,7 @@ class DealCreateView(APIView):
             serializer.is_valid(raise_exception=True)
             return Response(data=serializer.data, status=st.HTTP_200_OK)
         return Response(data={"message":"Try again later"}, status=st.HTTP_500_INTERNAL_SERVER_ERROR)  
-        
+
 class DealUpdateView(APIView):
     """
     An endpoint to update a deal, takes in prospect_id, status, title, and amount.
