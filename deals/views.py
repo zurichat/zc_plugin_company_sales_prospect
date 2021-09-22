@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.conf import settings
-from deals.serializers import DealSerializer, DealUpdateSerializer
+from deals.serializers import DealSerializer
 from rest_framework.views import APIView
 from django.http import JsonResponse
 import requests
@@ -61,11 +61,9 @@ class DealCreateView(APIView):
         # print(r)
         if response.status_code == 201:
             return Response(data={'message':'Created deal object successfully!',"deal_created":r['data']}, status=st.HTTP_201_CREATED)
-<<<<<<< HEAD
+
         return Response(data={"message":"Creation of deals failed... Try again later."}, status=response.status_code)
-=======
-        return Response(data={"message":"Creation of deals failed... Try again later."}, status=st.HTTP_500_INTERNAL_SERVER_ERROR)
-    
+
     def get(self, request, *args, **kwargs):
         url = "https://zccore.herokuapp.com/data/write"
         response = requests.request("GET", url)
@@ -75,34 +73,39 @@ class DealCreateView(APIView):
             serializer.is_valid(raise_exception=True)
             return Response(data=serializer.data, status=st.HTTP_200_OK)
         return Response(data={"message":"Try again later"}, status=st.HTTP_500_INTERNAL_SERVER_ERROR)  
->>>>>>> 8b7084c97018813ccb248e8ad18c3106af5c5354
 
 class DealUpdateView(APIView):
     """
     An endpoint to update a deal, takes in prospect_id, status, title, and amount.
     The endpoint is https://sales.zuri.chat/api/v1/deals/update/{id}/
     """
-    serializer_class = DealUpdateSerializer
+    serializer_class = DealSerializer
     queryset = None
 
-    def put(self, request, id, *args, **kwargs):
+    def put(self, request, *args, **kwargs):
         url = "https://api.zuri.chat/data/write"
-        serializer = DealUpdateSerializer(data=request.data)
+        serializer = DealSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         data = {
                 "plugin_id": "614105b66173056af01b4cca",
                 "organization_id": "613a495f59842c7444fb0246",
                 "collection_name": "deals",
                 "bulk_write": False,
-                "object_id": id,
-                "payload": serializer.data
+                "object_id":serializer.data.get("_id"),
+                "payload": {
+                    "prospect_id":request.data.get("prospect_id"),
+                    "name":request.data.get("name"),
+                    "deal_stage": request.data.get("deal_stage"),
+                    "amount":request.data.get("amount"),
+                    "close_date":request.data.get("close_date"),
+                    "description":request.data.get("description"),
+                }
             }
-        print(data['object_id'])
-        response = requests.put(url,data=json.dumps(data))
-        print(response.status_code)
+        response = requests.request("PUT", url,data=json.dumps(data))
         r = response.json()
+        print(response.status_code)
         print(r)
-        if response.status_code >= 200:
+        if response.status_code == 200:
             return Response(data={'message':'Deal Updated Successfully'}, status=st.HTTP_201_CREATED)
         return Response(data={"message":"Try again later"}, status=st.HTTP_500_INTERNAL_SERVER_ERROR)
       
