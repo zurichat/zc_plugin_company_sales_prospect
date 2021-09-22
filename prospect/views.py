@@ -200,7 +200,7 @@ class ProspectsUpdateView(APIView):
         # print(serializer.data.get("object_id"))
         if response.status_code == 200 or 201:
             return Response(data=response, status=status.HTTP_201_CREATED)
-        return Response(data={"message": "Try again later"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return Response(data={"message": "Try again later", "data":request.data}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class ProspectsDeleteView(APIView):
