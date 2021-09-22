@@ -1,9 +1,24 @@
-import React from "react";
+import React , {useState, useContext} from "react";
 import avatar from "../avatar.svg";
 import { FileText, MoreVertical } from "react-feather";
 import { Draggable } from "react-beautiful-dnd";
+import DealOptions from "./DealOptions";
+import EditDeals from "./EditDeals";
+import {DealsContext} from "../context/Deals/DealContext";
+import DealActions from "./DeleteDealForm";
 
 const DealCard = ({ data }) => {
+  const [open, setOpen] = useState(false);
+  const handleOpenModal = () => setOpen(true);
+
+  const [open2, setOpen2] = useState(false);
+  const handleOpenModal2 = () => setOpen2(true);
+ 
+  
+  const handleCloseModal = () => {
+    setOpen(false);
+    setOpen2(false);
+  };
   const items = [
     {
       id: "head 88",
@@ -47,12 +62,14 @@ const DealCard = ({ data }) => {
     },
   ];
 
+  const {deals, deleteDeal} = useContext(DealsContext)
+
   return (
     <>
-      {items.map((item, index) => {
-        const { id, name, company, amount, email, category } = item;
+      {deals.map((deal, index) => {
+        const { id, name, deal_stage, amount, date, description } = deal;
 
-        if (data === category) {
+        if (data === deal_stage) {
           return (
             <Draggable key={id} draggableId={id} index={index}>
               {(provided) => (
@@ -70,15 +87,26 @@ const DealCard = ({ data }) => {
                         <FileText className="w-8 mr-4" strokeWidth={1} />
                         <span className="font-bold text-lg">{name} deal </span>
                       </div>
-                      <MoreVertical className="text-gray-600" strokeWidth={1} />
+                      <DealOptions handleOpenModal={handleOpenModal} handleOpenDeleteModal={handleOpenModal2}/>
+                      <DealActions open2={open2} handleCloseModal={handleCloseModal} id={id} deleteDeal={deleteDeal}/>
+                      <EditDeals
+                          name={name}
+                          stage={deal_stage}
+                          dealId={id}
+                          description={description}
+                          amount={amount}
+                          date={date}
+                          open={open}
+                          handleCloseModal={handleCloseModal}
+                      />
                     </div>
                     <div className="flex items-end">
                       <img src={avatar} alt="avatar" className="w-8 mr-4" />
                       <span className="mt-2">
-                        <p>{company}</p>
+                      <p>{deal_stage}</p>
                         <p className="mb-2">${amount}</p>
-                        <p>{email} </p>
-                        <p>{name}</p>
+                        <p>{description} </p>
+                        <p>{date}</p>
                       </span>
                     </div>
                   </div>
@@ -127,3 +155,4 @@ const DealCard = ({ data }) => {
 //     )
 // }
 export default DealCard;
+
