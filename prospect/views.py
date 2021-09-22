@@ -197,14 +197,9 @@ class ProspectsUpdateView(APIView):
         return Response(data={"message": "Try again later"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-<<<<<<< HEAD
-class ProspectsDeleteView(APIView):     
-        
-=======
 class ProspectsDeleteView(APIView):
     permission_classes = [AllowAny]
     authentication_classes = []
->>>>>>> upstream/dev
     def delete(self, request, id):
         # # check authentication
         # if not isAuthorized(request):
