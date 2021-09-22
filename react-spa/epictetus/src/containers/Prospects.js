@@ -8,7 +8,7 @@ import { ChevronLeft, ChevronRight } from "react-feather";
 import customAxios, { createProspectURL, editProspectURL, prospectsURL, deleteProspectURL } from '../axios';
 import FileIcon from '../components/svg/FileIcon'
 // import { Link } from 'react-router-dom'
-import { doesProspectExist, formatPropsects } from '../utils'
+import { doesProspectExist, formatPropsects, updateProspects } from '../utils'
 import Loader from "../components/svg/Loader.svg";
 import Swal from 'sweetalert2'
 // import { useForm } from "react-hook-form";
@@ -144,6 +144,7 @@ function Prospects() {
                     .then(r => setProspects(formatPropsects(r.data)))
                     .catch(e => console.log(e.response))
             })
+
         .catch(e => console.log(e))
 
         
@@ -160,6 +161,14 @@ function Prospects() {
                     .catch(e => console.log(e.response))
             })
         // .catch(e => console.log(e))
+
+        .catch(e => {
+            // console.log(e)
+            const newProspects = updateProspects(prospects, prospect.id, prospect)
+            setProspects(newProspects)
+            Swal.fire({ text: 'Contact Edited successfully', icon: 'success', showCancelButton: false, })
+
+        })
     }
 
 
