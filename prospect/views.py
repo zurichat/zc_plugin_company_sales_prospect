@@ -181,12 +181,17 @@ class ProspectsUpdateView(APIView):
         url = "https://api.zuri.chat/data/write"
         serializer = ProspectSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
+        object_id = serializer.data.get("_id")
+        try:
+            del serializer.data['_id']
+        except:
+            pass
         data = {
                 "plugin_id": "614105b66173056af01b4cca",
                 "organization_id": "613a495f59842c7444fb0246",
                 "collection_name": "prospects",
                 "bulk_write": False,
-                "object_id":serializer.data.get("object_id"),
+                "object_id":object_id,
                 "payload": serializer.data
             }
         response = requests.put(url,data=json.dumps(data))

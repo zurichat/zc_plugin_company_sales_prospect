@@ -136,7 +136,7 @@ function Prospects() {
             phone_number: prospect.phone,
             deal_stage: prospect.status
         }
-        customAxios.post(editProspectURL, apiProspect)
+        customAxios.put(`${editProspectURL}${prospect.id}/`, apiProspect)
             .then(r => {
                 Swal.fire({ text: 'Contact Edited successfully', icon: 'success', showCancelButton: false, })
                 handleCloseModal()
