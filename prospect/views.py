@@ -12,7 +12,7 @@ from django.http import HttpResponse
 from drf_spectacular.utils import OpenApiExample, extend_schema
 
 from django.core.mail import send_mail
-
+from rest_framework.permissions import AllowAny
 
 from django.http import HttpResponse
 import requests
@@ -190,7 +190,8 @@ class ProspectsUpdateView(APIView):
 
 
 class ProspectsDeleteView(APIView):
-
+    permission_classes = [AllowAny]
+    authentication_classes = []
     def delete(self, request, id):
 
         url = "https://api.zuri.chat/data/delete"

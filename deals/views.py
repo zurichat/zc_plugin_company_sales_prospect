@@ -113,12 +113,34 @@ class DealsStageListView(APIView):
 
     def get(self, request, *args, **kwargs):
 
-        url = "https://api.zuri.chat/data/read/613b677d41f5856617552f1e/deals/613a495f59842c7444fb0246/"
+        url = "https://api.zuri.chat/data/read/614105b66173056af01b4cca/deals/613a495f59842c7444fb0246"
         response = requests.request("GET", url)
         r = response.json()
         if response.status_code == 200:
             output_data = [data for data in r['data'] if data['deal_stage'] == kwargs['stage']]
             return Response(data=output_data, status=st.HTTP_200_OK)
+        return Response(data={"message":"Try again later"}, status=st.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class DealsFilterListView(APIView):
+    """
+    Filters existing deals by the provided search criteria. For now, this is limited to just the name field.
+    """
+
+    serializer_class = DealSerializer
+    queryset = None
+
+    def get(self, request, *args, **kwargs):
+
+        url = "https://api.zuri.chat/data/read/614105b66173056af01b4cca/deals/613a495f59842c7444fb0246"
+        response = requests.request("GET", url)
+        r = response.json()
+        if response.status_code == 200:
+            output_data = [data for data in r['data'] if kwargs['filter'].lower() in str(data['name']).lower()]
+            if len(output_data) > 0:
+                return Response(data=output_data, status=st.HTTP_200_OK)
+            else:
+                return Response(data={"message":"There are no deals matching your search"}, status=st.HTTP_404_NOT_FOUND)
         return Response(data={"message":"Try again later"}, status=st.HTTP_500_INTERNAL_SERVER_ERROR)
 
 

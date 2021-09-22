@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 // import { X } from 'react-feather'
 import Button from "../components/Button";
 import DealCard from "../components/DealCard";
@@ -13,7 +13,8 @@ import FilterDeals from '../components/FilterDeals'
 import FilterButton from '../components/FilterButton'
 
 
-const url = "https://sales.zuri.chat/api/v1/deals/create/";
+const urlpost = "https://sales.zuri.chat/api/v1/deals/create/";
+// const urlget = "https://sales.zuri.chat/api/v1/deals/";
 
 const Deals = (data, key, index) => {
   const [open, setOpen] = useState(false);
@@ -29,25 +30,24 @@ const Deals = (data, key, index) => {
   // const [userInputId, setUserInputId] = useState(null);
 
   const userStuff = (response) => {
-    setName({ userInputId: response.name });
-    setCompany({ userInputId: response.company });
-    setAmount({ userInputId: response.amount });
-    setCategory({ userInputId: response.category });
-
-    console.log(name);
+    // setName(response.name);
+    // setCompany(response.company);
+    // setAmount(response.amount);
+    // setCategory(response.category);
+    console.log(response.data);
   };
 
-  useEffect(() => {
-    const handleSubmit = async () => {
-      const request = await axios.get(url);
-      setName(request.name);
-      setCompany(request.company);
-      setAmount(request.amount);
-      setCategory(request.category);
-      return request;
-    };
-    handleSubmit();
-  }, []);
+  // useEffect(() => {
+  //   const handleSubmit = async () => {
+  //     const request = await axios.get(urlget);
+  //     setName(request.name);
+  //     setCompany(request.company);
+  //     setAmount(request.amount);
+  //     setCategory(request.category);
+  //     return request;
+  //   };
+  //   handleSubmit();
+  // }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -66,7 +66,7 @@ const Deals = (data, key, index) => {
       amount: amount,
       deal_stage: category,
     };
-    axios.post(url, userInput).then((response) => {
+    axios.post(urlpost, userInput).then((response) => {
       return userStuff(response);
     });
     setOpen(false);
@@ -102,7 +102,7 @@ const Deals = (data, key, index) => {
                 </button>
                 <button
                     type="button"
-                    className="bg-primary text-white px-10 py-2 rounded"
+                    className="bg-green text-white px-10 py-2 rounded"
                     onClick={CloseModal}>
                     Done
                 </button>
@@ -158,7 +158,7 @@ const Deals = (data, key, index) => {
             <div className="mt-4 flex justify-end">
               <button
                 type="submit"
-                className="bg-primary text-white px-10 py-2"
+                className="bg-green text-white px-10 py-2"
                 onClick={handleSubmit}
               >
                 Create

@@ -19,7 +19,7 @@ module.exports = {
       phblack: "#535353",
       graay:"#F6F6F6",
       grey:"#A1A1A1",
-      primary: {
+      green: {
         DEFAULT: "#00B87C",
         light: "#E2FFF5"
       },
