@@ -7,14 +7,14 @@ import NoProspectsFound from './containers/NoProspectsFound';
 import Deals from "./containers/Deals";
 import SubHeader from "./components/SubHeader";
 import MobileHeader from "./components/MobileHeader";
-import Header from "./components/Header";
+//import Header from "./components/Header";
 import Intro from "./containers/Intro";
 
 function App() {
   return (
     <Router basename="/sales">
       <div className="App font-lato" >  
-        <Header />
+        {/* <Header /> */}
         <SubHeader/>
         <MobileHeader/>  
         <Switch >

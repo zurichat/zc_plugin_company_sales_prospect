@@ -8,12 +8,9 @@ export default function Select({ title, label, children, register, required }) {
         {label}
       </label>
 
-      <select
-        className="border border-gray-500 text-gray-400 outline-none rounded-sm px-5 h-xl w-full  focus:border-green"
-        // {...register(title, { required })}
-      >
-        {children}
-      </select>
+      <select className="border border-gray-500 text-gray-400 outline-none rounded-sm px-5 h-xl w-full  focus:border-primary" {...register(title, { required })}>
+                {children}
+            </select>
     </div>
   );
 }
