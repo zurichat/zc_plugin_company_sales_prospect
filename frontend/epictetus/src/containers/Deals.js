@@ -204,7 +204,7 @@ const Deals = (data, key, index) => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="grid grid-cols-4 border border-t-0 border-gray-300 rounded h-screen2">
+                                <div className="grid grid-cols-4 border border-t-0 border-gray-300 rounded h-screen2 mt-4">
                                     <div
                                         className="text-center border-r border-gray-300 rounded py-2 overflow-x-auto flex flex-col items-center gap-4">
                                         <DealCard data={"prospects"}/>
@@ -217,7 +217,7 @@ const Deals = (data, key, index) => {
                                         className="text-center border-r border-gray-300 rounded py-2 overflow-x-auto flex flex-col items-center gap-4">
                                         <DealCard data={"negotiation"}/>
                                     </div>
-                                    <div className="text-center py-2 overflow-x-auto">
+                                    <div className="text-center py-2 overflow-x-auto ml-8">
                                         <DealCard data={"closed"}/>
                                     </div>
                                 </div>

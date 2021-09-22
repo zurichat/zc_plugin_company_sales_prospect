@@ -1,6 +1,6 @@
 import React, {useContext, useState} from "react";
 import avatar from "../avatar.svg";
-import {FileText} from "react-feather";
+// import {FileText} from "react-feather";
 import {Draggable} from "react-beautiful-dnd";
 import EditDeals from "./EditDeals";
 import DealsOptions from "./DealOptions";
@@ -110,8 +110,8 @@ const DealCard = ({data}) => {
                                         />
                                         <div className="flex justify-between items-center">
                                             <div className="flex">
-                                                <FileText className="w-8 mr-4" strokeWidth={1}/>
-                                                <span className="font-bold text-lg">{name} deal </span>
+                                                {/* <FileText className="w-8 mr-4" strokeWidth={1}/> */}
+                                                <span className="font-bold text-lg mt-2 text-gray-700">{name} deal </span>
                                             </div>
                                             <DealsOptions
                                                 handleOpenModal={handleOpenModal}
@@ -120,12 +120,12 @@ const DealCard = ({data}) => {
                                                 handleCloseDeleteModal={handleCloseModal}
                                             />
                                         </div>
-                                        <div className="flex flex-col">
-                                            <span className="mt-2">
-                        <p>{company}</p>
-                        <p className="mb-2 text-green-500 font-bold">${amount}</p>
-                        <p>{email} </p>
-                        <p>{name}</p>
+                                        <div className="flex flex-col text-left">
+                                            <span >
+                        <p className="text-gray-500">{company}</p>
+                        <p className="text-green-500 font-bold mt-2">${amount}</p>
+                        <p className="text-gray-500">{email} </p>
+                        <p className="text-gray-500">{name}</p>
                       </span>
                                         </div>
                                     </div>

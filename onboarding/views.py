@@ -28,9 +28,9 @@ class OnboardingCreateView(APIView):
 
     def post(self, request, *args, **kwargs):
         url = "https://api.zuri.chat/data/write"
-        company = request.data['company']
-        sector = request.data['sector']
-        position = request.data['position']
+        company = request.data.get('company')
+        sector = request.data.get('sector')
+        position = request.data.get('position')
         data = {
             "plugin_id": "613b677d41f5856617552f1e",
             "organization_id": "613a495f59842c7444fb0246",
