@@ -12,7 +12,7 @@ from django.http import HttpResponse
 from drf_spectacular.utils import OpenApiExample, extend_schema
 
 from django.core.mail import send_mail
-
+from rest_framework.permissions import AllowAny
 
 from django.http import HttpResponse
 import requests
@@ -76,9 +76,9 @@ class ProspectsListView(APIView):
         print(response.status_code)
         if response.status_code == 200:
             r = response.json()
-            serializer = ProspectSerializer(data=r['data'], many=True)
-            serializer.is_valid(raise_exception=True)
-            return Response(data=serializer.data, status=status.HTTP_200_OK)
+            # serializer = ProspectSerializer(data=r['data'], many=True)
+            # serializer.is_valid(raise_exception=True)
+            return Response(data=r['data'], status=status.HTTP_200_OK)
         return Response(data={"message": "Try again later"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
@@ -133,10 +133,10 @@ class ProspectsCreateView(APIView):
         #     return Response(data={"message":"Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
 
         url = "https://api.zuri.chat/data/write"
-        name = request.data['name']
-        email = request.data['email']
-        phone_number = request.data['phone_number']
-        deal_stage = request.data['deal_stage']
+        name = request.data.get('name')
+        email = request.data.get('email')
+        phone_number = request.data.get('phone_number')
+        deal_stage = request.data.get('deal_stage')
         data = {
             "plugin_id": "614105b66173056af01b4cca",
             "organization_id": "613a495f59842c7444fb0246",
@@ -178,12 +178,12 @@ class ProspectsUpdateView(APIView):
     queryset = None
 
     def put(self, request, *args, **kwargs):
-        url = "https://zccore.herokuapp.com/data/write"
+        url = "https://api.zuri.chat/data/write"
         serializer = ProspectSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         data = {
-                "plugin_id": "000000000000000000000000",
-                "organization_id": "612a3a914acf115e685df8e3",
+                "plugin_id": "614105b66173056af01b4cca",
+                "organization_id": "613a495f59842c7444fb0246",
                 "collection_name": "prospects",
                 "bulk_write": False,
                 "object_id":serializer.data.get("_id"),
@@ -197,8 +197,14 @@ class ProspectsUpdateView(APIView):
         return Response(data={"message": "Try again later"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
+<<<<<<< HEAD
 class ProspectsDeleteView(APIView):     
         
+=======
+class ProspectsDeleteView(APIView):
+    permission_classes = [AllowAny]
+    authentication_classes = []
+>>>>>>> upstream/dev
     def delete(self, request, id):
         # # check authentication
         # if not isAuthorized(request):
