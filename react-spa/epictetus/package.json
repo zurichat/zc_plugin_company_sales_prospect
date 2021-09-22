@@ -70,7 +70,7 @@
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.9",
     "sweetalert2": "^11.1.5",
     "react-hook-form": "^7.15.3",
-    "@hookform/resolvers": "^2.8.0",
+    "@hookform/resolvers": "^2.8.1",
     "yup": "^0.32.9"
   },
   "pluginDomain": "https://sales.zuri.chat"
