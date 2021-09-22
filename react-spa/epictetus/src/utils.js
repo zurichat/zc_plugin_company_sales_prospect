@@ -18,3 +18,13 @@ export const formatPropsects = (prospects) => {
 export const doesProspectExist = (prospects, name) => {
   return prospects.filter(x => x.name === name).length > 0
 }
+
+export const updateProspects = (prospects, id, newDetails) => {
+  let p = prospects
+  const prospect = p.find(x => x.id === id)
+  const i = p.indexOf(prospect);
+  if(i > 0){
+    p[i] = newDetails
+  }
+  return p
+}
