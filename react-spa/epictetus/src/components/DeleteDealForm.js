@@ -1,31 +1,42 @@
 import React from "react";
-import Cancel from "./svg/Cancel";
-import DealCard from "./svg/DealCard/DealCard";
-import "./../App.css";
+import Modal from "./Modal";
+import {Trash2} from "react-feather";
 
-const DeleteDealForm = () => {
+const DealActions = ({open2, handleCloseModal, id, deleteDeal}) => {
+
 	return (
-		<div className="fixed inset-0 modal">
-			<div className="flex justify-center items-center h-screen">
-				<div className="w-2/5 h-4/6 bg-white rounded-sm shadow-md flex flex-col gap-4 px-8 py-5">
-					<div className="flex justify-between items-center">
-						<h5 className="font-bold text-black text-2xl">Delete Deal</h5>
-						<Cancel/>
-					</div>
-					<h5 className="font-bold text-gray-800 text-base mt-4">
-						This deal will be deleted, this action cannot be undone.
-					</h5>
-					<div className="w-full flex justify-center mt-8">
-						<DealCard className="w-full" />
-					</div>
-					<div className="mt-8 flex justify-end gap-4 items-center">
-						<a href="void" className="text-green-600 hover:text-green-800 text-xl no-underline">No, keep</a>
-						<button className="bg-red-600 hover:bg-red-700 text-white w-36 h-12 rounded text-lg">Yes, Delete</button>
-					</div>
+		<Modal open={open2} closeModal={handleCloseModal}>
+			<div className="flex flex-col justify-center items-center gap-2">
+				<div>
+					<Trash2 strokeWidth={1} size={64} color="gray"/>
 				</div>
+				<div>
+					<h1 className="text-3xl">Delete deal?</h1>
+				</div>
+				<div>
+					<p className="text-center text-gray-500">
+						You’re about to permanently erase this deal and all information
+						about it. Are you sure you want to continue?
+					</p>
+					</div>
 			</div>
-		</div>
+
+			<div className="mt-4 flex justify-center gap-4">
+				<button
+					type="button"
+					className="border-2 border-transparent border-primary text-primary px-6 py-2 rounded"
+					onClick={handleCloseModal}
+				>
+					No, return
+				</button>
+				<button
+					className=" bg-red-600 text-white px-10 py-2 rounded"
+					onClick={() => deleteDeal(id)}>
+					Delete
+				</button>
+			</div>
+		</Modal>
 	);
 };
 
-export default DeleteDealForm;
+export default DealActions;
