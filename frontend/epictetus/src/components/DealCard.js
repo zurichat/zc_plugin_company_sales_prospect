@@ -1,57 +1,24 @@
-import React, {useContext, useState} from "react";
-import avatar from "../avatar.svg";
-// import {FileText} from "react-feather";
+import React, {useEffect, useState} from "react";
+import {Calendar} from "react-feather";
 import {Draggable} from "react-beautiful-dnd";
 import EditDeals from "./EditDeals";
 import DealsOptions from "./DealOptions";
-import {DealsContext} from "../context/Deal/DealContext";
 
-const DealCard = ({data}) => {
-    const items = [
-        {
-            id: "88",
-            name: "Crystal",
-            company: "Nigerian Brewery",
-            amount: "6700000",
-            email: "youcametowatch.@get.com",
-            category: "prospects",
-        },
-        {
-            id: "80",
-            name: "Youhan",
-            company: "NNPC",
-            amount: "1B",
-            email: "youcametowatch.@get.com",
-            category: "proposal",
-        },
-        {
-            id: "7",
-            name: "Frranks",
-            email: "youcametowatch.@get.com",
-            company: "JONSON'S INC",
-            amount: "500,000",
-            category: "negotiation",
-        },
-        {
-            id: "42",
-            name: "Naza",
-            email: "youcametowatch.@get.com",
-            company: "JBc LTD",
-            amount: "594540,000",
-            category: "negotiation",
-        },
-        {
-            id: "3",
-            name: "Klly",
-            email: "youcametowatch.@get.com",
-            company: "Thytt trbi",
-            amount: "10,000",
-            category: "closed",
-        },
-    ];
+const DealCard = ({data, setLoading}) => {
 
+    const [deals, setDeals] = useState();
+    const [error, setError] = useState("");
 
-    const {deals} = useContext(DealsContext)
+    const getAllDeals = async () => {
+        await fetch('https://sales.zuri.chat/api/v1/deals/')
+            .then(response => response.json())
+            .then(data => setDeals(data))
+            .catch(err => setError(err.message))
+    }
+
+    useEffect(() => {
+        getAllDeals()
+    }, [])
 
     const [open, setOpen] = useState(false);
     const handleOpenModal = () => setOpen(true);
@@ -64,28 +31,16 @@ const DealCard = ({data}) => {
         setOpen2(false);
     };
 
-    let {category} = items;
-
-    let borderColor = "";
-
-    if (category === "prospects") {
-        borderColor = "yellow-300";
-    } else if (category === "proposal") {
-        borderColor = "red-300";
-    } else if (category === "negotiation") {
-        borderColor = "indigo-300";
-    } else if (category === "closed") {
-        borderColor = "green-300";
+    if (error) {
+        return <p>{error}</p>
     }
 
     return (
         <>
-            {deals.map((item, index) => {
-                const {id, name, company, amount, email, category} = item;
-
-                if (data === category) {
+            {deals && deals.map((deal, index) => {
+                if (data === deal.deal_stage) {
                     return (
-                        <Draggable key={id} draggableId={id} index={index}>
+                        <Draggable key={deal._id} draggableId={deal._id} index={index}>
                             {(provided) => (
                                 <div
                                     ref={provided.innerRef}
@@ -93,25 +48,29 @@ const DealCard = ({data}) => {
                                     {...provided.dragHandleProps}
                                 >
                                     <div
-                                        key={id}
-                                        className={`w-64 h-44 bg-white shadow-lg px-4 py-2 flex flex-col gap-3 border-t-2  border-${borderColor} rounded`}
+                                        key={deal._id}
+                                        className={`w-64 h-44 mb-4 bg-white shadow border border-graay-50 px-4 py-2 flex flex-col gap-3 border-t-2  
+                                        border-indigo-300 rounded`}
                                     >
                                         {/* Edit Deals */}
                                         <EditDeals
                                             open={open}
+                                            prospectID={deal.prospect_id}
                                             handleCloseModal={handleCloseModal}
-                                            id={id}
-                                            name={name}
-                                            amount={amount}
-                                            category={category}
-                                            email={email}
-                                            company={company}
-                                            items={items}
+                                            id={deal._id}
+                                            name={deal.name}
+                                            amount={deal.amount}
+                                            stage={deal.deal_stage}
+                                            description={deal.description}
+                                            date={deal.close_date}
+                                            deals={deals}
+                                            setDeals={setDeals}
                                         />
                                         <div className="flex justify-between items-center">
                                             <div className="flex">
                                                 {/* <FileText className="w-8 mr-4" strokeWidth={1}/> */}
-                                                <span className="font-bold text-lg mt-2 text-gray-700">{name} deal </span>
+                                                <span
+                                                    className="font-bold text-lg mt-2 text-gray-700">{deal.name}</span>
                                             </div>
                                             <DealsOptions
                                                 handleOpenModal={handleOpenModal}
@@ -120,13 +79,18 @@ const DealCard = ({data}) => {
                                                 handleCloseDeleteModal={handleCloseModal}
                                             />
                                         </div>
+                                        <p>{error}</p>
                                         <div className="flex flex-col text-left">
-                                            <span >
-                        <p className="text-gray-500">{company}</p>
-                        <p className="text-green-500 font-bold mt-2">${amount}</p>
-                        <p className="text-gray-500">{email} </p>
-                        <p className="text-gray-500">{name}</p>
-                      </span>
+                                            <p className="text-gray-500">{deal.description} </p>
+                                            <div className="mt-2">
+                                                <p className="text-indigo-500 font-bold mt-2">{deal.amount}</p>
+                                                <div className="flex gap-2 text-gray-400 text-base pt-2">
+                                                    <Calendar/> -
+                                                    <p className="">{deal.close_date}</p>
+                                                </div>
+
+                                            </div>
+
                                         </div>
                                     </div>
                                     {provided.placeholder}
