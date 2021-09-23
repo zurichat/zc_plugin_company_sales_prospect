@@ -6,6 +6,10 @@ env
 .DS_Store
 **/__pycache__/
 venv/
+bin/
+include/
+lib/
+*.cfg
 salesvenv/
 db.sqlite3
 duovenv/
@@ -15,6 +19,11 @@ Pipfile*
 node_modules/
 dist
 openapi.yaml
+
 /backend/build/root/*
+!/backend/build/root/__.txt
+
 /backend/build/main/*
-/backend/static/*
+!/backend/build/main/__.txt
+
+# /backend/static/*
