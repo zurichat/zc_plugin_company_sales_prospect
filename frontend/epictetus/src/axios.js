@@ -10,7 +10,7 @@ export const createProspectURL = `${API_ENDPOINT}/prospects/create/`
 export const editProspectURL = `${API_ENDPOINT}/prospects/update/`
 export const dealsURL = `${API_ENDPOINT}/deals/`
 export const onboardingURL = `${API_ENDPOINT}/onboarding/`
-export const deleteProspectURL= `${API_ENDPOINT}/prospects/delete/`
+export const deleteProspectURL = `${API_ENDPOINT}/prospects/delete/`
 export const addToRoomURL = `${API_ENDPOINT}/add-to-room/`
 export const roomsURL = `${API_ENDPOINT}/rooms/`
 export const leaveRoomURL = `${API_ENDPOINT}/leave-room/`
@@ -19,7 +19,4 @@ const customAxios = axios.create({
     baseURL: API_ENDPOINT
 })
 
-const customAxios = axios.delete({
-    baseURL: API_ENDPOINT
-})
 export default customAxios
