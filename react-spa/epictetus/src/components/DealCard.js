@@ -2,16 +2,8 @@ import React from "react";
 import avatar from "../avatar.svg";
 import { FileText, MoreVertical } from "react-feather";
 import { Draggable } from "react-beautiful-dnd";
-[Window Title]
-Visual Studio Code
+import DealActions from "./DeleteDealForm";
 
-[Main Instruction]
-The window has crashed (reason: 'oom', code: '-536870904')
-
-[Content]
-We are sorry for the inconvenience. You can reopen the window to continue where you left off.
-
-[Re
 const DealCard = ({ data }) => {
   const items = [
     {
