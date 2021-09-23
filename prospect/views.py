@@ -1,52 +1,24 @@
-from rest_framework import generics, serializers
+
+import requests, json
+
 from django.http import JsonResponse
 from django.conf import settings
+from django.core.mail import send_mail
+
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
-from .serializers import ProspectSerializer
-import requests
-import json
-import pandas as pd
-from django.http import HttpResponse
-from drf_spectacular.utils import OpenApiExample, extend_schema
+from rest_framework import serializers
 
-from django.core.mail import send_mail
+from .serializers import ProspectSerializer
+from drf_spectacular.utils import extend_schema
+
 from rest_framework.permissions import AllowAny
 
-from django.http import HttpResponse
-import requests
-from .authcheck import isAuthorized
+# from .authcheck import isAuthorized
 
 
 # Create your views here.
-
-@extend_schema(
-    description="This view shows how the plugin was registered"
-)
-def plugin_registration(request):
-    url = "https://zccore.herokuapp.com/plugin/register"
-
-    payload = {
-        "name": "sales_prospects",
-        "description": "A Sales Prospects Plugin",
-        "template_url": "https://sales.zuri.chat",
-        "sidebar_url": "https://sales.zuri.chat/sidebar",
-        "install_url":  "https://sales.zuri.chat/install",
-        "icon_url": "icon.png",
-        "developer_email": "azeezsodiqkayode@gmail.com",
-        "developer_name": "Sodiq Azeez"
-    }
-    working = True
-    if working:
-        return JsonResponse(data={
-            'Message': 'This plugin has been registered on the marketplace',
-            "plugin_id": "000000000000000000000000",
-            "organization_id": "612a3a914acf115e685df8e3",
-            "collection_name": "prospects",
-
-        })
-
 
 # PLUGIN_ID = settings.PLUGIN_ID
 # ORGANISATION_ID = settings.ORGANISATION_ID
@@ -81,28 +53,6 @@ class ProspectsListView(APIView):
             return Response(data=r['data'], status=status.HTTP_200_OK)
         return Response(data={"message": "Try again later"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-
-class ProspectsDetailView(APIView):
-    serializer_class = ProspectSerializer
-    queryset = None
-
-    def get(self, request, *args, **kwargs):
-
-        url = "https://zccore.herokuapp.com/data/read/000000000000000000000000/prospects/612a3a914acf115e685df8e3/"
-        response = requests.request("GET", url)
-        r = response.json()
-        if response.status_code == 200:
-
-            dataframe = pd.DataFrame(r['data'])
-            dataframe.set_index('_id', inplace=True)
-            detail_prospect_data = json.loads(
-                dataframe.loc[kwargs["id"], :].to_json())
-            detail_prospect_data['_id'] = kwargs["id"]
-            serializer = ProspectSerializer(
-                data=detail_prospect_data, many=False)
-            serializer.is_valid(raise_exception=True)
-            return Response(data=serializer.data, status=status.HTTP_200_OK)
-        return Response(data={"message": "Try again later"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 def SearchProspects(request, search):

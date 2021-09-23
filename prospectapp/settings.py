@@ -159,10 +159,10 @@ STATICFILES_DIRS = [
 
 
 ############### plugin details #######################
-PLUGIN_ID = "6138ad498aa1cea0e6aa5b9e"
-PLUGIN_NAME = "company sales prospect"
-ORGANIZATION_ID = "6138ad498aa1cea0e6aa5b9e"
-DESCRIPTION = "we provide a list of potential clients for your business"
+PLUGIN_ID = "614105b66173056af01b4cca"
+PLUGIN_NAME = "Company Sales Prospects"
+ORGANIZATION_ID = "613a495f59842c7444fb0246"
+DESCRIPTION = "We provide a list of potential clients for your business"
 
 #email config
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' 
