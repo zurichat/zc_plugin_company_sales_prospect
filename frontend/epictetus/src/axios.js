@@ -19,7 +19,7 @@ const customAxios = axios.create({
     baseURL: API_ENDPOINT
 })
 
-const customAxios = axios.delete({
+const customAxioss = axios.delete({
     baseURL: API_ENDPOINT
 })
 export default customAxios
