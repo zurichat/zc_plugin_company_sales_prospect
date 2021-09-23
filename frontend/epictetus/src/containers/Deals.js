@@ -8,34 +8,37 @@ import Modal from "../components/Modal";
 import axios from "axios";
 import Swal from "sweetalert2";
 import {DragDropContext, Droppable} from "react-beautiful-dnd";
-import FilterDeal from '../components/FilterDeal'
 import FilterDeals from '../components/FilterDeals'
 import FilterButton from '../components/FilterButton'
-import {DealsProvider} from "../context/Deal/DealContext";
 
 
 const urlpost = "https://sales.zuri.chat/api/v1/deals/create/";
+
 // const urlget = "https://sales.zuri.chat/api/v1/deals/";
 
-function Input({ title, label, placeholder, required, disabled = false, id }) {
+function Input({title, label, placeholder, required, disabled = false, id}) {
     return (
         <div className="mb-6">
             <label className=" mb-2 block font-bold text-base" htmlFor={title}>
                 {label}
             </label>
-            <input className="border border-gray-500 outline-none placeholder-gray-400 rounded-sm h-xl  w-full px-5 focus:border-green" id={id} type="text" placeholder={placeholder} disabled={disabled} />
+            <input
+                className="border border-gray-500 outline-none placeholder-gray-400 rounded-sm h-xl  w-full px-5 focus:border-green"
+                id={id} type="text" placeholder={placeholder} disabled={disabled}/>
         </div>
     )
 }
 
-function Select({ id, title, label, children, required, disabled }) {
+function Select({id, title, label, children, required, disabled}) {
     return (
         <div className="mb-6" id={title}>
             <label className=" mb-2 block font-bold text-base" htmlFor={title}>
                 {label}
             </label>
 
-            <select id={id} required className="border border-gray-500 text-gray-400 outline-none rounded-sm px-5 h-xl w-full  focus:border-green" disabled={disabled}>
+            <select id={id} required
+                    className="border border-gray-500 text-gray-400 outline-none rounded-sm px-5 h-xl w-full  focus:border-green"
+                    disabled={disabled}>
                 {children}
             </select>
         </div>
@@ -53,7 +56,11 @@ const Deals = (data, key, index) => {
     const [toggle, setopen] = useState(false)
     const OpenModal = () => setopen(true)
     const CloseModal = () => setopen(false)
+
+    const [loading, setLoading] = useState(false)
+
     // const [userInputId, setUserInputId] = useState(null);
+
 
     const userStuff = (response) => {
         // setName(response.name);
@@ -102,18 +109,17 @@ const Deals = (data, key, index) => {
     }
 
     return (
-        <DealsProvider>
-            <DragDropContext onDragEnd={handleOnDragEnd}>
-                <div className="p-6">
+        <DragDropContext onDragEnd={handleOnDragEnd}>
+            <div className="p-6">
 
-                    <div className="flex gap-2 justify-end">
-                        <FilterButton onClick={OpenModal}>Filter</FilterButton>
-                        <Button onClick={handleOpenModal}>Create New</Button>
-                    </div>
+                <div className="flex gap-2 justify-end">
+                    <FilterButton onClick={OpenModal}>Filter</FilterButton>
+                    <Button onClick={handleOpenModal}>Create New</Button>
+                </div>
 
-                    <Modal
-                        title="Filter deal"
-                        description="Filter deal to quickly find your prospects on the deal pipeline.
+                <Modal
+                    title="Filter deal"
+                    description="Filter deal to quickly find your prospects on the deal pipeline.
             You can filter by one or more criteria."
                         open={toggle} closeModal={CloseModal}>
                         <div className="w-full mt-6">
@@ -136,63 +142,64 @@ const Deals = (data, key, index) => {
                         </form>
                     </Modal>
 
-                    <Modal
-                        title="Create a Deal"
-                        description="Provide information about your deal."
-                        open={open}
-                        closeModal={handleSubmit}
-                    >
-                        <form onSubmit={handleSubmit}>
-                            <div className="mt-2">
-                                <div>
-                                    <label className="block font-bold">Name</label>
-                                    <Input
-                                        type="text"
-                                        value={name}
-                                        onChange={(event) => setName(event.target.value)}
-                                        placeholder="Enter Full Name"
-                                    />
-                                </div>
-                                <div>
-                                    <label className="block">Company</label>
-                                    <Input
-                                        type="text"
-                                        value={company}
-                                        onChange={(event) => setCompany(event.target.value)}
-                                        placeholder="Enter Company"
-                                    />
-                                </div>
-                                <div>
-                                    <Select title="stage" label="Deal stage">
-                                        <option>Select a stage</option>
-                                        <option>Proposal</option>
-                                        <option>Closed</option>
-                                        <option>Negotiation</option>
-                                        <option>Prospect</option>
-                                    </Select>
-                                </div>
-                                <div>
-                                    <label className="block">Amount</label>
-                                    <Input
-                                        type="number"
-                                        value={amount}
-                                        onChange={(event) => setAmount(event.target.value)}
-                                        placeholder="Enter Amount"
-                                    />
-                                </div>
+                <Modal
+                    title="Create a Deal"
+                    description="Provide information about your deal."
+                    open={open}
+                    closeModal={handleSubmit}
+                >
+                    <form onSubmit={handleSubmit}>
+                        <div className="mt-2">
+                            <div>
+                                <label className="block font-bold">Name</label>
+                                <Input
+                                    type="text"
+                                    value={name}
+                                    onChange={(event) => setName(event.target.value)}
+                                    placeholder="Enter Full Name"
+                                />
                             </div>
+                            <div>
+                                <label className="block">Company</label>
+                                <Input
+                                    type="text"
+                                    value={company}
+                                    onChange={(event) => setCompany(event.target.value)}
+                                    placeholder="Enter Company"
+                                />
+                            </div>
+                            <div>
+                                <Select title="stage" label="Deal stage">
+                                    <option>Select a stage</option>
+                                    <option>Proposal</option>
+                                    <option>Closed</option>
+                                    <option>Negotiation</option>
+                                    <option>Prospect</option>
+                                </Select>
+                            </div>
+                            <div>
+                                <label className="block">Amount</label>
+                                <Input
+                                    type="number"
+                                    value={amount}
+                                    onChange={(event) => setAmount(event.target.value)}
+                                    placeholder="Enter Amount"
+                                />
+                            </div>
+                        </div>
 
-                            <div className="mt-4 flex justify-end">
-                                <button
-                                    type="submit"
-                                    className="bg-green text-white px-10 py-2"
-                                    onClick={handleSubmit}
-                                >
-                                    Create
-                                </button>
-                            </div>
-                        </form>
-                    </Modal>
+                        <div className="mt-4 flex justify-end">
+                            <button
+                                type="submit"
+                                className="bg-green text-white px-10 py-2"
+                                onClick={handleSubmit}
+                            >
+                                Create
+                            </button>
+                        </div>
+                    </form>
+                </Modal>
+                {
 
                     <Droppable droppableId="characters">
                         {(provided) => (
@@ -227,30 +234,32 @@ const Deals = (data, key, index) => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="grid grid-cols-4 border border-t-0 border-gray-300 rounded h-screen2 mt-4">
+                                <div
+                                    className="grid grid-cols-4 border border-t-0 border-gray-300 rounded h-screen2 mt-4">
                                     <div
                                         className="text-center border-r border-gray-300 rounded py-2 overflow-x-auto flex flex-col items-center gap-4">
-                                        <DealCard data={"prospects"}/>
+                                        <DealCard data={"Prospect"}/>
                                     </div>
                                     <div
                                         className="text-center border-r border-gray-300 rounded py-2 overflow-x-auto flex flex-col items-center gap-4">
-                                        <DealCard data={"proposal"}/>
+                                        <DealCard data={"Proposal"}/>
                                     </div>
                                     <div
                                         className="text-center border-r border-gray-300 rounded py-2 overflow-x-auto flex flex-col items-center gap-4">
-                                        <DealCard data={"negotiation"}/>
+                                        <DealCard data={"Negotiation"}/>
                                     </div>
                                     <div className="text-center py-2 overflow-x-auto ml-8">
-                                        <DealCard data={"closed"}/>
+                                        <DealCard data={"Closed"}/>
                                     </div>
                                 </div>
                                 {provided.placeholder}
                             </div>
                         )}
                     </Droppable>
-                </div>
-            </DragDropContext>
-        </DealsProvider>
+                }
+            </div>
+        </DragDropContext>
+
     );
 };
 export default Deals;
