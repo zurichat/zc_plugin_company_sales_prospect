@@ -61,9 +61,11 @@ jobs:
             cd backend
             pip install -r requirements.txt
             python manage.py collectstatic --noinput
+            pkill -u ${{secrets.SSH_USER}} gunicorn
+            gunicorn --bind 0.0.0.0:8200 config.wsgi --daemon
             cd ../frontend/rootApp
             yarn install
             cd ../../frontend/mainApp
             yarn install
-            #systemctl daemon-reload
+            
       
