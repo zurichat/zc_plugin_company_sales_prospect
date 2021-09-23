@@ -15,3 +15,6 @@ Pipfile*
 node_modules/
 dist
 openapi.yaml
+/backend/build/root/*
+/backend/build/main/*
+/backend/static/*
