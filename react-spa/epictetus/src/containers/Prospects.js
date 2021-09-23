@@ -5,7 +5,7 @@ import Modal from '../components/Modal'
 import ProspectRow from '../components/ProspectRow'
 import { ChevronLeft, ChevronRight } from "react-feather";
 // import Select from '../components/Select'
-import customAxios, { createProspectURL, editProspectURL, prospectsURL } from '../axios';
+import customAxios, { createProspectURL, editProspectURL, prospectsURL, deleteProspectURL } from '../axios';
 import FileIcon from '../components/svg/FileIcon'
 // import { Link } from 'react-router-dom'
 import { doesProspectExist, formatPropsects, updateProspects } from '../utils'
@@ -144,6 +144,24 @@ function Prospects() {
                     .then(r => setProspects(formatPropsects(r.data)))
                     .catch(e => console.log(e.response))
             })
+
+        .catch(e => console.log(e))
+
+        
+    }
+
+    const handleDelete = e => {
+        e.preventDefault()
+        customAxios.delete(deleteProspectURL, prospect)
+            .catch(r => {
+                alert("prospects deleted succesfully")
+                handleCloseModal()
+                customAxios.get(prospectsURL)
+                    .then(r => setProspects(formatPropsects(r.data)))
+                    .catch(e => console.log(e.response))
+            })
+        // .catch(e => console.log(e))
+
         .catch(e => {
             // console.log(e)
             const newProspects = updateProspects(prospects, prospect.id, prospect)
@@ -152,6 +170,7 @@ function Prospects() {
 
         })
     }
+
 
     const handleChange = ({ target }) => {
         setProspect({
@@ -251,15 +270,15 @@ function Prospects() {
                 <div className="mt-2">
                     <div>
                         <label className="block">Name</label>
-                        <Input placeholder="Jane Cooper" disabled />
-                    </div>
-                    <div>
+                        <Input placeholder="Jane Cooper" id = "name" value = {prospect.name}  onChange = {handleChange} />
+                 </div>  
+                 <div>
                         <label className="block">Email</label>
-                        <Input placeholder="jane.cooper@example.com" disabled />
+                        <Input placeholder="jane.cooper@example.com" id = "email" value = {prospect.email} onChange = {handleChange} />
                     </div>
                     <div>
                         <label className="block">Phone Number</label>
-                        <Input placeholder="09093527277" disabled />
+                        <Input placeholder="09093527277" id = "phone" value = {prospect.phone} onChange = {handleChange} />
                     </div>
                     <div>
                         <Select title="stage" label="Deal stage">

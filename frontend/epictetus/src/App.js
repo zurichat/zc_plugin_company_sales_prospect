@@ -12,22 +12,22 @@ import Intro from "./containers/Intro";
 
 function App() {
   return (
-    <Router basename="/sales">
-      <div className="App font-lato" >  
-        {/* <Header /> */}
-        <SubHeader/>
-        <MobileHeader/>  
-        <Switch >
-          <Route exact path="/" component={Intro} />
-          <Route exact path="/prospects" component={Prospects} />
-          <Route exact path="/deals" component={Deals} />
-          <Route exact path="/test" component={Test} />
-          <Route exact path="/NoProspectsFound" component={NoProspectsFound} />
-          <Route exact path="/onboarding" component={Home} />
-        </Switch>
+        <Router basename="/sales">
+          <div className="App font-lato" >
+            {/* <Header /> */}
+            <SubHeader/>
+            <MobileHeader/>
+            <Switch >
+              <Route exact path="/" component={Intro} />
+              <Route exact path="/prospects" component={Prospects} />
+              <Route exact path="/deals" component={Deals} />
+              <Route exact path="/test" component={Test} />
+              <Route exact path="/NoProspectsFound" component={NoProspectsFound} />
+              <Route exact path="/onboarding" component={Home} />
+            </Switch>
 
-      </div>
-    </ Router >
+          </div>
+        </ Router >
   );
 
 }

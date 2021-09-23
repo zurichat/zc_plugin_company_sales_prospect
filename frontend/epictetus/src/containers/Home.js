@@ -175,8 +175,8 @@ function Home(props) {
             We will use this to personalize your Sales Prospect experience
           </p>
           <br />
-          <p className="error text-red-500 text-xs mb-2 -mt-3 capitalize px-5 mb-3">{errors.company?.message}</p>
-          <p className="error text-red-500 text-xs mb-2 -mt-3 capitalize px-5 mb-3">{errors.sector?.message}</p>
+          <p className="error text-red-500 text-xs mb-2 -mt-3 capitalize px-5 ">{errors.company?.message}</p>
+          <p className="error text-red-500 text-xs mb-2 -mt-3 capitalize px-5 ">{errors.sector?.message}</p>
           <p className="error text-red-500 text-xs mb-2 -mt-3 capitalize px-5">{errors.position?.message}</p>
           <div className="flex flex-row flex-wrap justify-around content-start w-6/7 relative mb-10">
             <HomeCard
@@ -237,7 +237,7 @@ function Home(props) {
           
           {(document.getElementsByClassName("error")) ? (<button
             onClick={showPageOne}
-            className="flex absolute right-96 bottom-5 block w-36 bg-green p-3 text-white rounded-sm border-green  hover:bg-green-300" 
+            className="flex absolute right-96 bottom-5  w-36 bg-green p-3 text-white rounded-sm border-green  hover:bg-green-300" 
           >
            <ArrowLeft />&nbsp; Previous 
           </button>) : null}
