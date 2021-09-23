@@ -1,0 +1,246 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Sales Prospects API (Deals endpoints)",
+    "description": "Sales prospects is a plugin that lets you to keep track of your organization’s prospects and deals.",
+    "version": "1.0.0",
+    "contact": {
+      "email": "developer@zuri.chat"
+    }
+  },
+  "tags": [
+    {
+      "name": "Deals"
+    }
+  ],
+  "paths": {
+    "/api/v1/deals/list/": {
+      "get": {
+        "tags": [
+          "Deals"
+        ],
+        "description": "Reads data from ZuriCore DB and return list of available deals.",
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/deal"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/_id"
+          },
+          {
+            "$ref": "#/components/parameters/prospect_id"
+          },
+          {
+            "$ref": "#/components/parameters/status"
+          },
+          {
+            "$ref": "#/components/parameters/amount"
+          }
+        ]
+      }
+    },
+    "/api/v1/deals/{id}/": {
+      "get": {
+        "tags": [
+          "Deals"
+        ],
+        "description": "Fetches prospect with the specified id from the DB",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of deal to fetch",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/deal"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/deals/create/": {
+      "post": {
+        "tags": [
+          "Deals"
+        ],
+        "description": "Creates a new deal",
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/deal"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "title": "Deal",
+                "type": "object",
+                "properties": {
+                  "prospect_id": {
+                    "type": "string",
+                    "default": "123abc456def789ghi"
+                  },
+                  "status": {
+                    "type": "string",
+                    "default": "Open"
+                  },
+                  "amount": {
+                    "type": "string",
+                    "default": 123456789
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/deals/update/{id}/": {
+      "put": {
+        "tags": [
+          "Deals"
+        ],
+        "description": "Edits a deal with specified id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of prospect to be edited",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/deal"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "app_id": []
+    }
+  ],
+  "components": {
+    "schemas": {
+      "deal": {
+        "title": "Deal",
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "title": "id",
+            "default": "123abc456def"
+          },
+          "prospect_id": {
+            "type": "string",
+            "default": "123abc456def789ghi"
+          },
+          "status": {
+            "type": "string",
+            "default": "Open"
+          },
+          "amount": {
+            "type": "string",
+            "default": 123456789
+          }
+        }
+      }
+    },
+    "parameters": {
+      "_id": {
+        "name": "_id",
+        "in": "query",
+        "description": "**_id**. *Example: 23142dfdwr432*. You can fetch deals by their id.",
+        "schema": {
+          "type": "string",
+          "default": "123abc456def"
+        },
+        "required": true
+      },
+      "prospect_id": {
+        "name": "prospect_id",
+        "in": "query",
+        "description": "**Prospect ID**. *Example: 123abc456def789ghi*. This contains the id of the corresponding prospect",
+        "schema": {
+          "type": "string",
+          "default": "123abc456def789ghi"
+        },
+        "required": true
+      },
+      "status": {
+        "name": "status",
+        "in": "query",
+        "description": "**Status**. *Example: Open*. This contains the status",
+        "schema": {
+          "type": "string",
+          "default": "Open"
+        },
+        "required": true
+      },
+      "amount": {
+        "name": "amount",
+        "in": "query",
+        "description": "**Amount**. *Example: 1234567*. This contains the of the deal",
+        "schema": {
+          "type": "string",
+          "default": 123456789
+        },
+        "required": true
+      }
+    },
+    "securitySchemes": {
+      "app_id": {
+        "type": "apiKey",
+        "description": "API key to authorize requests.",
+        "name": "Session",
+        "in": "cookie"
+      }
+    }
+  },
+  "servers": [
+    {
+      "description": "Sales Prospects API",
+      "url": "https://sales.zuri.chat/"
+    }
+  ]
+}
