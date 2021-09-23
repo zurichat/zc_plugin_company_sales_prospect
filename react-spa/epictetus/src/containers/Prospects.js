@@ -5,10 +5,10 @@ import Modal from '../components/Modal'
 import ProspectRow from '../components/ProspectRow'
 import { ChevronLeft, ChevronRight } from "react-feather";
 // import Select from '../components/Select'
-import customAxios, { createProspectURL, editProspectURL, prospectsURL } from '../axios';
+import customAxios, { createProspectURL, editProspectURL, prospectsURL, deleteProspectURL } from '../axios';
 import FileIcon from '../components/svg/FileIcon'
 // import { Link } from 'react-router-dom'
-import { doesProspectExist, formatPropsects } from '../utils'
+import { doesProspectExist, formatPropsects, updateProspects } from '../utils'
 import Loader from "../components/svg/Loader.svg";
 import Swal from 'sweetalert2'
 // import { useForm } from "react-hook-form";
@@ -136,7 +136,7 @@ function Prospects() {
             phone_number: prospect.phone,
             deal_stage: prospect.status
         }
-        customAxios.post(editProspectURL, apiProspect)
+        customAxios.put(`${editProspectURL}${prospect.id}/`, apiProspect)
             .then(r => {
                 Swal.fire({ text: 'Contact Edited successfully', icon: 'success', showCancelButton: false, })
                 handleCloseModal()
@@ -144,8 +144,33 @@ function Prospects() {
                     .then(r => setProspects(formatPropsects(r.data)))
                     .catch(e => console.log(e.response))
             })
+
         .catch(e => console.log(e))
+
+        
     }
+
+    const handleDelete = e => {
+        e.preventDefault()
+        customAxios.delete(deleteProspectURL, prospect)
+            .catch(r => {
+                alert("prospects deleted succesfully")
+                handleCloseModal()
+                customAxios.get(prospectsURL)
+                    .then(r => setProspects(formatPropsects(r.data)))
+                    .catch(e => console.log(e.response))
+            })
+        // .catch(e => console.log(e))
+
+        .catch(e => {
+            // console.log(e)
+            const newProspects = updateProspects(prospects, prospect.id, prospect)
+            setProspects(newProspects)
+            Swal.fire({ text: 'Contact Edited successfully', icon: 'success', showCancelButton: false, })
+
+        })
+    }
+
 
     const handleChange = ({ target }) => {
         setProspect({
@@ -245,15 +270,15 @@ function Prospects() {
                 <div className="mt-2">
                     <div>
                         <label className="block">Name</label>
-                        <Input placeholder="Jane Cooper" disabled />
-                    </div>
-                    <div>
+                        <Input placeholder="Jane Cooper" id = "name" value = {prospect.name}  onChange = {handleChange} />
+                 </div>  
+                 <div>
                         <label className="block">Email</label>
-                        <Input placeholder="jane.cooper@example.com" disabled />
+                        <Input placeholder="jane.cooper@example.com" id = "email" value = {prospect.email} onChange = {handleChange} />
                     </div>
                     <div>
                         <label className="block">Phone Number</label>
-                        <Input placeholder="09093527277" disabled />
+                        <Input placeholder="09093527277" id = "phone" value = {prospect.phone} onChange = {handleChange} />
                     </div>
                     <div>
                         <Select title="stage" label="Deal stage">
