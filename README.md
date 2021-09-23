@@ -19,7 +19,7 @@ To:
 "build" : "craco build"
 ``` -->
 
-To actually build run `yarn relocate`
+To actually build run `yarn build`
 
 ## Django server
 
