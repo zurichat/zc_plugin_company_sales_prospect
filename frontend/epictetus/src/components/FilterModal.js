@@ -15,7 +15,7 @@ export default function Modal({ open = false, closeModal, title, children, descr
           <div className="min-h-screen px-4 text-center">
             <Transition.Child
               as={Fragment}
-              enter="ease-out duration-300"
+              enter="ease-out duration-400"
               enterFrom="opacity-0"
               enterTo="opacity-100"
               leave="ease-in duration-200"
