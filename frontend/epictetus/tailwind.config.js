@@ -41,9 +41,9 @@ module.exports = {
       'lg':'1.875rem', 
       'xl':'1.125rem',
       'x1':'1.25rem',
-      '2x1':'1rem', 
+      '2x11':'1rem', 
       '3x1': '1.35rem',
-      '4x1': '1.5rem',
+      'lgg': '1.5rem',
      },
      lineHeight:{
       'leading-1': '.75rem',

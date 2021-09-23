@@ -4,6 +4,7 @@ import Button from "../components/Button";
 import DealCard from "../components/DealCard";
 //import Input from "../components/Input";
 import Modal from "../components/Modal";
+import FilterModal from "../components/FilterModal";
 //import Select from "../components/Select";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -117,7 +118,7 @@ const Deals = (data, key, index) => {
                     <Button onClick={handleOpenModal}>Create New</Button>
                 </div>
 
-                <Modal
+                <FilterModal
                     title="Filter deal"
                     description="Filter deal to quickly find your prospects on the deal pipeline.
             You can filter by one or more criteria."
@@ -140,7 +141,7 @@ const Deals = (data, key, index) => {
                                 Done
                             </button>
                         </form>
-                    </Modal>
+                    </FilterModal>
 
                 <Modal
                     title="Create a Deal"
