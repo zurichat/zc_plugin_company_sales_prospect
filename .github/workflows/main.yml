@@ -17,10 +17,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Use cached node_modules
-        uses: c-hive/gha-yarn-cache@v2
-        with:
-          directory: react-spa
+
+
       - name: Install yarn dependencies and build react-spa project
         run: |
           cd frontend/mainApp/
