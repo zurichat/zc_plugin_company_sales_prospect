@@ -27,7 +27,7 @@ import { registerApplication, start } from "single-spa";
 registerApplication({
   name: "@zuri/zuri-plugin-company-sales-prospects",
   app: () => System.import("@zuri/zuri-plugin-company-sales-prospects"),
-  activeWhen: ["/sales"],
+  activeWhen: ["/"],
 });
 
 // customRegister(window.isLocal ? "dev" : "prod");
