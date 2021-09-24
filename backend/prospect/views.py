@@ -9,7 +9,7 @@ from rest_framework.views import APIView
 from rest_framework import status
 
 from .serializers import ProspectSerializer
-
+from common.utils import centrifugo_post #changed the import to a single import
 from rest_framework.permissions import AllowAny
 
 PLUGIN_ID = settings.PLUGIN_ID
@@ -22,6 +22,7 @@ class ProspectsListView(APIView):
     queryset = None
 
     def get(self, request, *args, **kwargs):
+        centrifugo_post("Prospects", {"event":"join","token":"elijah"})
         # # check authentication
         # if not isAuthorized(request):
         #     return Response(data={"message":"Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)

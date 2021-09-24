@@ -1,3 +1,39 @@
+import json
+from zc_plugin_company_sales_prospect.backend.conf.settings import ZURI_API_KEY
+import requests
+from django.conf import settings
+
+ZURI_API_KEY = settings.ZURI_API_KEY
+API_KEY = settings.API_KEY
+
+def centrifugo_post(room, data):
+    command = {
+        "method": "publish",
+        "params": {
+            "channel": room,
+            "data": data
+        }
+    }
+    data = json.dumps(command)
+    headers = {"Content-type": "application/json", "Authorization": "apikey " + API_KEY}
+    resp = requests.post("https://realtime.zuri.chat/api", data=data, headers=headers)
+    return resp.json()
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # from __future__ import annotations
 
 # import json

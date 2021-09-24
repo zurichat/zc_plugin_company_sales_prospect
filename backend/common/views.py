@@ -194,6 +194,14 @@ class RemoveUserFromRoom(APIView):
             return Response(data={"message": "failed"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         return Response(data={"message": "This user does not exist to this room"}, status=status.HTTP_404_NOT_FOUND)
 
+
+
+
+
+
+
+
+
 #
 # class DeleteUserToRoom(APIView):
 #     serializer_class = RoomSerializer
