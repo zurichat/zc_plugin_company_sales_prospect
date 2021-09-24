@@ -9,7 +9,7 @@ from rest_framework.views import APIView
 from rest_framework import status
 
 from .serializers import ProspectSerializer
-from common.utils import *
+from common.utils import centrifugo_post #changed the import to a single import
 from rest_framework.permissions import AllowAny
 
 PLUGIN_ID = settings.PLUGIN_ID
