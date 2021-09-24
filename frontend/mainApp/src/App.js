@@ -8,7 +8,7 @@ import Deals from "./containers/Deals";
 import SubHeader from "./components/SubHeader";
 import MobileHeader from "./components/MobileHeader";
 //import Header from "./components/Header";
-import Intro from "./containers/Intro";
+// import Intro from "./containers/Intro";
 
 function App() {
   return (
@@ -18,12 +18,12 @@ function App() {
             <SubHeader/>
             <MobileHeader/>
             <Switch >
-              <Route exact path="/" component={Intro} />
+              <Route exact path="/" component={Home} />
               <Route exact path="/prospects" component={Prospects} />
               <Route exact path="/deals" component={Deals} />
               <Route exact path="/test" component={Test} />
               <Route exact path="/NoProspectsFound" component={NoProspectsFound} />
-              <Route exact path="/onboarding" component={Home} />
+              {/* <Route exact path="/onboarding" component={Home} /> */}
             </Switch>
 
           </div>

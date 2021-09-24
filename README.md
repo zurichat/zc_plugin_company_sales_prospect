@@ -8,7 +8,7 @@ Go to the `frontend/mainApp` directory and then run the following:
 yarn install
 yarn start:standalone
 ```
-The server will run on http://localhost:8081/
+The server will run on http://localhost:8080/
 <!-- To build the application so that the frontend application can be integrated into the backend to form a fullstack application, go to package.json and change the build script:
 
 ```
