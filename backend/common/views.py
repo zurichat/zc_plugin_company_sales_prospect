@@ -26,6 +26,18 @@ class SidebarView(APIView):
         data = success_query()
         return Response(data, status=status.HTTP_200_OK)
 
+
+class SidebarDealsRooms(APIView):
+    def get(self, request, *args, **kwargs):
+        data = sidebardealsrooms()
+        return Response(data, status=status.HTTP_200_OK)
+
+
+class SidebarProspectsRooms(APIView):
+    def get(self, request, *args, **kwargs):
+        data = sidebarprospectsrooms()
+        return Response(data, status=status.HTTP_200_OK)
+
 class RoomSerializer(serializers.Serializer):
     user = serializers.IntegerField()
     room_name = serializers.CharField()
