@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 import requests, json
 from rest_framework.response import Response
 from rest_framework import status as st
-
+from common.utils import *
 
 PLUGIN_ID = settings.PLUGIN_ID
 ORGANISATION_ID = settings.ORGANISATION_ID
@@ -102,7 +102,7 @@ class DealsListView(APIView):
     queryset = None
 
     def get(self, request, *args, **kwargs):
-
+        centrifugo_post("Deals", {"event":"join","token":"elijah"})
         url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/deals/{ORGANISATION_ID}"
         response = requests.request("GET", url)
         r = response.json()
