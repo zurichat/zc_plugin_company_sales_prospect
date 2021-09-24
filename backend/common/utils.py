@@ -1,5 +1,4 @@
 import json
-from zc_plugin_company_sales_prospect.backend.conf.settings import ZURI_API_KEY
 import requests
 from django.conf import settings
 
