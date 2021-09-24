@@ -1,18 +1,64 @@
-from rest_framework.response import Response
-from rest_framework import status
-from django.contrib.sites.shortcuts import get_current_site
 from django.conf import settings
 import requests
 import json
 
+
+
+def sidebardealsrooms():
+    url = "https://api.zuri.chat/data/read/614105b66173056af01b4cca/salesrooms/613a495f59842c7444fb0246?id=614d11271df928467cc563d8"
+    r = requests.get(url)
+    response = json.loads(r.text)
+    if response['status'] == 200:
+        data = {
+            "_id": response['data']['_id'],
+            "deals": response['data']['deals']
+        }
+
+        return data
+        
+    else:
+        data = {
+            "error": "rooms not available"
+        }
+
+        return data
+
+
+
+
+
+def sidebarprospectsrooms():
+    url = "https://api.zuri.chat/data/read/614105b66173056af01b4cca/salesrooms/613a495f59842c7444fb0246?id=614d12901df928467cc563df"
+    r = requests.get(url)
+    response = json.loads(r.text)
+    if response['status'] == 200:
+        data = {
+            "_id": response['data']['_id'],
+            "prospects": response['data']['prospects']
+        }
+
+        return data
+        
+    else:
+        data = {
+            "error": "rooms not available"
+        }
+
+        return data
+
+
+
+
+
+
+
 def success_query():
     data = {
-        "name": "sales plugin",
+        "name": settings.PLUGIN_NAME,
         "plugin_id": settings.PLUGIN_ID,
         "description": settings.DESCRIPTION,
-        "organisation_id": settings.ORGANIZATION_ID,
-        "group_name": settings.PLUGIN_NAME,
-        "user_id": f"123456",
+        "organisation_id": settings.ORGANISATION_ID,
+        "group_name": "Plugin",
         "show_group": False,
         "joined_rooms": [
             {
@@ -57,32 +103,4 @@ def success_query():
 
     return data
 
-# def no_query_params():
-#     data = {
-#         "name": "sales plugin",
-#         "plugin_id": settings.PLUGIN_ID,
-#         "description": settings.DESCRIPTION,
-#         "organisation_id": settings.ORGANIZATION_ID,
-#         "group_name": settings.PLUGIN_NAME,
-#         "show_group": False,
-#         "joined_rooms": [],
-#         "public_rooms": [
-#             {
-#                 "title": "prospects",
-#                 "url": "https://sales.zuri.chat/prospects/",
-#                 "icon": "cdn.cloudflare.com/445345453345/hello.jpeg",
-#                 "action" : "open",
-#                 "auto-join" : True
-#             },
 
-#             {
-#                 "title": "deals",
-#                 "url": "https://sales.zuri.chat/deals/",
-#                 "icon": "cdn.cloudflare.com/445345453345/hello.jpeg",
-#                 "action" : "open",
-#                 "auto-join" : True
-#             },
-#         ]
-#     }
-
-#     return data
