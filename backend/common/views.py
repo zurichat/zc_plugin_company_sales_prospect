@@ -24,9 +24,9 @@ DESCRIPTION = settings.DESCRIPTION
 
 class SidebarView(APIView):
     def get(self,request,*args, **kwargs):
+        user = request.GET.get('user')
+        org = request.GET.get('org')
         if request.GET.get('org') and request.GET.get('user'):
-            user = request.GET.get('user')
-            org = request.GET.get('org')
             url = f'https://api.zuri.chat/organizations/{org}/members/{user}'
             headers = {
                 "Authorization" : "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb29raWUiOiJNVFl6TWpVMk5UY3pPSHhIZDNkQlIwUlplRTVIVm0xUFYxWm9XbFJOTVZsdFNUTk5Na1V6VGpKS2FrMXRSWGxPZHowOWZERHRMWFpqWlRUU1VLSHNPNzItTjNVSlVZNmlVaDlTMUhveXcwbl8zaWNUIiwiZW1haWwiOiJhbGFzaGltdXlpd2FAZ21haWwuY29tIiwiaWQiOiI2MTRlZjllYWUzNWJiNzNhNzdiYzJhMjciLCJvcHRpb25zIjp7IlBhdGgiOiIvIiwiRG9tYWluIjoiIiwiTWF4QWdlIjo3OTM5NzY1MjQ0LCJTZWN1cmUiOmZhbHNlLCJIdHRwT25seSI6ZmFsc2UsIlNhbWVTaXRlIjowfSwic2Vzc2lvbl9uYW1lIjoiZjY4MjJhZjk0ZTI5YmExMTJiZTMxMGQzYWY0NWQ1YzcifQ.ZAFc8PUEnHveRyGzDPB_TXP0qzGhd2ymhDx44ECdDA4",
@@ -49,8 +49,8 @@ class SidebarView(APIView):
                     "user_id": user,
                     "group_name": "SALES",
                     "show_group": False,
-                    "Public rooms":public_response['data'],
-                    "Joined rooms":[]})
+                    "public_rooms":public_response['data'],
+                    "joined_rooms":[]})
                 else:
                     return Response({"name": PLUGIN_NAME,
                     "description": DESCRIPTION,
@@ -59,28 +59,28 @@ class SidebarView(APIView):
                     "user_id": user,
                     "group_name": "SALES",
                     "show_group": False,
-                    "Public rooms":private_response['data'],
-                    "Joined rooms":private_response['data']})
+                    "public_rooms":private_response['data'],
+                    "joined_rooms":private_response['data']})
             else:
                 return Response({"name": PLUGIN_NAME,
                     "description": DESCRIPTION,
                     "plugin_id": PLUGIN_ID,
-                    "organisation_id": "",
-                    "user_id": "",
+                    "organisation_id": org,
+                    "user_id": user,
                     "group_name": "SALES",
                     "show_group": False,
-                    "Public rooms":[],
-                    "Joined rooms":[]})
+                    "public_rooms":[],
+                    "joined_rooms":[]})
         else:
             return Response({"name": PLUGIN_NAME,
                     "description": DESCRIPTION,
                     "plugin_id": PLUGIN_ID,
-                    "organisation_id": "",
-                    "user_id": "",
+                    "organisation_id": org,
+                    "user_id": user,
                     "group_name": "SALES",
                     "show_group": False,
-                    "Public rooms":[],
-                    "Joined rooms":[]})
+                    "public_rooms":[],
+                    "joined_rooms":[]})
 
 
 def is_valid(param):
