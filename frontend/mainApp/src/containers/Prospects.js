@@ -191,7 +191,7 @@ function Prospects() {
 
   const handleDealCreate = (e) => {
     e.preventDefault();
-    const dealInfo = { ...deal, prospect_id: prospect.id };
+    const dealInfo = { ...deal, prospect_id: prospect.id, name: prospect.name };
     customAxios
       .post(createDealURL, dealInfo)
       .then((r) => {
@@ -468,22 +468,6 @@ function Prospects() {
         closeModal={handleCloseModal}
       >
         <form className="mt-2" onSubmit={handleDealCreate}>
-          <div>
-            <label className="block">Name</label>
-            <Input
-              placeholder="Enter Full Name"
-              onChange={handleDealChange}
-              id="name"
-            />
-          </div>
-          <div>
-            <label className="block">Company</label>
-            <Input
-              placeholder="Enter Company"
-              onChange={handleDealChange}
-              id="company"
-            />
-          </div>
           <div>
             <Select
               title="stage"

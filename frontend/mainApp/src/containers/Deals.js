@@ -272,21 +272,96 @@ const Deals = (data, key, index) => {
                     </div>
                   </div>
                 </div>
-                <div className="grid grid-cols-4 border border-t-0 border-gray-300 rounded h-screen2">
-                  <div className="text-center border-r border-gray-300 rounded py-2 overflow-x-auto flex flex-col items-center gap-4">
-                    <DealCard data={"prospects"} />
+                <div className="grid grid-cols-4 border border-t-0 border-gray-300 rounded h-screen2 scrollbar-hide">
+                  <div className="text-center border-r border-gray-300 rounded py-2 overflow-x-auto flex flex-col items-center gap-4 scrollbar-hide">
+                    {deals.map(
+                      ({
+                        deal_stage,
+                        amount,
+                        name,
+                        close_date,
+                        description,
+                        _id,
+                      }) =>
+                        deal_stage.toLowerCase() === "prospect" && (
+                          <DealCard
+                            key={_id}
+                            stage={deal_stage}
+                            amount={amount}
+                            name={name}
+                            close_date={close_date}
+                            description={description}
+                          />
+                        )
+                    )}
                   </div>
-                  <div className="text-center border-r border-gray-300 rounded py-2 overflow-x-auto flex flex-col items-center gap-4">
-                    <DealCard data={"proposal"} />
+                  <div className="text-center border-r border-gray-300 rounded py-2 overflow-x-auto flex flex-col items-center gap-4 scrollbar-hide">
+                    {deals.map(
+                      ({
+                        deal_stage,
+                        amount,
+                        name,
+                        close_date,
+                        description,
+                        _id,
+                      }) =>
+                        deal_stage.toLowerCase() === "proposal" && (
+                          <DealCard
+                            key={_id}
+                            deal_stage={deal_stage}
+                            amount={amount}
+                            name={name}
+                            close_date={close_date}
+                            description={description}
+                          />
+                        )
+                    )}
                   </div>
-                  <div className="text-center border-r border-gray-300 rounded py-2 overflow-x-auto flex flex-col items-center gap-4">
-                    <DealCard data={"negotiation"} />
+                  <div className="text-center border-r border-gray-300 rounded py-2 overflow-x-auto flex flex-col items-center gap-4 scrollbar-hide">
+                    {deals.map(
+                      ({
+                        deal_stage,
+                        amount,
+                        name,
+                        close_date,
+                        description,
+                        _id,
+                      }) =>
+                        deal_stage.toLowerCase() === "negotiation" && (
+                          <DealCard
+                            key={_id}
+                            stage={deal_stage}
+                            amount={amount}
+                            name={name}
+                            close_date={close_date}
+                            description={description}
+                          />
+                        )
+                    )}
                   </div>
-                  <div className="text-center py-2 overflow-x-auto">
-                    <DealCard data={"closed"} />
+                  <div className="text-center border-r border-gray-300 rounded py-2 overflow-x-auto flex flex-col items-center gap-4 scrollbar-hide">
+                    {deals.map(
+                      ({
+                        deal_stage,
+                        amount,
+                        name,
+                        close_date,
+                        description,
+                        _id,
+                      }) =>
+                        deal_stage.toLowerCase() === "closed" && (
+                          <DealCard
+                            key={_id}
+                            stage={deal_stage}
+                            amount={amount}
+                            name={name}
+                            close_date={close_date}
+                            description={description}
+                          />
+                        )
+                    )}
                   </div>
                 </div>
-                {provided.placeholder}
               </div>
             )}
           </Droppable>
