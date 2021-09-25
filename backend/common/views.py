@@ -25,16 +25,16 @@ ADDED_ROOM_COLLECTION_NAME = settings.ADDED_ROOM_COLLECTION_NAME
 
 class SidebarView(APIView):
     def get(self,*args, **kwargs):
-        publicurl = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/{ROOM_COLLECTION_NAME}/{ORGANISATION_ID}"
-        privateurl = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/{ADDED_ROOM_COLLECTION_NAME}/{ORGANISATION_ID}"
-        publicr = requests.get(publicurl)
-        privater = requests.get(privateurl)
-        publicresponse = json.loads(publicr.text)
-        privateresponse = json.loads(privater.text)
-        if privateresponse['status']!=200:
-            return Response({"Public rooms":publicresponse['data'],"Joined rooms":[]})
+        public_url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/{ROOM_COLLECTION_NAME}/{ORGANISATION_ID}"
+        private_url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/{ADDED_ROOM_COLLECTION_NAME}/{ORGANISATION_ID}"
+        public_r = requests.get(public_url)
+        private_r = requests.get(private_url)
+        public_response = json.loads(public_r.text)
+        private_response = json.loads(private_r.text)
+        if private_response['status']!=200:
+            return Response({"Public rooms":public_response['data'],"Joined rooms":[]})
         else:
-            return Response({"Public rooms":publicresponse['data'],"Joined rooms":privateresponse['data']})
+            return Response({"Public rooms":private_response['data'],"Joined rooms":private_response['data']})
 
 
 class SidebarDealsRooms(APIView):
