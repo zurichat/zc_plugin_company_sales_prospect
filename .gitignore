@@ -22,10 +22,13 @@ node_modules/
 dist
 openapi.yaml
 
+
 /backend/build/root/*
 !/backend/build/root/__.txt
+/backend/venv
+!/backend/build/root/root.txt
 
 /backend/build/main/*
-!/backend/build/main/__.txt
+!/backend/build/main/main.txt
 
 # /backend/static/*
