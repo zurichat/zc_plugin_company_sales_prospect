@@ -1,6 +1,6 @@
 from django.conf import settings
 import requests, json
-from rest_framework.response import Response
+# from rest_framework.response import Response
 PLUGIN_ID = settings.PLUGIN_ID
 ORGANISATION_ID = settings.ORGANISATION_ID
 ROOM_COLLECTION_NAME = settings.ROOM_COLLECTION_NAME

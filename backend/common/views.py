@@ -13,7 +13,6 @@ from rest_framework import status
 
 from drf_spectacular.utils import extend_schema
 
-from .json_data import getsidebbarinfo
 
 ### api/v1/sidebar?org=5336&user=Devjoseph&token=FGEZJJ-ZFDGB-FDGG
 PLUGIN_ID = settings.PLUGIN_ID
