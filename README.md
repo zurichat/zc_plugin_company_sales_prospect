@@ -69,8 +69,8 @@ https://sales.zuri.chat/api/v1/deals/list/
 https://sales.zuri.chat/api/v1/deals/update/{id}/
 
 ## OTHERS
-https://sales.zuri.chat/api/info/ <br/>
-https://sales.zuri.chat/sidebar
+https://sales.zuri.chat/api/v1/info/ <br/>
+https://sales.zuri.chat/api/v1/sidebar/
 
 
 <!-- Always toggle isLocal to be the opposite  -->

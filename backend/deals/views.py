@@ -1,4 +1,5 @@
 
+from common.utils import centrifugo_post
 from django.conf import settings
 from deals.serializers import DealSerializer, DealUpdateSerializer
 from rest_framework.views import APIView
@@ -103,6 +104,7 @@ class DealsListView(APIView):
 
     def get(self, request, *args, **kwargs):
 
+        centrifugo_post("Deals", {"event":"join","token":"elijah"})
         url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/deals/{ORGANISATION_ID}"
         response = requests.request("GET", url)
         r = response.json()

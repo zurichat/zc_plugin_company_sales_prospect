@@ -30,6 +30,12 @@ registerApplication({
   activeWhen: ["/"],
 });
 
+registerApplication({
+  name: "@zuri/zuri-control",
+  app: () => System.import("@zuri/zuri-control"),
+  activeWhen: ["/control"],
+});
+
 // customRegister(window.isLocal ? "dev" : "prod");
 
 // function customRegister(env) {
