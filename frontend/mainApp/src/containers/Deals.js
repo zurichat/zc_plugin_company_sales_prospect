@@ -145,12 +145,12 @@ const Deals = (data, key, index) => {
             open={toggle}
             closeModal={CloseModal}
           >
-            <div className="w-full mt-6">
+            <div className="w-full mt-6 h-80">
               <FilterDeals />
-              <FilterDeal className="relative -top-28" />
             </div>
-
-            <form className=" relative top-72 z-50 flex justify-end">
+            <div className="h-40">
+            </div>
+            <form className="absolute bottom-6 right-6 z-50 flex justify-end">
               <button
                 type="reset"
                 className="text-btngreen px-10 py-2 border-none"

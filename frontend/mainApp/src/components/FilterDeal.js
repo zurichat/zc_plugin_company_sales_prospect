@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { Listbox, Transition } from "@headlessui/react";
-// import Shape from "./svg/Shape.svg";
+import Shape from "./svg/Shape.svg";
 
 const conditions = ["Is","Is not ", " Contains", "Does not contain", "Starts with", "Ends with", "Is Empty","Negotiation","Is not Empty"];
 
 
 
 export default function Index() {
-  const [selected, setSelected] = useState("Select filter condition");
+  const [selected, setSelected] = useState();
 
   return (
       <Listbox as="div" value={selected} onChange={setSelected}>
@@ -19,9 +19,9 @@ export default function Index() {
             </Listbox.Label>
             <div className="relative">
               <span className="flex w-full">
-                <Listbox.Button className="flex content-center justify-between h-xl  pl-4 py-4 top-8 w-full text-left focus:outline-none focus:shadow-lg relative rounded text-gray-800 border-grey">
-                  <span className="block truncate">{selected}</span>
-                  {/* <img src={Shape} alt="Shape" className=" relative top-3 right-3 " /> */}
+                <Listbox.Button className="flex h-14 content-center justify-between pl-4 py-4 top-8 w-full text-left focus:outline-none relative rounded text-gray-400">
+                {selected ? selected : "Select filter condition"}
+                  <img src={Shape} alt="Shape" className=" relative top-3 right-3 " />
                 </Listbox.Button>
               </span>
               <Transition
@@ -32,7 +32,7 @@ export default function Index() {
               >
                 <Listbox.Options
                   static
-                  className="border pt-3 border-btngreen shadow-lg border-t-0 outline-none rounded rounded-t-none w-full absolute top-20 bg-white z-50 overflow-y-auto h-lgcd"
+                  className="border pt-3 border-green shadow-lg border-t-0 outline-none rounded h-60 rounded-t-none w-full absolute top-20 bg-white z-50 overflow-y-hidden"
                 >
                   {conditions.map((fruit) => (
                     <Listbox.Option key={fruit} value={fruit}>
@@ -42,7 +42,7 @@ export default function Index() {
                             active
                               ? "text-black bg-gray-200"
                               : "text-gray-900"
-                          } cursor-default select-none relative py-2 pl-4 pr-4`}
+                          } cursor-default select-none relative py-4 pl-4 pr-4`}
                         >
                           <span
                             className={`${
