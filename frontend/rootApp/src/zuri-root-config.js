@@ -31,9 +31,9 @@ registerApplication({
 });
 
 registerApplication({
-  name: "@zuri/zuri-control",
-  app: () => System.import("@zuri/zuri-control"),
-  activeWhen: ["/control"],
+  name: "@zuri/zuri-sidebar",
+  app: () => System.import("@zuri/zuri-sidebar"),
+  activeWhen: ["/sidebar"],
 });
 
 // customRegister(window.isLocal ? "dev" : "prod");
