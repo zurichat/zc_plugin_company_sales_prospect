@@ -1,5 +1,15 @@
 from rest_framework import serializers
 
+class RoomSerializer(serializers.Serializer):
+    user = serializers.CharField()
+    room_name = serializers.CharField()
+
+
+class RoomCreateSerializer(serializers.Serializer):
+    user = serializers.IntegerField()
+    room_name = serializers.CharField()
+    icon = serializers.CharField()
+
 
 # headers = {
     #     'Authorization': f'Bearer {token}',

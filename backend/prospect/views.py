@@ -1,3 +1,4 @@
+from common.utils import centrifugo_post
 import requests, json
 
 from django.http import JsonResponse
@@ -9,7 +10,7 @@ from rest_framework.views import APIView
 from rest_framework import status
 
 from .serializers import ProspectSerializer
-
+from common.utils import centrifugo_post #changed the import to a single import
 from rest_framework.permissions import AllowAny
 
 PLUGIN_ID = settings.PLUGIN_ID
@@ -22,10 +23,11 @@ class ProspectsListView(APIView):
     queryset = None
 
     def get(self, request, *args, **kwargs):
+        centrifugo_post("Prospects", {"event":"join","token":"elijah"})
         # # check authentication
         # if not isAuthorized(request):
         #     return Response(data={"message":"Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
-
+        centrifugo_post("Prospects", {"event":"join","token":"elijah"})
         url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/prospects/{ORGANISATION_ID}"
         response = requests.request("GET", url)
         print(response.status_code)

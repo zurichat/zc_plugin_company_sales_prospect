@@ -30,6 +30,12 @@ registerApplication({
   activeWhen: ["/"],
 });
 
+registerApplication({
+  name: "@zuri/zuri-sidebar",
+  app: () => System.import("@zuri/zuri-sidebar"),
+  activeWhen: ["/sidebar"],
+});
+
 // customRegister(window.isLocal ? "dev" : "prod");
 
 // function customRegister(env) {

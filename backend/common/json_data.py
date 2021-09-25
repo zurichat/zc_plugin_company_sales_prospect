@@ -1,11 +1,21 @@
 from django.conf import settings
-import requests
-import json
+import requests, json
+
+PLUGIN_ID = settings.PLUGIN_ID
+ORGANISATION_ID = settings.ORGANISATION_ID
+ROOM_COLLECTION_NAME = settings.ROOM_COLLECTION_NAME
+PROSPECTS_COLLECTION_NAME = settings.PROSPECTS_COLLECTION_NAME
+PROSPECTS_ROOM_ID = settings.PROSPECTS_ROOM_ID
+DEALS_ROOM_ID = settings.DEALS_ROOM_ID
+
+
+# Fetch all the test room - public rooms
+# Fetch all the actual room - joined rooms
 
 
 
 def sidebardealsrooms():
-    url = "https://api.zuri.chat/data/read/614105b66173056af01b4cca/salesrooms/613a495f59842c7444fb0246?id=614d11271df928467cc563d8"
+    url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/{ROOM_COLLECTION_NAME}/{ORGANISATION_ID}?id={DEALS_ROOM_ID}"
     r = requests.get(url)
     response = json.loads(r.text)
     if response['status'] == 200:
@@ -28,7 +38,7 @@ def sidebardealsrooms():
 
 
 def sidebarprospectsrooms():
-    url = "https://api.zuri.chat/data/read/614105b66173056af01b4cca/salesrooms/613a495f59842c7444fb0246?id=614d12901df928467cc563df"
+    url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/{ROOM_COLLECTION_NAME}/{ORGANISATION_ID}?id={PROSPECTS_ROOM_ID}"
     r = requests.get(url)
     response = json.loads(r.text)
     if response['status'] == 200:
@@ -64,7 +74,7 @@ def success_query():
             {
             "title": "prospects",
             "id": "6139391dd941c451490f3f2f",
-            "url": "https://sales.zuri.chat/prospects/",
+            "url": "https://sales.zuri.chat/api/v1/prospects/",
             "unread": 0,
             "badge_type": "info",
             "members": 15,
@@ -74,7 +84,7 @@ def success_query():
             {
             "title": "deals",
             "id": "6139393ed941c451490f3f30",
-            "url": "https://sales.zuri.chat/deals/",
+            "url": "https://sales.zuri.chat/api/v1/deals/",
             "unread": 0,
             "badge_type": "info",
             "members": 2,
@@ -85,7 +95,7 @@ def success_query():
         "public_rooms": [
             {
                 "title": "prospects",
-                "url": "https://sales.zuri.chat/prospects/",
+                "url": "https://sales.zuri.chat/api/v1/prospects/",
                 "icon": "cdn.cloudflare.com/445345453345/hello.jpeg",
                 "action" : "open",
                 "auto-join" : True
@@ -93,7 +103,7 @@ def success_query():
 
             {
                 "title": "deals",
-                "url": "https://sales.zuri.chat/deals/",
+                "url": "https://sales.zuri.chat/api/v1/deals/",
                 "icon": "cdn.cloudflare.com/445345453345/hello.jpeg",
                 "action" : "open",
                 "auto-join" : True

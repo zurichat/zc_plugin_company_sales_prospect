@@ -1,3 +1,6 @@
+import { GetUserInfo } from "@zuri/zuri-sidebar";
+// import { GetUserInfo } from "https://zuri.chat/zuri-sidebar.js";
+
 export const capitalize = (word) => {
   const lower = word.toLowerCase();
   return word.charAt(0).toUpperCase() + lower.slice(1);
@@ -28,3 +31,12 @@ export const updateProspects = (prospects, id, newDetails) => {
   }
   return p;
 };
+
+//Store token in localstorage
+export const token = sessionStorage.getItem("token");
+
+//Store user copy in localstorage
+export const user = JSON.parse(sessionStorage.getItem("user"));
+
+export const getUserInfo = async (userID = user.id, token = token) =>
+  GetUserInfo(userID, token);
