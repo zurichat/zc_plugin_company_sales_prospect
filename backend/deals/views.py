@@ -1,4 +1,3 @@
-
 from django.conf import settings
 from deals.serializers import DealSerializer, DealUpdateSerializer
 from rest_framework.views import APIView
@@ -16,7 +15,7 @@ class DealCreateView(APIView):
     The endpoint is https://sales.zuri.chat/deals/create
     """
 
-    serializer_class = DealUpdateSerializer
+    serializer_class = DealSerializer
     queryset = None
     def post(self, request, *args, **kwargs):
         url = "https://api.zuri.chat/data/write"
@@ -37,7 +36,7 @@ class DealCreateView(APIView):
         
         urlprospect = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/prospects/{ORGANISATION_ID}"
         responseprospect = requests.request("GET", urlprospect)
-        # print(responseprospect.status_code,'here')
+        print(responseprospect.status_code,'here')
         if(responseprospect.status_code!='200'):
             prospectdata = responseprospect.json()['data']
             liste = []
@@ -46,12 +45,13 @@ class DealCreateView(APIView):
               if (prospectid == i["_id"]):
                 liste.append(i)
             if len(liste) == 0:
-                 return Response(data={"message":"prospect id you supplied does not exist, please provide a valid prospect id"}, status=st.HTTP_200_OK)
+                return Response(data={"message":"prospect id you supplied does not exist, please provide a valid prospect id"}, status=st.HTTP_200_OK)
         response = requests.request("POST", url,data=json.dumps(data))
         r = response.json()
         # print(r)
         if response.status_code == 201:
-            return Response(data={'message':'Created deal object successfully!',"deal_created":r['data']}, status=st.HTTP_201_CREATED)
+            # return Response(data={'message':'Created deal object successfully!',"deal_created":r['data']}, status=st.HTTP_201_CREATED)
+            return Response(data={'message':'Created deal object successfully!', "data":request.data}, status=st.HTTP_201_CREATED)
 
         return Response(data={"message":"Creation of deals failed... Try again later."}, status=response.status_code)
 
@@ -93,6 +93,7 @@ class DealUpdateView(APIView):
             return Response(data={'message':'Deal Updated Successfully'}, status=st.HTTP_201_CREATED)
         return Response(data={"message":"Try again later"}, status=st.HTTP_500_INTERNAL_SERVER_ERROR)
         
+
 class DealsListView(APIView):
     """
     Documentation here.
@@ -115,7 +116,6 @@ class DealsListView(APIView):
         return Response(data={"message":"Try again later"}, status=st.HTTP_500_INTERNAL_SERVER_ERROR) 
 
 
-
 class DealsFilterListView(APIView):
     """
     Filters existing deals by the provided search criteria. For now, this is limited to just the name field.
@@ -124,41 +124,57 @@ class DealsFilterListView(APIView):
     serializer_class = DealSerializer
     queryset = None
 
-    def get(self, request, *args, **kwargs):
+    def post(self, request, search, *args, **kwargs):
 
-        url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/deals/{ORGANISATION_ID}"
-        response = requests.request("GET", url)
+        url = "https://api.zuri.chat/data/read"
+        data = {
+                "plugin_id": PLUGIN_ID,
+                "collection_name": "deals",
+                "organization_id": ORGANISATION_ID,
+                "filter": {"$or": [
+                        {"name": {"$regex": search}},
+                        {"amount": {"$regex": search}},
+                        {"description": {"$regex": search}}
+                        ]
+                    }
+                }
+
+        response = requests.request("POST", url, data=json.dumps(data))
         r = response.json()
         if response.status_code == 200:
-            output_data = [data for data in r['data'] if kwargs['filter'].lower() in str(data['name']).lower()]
-            if len(output_data) > 0:
-                return Response(data=output_data, status=st.HTTP_200_OK)
-            else:
-                return Response(data={"message":"There are no deals matching your search"}, status=st.HTTP_404_NOT_FOUND)
-        return Response(data={"message":"Try again later"}, status=st.HTTP_500_INTERNAL_SERVER_ERROR)
-
-# a view to list deals by stages
-class DealsStageListView(APIView):
-    """
-    Returns the available deals by the stage they are in the pipeline.
-    """
-
-    serializer_class = DealSerializer
-    queryset = None
-
-    def get(self, request, *args, **kwargs):
-
-        url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/deals/{ORGANISATION_ID}"
-        response = requests.request("GET", url)
-        r = response.json()
-        if response.status_code == 200:
-            for output_data in r['data']:
-                if output_data['deal_stage'] == kwargs['stage']:
-                    return Response(data=output_data, status=st.HTTP_200_OK)
+            return Response(data={"data": r["data"]}, status=st.HTTP_201_CREATED)
+        
         return Response(data={"message":"Try again later"}, status=st.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-# Added deleted view
+# class DealsStageListView(APIView):
+#     """
+#     Returns the available deals by the stage they are in the pipeline.
+#     """
+
+#     serializer_class = DealSerializer
+#     queryset = None
+
+#     def post(self, request, *args, **kwargs):
+
+#         url = "https://api.zuri.chat/data/read"
+        
+#         data = {
+#                 "plugin_id": PLUGIN_ID,
+#                 "collection_name": "deals",
+#                 "organization_id": ORGANISATION_ID,
+#                 "filter": {
+#                     "deal_stage": request.data.get("deal_stage")}
+#                 }
+
+#         response = requests.request("POST", url, data=json.dumps(data))
+#         r = response.json()
+#         if response.status_code == 200:
+#             return Response(data={"data": r["data"]}, status=st.HTTP_201_CREATED)
+        
+#         return Response(data={"message":"Try again later"}, status=st.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
 class DealsDeleteView(APIView):
     """
     An endpoint to delete a deal.
@@ -177,32 +193,17 @@ class DealsDeleteView(APIView):
                 "bulk_write": False,
                 "object_id": id,
                 }
-        print(id)
         
         response = requests.request("POST", url,data=json.dumps(data))
         
         r=response.json()
-        print(r['data'])
         
         if response.status_code == 200:
             
-        # print(r)
           if r["data"]["deleted_count"] == 0 :
             return Response(data={'message':'There is no deals with this object id you supplied'}, status=st.HTTP_400_BAD_REQUEST)
           if response.status_code == 200:
             return Response(data={'message':'deals with object id '+ data["object_id"] +' deleted successfully!'}, status=st.HTTP_200_OK)
         return Response(data={"message":"deals deletion fails... Try again later."}, status=response.status_code)
         
-        
-        # response = requests.request("POST", url, data)
-        # r = response.json()
-        # print(r.status_code)
-        # return Response(data=r.status_code)
-        #print(response)
-        #if response.status_code == 200:
-            # serializer = DealSerializer(data=r['data'], many=True)
-            # serializer.is_valid(raise_exception=True)
-            #return Response(data=r['data'], status=st.HTTP_200_OK)
-        #return Response(data={"message":"Try again later"}, status=st.HTTP_500_INTERNAL_SERVER_ERROR)
-
 
