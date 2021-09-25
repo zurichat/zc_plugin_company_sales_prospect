@@ -1,5 +1,5 @@
-import { GetUserInfo } from "@zuri/zuri-control";
-// import { GetUserInfo } from "https://zuri.chat/zuri-control.js";
+import { GetUserInfo } from "@zuri/zuri-sidebar";
+// import { GetUserInfo } from "https://zuri.chat/zuri-sidebar.js";
 
 export const capitalize = word => {
   const lower = word.toLowerCase();
