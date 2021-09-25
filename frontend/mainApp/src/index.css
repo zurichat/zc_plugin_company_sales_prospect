@@ -3,6 +3,35 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body{
+html,
+body {
     width: 100% !important;
 }
+
+/* @media only screen and (max-width: 1380px) {
+    html,
+    body {
+        font-size: auto !important;
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    html,
+    body {
+        font-size: auto !important;
+    }
+}
+
+@media only screen and (max-width: 780px) {
+    html,
+    body {
+        font-size: auto !important;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    html,
+    body {
+        font-size: auto !important;
+    }
+} */

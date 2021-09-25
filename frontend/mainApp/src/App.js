@@ -11,9 +11,9 @@ import Centrifuge from 'centrifuge';
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom"
-import { getUserInfo } from "./utils";
+// import { getUserInfo } from "./utils";
 import { addToRoomURL, leaveRoomURL } from "./axios";
-// import { GetUserInfo } from "@zuri/zuri-sidebar";
+// import { GetUserInfo } from "@zuri/zuri-control";
 //import Header from "./components/Header";
 // import Intro from "./containers/Intro";
 
@@ -36,12 +36,18 @@ function App() {
       console.log("DISCONNECTED", ctx);
     });
 
-    getUserInfo(
-      "6146f82c845b436ea04d10e1",
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb29raWUiOiJNVFl6TWpVek5qSTJObnhIZDNkQlIwUlplRTVIVlRST2JVNW9XbXBOZUZsVVl6QmFWRUV5VDBkVk1GcEVaR3haZHowOWZFMktIUWUxWHhRbVNTbGhTbTlndTFaZWdOdV8zMkVRRkdZeW44OHg1UnpOIiwiZW1haWwiOiJwaWRAb3h5LmNvbSIsImlkIjoiNjE0ZTg2Y2FmMzFhNzRlMDY4ZTRkN2VjIiwib3B0aW9ucyI6eyJQYXRoIjoiLyIsIkRvbWFpbiI6IiIsIk1heEFnZSI6NzkzOTY4NjE3NSwiU2VjdXJlIjpmYWxzZSwiSHR0cE9ubHkiOmZhbHNlLCJTYW1lU2l0ZSI6MH0sInNlc3Npb25fbmFtZSI6ImY2ODIyYWY5NGUyOWJhMTEyYmUzMTBkM2FmNDVkNWM3In0.S8vzVsij0CgaKY8TpnujYmBxM1doFPdNSNGQRZkecNs"
-    ).then(data => {
-      console.log(data)
-    })
+    // getUserInfo(
+    //   "6146f82c845b436ea04d10e1",
+    //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb29raWUiOiJNVFl6TWpVek5qSTJObnhIZDNkQlIwUlplRTVIVlRST2JVNW9XbXBOZUZsVVl6QmFWRUV5VDBkVk1GcEVaR3haZHowOWZFMktIUWUxWHhRbVNTbGhTbTlndTFaZWdOdV8zMkVRRkdZeW44OHg1UnpOIiwiZW1haWwiOiJwaWRAb3h5LmNvbSIsImlkIjoiNjE0ZTg2Y2FmMzFhNzRlMDY4ZTRkN2VjIiwib3B0aW9ucyI6eyJQYXRoIjoiLyIsIkRvbWFpbiI6IiIsIk1heEFnZSI6NzkzOTY4NjE3NSwiU2VjdXJlIjpmYWxzZSwiSHR0cE9ubHkiOmZhbHNlLCJTYW1lU2l0ZSI6MH0sInNlc3Npb25fbmFtZSI6ImY2ODIyYWY5NGUyOWJhMTEyYmUzMTBkM2FmNDVkNWM3In0.S8vzVsij0CgaKY8TpnujYmBxM1doFPdNSNGQRZkecNs"
+    // ).then(data => {
+    //   console.log(data)
+    // })
+
+    // getUserInfo()
+    // .then(data =>{
+    //   console.log(data);
+    // })
+
     // Prospects listener
     centrifuge.subscribe("Prospects", function (ctx) {
       const data = ctx.data
