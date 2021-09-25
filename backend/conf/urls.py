@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 from django.views.generic import TemplateView
 
-
+from common.views import SidebarView
 
 # from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 from django.conf.urls.static import static
@@ -30,6 +30,7 @@ urlpatterns = [
     path("api/v1/deals/", include("deals.urls")),
     path("api/v1/prospects/", include("prospect.urls")),
     path("api/v1/api-auth/", include("rest_framework.urls")),
+    path('sidebar', SidebarView.as_view(), name='sidebar'),
     # DOCUMENTATION
     # path('api/v1/schema/', SpectacularAPIView.as_view(), name='schema'),
     # path('api/v1/swagger-docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
