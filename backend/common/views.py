@@ -20,13 +20,21 @@ from .json_data import *
 PLUGIN_ID = settings.PLUGIN_ID
 ORGANISATION_ID = settings.ORGANISATION_ID
 ROOM_COLLECTION_NAME = settings.ROOM_COLLECTION_NAME
-TEST_ROOM_COLLECTION_NAME = settings.TEST_ROOM_COLLECTION_NAME
+ADDED_ROOM_COLLECTION_NAME = settings.ADDED_ROOM_COLLECTION_NAME
 
 
 class SidebarView(APIView):
-    def get(self, request, *args, **kwargs):
-        data = success_query()
-        return Response(data, status=status.HTTP_200_OK)
+    def get(self,*args, **kwargs):
+        publicurl = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/{ROOM_COLLECTION_NAME}/{ORGANISATION_ID}"
+        privateurl = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/{ADDED_ROOM_COLLECTION_NAME}/{ORGANISATION_ID}"
+        publicr = requests.get(publicurl)
+        privater = requests.get(privateurl)
+        publicresponse = json.loads(publicr.text)
+        privateresponse = json.loads(privater.text)
+        if privateresponse['status']!=200:
+            return Response({"Public rooms":publicresponse['data'],"Joined rooms":[]})
+        else:
+            return Response({"Public rooms":publicresponse['data'],"Joined rooms":privateresponse['data']})
 
 
 class SidebarDealsRooms(APIView):
