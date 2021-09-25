@@ -88,7 +88,7 @@ class RoomCreateView(APIView):
             raise Http404("user_id not supplied")
         if not is_valid(room_name):
             raise Http404("room_name not supplied")
-        get_url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/{TEST_ROOM_COLLECTION_NAME}/{ORGANISATION_ID}/"
+        get_url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/{ADDED_ROOM_COLLECTION_NAME}/{ORGANISATION_ID}/"
         res = requests.request("GET", url=get_url)
         if res.status_code == 200 and is_valid(res.json().get('data')):
             rooms = res.json()['data']
