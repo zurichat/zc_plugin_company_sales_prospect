@@ -169,7 +169,7 @@ DESCRIPTION = "We provide a list of potential clients for your business"
 PROSPECTS_COLLECTION_NAME = "prospects"
 DEALS_COLLECTION_NAME = "deals"
 ROOM_COLLECTION_NAME = "sales_room"
-TEST_ROOM_COLLECTION_NAME = "test_sales_room"
+ADDED_ROOM_COLLECTION_NAME = "added_sales_room"
 PROSPECTS_ROOM_NAME = "Prospects"
 PROSPECTS_ROOM_ID = "614e65b2f31a74e068e4d6dd"
 

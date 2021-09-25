@@ -20,13 +20,21 @@ from .json_data import *
 PLUGIN_ID = settings.PLUGIN_ID
 ORGANISATION_ID = settings.ORGANISATION_ID
 ROOM_COLLECTION_NAME = settings.ROOM_COLLECTION_NAME
-TEST_ROOM_COLLECTION_NAME = settings.TEST_ROOM_COLLECTION_NAME
+ADDED_ROOM_COLLECTION_NAME = settings.ADDED_ROOM_COLLECTION_NAME
 
 
 class SidebarView(APIView):
-    def get(self, request, *args, **kwargs):
-        data = success_query()
-        return Response(data, status=status.HTTP_200_OK)
+    def get(self,*args, **kwargs):
+        public_url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/{ROOM_COLLECTION_NAME}/{ORGANISATION_ID}"
+        private_url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/{ADDED_ROOM_COLLECTION_NAME}/{ORGANISATION_ID}"
+        public_r = requests.get(public_url)
+        private_r = requests.get(private_url)
+        public_response = json.loads(public_r.text)
+        private_response = json.loads(private_r.text)
+        if private_response['status']!=200:
+            return Response({"Public rooms":public_response['data'],"Joined rooms":[]})
+        else:
+            return Response({"Public rooms":private_response['data'],"Joined rooms":private_response['data']})
 
 
 class SidebarDealsRooms(APIView):
@@ -68,7 +76,7 @@ class InfoView(APIView):
         return Response(data=data, status=status.HTTP_200_OK)
 
 class RoomCreateView(APIView):
-    serializer_class = RoomSerializer
+    serializer_class = RoomCreateSerializer
     @extend_schema(
         description = "Room Name (str) : The name of the room\
             This view creates a room if there isn't a room that has the specified name"
@@ -76,11 +84,12 @@ class RoomCreateView(APIView):
     def post(self, request, *args, **kwargs):
         room_name = request.data.get('room_name')
         user = request.data.get('user')
+        icon = request.data.get('icon')
         if not is_valid(user):
             raise Http404("user_id not supplied")
         if not is_valid(room_name):
             raise Http404("room_name not supplied")
-        get_url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/{TEST_ROOM_COLLECTION_NAME}/{ORGANISATION_ID}/"
+        get_url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/{ADDED_ROOM_COLLECTION_NAME}/{ORGANISATION_ID}/"
         res = requests.request("GET", url=get_url)
         if res.status_code == 200 and is_valid(res.json().get('data')):
             rooms = res.json()['data']
@@ -97,7 +106,8 @@ class RoomCreateView(APIView):
                 "bulk_write": False,
                 "payload": {
                     "name": room_name,
-                    "users": [user]
+                    "users": [user],
+                    "icon":icon
                 }
             }
             post_url = 'https://api.zuri.chat/data/write/'
