@@ -1,4 +1,4 @@
-import json, requests, time
+import json, requests#, time
 
 from django.conf import settings
 
@@ -19,7 +19,7 @@ def centrifugo_post(room, data):
     headers = {"Content-type": "application/json", "Authorization": "apikey " + ZURI_API_KEY}
     resp = requests.post(CENTRIFUGO_LIVE_ENDPOINT, data=data, headers=headers)
     print(resp)
-    time.sleep(10)
+    # time.sleep(10)
     return resp.json()
 
 # from __future__ import annotations
