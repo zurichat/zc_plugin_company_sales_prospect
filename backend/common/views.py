@@ -175,7 +175,7 @@ class AddUserToRoom(APIView):
             }
         }
         res = requests.request(method, url=post_url, data=json.dumps(data))
-
+        print(res.json())
         if res.status_code in [201, 200]:
 
             response = {
@@ -185,8 +185,11 @@ class AddUserToRoom(APIView):
                 "rooms":"http://sales.zuri.chat/api/v1/rooms/"
             }
             return Response(data=response, status=status.HTTP_200_OK)
-
-        return Response(data={"message": "failed"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        else:
+            try:
+                return Response(data=res.json(), status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            except:
+                return Response(data={"message": "failed"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class RoomsListView(APIView):
     def get(self, request, *args, **kwargs):
