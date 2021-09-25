@@ -4,7 +4,7 @@ from deals.views import (
     DealUpdateView,
     DealsListView,
     DealsDeleteView,
-    DealsStageListView,
+    # DealsStageListView,
     DealsFilterListView,
 )
 
@@ -13,6 +13,6 @@ urlpatterns = [
     path("update/<str:id>/", DealUpdateView.as_view()),
     path("", DealsListView.as_view()),
     path("delete/<str:id>/", DealsDeleteView.as_view()),
-    path("stages/<str:stage>/", DealsStageListView.as_view()),
-    path("filters/<str:filter>/", DealsFilterListView.as_view()),
+    # path("stage/", DealsStageListView.as_view()),
+    path("filter/<str:search>/", DealsFilterListView.as_view()),
 ]
