@@ -18,8 +18,8 @@ import { addToRoomURL, leaveRoomURL } from "./axios";
 // import Intro from "./containers/Intro";
 
 // const centrifuge = new Centrifuge('ws://localhost:8400/connection/websocket');
-const centrifuge = new Centrifuge('ws://realtime.zuri.chat/connection/websocket');
-centrifuge.setToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM3MjIiLCJleHAiOjE2MzMxMDI5MTN9.Fs1kg9yvQ1WXdmAoKayDjgP7PovZ6NjWBCS8xyb4J3M");
+const centrifuge = new Centrifuge('wss://realtime.zuri.chat/connection/websocket');
+// centrifuge.setToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM3MjIiLCJleHAiOjE2MzMxMDI5MTN9.Fs1kg9yvQ1WXdmAoKayDjgP7PovZ6NjWBCS8xyb4J3M");
 
 function App() {
 
