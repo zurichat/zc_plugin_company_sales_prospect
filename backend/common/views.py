@@ -76,7 +76,7 @@ class InfoView(APIView):
         return Response(data=data, status=status.HTTP_200_OK)
 
 class RoomCreateView(APIView):
-    serializer_class = RoomSerializer
+    serializer_class = RoomCreateSerializer
     @extend_schema(
         description = "Room Name (str) : The name of the room\
             This view creates a room if there isn't a room that has the specified name"
@@ -84,6 +84,7 @@ class RoomCreateView(APIView):
     def post(self, request, *args, **kwargs):
         room_name = request.data.get('room_name')
         user = request.data.get('user')
+        icon = request.data.get('icon')
         if not is_valid(user):
             raise Http404("user_id not supplied")
         if not is_valid(room_name):
@@ -105,7 +106,8 @@ class RoomCreateView(APIView):
                 "bulk_write": False,
                 "payload": {
                     "name": room_name,
-                    "users": [user]
+                    "users": [user],
+                    "icon":icon
                 }
             }
             post_url = 'https://api.zuri.chat/data/write/'

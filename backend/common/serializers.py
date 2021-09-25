@@ -4,8 +4,11 @@ class RoomSerializer(serializers.Serializer):
     user = serializers.IntegerField()
     room_name = serializers.CharField()
 
+
 class RoomCreateSerializer(serializers.Serializer):
+    user = serializers.IntegerField()
     room_name = serializers.CharField()
+    icon = serializers.CharField()
 
 
 # headers = {
