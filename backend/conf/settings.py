@@ -50,6 +50,9 @@ INSTALLED_APPS = [
     "deals",
     "prospect",
     "onboarding",
+    # Centrifugo
+    # "instant",
+    # "cent",
 ]
 
 MIDDLEWARE = [
@@ -163,6 +166,22 @@ PLUGIN_NAME = "Company Sales Prospects"
 ORGANISATION_ID = "613a495f59842c7444fb0246"
 DESCRIPTION = "We provide a list of potential clients for your business"
 
+PROSPECTS_COLLECTION_NAME = "prospects"
+DEALS_COLLECTION_NAME = "deals"
+ROOM_COLLECTION_NAME = "sales_room"
+TEST_ROOM_COLLECTION_NAME = "test_sales_room"
+PROSPECTS_ROOM_NAME = "Prospects"
+PROSPECTS_ROOM_ID = "614e65b2f31a74e068e4d6dd"
+
+DEALS_ROOM_NAME = "Deals"
+DEALS_ROOM_ID = "614e670af31a74e068e4d6e4"
+
+API_KEY = "2f822967-1774-45fb-8966-97751382451f"
+CENTRIFUGO_DEBUG_ENDPOINT = "http://localhost:8400/api"
+
+ZURI_API_KEY = "58c2400b-831d-411d-8fe8-31b6e337738b"
+CENTRIFUGO_LIVE_ENDPOINT = "https://realtime.zuri.chat/api"
+
 #email config
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' 
 EMAIL_HOST_USER = 'support@test.com'
@@ -179,14 +198,13 @@ SPECTACULAR_SETTINGS = {
     'SCHEMA_PATH_PREFIX': '/api',
 }
 
-API_KEY = "2f822967-1774-45fb-8966-97751382451f"
-ZURI_API_KEY = "58c2400b-831d-411d-8fe8-31b6e337738b"
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_HTTPONLY = True
+# CSRF_COOKIE_SECURE = True
 
-
-CENTRIFUGO_HOST = "http://localhost"
-CENTRIFUGO_PORT = 8200
-CENTRIFUGO_HMAC_KEY = "df5d3a41-1e93-4f45-98ae-ffce52c4def1"
-CENTRIFUGO_API_KEY = "2f822967-1774-45fb-8966-97751382451f"
-SITE_NAME = "My site"
-CENTRIFUGO_TOKEN = "58c2400b-831d-411d-8fe8-31b6e337738b"
-# wss://realtime.zuri.chat/connection/websocket
+# CENTRIFUGO_HOST = "http://localhost"
+# CENTRIFUGO_PORT = 8200
+# CENTRIFUGO_HMAC_KEY = "df5d3a41-1e93-4f45-98ae-ffce52c4def1"
+# CENTRIFUGO_API_KEY = "2f822967-1774-45fb-8966-97751382451f"
+# SITE_NAME = "My site"
+# CENTRIFUGO_TOKEN = "58c2400b-831d-411d-8fe8-31b6e337738b"

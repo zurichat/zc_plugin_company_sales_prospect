@@ -1,4 +1,5 @@
 
+from common.utils import centrifugo_post
 from django.conf import settings
 from deals.serializers import DealSerializer, DealUpdateSerializer
 from rest_framework.views import APIView
