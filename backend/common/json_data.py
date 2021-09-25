@@ -1,16 +1,60 @@
 from django.conf import settings
 import requests, json
-
+from rest_framework.response import Response
 PLUGIN_ID = settings.PLUGIN_ID
 ORGANISATION_ID = settings.ORGANISATION_ID
 ROOM_COLLECTION_NAME = settings.ROOM_COLLECTION_NAME
 PROSPECTS_COLLECTION_NAME = settings.PROSPECTS_COLLECTION_NAME
 PROSPECTS_ROOM_ID = settings.PROSPECTS_ROOM_ID
 DEALS_ROOM_ID = settings.DEALS_ROOM_ID
-
+ADDED_ROOM_COLLECTION_NAME = settings.ADDED_ROOM_COLLECTION_NAME
+PLUGIN_NAME = settings.PLUGIN_NAME
+DESCRIPTION = settings.DESCRIPTION
 
 # Fetch all the test room - public rooms
 # Fetch all the actual room - joined rooms
+
+
+
+
+# def getsidebbarinfo(org,user):
+#     public_url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/{ROOM_COLLECTION_NAME}/{ORGANISATION_ID}"
+#     private_url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/{ADDED_ROOM_COLLECTION_NAME}/{ORGANISATION_ID}"
+#     public_r = requests.get(public_url)
+#     private_r = requests.get(private_url)
+#     public_response = json.loads(public_r.text)
+#     private_response = json.loads(private_r.text)
+#     if private_response['status']!=200:
+#         return Response({"name": PLUGIN_NAME,
+#         "description": DESCRIPTION,
+#         "plugin_id": PLUGIN_ID,
+#         "organisation_id": org,
+#         "user_id": user,
+#         "group_name": "SALES",
+#         "show_group": False,
+#         "Public rooms":public_response['data'],
+#         "Joined rooms":[]})
+#     else:
+#         return Response({"name": PLUGIN_NAME,
+#         "description": DESCRIPTION,
+#         "plugin_id": PLUGIN_ID,
+#         "organisation_id": org,
+#         "user_id": user,
+#         "group_name": "SALES",
+#         "show_group": False,
+#         "Public rooms":private_response['data'],
+#         "Joined rooms":private_response['data']})
+
+
+
+
+
+
+
+
+
+
+
 
 
 
