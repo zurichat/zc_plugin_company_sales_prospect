@@ -29,7 +29,6 @@ registerApplication({
   app: () => System.import("@zuri/zuri-plugin-company-sales-prospects"),
   activeWhen: ["/"],
 });
-
 // customRegister(window.isLocal ? "dev" : "prod");
 
 // function customRegister(env) {
