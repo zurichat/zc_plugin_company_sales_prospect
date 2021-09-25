@@ -146,7 +146,7 @@ class AddUserToRoom(APIView):
         method = "POST"
         current_users = []
         object_id = None
-        get_url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/{ROOM_COLLECTION_NAME}/{ORGANISATION_ID}/"
+        get_url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/{ADDED_ROOM_COLLECTION_NAME}/{ORGANISATION_ID}/"
         res = requests.request("GET", url=get_url)
         if res.status_code == 200 and is_valid(res.json().get('data')):
             rooms = res.json()['data']
@@ -166,7 +166,7 @@ class AddUserToRoom(APIView):
         data = {
             "plugin_id": PLUGIN_ID,
             "organization_id": ORGANISATION_ID,
-            "collection_name": ROOM_COLLECTION_NAME,
+            "collection_name": ADDED_ROOM_COLLECTION_NAME,
             "object_id": object_id,
             "bulk_write": False,
             "payload": {
