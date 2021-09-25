@@ -55,9 +55,11 @@ button:hover {
 
 .homeCard {
     min-width: 170px;
-    min-height: 120px;
+    height: 120px;
     margin: 25px;
     border-radius: 5px;
+    align-items: center;
+    
 }
 
 .homeCard:hover {
