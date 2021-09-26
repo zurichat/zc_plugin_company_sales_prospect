@@ -123,10 +123,11 @@ class ProspectsUpdateView(APIView):
     serializer_class = ProspectSerializer
     queryset = None
 
-    def put(self, request, *args, **kwargs):
+    def put(self, request,id, *args, **kwargs):
         url = "https://api.zuri.chat/data/write"
         serializer = ProspectSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
+
         object_id = serializer.data.get("object_id")
         try:
             del request.data["object_id"]
@@ -138,9 +139,10 @@ class ProspectsUpdateView(APIView):
             "collection_name": "prospects",
             "bulk_write": False,
             "object_id": object_id,
-            "payload": request.data,
+            "payload":  serializer.data,
         }
         response = requests.put(url, data=json.dumps(data))
+
         if response.status_code in [200, 201]:
             response = response.json()
             print(response)
@@ -152,10 +154,12 @@ class ProspectsUpdateView(APIView):
                     status=status.HTTP_400_BAD_REQUEST,
                 )
             return Response(data=response, status=status.HTTP_200_OK)
+
         return Response(
             data={"message": "Try again later", "data": request.data},
             status=status.HTTP_500_INTERNAL_SERVER_ERROR,
         )
+
 
 
 class ProspectsDeleteView(APIView):
