@@ -49,8 +49,8 @@ class SidebarView(APIView):
                     "user_id": user,
                     "group_name": "SALES",
                     "show_group": False,
-                    "public_rooms":public_response['data'],
-                    "joined_rooms":[]})
+                    "public_rooms":[],
+                    "joined_rooms":public_response['data']})
                 else:
                     return Response({"name": PLUGIN_NAME,
                     "description": DESCRIPTION,
@@ -60,7 +60,7 @@ class SidebarView(APIView):
                     "group_name": "SALES",
                     "show_group": False,
                     "public_rooms":private_response['data'],
-                    "joined_rooms":private_response['data']})
+                    "joined_rooms":public_response['data']})
             else:
                 return Response({"name": PLUGIN_NAME,
                     "description": DESCRIPTION,
