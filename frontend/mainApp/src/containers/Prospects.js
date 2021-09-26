@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import Button from "../components/Button";
 // import Input from '../components/Input'
@@ -18,6 +18,7 @@ import FileIcon from "../components/svg/FileIcon";
 import { customAlert, doesProspectExist, formatAPIProspect, formatProspect, formatProspects } from "../utils";
 import Loader from "../components/svg/Loader.svg";
 import Swal from "sweetalert2";
+import { PluginContext } from "../context/store";
 // import { useForm } from "react-hook-form";
 // import { yupResolver } from '@hookform/resolvers/yup';
 // import * as yup from "yup";
@@ -104,8 +105,8 @@ function Prospects() {
   //     { id: "4", name: "Jane Cooper", email: "jane.cooper@example.com", phone: "09093527277", status: "Negotiation" },
   //     { id: "5", name: "Jane Cooper", email: "jane.cooper@example.com", phone: "09093527277", status: "Prospect" }
   // ]
-
-  const [prospects, setProspects] = useState([]);
+  const { prospects, setProspects } = useContext(PluginContext)
+  // const [prospects, setProspects] = useState([]);
 
   const [prospect, setProspect] = useState({
     id: "",
@@ -125,22 +126,22 @@ function Prospects() {
 
   const [open2, setOpen2] = useState(false);
   const handleOpenModal2 = (e, prospect) => {
-    setProspect( formatAPIProspect(prospect) );
+    setProspect(formatAPIProspect(prospect));
     setOpen2(true);
   };
 
   const [open3, setOpen3] = useState(false);
   const handleOpenModal3 = (e, prospect) => {
-    setProspect( formatAPIProspect(prospect) );
+    setProspect(formatAPIProspect(prospect));
     setOpen3(true)
   };
 
   const [open4, setOpen4] = useState(false);
   const handleOpenModal4 = (e, prospect) => {
-    setProspect( formatAPIProspect(prospect) );
+    setProspect(formatAPIProspect(prospect));
     const newDeal = {
-      prospect_id:prospect.id,
-      name:prospect.name
+      prospect_id: prospect.id,
+      name: prospect.name
     }
     setDeal(newDeal)
     setOpen4(true);
@@ -187,11 +188,11 @@ function Prospects() {
           //     .catch(e => console.log(e.response))
           const latestProspect = formatProspect(prospect)
           setProspects([...prospects, latestProspect]);
-          customAlert("Contact Created Successfully","success")
+          customAlert("Contact Created Successfully", "success")
         })
         .catch((e) => {
           console.log(e);
-        customAlert("Oops, something went wrong","error")
+          customAlert("Oops, something went wrong", "error")
         });
     } else {
       alert("Prospect already exists");
@@ -229,7 +230,7 @@ function Prospects() {
     customAxios
       .put(editProspectURL, apiProspect)
       .then((r) => {
-        customAlert("Contact Edited Successfully","success")
+        customAlert("Contact Edited Successfully", "success")
         handleCloseModal();
         customAxios
           .get(prospectsURL)
@@ -239,7 +240,7 @@ function Prospects() {
 
       .catch((e) => {
         console.log(e)
-        customAlert("Oops, something went wrong","error")
+        customAlert("Oops, something went wrong", "error")
 
       });
   };
@@ -247,13 +248,13 @@ function Prospects() {
   const handleDelete = (e) => {
     e.preventDefault();
     customAxios
-      .post(`${deleteProspectURL}`, {'object_id':prospect.id})
+      .post(`${deleteProspectURL}`, { 'object_id': prospect.id })
       .then((r) => {
         handleCloseModal();
         customAxios
           .get(prospectsURL)
           .then((r) => {
-            customAlert("Contact Deleted Successfully","success")
+            customAlert("Contact Deleted Successfully", "success")
             setProspects(formatPropsects(r.data))
           })
           .catch((e) => console.log(e.response));
@@ -262,7 +263,7 @@ function Prospects() {
 
       .catch((e) => {
         console.log(e)
-        customAlert("Oops, something went wrong","error")
+        customAlert("Oops, something went wrong", "error")
       });
   };
 
@@ -415,7 +416,7 @@ function Prospects() {
               placeholder="Jane Cooper"
               id="name"
               value={prospect.name}
-              onChange={handleChange}
+              disabled
             />
           </div>
           <div>
@@ -424,7 +425,7 @@ function Prospects() {
               placeholder="jane.cooper@example.com"
               id="email"
               value={prospect.email}
-              onChange={handleChange}
+              disabled
             />
           </div>
           <div>
@@ -433,11 +434,11 @@ function Prospects() {
               placeholder="09093527277"
               id="phone"
               value={prospect.phone_number}
-              onChange={handleChange}
+              disabled
             />
           </div>
           <div>
-            <Select title="stage" label="Deal stage" value={prospect.deal_stage}>
+            <Select title="stage" label="Deal stage" value={prospect.deal_stage} disabled>
               <option>Active</option>
               <option>Closed</option>
               <option>Negotiation</option>
