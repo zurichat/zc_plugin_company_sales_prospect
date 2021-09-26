@@ -92,8 +92,13 @@ export const PluginProvider = ({ children }) => {
                         // setRooms(filteredRooms)
                     });
                 } else if (data.event === "new_prospect") {
-                    const latestProspect = formatProspect(data.object)
-                    setProspects([...prospects, latestProspect])
+                    // const latestProspect = formatProspect(data.object)
+                    // setProspects([...prospects, latestProspect])
+                    customAxios
+                    .get(prospectsURL)
+                    .then((r) => setProspects(formatProspects(r.data)))
+                    .catch((e) => console.log(e.response));
+
                 } else if (data.event === "edit_prospect") {
                     customAxios
                         .get(prospectsURL)
