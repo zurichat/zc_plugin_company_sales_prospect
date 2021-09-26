@@ -33,6 +33,16 @@ export const formatProspect = (prospect) => {
   };
 }
 
+export const formatAPIProspect = (prospect) => {
+  return {
+    id: prospect.id,
+    name: prospect.name,
+    email: prospect.email,
+    phone_number: prospect.phone,
+    deal_stage: capitalize(prospect.status),
+  };
+}
+
 export const doesProspectExist = (prospects, name) => {
   return prospects.filter((x) => x.name === name).length > 0;
 };
