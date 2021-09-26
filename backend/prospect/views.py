@@ -123,7 +123,7 @@ class ProspectsUpdateView(APIView):
     serializer_class = ProspectSerializer
     queryset = None
 
-    def put(self, request,id, *args, **kwargs):
+    def put(self, request, *args, **kwargs):
         url = "https://api.zuri.chat/data/write"
         serializer = ProspectSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
