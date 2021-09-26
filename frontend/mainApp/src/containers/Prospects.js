@@ -15,7 +15,7 @@ import customAxios, {
 } from "../axios";
 import FileIcon from "../components/svg/FileIcon";
 // import { Link } from 'react-router-dom'
-import { customAlert, doesProspectExist, formatProspect, formatProspects } from "../utils";
+import { customAlert, doesProspectExist, formatAPIProspect, formatProspect, formatProspects } from "../utils";
 import Loader from "../components/svg/Loader.svg";
 import Swal from "sweetalert2";
 // import { useForm } from "react-hook-form";
@@ -125,18 +125,19 @@ function Prospects() {
 
   const [open2, setOpen2] = useState(false);
   const handleOpenModal2 = (e, prospect) => {
-    setProspect(prospect);
+    setProspect( formatAPIProspect(prospect) );
     setOpen2(true);
   };
 
   const [open3, setOpen3] = useState(false);
   const handleOpenModal3 = (e, prospect) => {
+    setProspect( formatAPIProspect(prospect) );
     setOpen3(true)
   };
 
   const [open4, setOpen4] = useState(false);
   const handleOpenModal4 = (e, prospect) => {
-    setProspect(prospect)
+    setProspect( formatAPIProspect(prospect) );
     const newDeal = {
       prospect_id:prospect.id,
       name:prospect.name
