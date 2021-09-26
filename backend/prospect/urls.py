@@ -14,6 +14,6 @@ urlpatterns = [
     path("create/", ProspectsCreateView.as_view()),
     path("", ProspectsListView.as_view(), name="prospects"),
     path("welcome/", WelcomeView.as_view(), name="welcome_mail"),
-    path("update/<str:pk>/", ProspectsUpdateView.as_view()),
+    path("update/<str:id>/", ProspectsUpdateView.as_view()),
     path("delete/<str:pk>/", ProspectsDeleteView.as_view()),
 ]
