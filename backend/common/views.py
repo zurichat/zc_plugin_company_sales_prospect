@@ -185,7 +185,7 @@ class AddUserToRoom(APIView):
         if res.status_code == 200 and is_valid(res.json().get('data')):
             rooms = res.json()['data']
 
-            current_room = filter(lambda room: room['name'] == room_name, rooms)
+            current_room = filter(lambda room: room.get('name') == room_name, rooms)
             current_room = list(current_room)
 
             if len(current_room) > 0:

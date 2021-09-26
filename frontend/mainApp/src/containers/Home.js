@@ -106,7 +106,7 @@ function Home(props) {
                 register={register} 
                 required
               />
-              <p className="text-red-500 text-xs mb-2 -mt-3 capitalize">{errors.company?.message}</p>
+              <p className="text-error text-xs mb-2 -mt-3 capitalize">{errors.company?.message}</p>
 
               <Select
                 title="sector"
@@ -124,7 +124,7 @@ function Home(props) {
                 <option>Business</option>
                 <option>Real estate</option>
               </Select>
-              <p className="text-red-500 text-xs mb-2 -mt-3 capitalize">{errors.sector?.message}</p>
+              <p className="text-error text-xs mb-2 -mt-3 capitalize">{errors.sector?.message}</p>
 
               {window.innerWidth>=768 ? null :
                 (<>
@@ -145,7 +145,7 @@ function Home(props) {
                     <option>Supervisor</option>
                     <option>Others</option>
                   </Select>
-                  <p className="text-red-500 text-xs mb-2 -mt-3 capitalize md:hidden">{errors.position?.message}</p>
+                  <p className="text-error text-xs mb-2 -mt-3 capitalize md:hidden">{errors.position?.message}</p>
                 </>)}
 
               <div className="flex justify-end">
@@ -174,9 +174,9 @@ function Home(props) {
             We will use this to personalize your Sales Prospect experience
           </p>
           <br />
-          <p className="error text-red-500 text-xs mb-2 -mt-3 capitalize px-5 ">{errors.company?.message}</p>
-          <p className="error text-red-500 text-xs mb-2 -mt-3 capitalize px-5 ">{errors.sector?.message}</p>
-          <p className="error text-red-500 text-xs mb-2 -mt-3 capitalize px-5">{errors.position?.message}</p>
+          <p className="error text-error text-xs mb-2 -mt-3 capitalize px-5 ">{errors.company?.message}</p>
+          <p className="error text-error text-xs mb-2 -mt-3 capitalize px-5 ">{errors.sector?.message}</p>
+          <p className="error text-error text-xs mb-2 -mt-3 capitalize px-5">{errors.position?.message}</p>
           <div className="flex flex-row flex-wrap justify-around content-start w-6/7 relative mb-10">
             <HomeCard
               src={Executive}

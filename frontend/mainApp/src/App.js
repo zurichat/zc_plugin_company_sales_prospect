@@ -3,14 +3,12 @@ import Test from "./containers/Test";
 // import Home from "./containers/Home";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Prospects from "./containers/Prospects";
-import NoProspectsFound from './containers/NoProspectsFound';
 import Deals from "./containers/Deals";
 import SubHeader from "./components/SubHeader";
 import MobileHeader from "./components/MobileHeader";
 import Centrifuge from 'centrifuge';
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useHistory } from "react-router-dom"
 // import { getUserInfo } from "./utils";
 import { addToRoomURL, leaveRoomURL } from "./axios";
 // import { GetUserInfo } from "@zuri/zuri-control";
@@ -24,7 +22,7 @@ const centrifuge = new Centrifuge('wss://realtime.zuri.chat/connection/websocket
 function App() {
 
   const [state, setState] = useState(null);
-  const [rooms, setRooms] = useState([]);
+  // const [rooms, setRooms] = useState([]);
   // const history = useHistory();
 
   useEffect(() => {
@@ -120,7 +118,8 @@ function App() {
     });
     centrifuge.connect();
   }, [])
-
+// /sales/614f63b8cf2c0f1ad7584ffe
+// /sales/614f651dcf2c0f1ad7585002
   return (
         <Router basename="/sales">
           <div className="App font-lato" >
@@ -129,9 +128,11 @@ function App() {
             <MobileHeader/>
             <Switch >
               <Route exact path="/" component={Prospects} />
+              <Route exact path="/prospects" component={Prospects} />
+              <Route exact path="/614f651dcf2c0f1ad7585002" component={Prospects} />
+              
               <Route exact path="/deals" component={Deals} />
-              <Route exact path="/test" component={Test} />
-              <Route exact path="/NoProspectsFound" component={Test} />
+              <Route exact path="/614f63b8cf2c0f1ad7584ffe" component={Deals} />
               {/*  */}
             </Switch>
 
