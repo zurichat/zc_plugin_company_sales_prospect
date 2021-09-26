@@ -15,7 +15,7 @@ import customAxios, {
 } from "../axios";
 import FileIcon from "../components/svg/FileIcon";
 // import { Link } from 'react-router-dom'
-import { doesProspectExist, formatProspects, updateProspects } from "../utils";
+import { customAlert, doesProspectExist, formatProspect, formatProspects } from "../utils";
 import Loader from "../components/svg/Loader.svg";
 import Swal from "sweetalert2";
 // import { useForm } from "react-hook-form";
@@ -39,6 +39,7 @@ function Input({
   id,
   onChange,
   value,
+  defaultValue,
   type,
 }) {
   return (
@@ -52,8 +53,10 @@ function Input({
         id={id}
         value={value}
         type={type || "text"}
+        defaultValue={defaultValue}
         placeholder={placeholder}
         disabled={disabled}
+        required
       />
     </div>
   );
@@ -68,6 +71,7 @@ function Select({
   disabled,
   onChange,
   value,
+  defaultValue
 }) {
   return (
     <div className="mb-6" id={title}>
@@ -79,9 +83,11 @@ function Select({
         id={id}
         value={value}
         required
-        className="border border-gray-500 text-gray-400 outline-none rounded-sm px-5 h-12 w-full  focus:border-green"
+        className="border border-gray-500 text-gray-500 outline-none rounded-sm px-5 h-12 w-full  focus:border-green"
         onChange={onChange}
+        defaultValue={defaultValue}
         disabled={disabled}
+        required
       >
         {children}
       </select>
@@ -99,6 +105,21 @@ function Prospects() {
   //     { id: "5", name: "Jane Cooper", email: "jane.cooper@example.com", phone: "09093527277", status: "Prospect" }
   // ]
 
+  const [prospects, setProspects] = useState([]);
+
+  const [prospect, setProspect] = useState({
+    id: "",
+    name: "",
+    email: "",
+    phone_number: "",
+    deal_stage: "",
+  });
+
+  const [deal, setDeal] = useState(null);
+
+  const [loading, setLoading] = useState(true);
+  const history = useHistory();
+
   const [open, setOpen] = useState(false);
   const handleOpenModal = () => setOpen(true);
 
@@ -109,40 +130,35 @@ function Prospects() {
   };
 
   const [open3, setOpen3] = useState(false);
-  const handleOpenModal3 = () => setOpen3(true);
+  const handleOpenModal3 = (e, prospect) => {
+    setOpen3(true)
+  };
 
   const [open4, setOpen4] = useState(false);
   const handleOpenModal4 = (e, prospect) => {
-    setProspect(prospect);
+    setProspect(prospect)
+    const newDeal = {
+      prospect_id:prospect.id,
+      name:prospect.name
+    }
+    setDeal(newDeal)
     setOpen4(true);
   };
 
   const handleCloseModal = () => {
+    setDeal(null)
+    setProspect({
+      id: "",
+      name: "",
+      email: "",
+      phone_number: "",
+      deal_stage: "",
+    })
     setOpen(false);
     setOpen2(false);
     setOpen3(false);
     setOpen4(false);
   };
-
-  const [prospects, setProspects] = useState([]);
-
-  const [prospect, setProspect] = useState({
-    id: "",
-    name: "",
-    email: "",
-    phone: "",
-    status: "",
-  });
-
-  const [deal, setDeal] = useState({
-    prospect_id: "",
-    name: "",
-    company: "",
-    amount: "",
-    deal_stage: "",
-  });
-
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     customAxios
@@ -164,21 +180,17 @@ function Prospects() {
       customAxios
         .post(createProspectURL, prospect)
         .then((r) => {
-          // alert("prospects created successfully")
           handleCloseModal();
           // customAxios.get(prospectsURL)
           //     .then(r => setProspects(formatProspects(r.data)))
           //     .catch(e => console.log(e.response))
-          setProspects(formatProspects([...prospects, prospect]));
-          Swal.fire({
-            text: "Contact created successfully",
-            icon: "success",
-            showCancelButton: false,
-          });
+          const latestProspect = formatProspect(prospect)
+          setProspects([...prospects, latestProspect]);
+          customAlert("Contact Created Successfully","success")
         })
         .catch((e) => {
           console.log(e);
-          setProspects([...prospects, prospect]);
+        customAlert("Oops, something went wrong","error")
         });
     } else {
       alert("Prospect already exists");
@@ -187,7 +199,6 @@ function Prospects() {
     }
   };
 
-  const history = useHistory();
 
   const handleDealCreate = (e) => {
     e.preventDefault();
@@ -196,68 +207,61 @@ function Prospects() {
       .post(createDealURL, dealInfo)
       .then((r) => {
         handleCloseModal();
-        Swal.fire({
-          text: "Deal created successfully",
-          icon: "success",
-          showCancelButton: false,
-        });
+        customAlert("Deal created successfully", "success")
         history.push("/deals");
       })
       .catch((e) => {
         console.log(e);
+        customAlert("Oops, something went wrong", "error")
       });
   };
 
   const handleUpdate = (e) => {
     e.preventDefault();
     const apiProspect = {
-      _id: prospect.id,
+      object_id: prospect.id,
       name: prospect.name,
       email: prospect.email,
-      phone_number: prospect.phone,
-      deal_stage: prospect.status,
+      phone_number: prospect.phone_number,
+      deal_stage: prospect.deal_stage,
     };
     customAxios
-      .put(`${editProspectURL}${prospect.id}/`, apiProspect)
+      .put(editProspectURL, apiProspect)
       .then((r) => {
-        Swal.fire({
-          text: "Contact Edited successfully",
-          icon: "success",
-          showCancelButton: false,
-        });
+        customAlert("Contact Edited Successfully","success")
         handleCloseModal();
         customAxios
           .get(prospectsURL)
-          .then((r) => setProspects(formatPropsects(r.data)))
+          .then((r) => setProspects(formatProspects(r.data)))
           .catch((e) => console.log(e.response));
       })
 
-      .catch((e) => console.log(e));
+      .catch((e) => {
+        console.log(e)
+        customAlert("Oops, something went wrong","error")
+
+      });
   };
 
   const handleDelete = (e) => {
     e.preventDefault();
     customAxios
-      .delete(deleteProspectURL, prospect)
-      .catch((r) => {
-        alert("prospects deleted successfully");
+      .post(`${deleteProspectURL}`, {'object_id':prospect.id})
+      .then((r) => {
         handleCloseModal();
         customAxios
           .get(prospectsURL)
-          .then((r) => setProspects(formatPropsects(r.data)))
+          .then((r) => {
+            customAlert("Contact Deleted Successfully","success")
+            setProspects(formatPropsects(r.data))
+          })
           .catch((e) => console.log(e.response));
       })
       // .catch(e => console.log(e))
 
       .catch((e) => {
-        // console.log(e)
-        const newProspects = updateProspects(prospects, prospect.id, prospect);
-        setProspects(newProspects);
-        Swal.fire({
-          text: "Contact Edited successfully",
-          icon: "success",
-          showCancelButton: false,
-        });
+        console.log(e)
+        customAlert("Oops, something went wrong","error")
       });
   };
 
@@ -312,6 +316,7 @@ function Prospects() {
               placeholder="Enter Phone Number"
               onChange={handleChange}
               id="phone_number"
+              type="tel"
             />
           </div>
           <div>
@@ -350,7 +355,7 @@ function Prospects() {
             <Input
               placeholder="Jane Cooper"
               id="name"
-              value={prospect.name}
+              defaultValue={prospect.name}
               onChange={handleChange}
             />
           </div>
@@ -359,7 +364,7 @@ function Prospects() {
             <Input
               placeholder="jane.cooper@example.com"
               id="email"
-              value={prospect.email}
+              defaultValue={prospect.email}
               onChange={handleChange}
             />
           </div>
@@ -368,7 +373,8 @@ function Prospects() {
             <Input
               placeholder="09093527277"
               id="phone_number"
-              value={prospect.phone}
+              type="tel"
+              defaultValue={prospect.phone_number}
               onChange={handleChange}
             />
           </div>
@@ -377,7 +383,7 @@ function Prospects() {
               title="stage"
               label="Deal stage"
               id="deal_stage"
-              value={prospect.status}
+              defaultValue={prospect.deal_stage}
               onChange={handleChange}
             >
               <option>Active</option>
@@ -425,15 +431,12 @@ function Prospects() {
             <Input
               placeholder="09093527277"
               id="phone"
-              value={prospect.phone}
+              value={prospect.phone_number}
               onChange={handleChange}
             />
           </div>
           <div>
-            <Select title="stage" label="Deal stage">
-              <option disabled selected>
-                Select a stage
-              </option>
+            <Select title="stage" label="Deal stage" value={prospect.deal_stage}>
               <option>Active</option>
               <option>Closed</option>
               <option>Negotiation</option>
@@ -453,7 +456,7 @@ function Prospects() {
           <button
             type="button"
             className="bg-error text-white px-10 py-2"
-            onClick={handleCloseModal}
+            onClick={handleDelete}
           >
             Yes, Delete
           </button>

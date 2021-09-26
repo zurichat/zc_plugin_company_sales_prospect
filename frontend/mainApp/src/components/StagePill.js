@@ -1,10 +1,10 @@
 import React from 'react'
 
 const stages = {
-    "Negotiation": "text-success-800",
+    "Negotiation": "text-green",
     "Prospect": "text-error",
     "Closed": "text-secondary",
-    "Active": "text-yellow-400"
+    "Active": "text-yellow"
 }
 
 function StagePill({ status, md=false }) {

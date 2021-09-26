@@ -7,14 +7,12 @@ module.exports = {
     extend: {},
     colors: {
       transparent: 'transparent',
-      current: 'currentColor',
       black: colors.black,
       white: colors.white,
       gray: colors.trueGray,
       indigo: colors.indigo,
-      red: colors.rose,
-      yellow: colors.amber,
-      success: colors.green,
+      yellow: colors.amber[400],
+      indigo:colors.indigo,
       green: {
         DEFAULT: "#00B87C",
         light: "#E2FFF5"
@@ -62,6 +60,6 @@ module.exports = {
     variants: {
       extend: {},
     },
-    plugins: [require('@tailwindcss/custom-forms')]
+    plugins: []
   }
 }

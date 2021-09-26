@@ -1,9 +1,14 @@
 // import { GetUserInfo } from "@zuri/zuri-control";
 // import { GetUserInfo } from "https://zuri.chat/zuri-control.js";
 
+import Swal from "sweetalert2";
+
 export const capitalize = (word) => {
-  const lower = word.toLowerCase();
-  return word.charAt(0).toUpperCase() + lower.slice(1);
+  if (word !== undefined) {
+    const lower = word.toLowerCase();
+    word = word.charAt(0).toUpperCase() + lower.slice(1);
+  }
+  return word
 };
 
 export const formatProspects = (prospects) => {
@@ -18,6 +23,16 @@ export const formatProspects = (prospects) => {
   });
 };
 
+export const formatProspect = (prospect) => {
+  return {
+    id: prospect.id,
+    name: prospect.name,
+    email: prospect.email,
+    phone: prospect.phone_number,
+    status: capitalize(prospect.deal_stage),
+  };
+}
+
 export const doesProspectExist = (prospects, name) => {
   return prospects.filter((x) => x.name === name).length > 0;
 };
@@ -31,6 +46,15 @@ export const updateProspects = (prospects, id, newDetails) => {
   }
   return p;
 };
+
+export const customAlert = (message, type = "success" || "warning" || "info" || "error") => {
+
+  Swal.fire({
+    text: message,
+    icon: type,
+    showCancelButton: false,
+  });
+}
 
 //Store token in localstorage
 export const token = sessionStorage.getItem("token");

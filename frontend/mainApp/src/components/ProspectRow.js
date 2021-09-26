@@ -54,7 +54,7 @@ function ProspectRow({
         <span>
           <Trash2
             className="inline-block text-gray-500"
-            onClick={openDeleteModal}
+            onClick={(e) => openDeleteModal(e, prospect)}
             strokeWidth={1}
           />
         </span>

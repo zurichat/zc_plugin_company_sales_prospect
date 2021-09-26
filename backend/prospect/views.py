@@ -119,40 +119,6 @@ class WelcomeView(APIView):
         return JsonResponse({"message": "welcome mail has been sent successfully"})
 
 
-# class ProspectsUpdateView(APIView):
-#     serializer_class = ProspectSerializer
-#     queryset = None
-
-#     def put(self, request, *args, **kwargs):
-#         url = "https://api.zuri.chat/data/write"
-#         serializer = ProspectSerializer(data=request.data)
-#         serializer.is_valid(raise_exception=True)
-#         object_id = serializer.data.get("_id")
-#         try:
-#             del request.data["_id"]
-#         except:
-#             pass
-#         data = {
-#             "plugin_id": PLUGIN_ID,
-#             "organization_id": ORGANISATION_ID,
-#             "collection_name": "prospects",
-#             "bulk_write": False,
-#             "object_id": object_id,
-#             "payload": request.data,
-#         }
-#         response = requests.put(url, data=json.dumps(data))
-#         print(response.status_code)
-#         # print(serializer.data)
-#         # print(serializer.data.get("object_id"))
-#         if response.status_code == 200 or 201:
-#             return Response(data=response, status=status.HTTP_201_CREATED)
-#         return Response(
-#             data={"message": "Try again later", "data": request.data},
-#             status=status.HTTP_500_INTERNAL_SERVER_ERROR,
-#         )
-
-
-
 class ProspectsUpdateView(APIView):
     serializer_class = ProspectSerializer
     queryset = None
@@ -161,21 +127,34 @@ class ProspectsUpdateView(APIView):
         url = "https://api.zuri.chat/data/write"
         serializer = ProspectSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        
+
+        object_id = serializer.data.get("object_id")
+        try:
+            del request.data["object_id"]
+        except:
+            pass
         data = {
             "plugin_id": PLUGIN_ID,
             "organization_id": ORGANISATION_ID,
             "collection_name": "prospects",
             "bulk_write": False,
-            "object_id": id,
+            "object_id": object_id,
             "payload":  serializer.data,
         }
         response = requests.put(url, data=json.dumps(data))
-        print(response.status_code)
-        print(response.json()['data'])
-        
-        if response.status_code == 200 or 201:
-            return Response(data=response, status=status.HTTP_201_CREATED)
+
+        if response.status_code in [200, 201]:
+            response = response.json()
+            print(response)
+            if response["data"]["modified_documents"] == 0:
+                return Response(
+                    data={
+                        "message": "There is no prospect with this object id you supplied"
+                    },
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+            return Response(data=response, status=status.HTTP_200_OK)
+
         return Response(
             data={"message": "Try again later", "data": request.data},
             status=status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -186,8 +165,7 @@ class ProspectsUpdateView(APIView):
 class ProspectsDeleteView(APIView):
     permission_classes = [AllowAny]
     authentication_classes = []
-
-    def delete(self, request, pk):
+    def post(self, request, *args, **kwargs):
         # # check authentication
         # if not isAuthorized(request):
         #     return Response(data={"message":"Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
@@ -197,11 +175,12 @@ class ProspectsDeleteView(APIView):
             "plugin_id": PLUGIN_ID,
             "organization_id": ORGANISATION_ID,
             "collection_name": "prospects",
-            "object_id": pk,
+            "object_id": kwargs.get("object_id"),
         }
         response = requests.request("POST", url, data=json.dumps(data))
-        r = response.json()
+        print(response.text)
         if response.status_code == 200:
+            r = response.json()
             if r["data"]["deleted_count"] == 0:
                 return Response(
                     data={
