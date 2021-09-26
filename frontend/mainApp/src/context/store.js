@@ -26,14 +26,14 @@ export const PluginProvider = ({ children }) => {
     useEffect(() => {
         centrifuge.on("connect", function (ctx) {
             console.log("CONNECTED", ctx);
-            centrifuge.publish("Prospects", {
-                "event": "join",
-                "token": "elijah"
-            })
-            centrifuge.publish("Deals", {
-                "event": "join",
-                "token": "elijah"
-            })
+            // centrifuge.publish("Prospects", {
+            //     "event": "join",
+            //     "token": "elijah"
+            // })
+            // centrifuge.publish("Deals", {
+            //     "event": "join",
+            //     "token": "elijah"
+            // })
         });
 
         centrifuge.on("disconnect", function (ctx) {
