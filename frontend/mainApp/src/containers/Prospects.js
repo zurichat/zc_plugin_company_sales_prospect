@@ -17,7 +17,7 @@ import FileIcon from "../components/svg/FileIcon";
 // import { Link } from 'react-router-dom'
 import { customAlert, doesProspectExist, formatAPIProspect, formatProspect, formatProspects } from "../utils";
 import Loader from "../components/svg/Loader.svg";
-import Swal from "sweetalert2";
+
 import { PluginContext } from "../context/store";
 // import { useForm } from "react-hook-form";
 // import { yupResolver } from '@hookform/resolvers/yup';
@@ -210,7 +210,7 @@ function Prospects() {
       .then((r) => {
         handleCloseModal();
         customAlert("Deal created successfully", "success")
-        history.push("/deals");
+        // history.push("/deals");
       })
       .catch((e) => {
         console.log(e);
