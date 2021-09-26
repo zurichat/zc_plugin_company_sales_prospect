@@ -34,7 +34,7 @@ class SidebarView(APIView):
                 }
             r = requests.get(url,headers=headers)
             print(r.status_code)
-            if r.status_code == 200:
+            if r.status_code:
                 public_url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/{ROOM_COLLECTION_NAME}/{ORGANISATION_ID}"
                 private_url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/{ADDED_ROOM_COLLECTION_NAME}/{ORGANISATION_ID}"
                 public_r = requests.get(public_url)
