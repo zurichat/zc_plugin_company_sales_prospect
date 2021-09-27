@@ -35,7 +35,6 @@ function Input({
   title,
   label,
   placeholder,
-  required,
   disabled = false,
   id,
   onChange,
@@ -68,7 +67,6 @@ function Select({
   title,
   label,
   children,
-  required,
   disabled,
   onChange,
   value,
@@ -97,16 +95,7 @@ function Select({
 }
 
 function Prospects() {
-  // const prospects = [
-  //     { id: "0", name: "Jane Cooper", email: "jane.cooper@example.com", phone: "09093527277", status: "Prospect" },
-  //     { id: "1", name: "Jane Cooper", email: "jane.cooper@example.com", phone: "09093527277", status: "Closed" },
-  //     { id: "2", name: "Jane Cooper", email: "jane.cooper@example.com", phone: "09093527277", status: "Negotiation" },
-  //     { id: "3", name: "Jane Cooper", email: "jane.cooper@example.com", phone: "09093527277", status: "Proposal" },
-  //     { id: "4", name: "Jane Cooper", email: "jane.cooper@example.com", phone: "09093527277", status: "Negotiation" },
-  //     { id: "5", name: "Jane Cooper", email: "jane.cooper@example.com", phone: "09093527277", status: "Prospect" }
-  // ]
   const { prospects, setProspects } = useContext(PluginContext)
-  // const [prospects, setProspects] = useState([]);
 
   const [prospect, setProspect] = useState({
     id: "",
@@ -119,25 +108,24 @@ function Prospects() {
   const [deal, setDeal] = useState(null);
 
   const [loading, setLoading] = useState(true);
-  const history = useHistory();
 
   const [open, setOpen] = useState(false);
-  const handleOpenModal = () => setOpen(true);
+  const handleOpenCreateModal = () => setOpen(true);
 
   const [open2, setOpen2] = useState(false);
-  const handleOpenModal2 = (e, prospect) => {
+  const handleOpenEditModal = (e, prospect) => {
     setProspect(formatAPIProspect(prospect));
     setOpen2(true);
   };
 
   const [open3, setOpen3] = useState(false);
-  const handleOpenModal3 = (e, prospect) => {
+  const handleOpenDeleteModal = (e, prospect) => {
     setProspect(formatAPIProspect(prospect));
     setOpen3(true)
   };
 
   const [open4, setOpen4] = useState(false);
-  const handleOpenModal4 = (e, prospect) => {
+  const handleOpenDealCreateModal = (e, prospect) => {
     setProspect(formatAPIProspect(prospect));
     const newDeal = {
       prospect_id: prospect.id,
@@ -280,13 +268,12 @@ function Prospects() {
       [target.id]: target.value,
     });
   };
-  // const [selectedProspect, setSelectedProspect] = useState(prospects[0])
 
   return (
     <div className="p-10 w-screen">
       <div className="flex justify-between items-center">
         <h3 className="text-2xl font-bold">Contact</h3>
-        <Button onClick={handleOpenModal}>Create New</Button>
+        <Button onClick={handleOpenCreateModal}>Create New</Button>
       </div>
       {/* CREATE MODAL */}
       <Modal
@@ -532,13 +519,15 @@ function Prospects() {
             <table className="text-left border-gray-100 w-full">
               <thead className="border-b cursor-pointer">
                 <tr>
-                  <th className="px-3 py-4 flex items-center">
-                    <input className="mr-4" type="checkbox" name="" id="all" />
-                    <label htmlFor="all">Name</label>
+                  <th className="px-3 py-4">
+                    <span className="flex items-center">
+                      <input className="mr-4" type="checkbox" name="" id="all" />
+                      <label htmlFor="all">Name</label>
+                    </span>
                   </th>
                   <th className="px-3 py-4">Email</th>
                   <th className="px-3 py-4">Phone Number</th>
-                  <th className="px-3 py-4">All stages</th>
+                  <th className="px-3 py-4">Stages</th>
                   <th className="px-3 py-4"> Actions </th>
                 </tr>
               </thead>
@@ -546,9 +535,9 @@ function Prospects() {
                 {prospects.map((prospect, i) => (
                   <ProspectRow
                     key={i}
-                    openEditModal={handleOpenModal2}
-                    openDealCreateModal={handleOpenModal4}
-                    openDeleteModal={handleOpenModal3}
+                    openEditModal={handleOpenEditModal}
+                    openDealCreateModal={handleOpenDealCreateModal}
+                    openDeleteModal={handleOpenDeleteModal}
                     prospect={prospect}
                   />
                 ))}
@@ -631,7 +620,7 @@ function Prospects() {
                       >
                         Skip
                       </button>
-                      <Button outline className="" onClick={handleOpenModal}>
+                      <Button outline className="" onClick={handleOpenCreateModal}>
                         Add Contact
                       </Button>
                     </div>

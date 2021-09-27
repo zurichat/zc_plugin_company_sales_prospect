@@ -3,7 +3,7 @@ import { createContext, useState } from 'react'
 import Centrifuge from "centrifuge";
 import customAxios, { addToRoomURL, leaveRoomURL, prospectsURL } from '../axios';
 import { useEffect } from 'react';
-import { customAlert, formatProspect, formatProspects } from '../utils';
+import { customAlert, dummyProspects, formatProspect, formatProspects } from '../utils';
 // import { GetUserInfo } from "@zuri/zuri-control";
 
 // const centrifuge = new Centrifuge('ws://localhost:8400/connection/websocket');
@@ -16,7 +16,7 @@ const centrifuge = new Centrifuge(
 
 export const PluginContext = createContext(null)
 export const PluginProvider = ({ children }) => {
-    const [prospects, setProspects] = useState([])
+    const [prospects, setProspects] = useState(dummyProspects)
     const [deals, setDeals] = useState([])
 
     const [inRoom, setInRoom] = useState(false);
