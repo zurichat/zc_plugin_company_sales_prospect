@@ -4,7 +4,15 @@ import { Calendar } from "react-feather";
 import EditDeals from "./EditDeals";
 import DealsOptions from "./DealOptions";
 
-const DealCard = ({ deal_stage, amount, name, close_date, description }) => {
+const stages = {
+  "Negotiation": "border-green",
+  "Prospect": "border-error",
+  "Closed": "border-secondary",
+  "Proposal": "border-pink"
+}
+
+const DealCard = ({ deal, index }) => {
+
   const [open, setOpen] = useState(false);
   const handleOpenModal = () => setOpen(true);
 
@@ -17,20 +25,10 @@ const DealCard = ({ deal_stage, amount, name, close_date, description }) => {
   };
 
   return (
-    <div
-      className={`w-64 h-44 mb-4 bg-white px-4 py-2 flex flex-col gap-3 rounded shadow-lg border-t-2 ${
-        deal_stage === "Prospect" && "border-yellow-200"
-      } ${deal_stage === "Proposal" && "border-pink-200"} ${
-        deal_stage === "Negotiation" && "border-blue-200"
-      } ${deal_stage === "Closed" && "border-red-200"}`}
-    >
-      {/* Edit Deals */}
+    <div className={`cursor-pointer w-64 mb-4 px-4 py-3 rounded shadow-lg border-t-2 ${stages[deal.deal_stage]}`}>
       <EditDeals open={open} handleCloseModal={handleCloseModal} />
       <div className="flex justify-between items-center">
-        <div className="flex">
-          {/* <FileText className="w-8 mr-4" strokeWidth={1}/> */}
-          <span className="font-bold text-lg mt-2 text-gray-700">{name}</span>
-        </div>
+        <span className="font-bold text-lg mt-2 text-gray-700">{deal.name}</span>
         <DealsOptions
           handleOpenModal={handleOpenModal}
           handleCloseModal={handleCloseModal}
@@ -38,14 +36,12 @@ const DealCard = ({ deal_stage, amount, name, close_date, description }) => {
           handleCloseDeleteModal={handleCloseModal}
         />
       </div>
-      <div className="flex flex-col text-left">
-        <p className="text-gray-500">{description}</p>
-        <div className="mt-2">
-          <p className="text-indigo-500 font-bold mt-2">${amount}</p>
-          <div className="flex gap-2 text-gray-400 text-base pt-2">
-            <Calendar /> - <p className="">{close_date}</p>
-          </div>
-        </div>
+      <div>
+        <p className="text-gray-500">{deal.description}</p>
+        <p className="text-green font-bold mt-3">${deal.amount}</p>
+        <p className="flex text-gray-400 pt-2">
+          <Calendar className="mr-2" />{" "}{deal.close_date}
+        </p>
       </div>
     </div>
   );

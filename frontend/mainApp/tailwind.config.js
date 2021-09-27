@@ -18,7 +18,8 @@ module.exports = {
         light: "#E2FFF5"
       },
       secondary:"#1264A3",
-      error:"#F40101"
+      error:"#F40101",
+      pink:"#FFC5D6"
     },
     fontFamily: {
       lato: ["'Lato', sans-serif"]
