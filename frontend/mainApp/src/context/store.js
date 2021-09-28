@@ -1,7 +1,7 @@
 import { createContext, useState } from 'react'
 
 import Centrifuge from "centrifuge";
-import customAxios, { addToRoomURL, leaveRoomURL, prospectsURL } from '../axios';
+import customAxios, { addToRoomURL, dealsURL, leaveRoomURL, prospectsURL } from '../axios';
 import { useEffect } from 'react';
 import { customAlert, dummyProspects, formatProspect, formatProspects } from '../utils';
 // import { GetUserInfo } from "@zuri/zuri-control";
@@ -95,9 +95,9 @@ export const PluginProvider = ({ children }) => {
                     // const latestProspect = formatProspect(data.object)
                     // setProspects([...prospects, latestProspect])
                     customAxios
-                    .get(prospectsURL)
-                    .then((r) => setProspects(formatProspects(r.data)))
-                    .catch((e) => console.log(e.response));
+                        .get(prospectsURL)
+                        .then((r) => setProspects(formatProspects(r.data)))
+                        .catch((e) => console.log(e.response));
 
                 } else if (data.event === "edit_prospect") {
                     customAxios
@@ -143,6 +143,25 @@ export const PluginProvider = ({ children }) => {
                         // const filteredRooms = rooms.filter(x !== "Deals")
                         // setRooms(filteredRooms)
                     });
+                } else if (data.event === "new_deal") {
+                    // const latestProspect = formatProspect(data.object)
+                    // setProspects([...prospects, latestProspect])
+                    customAxios
+                        .get(dealsURL)
+                        .then((r) => setDeals(r.data))
+                        .catch((e) => console.log(e.response));
+
+                } else if (data.event === "edit_deal") {
+                    customAxios
+                        .get(dealsURL)
+                        .then((r) => setDeals(r.data))
+                        .catch((e) => console.log(e.response));
+                } else if (data.event === "delete_deal") {
+
+                    customAxios
+                        .get(dealsURL)
+                        .then((r) => setDeals(r.data))
+                        .catch((e) => console.log(e.response));
                 }
             }
         });
