@@ -113,7 +113,7 @@ class ProspectsCreateView(APIView):
         print(r)
         if response.status_code == 201:
             new_prospect = request.data
-            new_prospect['_id'] = r['data']['object_id']
+            new_prospect["_id"] = r["data"]["object_id"]
             centrifugo_post(
                 "Prospects",
                 {"event": "new_prospect", "token": "elijah", "object": new_prospect},

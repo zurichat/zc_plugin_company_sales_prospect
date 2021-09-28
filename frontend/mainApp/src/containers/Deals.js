@@ -117,7 +117,7 @@ const Deals = () => {
           <div className="grid grid-cols-4 border border-t-0 border-gray-300 rounded h-screen2">
             <div className="border-r border-gray-300 overflow-y-auto rounded py-2 flex flex-col items-center gap-4">
               {deals
-                .filter(x => x.deal_stage.toLowerCase() === "prospect")
+                .filter(x => x.deal_stage && x.deal_stage.toLowerCase() === "prospect")
                 .map((deal, i) => (
                   <DealCard key={deal._id} deal={deal} index={i} />
                 ))}
@@ -125,14 +125,14 @@ const Deals = () => {
             <div className=" border-r border-gray-300 overflow-y-auto rounded py-2 flex flex-col items-center gap-4">
 
               {deals
-                .filter(x => x.deal_stage.toLowerCase() === "proposal")
+                .filter(x => x.deal_stage && x.deal_stage.toLowerCase() === "proposal")
                 .map((deal, i) => (
                   <DealCard key={deal._id} deal={deal} index={i} />
                 ))}
             </div>
             <div className=" border-r border-gray-300 overflow-y-auto rounded py-2 flex flex-col items-center gap-4">
               {deals
-                .filter(x => x.deal_stage.toLowerCase() === "negotiation")
+                .filter(x => x.deal_stage && x.deal_stage.toLowerCase() === "negotiation")
                 .map((deal, i) => (
                   <DealCard key={deal._id} deal={deal} index={i} />
                 ))}
@@ -140,7 +140,7 @@ const Deals = () => {
             </div>
             <div className=" border-r border-gray-300 overflow-y-auto rounded py-2 flex flex-col items-center gap-4">
               {deals
-                .filter(x => x.deal_stage.toLowerCase() === "closed")
+                .filter(x => x.deal_stage && x.deal_stage.toLowerCase() === "closed")
                 .map((deal, i) => (
                   <DealCard key={deal._id} deal={deal} index={i} />
                 ))}
