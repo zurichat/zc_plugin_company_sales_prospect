@@ -1,5 +1,6 @@
 from common.utils import centrifugo_post
-import requests, json
+import requests
+import json
 
 from django.http import JsonResponse
 from django.conf import settings
@@ -10,7 +11,8 @@ from rest_framework.views import APIView
 from rest_framework import status
 
 from .serializers import ProspectSerializer
-from common.utils import centrifugo_post  # changed the import to a single import
+# changed the import to a single import
+from common.utils import centrifugo_post
 from rest_framework.permissions import AllowAny
 
 PLUGIN_ID = settings.PLUGIN_ID
@@ -107,17 +109,22 @@ class ProspectsCreateView(APIView):
                 "deal_stage": deal_stage,
             },
         }
+        # print(data)
         response = requests.request("POST", url, data=json.dumps(data))
         r = response.json()
         print(response.status_code)
-        print(r)
         if response.status_code == 201:
             new_prospect = request.data
+            request.data._mutable = True
             new_prospect["_id"] = r["data"]["object_id"]
-            centrifugo_post(
-                "Prospects",
-                {"event": "new_prospect", "token": "elijah", "object": new_prospect},
-            )
+            request.data._mutable = False
+
+            # new_prospect["_id"] = r["data"]["object_id"]
+        #     # centrifugo_post(
+        #     #     "Prospects",
+        #     #     {"event": "new_prospect", "token": "elijah", "object": new_prospect},
+        #     # )
+            print(response.status_code)
             return Response(data=r, status=status.HTTP_201_CREATED)
         return Response(
             data={"message": "Try again later"},
@@ -179,7 +186,7 @@ class ProspectsDeleteView(APIView):
     permission_classes = [AllowAny]
     authentication_classes = []
 
-    def post(self, request, *args, **kwargs):
+    def delete(self, request, search, *args, **kwargs):
         # # check authentication
         # if not isAuthorized(request):
         #     return Response(data={"message":"Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
@@ -189,7 +196,7 @@ class ProspectsDeleteView(APIView):
             "plugin_id": PLUGIN_ID,
             "organization_id": ORGANISATION_ID,
             "collection_name": "prospects",
-            "object_id": kwargs.get("object_id"),
+            "object_id": search,
         }
         response = requests.request("POST", url, data=json.dumps(data))
         print(response.text)
