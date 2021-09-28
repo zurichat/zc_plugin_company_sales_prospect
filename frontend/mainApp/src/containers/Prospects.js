@@ -31,7 +31,7 @@ import { PluginContext } from "../context/store";
 // });
 // const { register,handleSubmit, formState: { errors }, } = useForm({resolver: yupResolver(schema)});
 
-function Input({
+export const Input = ({
   title,
   label,
   placeholder,
@@ -41,7 +41,7 @@ function Input({
   value,
   defaultValue,
   type,
-}) {
+}) => {
   return (
     <div className="mb-6">
       <label className=" mb-2 block font-bold text-base" htmlFor={title}>
@@ -62,7 +62,7 @@ function Input({
   );
 }
 
-function Select({
+export const Select = ({
   id,
   title,
   label,
@@ -71,7 +71,7 @@ function Select({
   onChange,
   value,
   defaultValue
-}) {
+}) => {
   return (
     <div className="mb-6" id={title}>
       <label className=" mb-2 block font-bold text-base" htmlFor={title}>
@@ -171,11 +171,11 @@ function Prospects() {
         .post(createProspectURL, prospect)
         .then((r) => {
           handleCloseModal();
-          // customAxios.get(prospectsURL)
-          //     .then(r => setProspects(formatProspects(r.data)))
-          //     .catch(e => console.log(e.response))
-          const latestProspect = formatProspect(prospect)
-          setProspects([...prospects, latestProspect]);
+          customAxios.get(prospectsURL)
+              .then(r => setProspects(formatProspects(r.data)))
+              .catch(e => console.log(e.response))
+          // const latestProspect = formatProspect(prospect)
+          // setProspects([...prospects, latestProspect]);
           customAlert("Contact Created Successfully", "success")
         })
         .catch((e) => {
@@ -184,8 +184,6 @@ function Prospects() {
         });
     } else {
       alert("Prospect already exists");
-
-      // Swal.fire({ text: 'Contact created successfully', icon: 'warning', showCancelButton: false, })
     }
   };
 
