@@ -8,6 +8,7 @@ import FilterDeal from "../components/FilterDeal";
 import FilterDeals from "../components/FilterDeals";
 import FilterButton from "../components/FilterButton";
 import { PluginContext } from "../context/store";
+import axios from "axios";
 
 const Deals = () => {
 
@@ -35,6 +36,12 @@ const Deals = () => {
         console.log(e.response);
       });
   }, []);
+
+
+  // axios.delete(`https://sales.zuri.chat/api/v1/deals/delete/${_id}`)
+  
+
+  
 
   return (
     <div className="p-6">
@@ -119,7 +126,7 @@ const Deals = () => {
               {deals
                 .filter(x => x.deal_stage && x.deal_stage.toLowerCase() === "prospect")
                 .map((deal, i) => (
-                  <DealCard key={deal._id} deal={deal} index={i} />
+                  <DealCard key={deal._id} deal={deal} index={i}  />
                 ))}
             </div>
             <div className=" border-r border-gray-300 overflow-y-auto rounded py-2 flex flex-col items-center gap-4">
@@ -127,7 +134,7 @@ const Deals = () => {
               {deals
                 .filter(x => x.deal_stage && x.deal_stage.toLowerCase() === "proposal")
                 .map((deal, i) => (
-                  <DealCard key={deal._id} deal={deal} index={i} />
+                  <DealCard key={deal._id} deal={deal} index={i}   />
                 ))}
             </div>
             <div className=" border-r border-gray-300 overflow-y-auto rounded py-2 flex flex-col items-center gap-4">
@@ -142,7 +149,7 @@ const Deals = () => {
               {deals
                 .filter(x => x.deal_stage && x.deal_stage.toLowerCase() === "closed")
                 .map((deal, i) => (
-                  <DealCard key={deal._id} deal={deal} index={i} />
+                  <DealCard key={deal._id} deal={deal} index={i}   />
                 ))}
             </div>
           </div>
