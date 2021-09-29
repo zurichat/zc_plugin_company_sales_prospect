@@ -7,6 +7,7 @@ function ProspectRow({
   openDeleteModal,
   prospect,
 }) {
+  console.log(prospect);
   return (
     <tr className="hover:bg-gray-100 cursor-pointer text-gray-900">
       <td className="p-3 text-sm font-medium">
@@ -31,9 +32,9 @@ function ProspectRow({
       </td>
 
       <td className="p-3 text-sm">{prospect.email}</td>
-      <td className="p-3 text-sm">{prospect.phone}</td>
+      <td className="p-3 text-sm">{prospect.phone_number}</td>
 
-      <td className="p-3 text-sm"> {prospect.status}</td>
+      <td className="p-3 text-sm"> {prospect.deal_stage}</td>
 
       <td className="p-3 text-sm font-medium">
         <span className="flex items-center">

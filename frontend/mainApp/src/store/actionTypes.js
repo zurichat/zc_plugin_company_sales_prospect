@@ -1,0 +1,2 @@
+export const FETCH_PROSPECTS = "FETCH_PROSPECTS"
+export const FETCH_DEALS = "FETCH_DEALS"
