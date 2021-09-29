@@ -8,6 +8,8 @@ import FilterDeal from "../components/FilterDeal";
 import FilterDeals from "../components/FilterDeals";
 import FilterButton from "../components/FilterButton";
 import { PluginContext } from "../context/store";
+import axios from "axios";
+
 import { Input, Select } from "./Prospects";
 import { customAlert } from "../utils";
 import FileIcon from "../components/svg/FileIcon";
@@ -284,7 +286,6 @@ const Deals = () => {
                   ))}
               </div>
             </div>
-
           </div>
 
         </div>

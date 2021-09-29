@@ -166,7 +166,11 @@ input[type="checkbox"]:checked:after {
 .swal2-validation-message{
     color: #00B87C !important;
 }
-.swal2-confirm.swal2-styled{
+/* .swal2-confirm.swal2-styled{
     background-color: #00B87C !important;
     display: none !important
+} */
+
+.swal2-styled.swal2-deny {
+    display: block !important;
 }
