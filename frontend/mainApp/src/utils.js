@@ -11,8 +11,8 @@ export const capitalize = (word) => {
   return word
 };
 
-export const formatProspects = (prospects) => {
-  return prospects.map((p) => {
+export const formatProspects = ({prospects, pageNum, next, prev}) => {
+  return { prospects: prospects.map((p) => {
     return {
       id: p._id,
       name: p.name,
@@ -20,7 +20,9 @@ export const formatProspects = (prospects) => {
       phone: p.phone_number,
       status: capitalize(p.deal_stage),
     };
-  });
+  }),
+  pageNum, next, prev
+}
 };
 
 export const formatProspect = (prospect) => {
@@ -78,11 +80,11 @@ export const user = JSON.parse(sessionStorage.getItem("user"));
 // export const getUserInfo = async () =>
 //   GetUserInfo();
 
-export const dummyProspects = [
+export const dummyProspects = { contacts: [
     { id: "0", name: "Jane Cooper", email: "jane.cooper@example.com", phone: "09093527277", status: "Prospect" },
     { id: "1", name: "Jane Cooper", email: "jane.cooper@example.com", phone: "09093527277", status: "Closed" },
     { id: "2", name: "Jane Cooper", email: "jane.cooper@example.com", phone: "09093527277", status: "Negotiation" },
     { id: "3", name: "Jane Cooper", email: "jane.cooper@example.com", phone: "09093527277", status: "Proposal" },
     { id: "4", name: "Jane Cooper", email: "jane.cooper@example.com", phone: "09093527277", status: "Negotiation" },
     { id: "5", name: "Jane Cooper", email: "jane.cooper@example.com", phone: "09093527277", status: "Prospect" }
-]
+], pageNum: 1, next: false, prev: false}
