@@ -95,16 +95,20 @@ class ProspectsCreateView(APIView):
         serializer = ProspectSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         url = "https://api.zuri.chat/data/write"
+        name = request.data.get("name")
+        email = request.data.get("email")
+        phone_number = request.data.get("phone_number")
+        company = request.data.get("company")
         data = {
             "plugin_id": PLUGIN_ID,
             "organization_id": ORGANISATION_ID,
             "collection_name": "prospects",
             "bulk_write": False,
             "payload": {
-                "name": serializer.data["name"],
-                "phone_number": serializer.data["phone_number"],
-                "email":  serializer.data["email"],
-                "deal_stage": serializer.data["deal_stage"],
+                "name": name,
+                "phone_number": phone_number,
+                "email": email,
+                "company": company,
             },
         }
         response = requests.request("POST", url, data=json.dumps(data))
