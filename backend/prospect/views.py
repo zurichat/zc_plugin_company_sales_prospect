@@ -108,11 +108,13 @@ class ProspectsCreateView(APIView):
         if not isValidOrganisation(ORGANISATION_ID, request):
             return Response(data={"message":"Invalid/Missing organization id"}, status=status.HTTP_401_UNAUTHORIZED)
 
+        serializer = ProspectSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
         url = "https://api.zuri.chat/data/write"
         name = request.data.get("name")
         email = request.data.get("email")
         phone_number = request.data.get("phone_number")
-        deal_stage = request.data.get("deal_stage")
+        company = request.data.get("company")
         data = {
             "plugin_id": PLUGIN_ID,
             "organization_id": ORGANISATION_ID,
@@ -122,10 +124,9 @@ class ProspectsCreateView(APIView):
                 "name": name,
                 "phone_number": phone_number,
                 "email": email,
-                "deal_stage": deal_stage,
+                "company": company,
             },
         }
-        # print(data)
         response = requests.request("POST", url, data=json.dumps(data))
         r = response.json()
         print(response.status_code)
@@ -144,7 +145,7 @@ class ProspectsCreateView(APIView):
             return Response(data=r, status=status.HTTP_201_CREATED)
         return Response(
             data={"message": "Try again later"},
-            status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            status=response.status_code,
         )
 
 
