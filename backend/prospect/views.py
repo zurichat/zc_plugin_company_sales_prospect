@@ -115,9 +115,7 @@ class ProspectsCreateView(APIView):
         print(response.status_code)
         if response.status_code == 201:
             new_prospect = request.data
-            request.data._mutable = True
             new_prospect["_id"] = r["data"]["object_id"]
-            request.data._mutable = False
 
             # new_prospect["_id"] = r["data"]["object_id"]
         #     # centrifugo_post(
