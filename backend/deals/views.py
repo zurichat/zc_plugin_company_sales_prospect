@@ -166,6 +166,50 @@ class DealsListView(APIView):
         )
 
 
+
+class ReArrangeDeals(APIView):
+    """
+        This view re-arrange the deals card
+    """
+    serializer_class = DealUpdateSerializer
+    queryset = None
+
+    def put(self, request, *args, **kwargs):
+        url = "https://api.zuri.chat/data/write"
+        serializer = DealUpdateSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        get_id = serializer.data
+        data = {
+            "plugin_id": PLUGIN_ID,
+            "organization_id": ORGANISATION_ID,
+            "collection_name": "deals",
+            "bulk_write": False,
+            "filter": {},
+            "object_id": get_id['_id'],
+            "payload": serializer.data,
+        }
+        response = requests.put(url, data=json.dumps(data))
+        r = response.json()
+        print(response.status_code)
+        print(r)
+        if response.status_code >= 200 and response.status_code < 300:
+            # centrifugo_post(
+            #     "Deals",
+            #     {
+            #         "event": "edit_deal",
+            #         "token": "elijah",
+            #         "object": r,
+            #     },
+            # )
+            return Response(
+                data={"message": "Deal Updated Successfully"},
+                status=st.HTTP_201_CREATED,
+            )
+        return Response(
+            data={"message": "Try again later"},
+            status=st.HTTP_500_INTERNAL_SERVER_ERROR,
+        )
+
 class DealsFilterListView(APIView):
     """
     Filters existing deals by the provided search criteria. For now, this is limited to just the name field.
