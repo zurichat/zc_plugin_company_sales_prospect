@@ -13,7 +13,6 @@ import { customAlert } from "../utils";
 import FileIcon from "../components/svg/FileIcon";
 import Loader from "../components/svg/Loader.svg";
 const Deals = () => {
-
   const [loading, setLoading] = useState(true);
   const [deal, setDeal] = useState({
     id: "",
@@ -22,22 +21,21 @@ const Deals = () => {
     deal_stage: "",
     description: "",
     name: "",
-    prospect_id: ""
+    prospect_id: "",
   });
-  const { deals, setDeals, prospects, setProspects } = useContext(PluginContext)
+  const { deals, setDeals, prospects, setProspects } =
+    useContext(PluginContext);
 
-  const [openCreate, setOpenCreate] = useState(false);
+  const [openCreate, setOpenCreate] = useState(true);
   const handleOpenCreateModal = () => setOpenCreate(true);
-
 
   const [openFilter, setOpenFilter] = useState(false);
   const handleOpenFilterModal = () => setOpenFilter(true);
 
   const handleCloseModal = () => {
-    setOpenCreate(false)
-    setOpenFilter(false)
+    setOpenCreate(false);
+    setOpenFilter(false);
   };
-
 
   useEffect(() => {
     customAxios
@@ -65,17 +63,16 @@ const Deals = () => {
           console.log(e.response);
         });
     }
-
   }, []);
 
   const handleChange = ({ target }) => {
     if (target.id === "prospect_id") {
-      const prospect_id = target.value.split("-")[0]
-      const name = target.value.split("-")[1]
+      const prospect_id = target.value.split("-")[0];
+      const name = target.value.split("-")[1];
       setDeal({
         ...deal,
         prospect_id,
-        name
+        name,
       });
     } else {
       setDeal({
@@ -85,26 +82,27 @@ const Deals = () => {
     }
   };
 
-  const handleSubmit = e => {
-    e.preventDefault()
-    console.log(deal)
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(deal);
 
     customAxios
       .post(createDealURL, deal)
       .then((r) => {
         handleCloseModal();
-        customAxios.get(dealsURL)
-          .then(r => setDeals(r.data))
-          .catch(e => console.log(e.response))
+        customAxios
+          .get(dealsURL)
+          .then((r) => setDeals(r.data))
+          .catch((e) => console.log(e.response));
         // const latestDeal = formatProspect(prospect)
         // setProspects([...prospects, latestProspect]);
-        customAlert("Deal Created Successfully", "success")
+        customAlert("Deal Created Successfully", "success");
       })
       .catch((e) => {
         console.log(e);
-        customAlert("Oops, something went wrong", "error")
+        customAlert("Oops, something went wrong", "error");
       });
-  }
+  };
 
   return (
     <div className="p-6">
@@ -142,22 +140,21 @@ const Deals = () => {
         title="Create a deal"
         description="Create a deal for your prospect. Please provide all necessary information."
         open={openCreate}
-        closeModal={handleCloseModal}>
+        closeModal={handleCloseModal}
+      >
         <form className="mt-2" onSubmit={handleSubmit}>
-          <div>
-            <Select
-              label="Name"
-              id="prospect_id"
-              onChange={handleChange}
-            >
+          <div className="font-bold mt-7 text-gray-700">
+            <Select label="Name" id="prospect_id" onChange={handleChange}>
               <option>Select a contact</option>
-              {prospects.length > 0 && prospects.map((prospect, i) => (
-                <option key={i} value={`${prospect.id}-${prospect.name}`}>{prospect.name}</option>
-              ))}
-
+              {prospects.length > 0 &&
+                prospects.map((prospect, i) => (
+                  <option key={i} value={`${prospect.id}-${prospect.name}`}>
+                    {prospect.name}
+                  </option>
+                ))}
             </Select>
           </div>
-          <div>
+          <div className="font-bold text-gray-500 rounded">
             <Select
               title="stage"
               label="Deal stage"
@@ -172,7 +169,9 @@ const Deals = () => {
             </Select>
           </div>
           <div>
-            <label className="block">Amount</label>
+            <label className="block font-bold text-gray-700 rounded">
+              Amount
+            </label>
             <Input
               placeholder="Enter Amount"
               onChange={handleChange}
@@ -180,7 +179,9 @@ const Deals = () => {
             />
           </div>
           <div>
-            <label className="block">Expected close date</label>
+            <label className="block font-bold text-gray-700">
+              Expected close date
+            </label>
             <Input
               placeholder="dd-mm-yy"
               onChange={handleChange}
@@ -189,7 +190,7 @@ const Deals = () => {
             />
           </div>
           <div>
-            <label className="block">Description</label>
+            <label className="block font-bold text-gray-700 ">Description</label>
             <Input
               placeholder="Additional Info"
               onChange={handleChange}
@@ -198,7 +199,7 @@ const Deals = () => {
           </div>
 
           <div className="mt-4 flex justify-end">
-            <button type="submit" className="bg-green text-white px-10 py-2">
+            <button type="submit" className="bg-green rounded text-white px-10 py-2">
               Create
             </button>
           </div>
@@ -210,13 +211,9 @@ const Deals = () => {
         <Button onClick={handleOpenCreateModal}>Create New</Button>
       </div>
 
-
-      {deals.length > 0 && !loading ?
-
+      {deals.length > 0 && !loading ? (
         <div className="overflow-x-auto">
-
           <div className="w-max lg:w-full">
-
             <div className="grid grid-cols-4 mt-5 border-gray-300">
               <div className="px-24 lg:px-8 border-b border-gray-300 py-2 text-left">
                 <span className="block font-bold text-lg text-gray-700">
@@ -255,40 +252,49 @@ const Deals = () => {
             <div className="grid grid-cols-4 border border-t-0 border-gray-300 rounded h-screen2">
               <div className="border-r border-gray-300 overflow-y-auto rounded py-2 flex flex-col items-center gap-4">
                 {deals
-                  .filter(x => x.deal_stage && x.deal_stage.toLowerCase() === "prospect")
-                  .map((deal, i) => (
-                    <DealCard key={deal._id} deal={deal} index={i} />
-                  ))}
-              </div>
-              <div className=" border-r border-gray-300 overflow-y-auto rounded py-2 flex flex-col items-center gap-4">
-
-                {deals
-                  .filter(x => x.deal_stage && x.deal_stage.toLowerCase() === "proposal")
+                  .filter(
+                    (x) =>
+                      x.deal_stage && x.deal_stage.toLowerCase() === "prospect"
+                  )
                   .map((deal, i) => (
                     <DealCard key={deal._id} deal={deal} index={i} />
                   ))}
               </div>
               <div className=" border-r border-gray-300 overflow-y-auto rounded py-2 flex flex-col items-center gap-4">
                 {deals
-                  .filter(x => x.deal_stage && x.deal_stage.toLowerCase() === "negotiation")
+                  .filter(
+                    (x) =>
+                      x.deal_stage && x.deal_stage.toLowerCase() === "proposal"
+                  )
                   .map((deal, i) => (
                     <DealCard key={deal._id} deal={deal} index={i} />
                   ))}
-
               </div>
               <div className=" border-r border-gray-300 overflow-y-auto rounded py-2 flex flex-col items-center gap-4">
                 {deals
-                  .filter(x => x.deal_stage && x.deal_stage.toLowerCase() === "closed")
+                  .filter(
+                    (x) =>
+                      x.deal_stage &&
+                      x.deal_stage.toLowerCase() === "negotiation"
+                  )
+                  .map((deal, i) => (
+                    <DealCard key={deal._id} deal={deal} index={i} />
+                  ))}
+              </div>
+              <div className=" border-r border-gray-300 overflow-y-auto rounded py-2 flex flex-col items-center gap-4">
+                {deals
+                  .filter(
+                    (x) =>
+                      x.deal_stage && x.deal_stage.toLowerCase() === "closed"
+                  )
                   .map((deal, i) => (
                     <DealCard key={deal._id} deal={deal} index={i} />
                   ))}
               </div>
             </div>
-
           </div>
-
         </div>
-        :
+      ) : (
         <>
           {loading ? (
             <div>
@@ -346,7 +352,11 @@ const Deals = () => {
                       >
                         Skip
                       </button>
-                      <Button outline className="" onClick={handleOpenCreateModal}>
+                      <Button
+                        outline
+                        className=""
+                        onClick={handleOpenCreateModal}
+                      >
                         Add Deal
                       </Button>
                     </div>
@@ -355,9 +365,9 @@ const Deals = () => {
               </div>
             </div>
           )}
-        </>}
+        </>
+      )}
     </div>
-
   );
 };
 export default Deals;
