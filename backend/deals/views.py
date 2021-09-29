@@ -179,6 +179,8 @@ class ReArrangeDeals(APIView):
         serializer = DealUpdateSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         get_id = serializer.data
+        get_all_data = serializer.data
+        del get_all_data["_id"]
         data = {
             "plugin_id": PLUGIN_ID,
             "organization_id": ORGANISATION_ID,
@@ -186,7 +188,7 @@ class ReArrangeDeals(APIView):
             "bulk_write": False,
             "filter": {},
             "object_id": get_id['_id'],
-            "payload": serializer.data,
+            "payload": get_all_data,
         }
         response = requests.put(url, data=json.dumps(data))
         r = response.json()
