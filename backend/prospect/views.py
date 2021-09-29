@@ -92,6 +92,8 @@ class ProspectsCreateView(APIView):
         # if not isAuthorized(request):
         #     return Response(data={"message":"Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
 
+        serializer = ProspectSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
         url = "https://api.zuri.chat/data/write"
         name = request.data.get("name")
         email = request.data.get("email")
@@ -109,15 +111,14 @@ class ProspectsCreateView(APIView):
                 "company": company,
             },
         }
-        # print(data)
         response = requests.request("POST", url, data=json.dumps(data))
         r = response.json()
         print(response.status_code)
         if response.status_code == 201:
             new_prospect = request.data
-            request.data._mutable = True
-            new_prospect["_id"] = r["data"]["object_id"]
-            request.data._mutable = False
+            # request.data._mutable = True
+            # new_prospect["_id"] = r["data"]["object_id"]
+            # request.data._mutable = False
 
             # new_prospect["_id"] = r["data"]["object_id"]
         #     # centrifugo_post(
@@ -128,7 +129,7 @@ class ProspectsCreateView(APIView):
             return Response(data=r, status=status.HTTP_201_CREATED)
         return Response(
             data={"message": "Try again later"},
-            status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            status=response.status_code,
         )
 
 
