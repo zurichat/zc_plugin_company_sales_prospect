@@ -4,7 +4,10 @@ import "../App.css";
 export default function Select({ title, label, children, register, required }) {
   return (
     <div className="mb-6 rounded-md" id={title}>
-      <label className=" mb-2 block font-bold text-base" htmlFor={title}>
+      <label
+        className=" mb-2 block font-bold text-gray-700 text-base"
+        htmlFor={title}
+      >
         {label}
       </label>
 

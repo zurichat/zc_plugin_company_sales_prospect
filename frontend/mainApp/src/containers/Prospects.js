@@ -15,7 +15,13 @@ import customAxios, {
 } from "../axios";
 import FileIcon from "../components/svg/FileIcon";
 // import { Link } from 'react-router-dom'
-import { customAlert, doesProspectExist, formatAPIProspect, formatProspect, formatProspects } from "../utils";
+import {
+  customAlert,
+  doesProspectExist,
+  formatAPIProspect,
+  formatProspect,
+  formatProspects,
+} from "../utils";
 import Loader from "../components/svg/Loader.svg";
 
 import { PluginContext } from "../context/store";
@@ -60,7 +66,7 @@ export const Input = ({
       />
     </div>
   );
-}
+};
 
 export const Select = ({
   id,
@@ -70,7 +76,7 @@ export const Select = ({
   disabled,
   onChange,
   value,
-  defaultValue
+  defaultValue,
 }) => {
   return (
     <div className="mb-6" id={title}>
@@ -92,10 +98,10 @@ export const Select = ({
       </select>
     </div>
   );
-}
+};
 
 function Prospects() {
-  const { prospects, setProspects } = useContext(PluginContext)
+  const { prospects, setProspects } = useContext(PluginContext);
 
   const [prospect, setProspect] = useState({
     id: "",
@@ -121,7 +127,7 @@ function Prospects() {
   const [open3, setOpen3] = useState(false);
   const handleOpenDeleteModal = (e, prospect) => {
     setProspect(formatAPIProspect(prospect));
-    setOpen3(true)
+    setOpen3(true);
   };
 
   const [open4, setOpen4] = useState(false);
@@ -129,21 +135,21 @@ function Prospects() {
     setProspect(formatAPIProspect(prospect));
     const newDeal = {
       prospect_id: prospect.id,
-      name: prospect.name
-    }
-    setDeal(newDeal)
+      name: prospect.name,
+    };
+    setDeal(newDeal);
     setOpen4(true);
   };
 
   const handleCloseModal = () => {
-    setDeal(null)
+    setDeal(null);
     setProspect({
       id: "",
       name: "",
       email: "",
       phone_number: "",
       deal_stage: "",
-    })
+    });
     setOpen(false);
     setOpen2(false);
     setOpen3(false);
@@ -171,22 +177,22 @@ function Prospects() {
         .post(createProspectURL, prospect)
         .then((r) => {
           handleCloseModal();
-          customAxios.get(prospectsURL)
-              .then(r => setProspects(formatProspects(r.data)))
-              .catch(e => console.log(e.response))
+          customAxios
+            .get(prospectsURL)
+            .then((r) => setProspects(formatProspects(r.data)))
+            .catch((e) => console.log(e.response));
           // const latestProspect = formatProspect(prospect)
           // setProspects([...prospects, latestProspect]);
-          customAlert("Contact Created Successfully", "success")
+          customAlert("Contact Created Successfully", "success");
         })
         .catch((e) => {
           console.log(e);
-          customAlert("Oops, something went wrong", "error")
+          customAlert("Oops, something went wrong", "error");
         });
     } else {
       alert("Prospect already exists");
     }
   };
-
 
   const handleDealCreate = (e) => {
     e.preventDefault();
@@ -195,12 +201,12 @@ function Prospects() {
       .post(createDealURL, dealInfo)
       .then((r) => {
         handleCloseModal();
-        customAlert("Deal created successfully", "success")
+        customAlert("Deal created successfully", "success");
         // history.push("/deals");
       })
       .catch((e) => {
         console.log(e);
-        customAlert("Oops, something went wrong", "error")
+        customAlert("Oops, something went wrong", "error");
       });
   };
 
@@ -216,7 +222,7 @@ function Prospects() {
     customAxios
       .put(editProspectURL, apiProspect)
       .then((r) => {
-        customAlert("Contact Edited Successfully", "success")
+        customAlert("Contact Edited Successfully", "success");
         handleCloseModal();
         customAxios
           .get(prospectsURL)
@@ -225,31 +231,30 @@ function Prospects() {
       })
 
       .catch((e) => {
-        console.log(e)
-        customAlert("Oops, something went wrong", "error")
-
+        console.log(e);
+        customAlert("Oops, something went wrong", "error");
       });
   };
 
   const handleDelete = (e) => {
     e.preventDefault();
     customAxios
-      .post(`${deleteProspectURL}`, { 'object_id': prospect.id })
+      .post(`${deleteProspectURL}`, { object_id: prospect.id })
       .then((r) => {
         handleCloseModal();
         customAxios
           .get(prospectsURL)
           .then((r) => {
-            customAlert("Contact Deleted Successfully", "success")
-            setProspects(formatPropsects(r.data))
+            customAlert("Contact Deleted Successfully", "success");
+            setProspects(formatPropsects(r.data));
           })
           .catch((e) => console.log(e.response));
       })
       // .catch(e => console.log(e))
 
       .catch((e) => {
-        console.log(e)
-        customAlert("Oops, something went wrong", "error")
+        console.log(e);
+        customAlert("Oops, something went wrong", "error");
       });
   };
 
@@ -271,18 +276,18 @@ function Prospects() {
     <div className="p-10 w-screen">
       <div className="flex justify-between items-center">
         <h3 className="text-2xl font-bold">Contact</h3>
-        <Button onClick={handleOpenCreateModal}>Create New</Button>
+        <Button onClick={handleOpenCreateModal}>Create New Contact</Button>
       </div>
       {/* CREATE MODAL */}
       <Modal
         title="Create a Contact"
-        description="Provide information about your contact."
+        description="Please input your contact infomation"
         open={open}
         closeModal={handleCloseModal}
       >
         <form className="mt-2" onSubmit={handleSubmit}>
           <div>
-            <label className="block">Name</label>
+            <label className="block font-bold text-gray-700">Name</label>
             <Input
               placeholder="Enter Full Name"
               onChange={handleChange}
@@ -290,7 +295,7 @@ function Prospects() {
             />
           </div>
           <div>
-            <label className="block">Email</label>
+            <label className="block font-bold text-gray-700">Email</label>
             <Input
               placeholder="Enter Email"
               onChange={handleChange}
@@ -298,7 +303,9 @@ function Prospects() {
             />
           </div>
           <div>
-            <label className="block">Phone Number</label>
+            <label className="block font-bold text-gray-700">
+              Phone Number
+            </label>
             <Input
               placeholder="Enter Phone Number"
               onChange={handleChange}
@@ -306,7 +313,7 @@ function Prospects() {
               type="tel"
             />
           </div>
-          <div>
+          <div className="text-gray-700">
             <Select
               title="stage"
               label="Deal stage"
@@ -322,7 +329,10 @@ function Prospects() {
           </div>
 
           <div className="mt-4 flex justify-end">
-            <button type="submit" className="bg-green text-white px-10 py-2">
+            <button
+              type="submit"
+              className="bg-green rounded text-white px-10 py-2"
+            >
               Create
             </button>
           </div>
@@ -337,8 +347,8 @@ function Prospects() {
         closeModal={handleCloseModal}
       >
         <form className="mt-2" onSubmit={handleUpdate}>
-          <div>
-            <label className="block">Name</label>
+          <div className="text-gray-500">
+            <label className="block font-bold text-gray-700">Name</label>
             <Input
               placeholder="Jane Cooper"
               id="name"
@@ -346,8 +356,8 @@ function Prospects() {
               onChange={handleChange}
             />
           </div>
-          <div>
-            <label className="block">Email</label>
+          <div className="text-gray-500">
+            <label className="block font-bold text-gray-700">Email</label>
             <Input
               placeholder="jane.cooper@example.com"
               id="email"
@@ -355,8 +365,10 @@ function Prospects() {
               onChange={handleChange}
             />
           </div>
-          <div>
-            <label className="block">Phone Number</label>
+          <div className="text-gray-500">
+            <label className="block font-bold text-gray-700">
+              Phone Number
+            </label>
             <Input
               placeholder="09093527277"
               id="phone_number"
@@ -365,7 +377,7 @@ function Prospects() {
               onChange={handleChange}
             />
           </div>
-          <div>
+          <div className="font-bold text-gray-700">
             <Select
               title="stage"
               label="Deal stage"
@@ -379,8 +391,11 @@ function Prospects() {
               <option>Prospect</option>
             </Select>
           </div>
-          <div className="mt-4 flex justify-end">
-            <button type="submit" className="bg-green text-white px-10 py-2">
+          <div className="mt-8 flex justify-end">
+            <button
+              type="submit"
+              className="bg-green text-white rounded px-10 py-2"
+            >
               Edit
             </button>
           </div>
@@ -394,9 +409,9 @@ function Prospects() {
         open={open3}
         closeModal={handleCloseModal}
       >
-        <div className="mt-2">
+        <div className="mt-2 text-gray-500">
           <div>
-            <label className="block">Name</label>
+            <label className="block font-bold text-gray-700">Name</label>
             <Input
               placeholder="Jane Cooper"
               id="name"
@@ -404,8 +419,8 @@ function Prospects() {
               disabled
             />
           </div>
-          <div>
-            <label className="block">Email</label>
+          <div className="text-gray-500">
+            <label className="block text-gray-700 font-bold">Email</label>
             <Input
               placeholder="jane.cooper@example.com"
               id="email"
@@ -413,8 +428,10 @@ function Prospects() {
               disabled
             />
           </div>
-          <div>
-            <label className="block">Phone Number</label>
+          <div className="text-gray-500">
+            <label className="block text-gray-700 font-bold">
+              Phone Number
+            </label>
             <Input
               placeholder="09093527277"
               id="phone"
@@ -422,8 +439,13 @@ function Prospects() {
               disabled
             />
           </div>
-          <div>
-            <Select title="stage" label="Deal stage" value={prospect.deal_stage} disabled>
+          <div className="text-gray-700">
+            <Select
+              title="stage"
+              label="Deal stage"
+              value={prospect.deal_stage}
+              disabled
+            >
               <option>Active</option>
               <option>Closed</option>
               <option>Negotiation</option>
@@ -435,14 +457,14 @@ function Prospects() {
         <div className="mt-4 flex justify-end">
           <button
             type="button"
-            className="text-green px-10 py-2 mr-2"
+            className="text-green rounded px-10 py-2 mr-2"
             onClick={handleCloseModal}
           >
             No, Keep
           </button>
           <button
             type="button"
-            className="bg-error text-white px-10 py-2"
+            className="bg-error rounded text-white px-10 py-2"
             onClick={handleDelete}
           >
             Yes, Delete
@@ -453,12 +475,12 @@ function Prospects() {
       {/* CREATE DEAL MODAL */}
       <Modal
         title="Create a deal"
-        description={`Create a deal for ${prospect.name}. Please provide all necessary information.`}
+        description={`Create a deal for ${prospect.name}.`}
         open={open4}
         closeModal={handleCloseModal}
       >
         <form className="mt-2" onSubmit={handleDealCreate}>
-          <div>
+          <div className="text-gray-700">
             <Select
               title="stage"
               label="Deal stage"
@@ -472,8 +494,8 @@ function Prospects() {
               <option>Prospect</option>
             </Select>
           </div>
-          <div>
-            <label className="block">Amount</label>
+          <div className="text-gray-500">
+            <label className="block font-bold text-gray-700">Amount</label>
             <Input
               type="number"
               onChange={handleDealChange}
@@ -481,8 +503,10 @@ function Prospects() {
               id="amount"
             />
           </div>
-          <div>
-            <label className="block">Expected close date</label>
+          <div className="text-gray-500">
+            <label className="block font-bold text-gray-700">
+              Expected close date
+            </label>
             <Input
               placeholder="dd-mm-yy"
               onChange={handleDealChange}
@@ -490,8 +514,8 @@ function Prospects() {
               type="date"
             />
           </div>
-          <div>
-            <label className="block">Description</label>
+          <div className="text-gray-500">
+            <label className="block font-bold text-gray-700">Description</label>
             <Input
               placeholder="Additional info"
               onChange={handleDealChange}
@@ -503,7 +527,7 @@ function Prospects() {
             <button
               type="submit"
               onClick={() => handleDealCreate()}
-              className="bg-green text-white px-10 py-2"
+              className="bg-green rounded text-white px-10 py-2"
             >
               Create
             </button>
@@ -519,7 +543,12 @@ function Prospects() {
                 <tr>
                   <th className="px-3 py-4">
                     <span className="flex items-center">
-                      <input className="mr-4" type="checkbox" name="" id="all" />
+                      <input
+                        className="mr-4"
+                        type="checkbox"
+                        name=""
+                        id="all"
+                      />
                       <label htmlFor="all">Name</label>
                     </span>
                   </th>
@@ -618,7 +647,11 @@ function Prospects() {
                       >
                         Skip
                       </button>
-                      <Button outline className="" onClick={handleOpenCreateModal}>
+                      <Button
+                        outline
+                        className=""
+                        onClick={handleOpenCreateModal}
+                      >
                         Add Contact
                       </Button>
                     </div>

@@ -26,7 +26,7 @@ const Deals = () => {
   const { deals, setDeals, prospects, setProspects } =
     useContext(PluginContext);
 
-  const [openCreate, setOpenCreate] = useState(true);
+  const [openCreate, setOpenCreate] = useState(false);
   const handleOpenCreateModal = () => setOpenCreate(true);
 
   const [openFilter, setOpenFilter] = useState(false);
@@ -154,7 +154,7 @@ const Deals = () => {
                 ))}
             </Select>
           </div>
-          <div className="font-bold text-gray-500 rounded">
+          <div className="font-bold text-gray-700 rounded">
             <Select
               title="stage"
               label="Deal stage"

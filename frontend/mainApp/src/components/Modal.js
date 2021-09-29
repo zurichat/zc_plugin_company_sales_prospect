@@ -42,7 +42,7 @@ export default function Modal({
               <div className="block m-auto h-lgx2 w-full max-w-md p-6 my-8 rounded shadow-2xl overflow-hidden text-left transition-all transform bg-white">
                 <Dialog.Title
                   as="h3"
-                  className="text-3xl font-bold leading-6 capitalize mb-5 text-gray-800 flex justify-between"
+                  className="text-3xl font-bold leading-6 capitalize mb-5 text-gray-700 flex justify-between"
                 >
                   <span>{title}</span>
                   <span
@@ -54,7 +54,7 @@ export default function Modal({
                   </span>
                 </Dialog.Title>
                 <div className="mt-2">
-                  <p className="text-sm text-gray-600">{description}</p>
+                  <p className="text-sm mb-5 capitalize text-gray-600">{description}</p>
                 </div>
                 <div className="capitalize">{children}</div>
               </div>
