@@ -15,5 +15,6 @@ urlpatterns = [
     path("", ProspectsListView.as_view(), name="prospects"),
     path("welcome/", WelcomeView.as_view(), name="welcome_mail"),
     path("update/", ProspectsUpdateView.as_view()),
-    path("delete/", ProspectsDeleteView.as_view())
+    path("delete/<str:search>/", ProspectsDeleteView.as_view())
 ]
+
