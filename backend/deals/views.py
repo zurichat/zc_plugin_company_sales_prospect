@@ -26,10 +26,10 @@ class DealCreateView(APIView):
     def post(self, request, *args, **kwargs):
         # # check authentication
         if not isAuthorized(request):
-            return Response(data={"message":"Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response(data={"message":"Missing Cookie/token header or session expired"}, status=st.HTTP_401_UNAUTHORIZED)
         
         if not isValidOrganisation(ORGANISATION_ID, request):
-            return Response(data={"message":"Invalid/Missing organization id"}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response(data={"message":"Invalid/Missing organization id"}, status=st.HTTP_401_UNAUTHORIZED)
 
         url = "https://api.zuri.chat/data/write"
         data = {
@@ -119,10 +119,10 @@ class DealUpdateView(APIView):
     def put(self, request, id, *args, **kwargs):
         # # check authentication
         if not isAuthorized(request):
-            return Response(data={"message":"Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response(data={"message":"Missing Cookie/token header or session expired"}, status=st.HTTP_401_UNAUTHORIZED)
         
         if not isValidOrganisation(ORGANISATION_ID, request):
-            return Response(data={"message":"Invalid/Missing organization id"}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response(data={"message":"Invalid/Missing organization id"}, status=st.HTTP_401_UNAUTHORIZED)
         
         
         url = "https://api.zuri.chat/data/write"
@@ -170,10 +170,10 @@ class DealsListView(APIView):
     def get(self, request, *args, **kwargs):
         # # check authentication
         if not isAuthorized(request):
-            return Response(data={"message":"Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response(data={"message":"Missing Cookie/token header or session expired"}, status=st.HTTP_401_UNAUTHORIZED)
         
         if not isValidOrganisation(ORGANISATION_ID, request):
-            return Response(data={"message":"Invalid/Missing organization id"}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response(data={"message":"Invalid/Missing organization id"}, status=st.HTTP_401_UNAUTHORIZED)
         
         # centrifugo_post("Deals", {"event": "join", "token": "elijah"})
         url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/deals/{ORGANISATION_ID}"
@@ -202,10 +202,10 @@ class DealsFilterListView(APIView):
     def post(self, request, search, *args, **kwargs):
         # # check authentication
         if not isAuthorized(request):
-            return Response(data={"message":"Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response(data={"message":"Missing Cookie/token header or session expired"}, status=st.HTTP_401_UNAUTHORIZED)
         
         if not isValidOrganisation(ORGANISATION_ID, request):
-            return Response(data={"message":"Invalid/Missing organization id"}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response(data={"message":"Invalid/Missing organization id"}, status=st.HTTP_401_UNAUTHORIZED)
         
 
         url = "https://api.zuri.chat/data/read"
@@ -273,10 +273,10 @@ class DealsDeleteView(APIView):
     def delete(self, request, id):
          # # check authentication
         if not isAuthorized(request):
-            return Response(data={"message":"Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response(data={"message":"Missing Cookie/token header or session expired"}, status=st.HTTP_401_UNAUTHORIZED)
         
         if not isValidOrganisation(ORGANISATION_ID, request):
-            return Response(data={"message":"Invalid/Missing organization id"}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response(data={"message":"Invalid/Missing organization id"}, status=st.HTTP_401_UNAUTHORIZED)
         
         url = "https://api.zuri.chat/data/delete"
         data = {
