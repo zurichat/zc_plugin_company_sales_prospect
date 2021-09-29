@@ -163,7 +163,7 @@ STATICFILES_DIRS = [
 ############### Plugin Details #######################
 PLUGIN_ID = "614105b66173056af01b4cca"
 PLUGIN_NAME = "Company Sales Prospects"
-ORGANISATION_ID = "613a495f59842c7444fb0246"
+ORGANISATION_ID = "6153d9c4a999ef8386e80804"
 DESCRIPTION = "We provide a list of potential clients for your business"
 
 PROSPECTS_COLLECTION_NAME = "prospects"

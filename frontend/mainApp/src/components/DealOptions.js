@@ -2,11 +2,49 @@ import React from "react";
 import { Popover, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { Trash2, Edit, Move, ChevronDown, MoreHorizontal } from "react-feather";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 export default function DealsOptions({
   handleOpenModal,
   handleOpenDeleteModal,
+  id 
 }) {
+ 
+
+
+  handleOpenDeleteModal = (id) => {
+    console.log(id)
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: false,
+      showCloseButton: true,
+      showConfirmButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios.delete(`https://sales.zuri.chat/api/v1/deals/delete/${id}/`).then(
+          (res) => {
+            console.log(res)
+            Swal.fire(
+              'Deleted!',
+              'Your file has been deleted.',
+              'success'
+            )
+          }
+        ).catch(
+          (error)=> {console.log(error)}
+        )
+      }
+    })
+  }
+
+
+
   return (
     <>
       <div>
@@ -49,7 +87,7 @@ export default function DealsOptions({
                     </div>
                     <div
                       className="flex items-center p-3 hover:bg-gray-100 cursor-pointer"
-                      onClick={handleOpenDeleteModal}
+                      onClick={handleOpenDeleteModal.bind(this,id)} 
                     >
                       <Trash2 strokeWidth={1} className="mr-2" /> Delete
                     </div>

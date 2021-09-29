@@ -111,6 +111,8 @@ function Prospects() {
     deal_stage: "",
   });
 
+  const [page, setPage] = useState(1);
+
   const [deal, setDeal] = useState(null);
 
   const [loading, setLoading] = useState(true);
@@ -156,18 +158,30 @@ function Prospects() {
     setOpen4(false);
   };
 
+  const pageForward = () => {
+    setLoading(true);
+    setPage(prospects.pageNum + 1);
+  }
+
+  const pageBackward = () => {
+    setLoading(true);
+    setPage(prospects.pageNum - 1);
+  }
+
   useEffect(() => {
     customAxios
-      .get(prospectsURL)
+      .get(prospectsURL, { params: { page: page } })
       .then((r) => {
-        setProspects(formatProspects(r.data));
+        console.log(r.data.contacts)
+        setProspects((r.data));
+        console.log(prospects);
         setLoading(false);
       })
       .catch((e) => {
         setLoading(false);
-        console.log(e.response);
+        // console.warn("Error fetching prospects!")
       });
-  }, []);
+  }, [prospects, page]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -245,8 +259,8 @@ function Prospects() {
         customAxios
           .get(prospectsURL)
           .then((r) => {
-            customAlert("Contact Deleted Successfully", "success");
-            setProspects(formatPropsects(r.data));
+            customAlert("Contact Deleted Successfully", "success")
+            setProspects(formatProspects(r.data))
           })
           .catch((e) => console.log(e.response));
       })
@@ -285,7 +299,7 @@ function Prospects() {
         open={open}
         closeModal={handleCloseModal}
       >
-        <form className="mt-2" onSubmit={handleSubmit}>
+        <form className="my-auto" onSubmit={handleSubmit}>
           <div>
             <label className="block font-bold text-gray-700">Name</label>
             <Input
@@ -535,7 +549,7 @@ function Prospects() {
         </form>
       </Modal>
 
-      {prospects.length > 0 && !loading ? (
+      {prospects.contacts.length > 0 && !loading ? (
         <div className="mt-4">
           <div className="overflow-x-auto overflow-y-hidden rounded-md">
             <table className="text-left border-gray-100 w-full">
@@ -559,7 +573,7 @@ function Prospects() {
                 </tr>
               </thead>
               <tbody className="bg-white">
-                {prospects.map((prospect, i) => (
+                {prospects.contacts.map((prospect, i) => (
                   <ProspectRow
                     key={i}
                     openEditModal={handleOpenEditModal}
@@ -573,21 +587,19 @@ function Prospects() {
           </div>
 
           {/* Pagination */}
-          <ul className="flex list-none justify-end mt-5">
-            <li className="py-2 px-3">
+          <div className="flex list-none justify-end items-center mt-5">
+            <button onClick={() => pageBackward()} disabled={!prospects.prev}  className="flex items-center py-2 px-3 cursor-pointer border-0 disabled:text-gray-300">
               {" "}
-              <ChevronLeft strokeWidth={1} />{" "}
-            </li>
-            <li className="py-2 px-3">Prev</li>
-            <li className="bg-green-light text-green rounded-sm py-2 px-4">
-              2
-            </li>
-            <li className="py-2 px-3">Next</li>
-            <li className="py-2 px-3">
-              {" "}
-              <ChevronRight strokeWidth={1} />{" "}
-            </li>
-          </ul>
+              <ChevronLeft strokeWidth={1} />{" "} <span className="py-2 px-3">Prev</span>
+            </button>
+            <div className="bg-green-light text-green rounded-sm py-2 px-4">
+              {prospects.pageNum}
+            </div>
+            <button onClick={() => pageForward()} disabled={!prospects.next} className="flex items-center py-2 px-3 cursor-pointer border-0 disabled:text-gray-300">
+              <span className="py-2 px-3">Next</span>{" "}
+                <ChevronRight strokeWidth={1} />{" "} 
+            </button>
+          </div>
         </div>
       ) : (
         <>
