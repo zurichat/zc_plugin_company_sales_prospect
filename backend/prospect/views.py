@@ -10,7 +10,6 @@ from django.core.paginator import Paginator
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
-from rest_framework.pagination import PageNumberPagination
 
 from .serializers import ProspectSerializer
 # changed the import to a single import
@@ -20,11 +19,6 @@ from rest_framework.permissions import AllowAny
 PLUGIN_ID = settings.PLUGIN_ID
 ORGANISATION_ID = settings.ORGANISATION_ID
 # Create your views here.
-
-
-# Custom Pagination Class
-class ProspectsResultPagination(PageNumberPagination):
-    page_size = 20
 
 
 class WelcomeView(APIView):
