@@ -92,32 +92,29 @@ class ProspectsCreateView(APIView):
         # if not isAuthorized(request):
         #     return Response(data={"message":"Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
 
+        serializer = ProspectSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
         url = "https://api.zuri.chat/data/write"
-        name = request.data.get("name")
-        email = request.data.get("email")
-        phone_number = request.data.get("phone_number")
-        deal_stage = request.data.get("deal_stage")
         data = {
             "plugin_id": PLUGIN_ID,
             "organization_id": ORGANISATION_ID,
             "collection_name": "prospects",
             "bulk_write": False,
             "payload": {
-                "name": name,
-                "phone_number": phone_number,
-                "email": email,
-                "deal_stage": deal_stage,
+                "name": serializer.data["name"],
+                "phone_number": serializer.data["phone_number"],
+                "email":  serializer.data["email"],
+                "deal_stage": serializer.data["deal_stage"],
             },
         }
-        # print(data)
         response = requests.request("POST", url, data=json.dumps(data))
         r = response.json()
         print(response.status_code)
         if response.status_code == 201:
             new_prospect = request.data
-            request.data._mutable = True
-            new_prospect["_id"] = r["data"]["object_id"]
-            request.data._mutable = False
+            # request.data._mutable = True
+            # new_prospect["_id"] = r["data"]["object_id"]
+            # request.data._mutable = False
 
             # new_prospect["_id"] = r["data"]["object_id"]
         #     # centrifugo_post(
@@ -128,7 +125,7 @@ class ProspectsCreateView(APIView):
             return Response(data=r, status=status.HTTP_201_CREATED)
         return Response(
             data={"message": "Try again later"},
-            status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            status=response.status_code,
         )
 
 
