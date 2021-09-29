@@ -96,7 +96,7 @@ class ProspectsCreateView(APIView):
         name = request.data.get("name")
         email = request.data.get("email")
         phone_number = request.data.get("phone_number")
-        deal_stage = request.data.get("deal_stage")
+        company = request.data.get("company")
         data = {
             "plugin_id": PLUGIN_ID,
             "organization_id": ORGANISATION_ID,
@@ -106,7 +106,7 @@ class ProspectsCreateView(APIView):
                 "name": name,
                 "phone_number": phone_number,
                 "email": email,
-                "deal_stage": deal_stage,
+                "company": company,
             },
         }
         # print(data)
