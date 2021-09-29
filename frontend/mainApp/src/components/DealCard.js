@@ -11,7 +11,7 @@ const stages = {
   "Proposal": "border-pink"
 }
 
-const DealCard = ({ deal, index,  Delete }) => {
+const DealCard = ({ deal }) => {
 
   const [open, setOpen] = useState(false);
   const handleOpenModal = () => setOpen(true);
