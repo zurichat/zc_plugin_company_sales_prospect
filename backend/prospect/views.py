@@ -65,6 +65,7 @@ def SearchProspects(request, search):
 class ProspectsListView(APIView):
     serializer_class = ProspectSerializer
     queryset = None
+    paginate_by = 20
 
     def get(self, request, *args, **kwargs):
         # # check authentication
@@ -78,7 +79,7 @@ class ProspectsListView(APIView):
             # centrifugo_post("Prospects", {"event": "join", "token": "elijah"})
             # serializer = ProspectSerializer(data=r['data'], many=True)
             # serializer.is_valid(raise_exception=True)
-            paginator = Paginator(r["data"], 20)
+            paginator = Paginator(r["data"], self.paginate_by)
             page_num = request.query_params.get('page', 1)
             page_obj = paginator.get_page(page_num)
             paginated_data = {
@@ -111,7 +112,7 @@ class ProspectsCreateView(APIView):
         name = request.data.get("name")
         email = request.data.get("email")
         phone_number = request.data.get("phone_number")
-        deal_stage = request.data.get("deal_stage")
+        company = request.data.get("company")
         data = {
             "plugin_id": PLUGIN_ID,
             "organization_id": ORGANISATION_ID,
@@ -121,7 +122,7 @@ class ProspectsCreateView(APIView):
                 "name": name,
                 "phone_number": phone_number,
                 "email": email,
-                "deal_stage": deal_stage,
+                "company": company,
             },
         }
         # print(data)
