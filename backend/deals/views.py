@@ -52,9 +52,9 @@ class DealCreateView(APIView):
             if len(liste) == 0:
                 return Response(
                     data={
-                        "message": "prospect id you supplied does not exist, please provide a valid prospect id"
+                        "message": "Prospect ID not found"
                     },
-                    status=st.HTTP_200_OK,
+                    status=st.HTTP_400_BAD_REQUEST,
                 )
         response = requests.request("POST", url, data=json.dumps(data))
         r = response.json()
