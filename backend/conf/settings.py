@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "deals",
     "prospect",
     "onboarding",
+    'email_template',
     # Centrifugo
     # "instant",
     # "cent",
