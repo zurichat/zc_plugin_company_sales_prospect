@@ -9,12 +9,12 @@ export const capitalize = (word) => {
   return word
 };
 
-export const doesProspectExist = (prospects, name) => {
-  return prospects.filter((x) => x.name === name).length > 0;
+export const doesProspectExist = (contacts, name) => {
+  return contacts.filter((x) => x.name === name).length > 0;
 };
 
-export const updateProspects = (prospects, id, newDetails) => {
-  let p = prospects;
+export const updateProspects = (contacts, id, newDetails) => {
+  let p = contacts;
   const prospect = p.find((x) => x.id === id);
   const i = p.indexOf(prospect);
   if (i > 0) {
