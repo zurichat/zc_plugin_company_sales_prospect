@@ -622,7 +622,7 @@ function Prospects() {
                       </th>
                       <th className="px-3 py-4">Email</th>
                       <th className="px-3 py-4">Phone Number</th>
-                      <th className="px-3 py-4">All stages</th>
+                      <th className="px-3 py-4">Company</th>
                       <th className="px-3 py-4"> Actions </th>
                     </tr>
                   </thead>
