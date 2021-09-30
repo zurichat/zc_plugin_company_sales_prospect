@@ -308,7 +308,7 @@ function Prospects() {
     <div className="p-10 w-screen">
       <div className="flex justify-between items-center">
         <h3 className="text-2xl font-bold">Contact</h3>
-        <Button onClick={handleOpenCreateModal}>Create New Contact</Button>
+        <Button onClick={handleOpenCreateModal}>Create New</Button>
       </div>
       {/* CREATE MODAL */}
       <Modal
@@ -346,7 +346,7 @@ function Prospects() {
             />
           </div>
           <div>
-            <label className="block">Company</label>
+            <label className="block font-bold text-gray-700">Company</label>
             <Input
               placeholder="Enter Company"
               onChange={handleChange}
@@ -404,7 +404,7 @@ function Prospects() {
             />
           </div>
           <div>
-            <label className="block">Company</label>
+            <label className="block font-bold text-gray-700">Company</label>
             <Input
               placeholder="Enter Company"
               onChange={handleChange}
@@ -591,14 +591,23 @@ function Prospects() {
 
           {/* Pagination */}
           <div className="flex list-none justify-end items-center mt-5">
-            <button onClick={() => pageBackward()} disabled={!prospects.prev} className="flex items-center py-2 px-3 cursor-pointer border-0 disabled:text-gray-300">
+            <button
+              onClick={() => pageBackward()}
+              disabled={!prospects.prev}
+              className="flex items-center py-2 px-3 cursor-pointer border-0 disabled:text-gray-300"
+            >
               {" "}
-              <ChevronLeft strokeWidth={1} />{" "} <span className="py-2 px-3">Prev</span>
+              <ChevronLeft strokeWidth={1} />{" "}
+              <span className="py-2 px-3">Prev</span>
             </button>
             <div className="bg-green-light text-green rounded-sm py-2 px-4">
               {prospects.pageNum}
             </div>
-            <button onClick={() => pageForward()} disabled={!prospects.next} className="flex items-center py-2 px-3 cursor-pointer border-0 disabled:text-gray-300">
+            <button
+              onClick={() => pageForward()}
+              disabled={!prospects.next}
+              className="flex items-center py-2 px-3 cursor-pointer border-0 disabled:text-gray-300"
+            >
               <span className="py-2 px-3">Next</span>{" "}
               <ChevronRight strokeWidth={1} />{" "}
             </button>
