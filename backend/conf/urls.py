@@ -28,7 +28,7 @@ urlpatterns = [
     path("api/v1/", include("common.urls")),
     path("api/v1/onboarding/", include("onboarding.urls")),
     path("api/v1/deals/", include("deals.urls")),
-    path("api/v1/prospects/", include("prospect.urls")),
+    path("api/v1/email-template/",include("email_template.urls")),
     path("api/v1/api-auth/", include("rest_framework.urls")),
     path('sidebar', SidebarView.as_view(), name='sidebar'),
     # DOCUMENTATION
