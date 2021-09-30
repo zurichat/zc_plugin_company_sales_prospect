@@ -22,7 +22,30 @@ def centrifugo_post(room, data):
     # time.sleep(10)
     return resp.json()
 
-# write data ( collect_name, object_) r
+def isAuthorized(request):
+    try:
+        authorization_content = request.headers['Authorization']
+        url = 'https://api.zuri.chat/auth/verify-token/'
+        headers = {"Authorization":authorization_content}
+        r = requests.request("GET", url=url, headers=headers)
+        print(r.status_code)
+        if r.status_code == 200:
+            return True
+    except:
+        return False
+
+def isValidOrganisation(organisationId, request):
+    try:
+        authorization_content = request.headers['Authorization']
+        url = f"https://api.zuri.chat/organizations/{organisationId}"
+        headers = {"Authorization":authorization_content}
+        r = requests.get(url, headers=headers)
+        print(r.status_code)
+        if r.status_code == 200:
+            return True
+    except:
+        return False
+# write data ( collect_name, objr.ect_) r
 # read data
 # commons/constants.py
 # class ResponseText:

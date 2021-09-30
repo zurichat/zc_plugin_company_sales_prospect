@@ -15,8 +15,8 @@ from .serializers import ProspectSerializer
 # changed the import to a single import
 from common.utils import centrifugo_post
 from rest_framework.permissions import AllowAny
-from prospect.authcheck import isAuthorized
-from prospect.orgcheck import isValidOrganisation
+from common.utils import isAuthorized
+from common.utils import isValidOrganisation
 
 PLUGIN_ID = settings.PLUGIN_ID
 ORGANISATION_ID = settings.ORGANISATION_ID

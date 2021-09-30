@@ -9,41 +9,6 @@ export const capitalize = (word) => {
   return word
 };
 
-export const formatProspects = ({ prospects, pageNum, next, prev }) => {
-  return {
-    prospects: prospects.map((p) => {
-      return {
-        id: p._id,
-        name: p.name,
-        email: p.email,
-        phone: p.phone_number,
-        status: capitalize(p.deal_stage),
-      };
-    }),
-    pageNum, next, prev
-  }
-};
-
-export const formatProspect = (prospect) => {
-  return {
-    id: prospect.id,
-    name: prospect.name,
-    email: prospect.email,
-    phone: prospect.phone_number,
-    status: capitalize(prospect.deal_stage),
-  };
-}
-
-export const formatAPIProspect = (prospect) => {
-  return {
-    id: prospect.id,
-    name: prospect.name,
-    email: prospect.email,
-    phone_number: prospect.phone,
-    deal_stage: capitalize(prospect.status),
-  };
-}
-
 export const doesProspectExist = (prospects, name) => {
   return prospects.filter((x) => x.name === name).length > 0;
 };
@@ -84,12 +49,12 @@ export const customAlert = (message, type = "success" || "warning" || "info" || 
 
 export const dummyProspects = {
   contacts: [
-    { id: "0", name: "Jane Cooper", email: "jane.cooper@example.com", phone: "09093527277", status: "Prospect" },
-    { id: "1", name: "Jane Cooper", email: "jane.cooper@example.com", phone: "09093527277", status: "Closed" },
-    { id: "2", name: "Jane Cooper", email: "jane.cooper@example.com", phone: "09093527277", status: "Negotiation" },
-    { id: "3", name: "Jane Cooper", email: "jane.cooper@example.com", phone: "09093527277", status: "Proposal" },
-    { id: "4", name: "Jane Cooper", email: "jane.cooper@example.com", phone: "09093527277", status: "Negotiation" },
-    { id: "5", name: "Jane Cooper", email: "jane.cooper@example.com", phone: "09093527277", status: "Prospect" }
+    { id: "0", name: "Jane Cooper", email: "jane.cooper@example.com", phone_number: "09093527277", status: "Prospect" },
+    { id: "1", name: "Jane Cooper", email: "jane.cooper@example.com", phone_number: "09093527277", status: "Closed" },
+    { id: "2", name: "Jane Cooper", email: "jane.cooper@example.com", phone_number: "09093527277", status: "Negotiation" },
+    { id: "3", name: "Jane Cooper", email: "jane.cooper@example.com", phone_number: "09093527277", status: "Proposal" },
+    { id: "4", name: "Jane Cooper", email: "jane.cooper@example.com", phone_number: "09093527277", status: "Negotiation" },
+    { id: "5", name: "Jane Cooper", email: "jane.cooper@example.com", phone_number: "09093527277", status: "Prospect" }
   ], pageNum: 1, next: false, prev: false
 }
 

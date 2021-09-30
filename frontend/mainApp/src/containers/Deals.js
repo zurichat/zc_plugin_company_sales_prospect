@@ -6,7 +6,6 @@ import customAxios, { createDealURL, dealsURL } from "../axios";
 
 import FilterDeal from "../components/FilterDeal";
 import FilterDeals from "../components/FilterDeals";
-import FilterButton from "../components/FilterButton";
 import { PluginContext } from "../context/store";
 
 import { Input, Select } from "./Prospects";
@@ -57,8 +56,13 @@ const Deals = () => {
     if (prospects.length <= 0) {
       customAxios
         .get(prospectsURL)
-        .then((r) => {
-          setProspects(formatProspects(r.data));
+        .then(({data}) => {
+          setProspects({
+            contacts: data.contacts,
+            next: data.next,
+            pageNum: data.pageNum,
+            prev: data.prev
+          })
           setLoading(false);
         })
         .catch((e) => {
@@ -153,7 +157,7 @@ const Deals = () => {
             >
               <option>Select a contact</option>
               {prospects.length > 0 && prospects.map((prospect, i) => (
-                <option key={i} value={`${prospect.id}-${prospect.name}`}>{prospect.name}</option>
+                <option key={i} value={`${prospect._id}-${prospect.name}`}>{prospect.name}</option>
               ))}
 
             </Select>
@@ -207,7 +211,7 @@ const Deals = () => {
       </Modal>
 
       <div className="flex gap-2 justify-end">
-        <FilterButton onClick={handleOpenFilterModal}>Filter</FilterButton>
+        <Button outline outlineColor="gray-500" onClick={handleOpenFilterModal}>Filter</Button>
         <Button onClick={handleOpenCreateModal}>Create New</Button>
       </div>
 
