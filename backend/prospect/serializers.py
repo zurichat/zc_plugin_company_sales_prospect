@@ -15,13 +15,6 @@ class ProspectSerializer(serializers.Serializer):
             raise serializers.ValidationError("Name too short")
         return self.name
 
-    def validate_email(self, email):
-        self.email = email
-        regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
-        if not (re.fullmatch(regex, email)):
-            raise serializers.ValidationError("Email not valid")
-        return self.email
-
     def validate_phone_number(self, phone_number):
         self.phone_number = phone_number
         if not phone_number.isdecimal():
