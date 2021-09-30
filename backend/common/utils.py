@@ -26,8 +26,8 @@ def isAuthorized(request):
     try:
         authorization_content = request.headers['Authorization']
         url = 'https://api.zuri.chat/auth/verify-token/'
-        headers = {"Authorization":f'Bearer {authorization_content}'}
-        r = requests.request("GET", url, headers=headers)
+        headers = {"Authorization":authorization_content}
+        r = requests.request("GET", url=url, headers=headers)
         print(r.status_code)
         if r.status_code == 200:
             return True

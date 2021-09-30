@@ -50,7 +50,7 @@ class DealCreateView(APIView):
         prospect = request.data.get("prospect_id")
 
         urlprospect = (
-            f"https://api.zuri.chat/data/read/{PLUGIN_ID}/deals/{ORGANISATION_ID}?_id={prospect}"
+            f"https://api.zuri.chat/data/read/{PLUGIN_ID}/prospects/{ORGANISATION_ID}?_id={prospect}"
         )
         responseprospect = requests.request("GET", urlprospect)
         print(responseprospect.status_code, "here")
