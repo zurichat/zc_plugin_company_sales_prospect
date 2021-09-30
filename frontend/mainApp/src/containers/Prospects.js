@@ -15,7 +15,7 @@ import customAxios, {
 } from "../axios";
 import FileIcon from "../components/svg/FileIcon";
 // import { Link } from 'react-router-dom'
-import { customAlert, doesProspectExist, formatAPIProspect, formatProspect, formatProspects } from "../utils";
+import { customAlert, doesProspectExist } from "../utils";
 import Loader from "../components/svg/Loader.svg";
 
 import { PluginContext } from "../context/store";
@@ -27,7 +27,7 @@ import { PluginContext } from "../context/store";
 //   name: yup.string().required(),
 //   email: yup.string().required(),
 //   phone_number: yup.string().required(),
-//   deal_stage: yup.string().required(),
+//   company: yup.string().required(),
 // });
 // const { register,handleSubmit, formState: { errors }, } = useForm({resolver: yupResolver(schema)});
 
@@ -102,7 +102,7 @@ function Prospects() {
     name: "",
     email: "",
     phone_number: "",
-    deal_stage: "",
+    company: "",
   });
 
   const [page, setPage] = useState(1);
@@ -116,21 +116,21 @@ function Prospects() {
 
   const [open2, setOpen2] = useState(false);
   const handleOpenEditModal = (e, prospect) => {
-    setProspect(formatAPIProspect(prospect));
+    setProspect(prospect);
     setOpen2(true);
   };
 
   const [open3, setOpen3] = useState(false);
   const handleOpenDeleteModal = (e, prospect) => {
-    setProspect(formatAPIProspect(prospect));
+    setProspect(prospect);
     setOpen3(true)
   };
 
   const [open4, setOpen4] = useState(false);
   const handleOpenDealCreateModal = (e, prospect) => {
-    setProspect(formatAPIProspect(prospect));
+    setProspect(prospect);
     const newDeal = {
-      prospect_id: prospect.id,
+      prospect_id: prospect._id,
       name: prospect.name
     }
     setDeal(newDeal)
@@ -144,7 +144,7 @@ function Prospects() {
       name: "",
       email: "",
       phone_number: "",
-      deal_stage: "",
+      company: "",
     })
     setOpen(false);
     setOpen2(false);
@@ -165,19 +165,23 @@ function Prospects() {
   useEffect(() => {
     customAxios
       .get(prospectsURL, {
-        params: { page: page },
-        headers: { Authorization: `Bearer ${sessionStorage.getItem("token")}` }
+        params: { page: page }
       })
-      .then((r) => {
-        // console.log(r.data.contacts)
-        setProspects((r.data));
+      .then(({data}) => {
+        console.log(data.contacts)
+        setProspects({
+          contacts: data.contacts,
+          next: data.next,
+          pageNum: data.pageNum,
+          prev: data.prev
+        })
         setLoading(false);
       })
       .catch((e) => {
         setLoading(false);
         // console.warn("Error fetching prospects!")
       });
-  }, [prospects, page]);
+  }, [page]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -188,7 +192,14 @@ function Prospects() {
         .then((r) => {
           handleCloseModal();
           customAxios.get(prospectsURL)
-            .then(r => setProspects(formatProspects(r.data)))
+            .then(({ data }) => {
+              setProspects({
+                contacts: data.contacts,
+                next: data.next,
+                pageNum: data.pageNum,
+                prev: data.prev
+              })
+            })
             .catch(e => console.log(e.response))
           // const latestProspect = formatProspect(prospect)
           // setProspects([...prospects, latestProspect]);
@@ -206,7 +217,7 @@ function Prospects() {
 
   const handleDealCreate = (e) => {
     e.preventDefault();
-    const dealInfo = { ...deal, prospect_id: prospect.id, name: prospect.name };
+    const dealInfo = { ...deal, prospect_id: prospect._id, name: prospect.name };
     customAxios
       .post(createDealURL, dealInfo)
       .then((r) => {
@@ -223,11 +234,11 @@ function Prospects() {
   const handleUpdate = (e) => {
     e.preventDefault();
     const apiProspect = {
-      object_id: prospect.id,
+      object_id: prospect._id,
       name: prospect.name,
       email: prospect.email,
       phone_number: prospect.phone_number,
-      deal_stage: prospect.deal_stage,
+      company: prospect.company,
     };
     customAxios
       .put(editProspectURL, apiProspect)
@@ -236,7 +247,14 @@ function Prospects() {
         handleCloseModal();
         customAxios
           .get(prospectsURL)
-          .then((r) => setProspects(formatProspects(r.data)))
+          .then(({ data }) => {
+            setProspects({
+              contacts: data.contacts,
+              next: data.next,
+              pageNum: data.pageNum,
+              prev: data.prev
+            })
+          })
           .catch((e) => console.log(e.response));
       })
 
@@ -250,14 +268,19 @@ function Prospects() {
   const handleDelete = (e) => {
     e.preventDefault();
     customAxios
-      .post(`${deleteProspectURL}`, { 'object_id': prospect.id })
+      .post(`${deleteProspectURL}`, { 'object_id': prospect._id })
       .then((r) => {
         handleCloseModal();
         customAxios
           .get(prospectsURL)
-          .then((r) => {
+          .then(({ data }) => {
             customAlert("Contact Deleted Successfully", "success")
-            setProspects(formatProspects(r.data))
+            setProspects({
+              contacts: data.contacts,
+              next: data.next,
+              pageNum: data.pageNum,
+              prev: data.prev
+            })
           })
           .catch((e) => console.log(e.response));
       })
@@ -323,18 +346,12 @@ function Prospects() {
             />
           </div>
           <div>
-            <Select
-              title="stage"
-              label="Deal stage"
-              id="deal_stage"
+            <label className="block">Company</label>
+            <Input
+              placeholder="Enter Company"
               onChange={handleChange}
-            >
-              <option>Select a stage</option>
-              <option>Active</option>
-              <option>Closed</option>
-              <option>Negotiation</option>
-              <option>Prospect</option>
-            </Select>
+              id="company"
+            />
           </div>
 
           <div className="mt-4 flex justify-end">
@@ -382,18 +399,13 @@ function Prospects() {
             />
           </div>
           <div>
-            <Select
-              title="stage"
-              label="Deal stage"
-              id="deal_stage"
-              defaultValue={prospect.deal_stage}
+            <label className="block">Company</label>
+            <Input
+              placeholder="Enter Company"
               onChange={handleChange}
-            >
-              <option>Active</option>
-              <option>Closed</option>
-              <option>Negotiation</option>
-              <option>Prospect</option>
-            </Select>
+              id="company"
+              defaultValue={prospect.company}
+            />
           </div>
           <div className="mt-4 flex justify-end">
             <button type="submit" className="bg-green text-white px-10 py-2">
@@ -433,18 +445,19 @@ function Prospects() {
             <label className="block">Phone Number</label>
             <Input
               placeholder="09093527277"
-              id="phone"
+              id="phone_number"
               value={prospect.phone_number}
               disabled
             />
           </div>
           <div>
-            <Select title="stage" label="Deal stage" value={prospect.deal_stage} disabled>
-              <option>Active</option>
-              <option>Closed</option>
-              <option>Negotiation</option>
-              <option>Prospect</option>
-            </Select>
+            <label className="block">Company</label>
+            <Input
+              placeholder="Enter Company"
+              onChange={handleChange}
+              id="company"
+              defaultValue={prospect.company}
+            />
           </div>
         </div>
 
@@ -541,7 +554,7 @@ function Prospects() {
                   </th>
                   <th className="px-3 py-4">Email</th>
                   <th className="px-3 py-4">Phone Number</th>
-                  <th className="px-3 py-4">Stages</th>
+                  <th className="px-3 py-4">Company</th>
                   <th className="px-3 py-4"> Actions </th>
                 </tr>
               </thead>
@@ -632,7 +645,7 @@ function Prospects() {
                       >
                         Skip
                       </button>
-                      <Button outline className="" onClick={handleOpenCreateModal}>
+                      <Button onClick={handleOpenCreateModal}>
                         Add Contact
                       </Button>
                     </div>
