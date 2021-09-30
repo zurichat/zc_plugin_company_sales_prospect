@@ -1,5 +1,3 @@
-// import { GetUserInfo } from "@zuri/zuri-control";
-// import { GetUserInfo } from "https://zuri.chat/zuri-control.js";
 
 import Swal from "sweetalert2";
 
@@ -11,18 +9,19 @@ export const capitalize = (word) => {
   return word
 };
 
-export const formatProspects = ({prospects, pageNum, next, prev}) => {
-  return { prospects: prospects.map((p) => {
-    return {
-      id: p._id,
-      name: p.name,
-      email: p.email,
-      phone: p.phone_number,
-      status: capitalize(p.deal_stage),
-    };
-  }),
-  pageNum, next, prev
-}
+export const formatProspects = ({ prospects, pageNum, next, prev }) => {
+  return {
+    prospects: prospects.map((p) => {
+      return {
+        id: p._id,
+        name: p.name,
+        email: p.email,
+        phone: p.phone_number,
+        status: capitalize(p.deal_stage),
+      };
+    }),
+    pageNum, next, prev
+  }
 };
 
 export const formatProspect = (prospect) => {
@@ -68,23 +67,30 @@ export const customAlert = (message, type = "success" || "warning" || "info" || 
   });
 }
 
-//Store token in localstorage
-export const token = sessionStorage.getItem("token");
+//Store token in sessionStorage
+// export const token = sessionStorage.getItem("token");
 
-//Store user copy in localstorage
-export const user = JSON.parse(sessionStorage.getItem("user"));
+//Store user copy in sessionStorage
+// export const user = JSON.parse(sessionStorage.getItem("user"));
+
+// Store workspace in localStorage [61459d8e62688da5302acdb1]
+// export const currentWorkspace = JSON.parse(localStorage.getItem("currentWorkspace"));
 
 // export const getUserInfo = async (userID = user.id, token = token) =>
 //   GetUserInfo(userID, token);
 
-// export const getUserInfo = async () =>
-//   GetUserInfo();
+// sessionStorage.setItem("user", "user-json")
+// sessionStorage.setItem("user", "user-json")
 
-export const dummyProspects = { contacts: [
+export const dummyProspects = {
+  contacts: [
     { id: "0", name: "Jane Cooper", email: "jane.cooper@example.com", phone: "09093527277", status: "Prospect" },
     { id: "1", name: "Jane Cooper", email: "jane.cooper@example.com", phone: "09093527277", status: "Closed" },
     { id: "2", name: "Jane Cooper", email: "jane.cooper@example.com", phone: "09093527277", status: "Negotiation" },
     { id: "3", name: "Jane Cooper", email: "jane.cooper@example.com", phone: "09093527277", status: "Proposal" },
     { id: "4", name: "Jane Cooper", email: "jane.cooper@example.com", phone: "09093527277", status: "Negotiation" },
     { id: "5", name: "Jane Cooper", email: "jane.cooper@example.com", phone: "09093527277", status: "Prospect" }
-], pageNum: 1, next: false, prev: false}
+  ], pageNum: 1, next: false, prev: false
+}
+
+export const pluginID = "614105b66173056af01b4cca"

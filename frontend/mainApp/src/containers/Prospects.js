@@ -170,11 +170,13 @@ function Prospects() {
 
   useEffect(() => {
     customAxios
-      .get(prospectsURL, { params: { page: page } })
+      .get(prospectsURL, {
+        params: { page: page },
+        headers: { Authorization: `Bearer ${sessionStorage.getItem("token")}` }
+      })
       .then((r) => {
-        console.log(r.data.contacts)
+        // console.log(r.data.contacts)
         setProspects((r.data));
-        console.log(prospects);
         setLoading(false);
       })
       .catch((e) => {
@@ -191,10 +193,9 @@ function Prospects() {
         .post(createProspectURL, prospect)
         .then((r) => {
           handleCloseModal();
-          customAxios
-            .get(prospectsURL)
-            .then((r) => setProspects(formatProspects(r.data)))
-            .catch((e) => console.log(e.response));
+          customAxios.get(prospectsURL)
+            .then(r => setProspects(formatProspects(r.data)))
+            .catch(e => console.log(e.response))
           // const latestProspect = formatProspect(prospect)
           // setProspects([...prospects, latestProspect]);
           customAlert("Contact Created Successfully", "success");
@@ -588,7 +589,7 @@ function Prospects() {
 
           {/* Pagination */}
           <div className="flex list-none justify-end items-center mt-5">
-            <button onClick={() => pageBackward()} disabled={!prospects.prev}  className="flex items-center py-2 px-3 cursor-pointer border-0 disabled:text-gray-300">
+            <button onClick={() => pageBackward()} disabled={!prospects.prev} className="flex items-center py-2 px-3 cursor-pointer border-0 disabled:text-gray-300">
               {" "}
               <ChevronLeft strokeWidth={1} />{" "} <span className="py-2 px-3">Prev</span>
             </button>
@@ -597,7 +598,7 @@ function Prospects() {
             </div>
             <button onClick={() => pageForward()} disabled={!prospects.next} className="flex items-center py-2 px-3 cursor-pointer border-0 disabled:text-gray-300">
               <span className="py-2 px-3">Next</span>{" "}
-                <ChevronRight strokeWidth={1} />{" "} 
+              <ChevronRight strokeWidth={1} />{" "}
             </button>
           </div>
         </div>
