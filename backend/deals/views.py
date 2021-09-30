@@ -6,8 +6,8 @@ import requests, json
 from rest_framework.response import Response
 from rest_framework import status as st
 from common.utils import centrifugo_post  # changed the import to a single import
-from prospect.authcheck import isAuthorized
-from prospect.orgcheck import isValidOrganisation
+from common.utils import isAuthorized
+from common.utils import isValidOrganisation
 
 
 PLUGIN_ID = settings.PLUGIN_ID
@@ -179,11 +179,11 @@ class DealsListView(APIView):
         url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/deals/{ORGANISATION_ID}"
         response = requests.request("GET", url)
         r = response.json()
-        print(response.status_code)
-        print(response)  # new
         if response.status_code == 200:
             # serializer = DealSerializer(data=r['data'], many=True)
             # serializer.is_valid(raise_exception=True)
+            if r.get("data") == None:
+                r['data'] = []
             return Response(data=r["data"], status=st.HTTP_200_OK)
         return Response(
             data={"message": "Try again later"},
