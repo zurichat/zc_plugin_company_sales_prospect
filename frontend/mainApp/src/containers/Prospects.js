@@ -185,7 +185,7 @@ function Prospects() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const isProspect = doesProspectExist(prospects, prospect.name);
+    const isProspect = doesProspectExist(prospects.contacts, prospect.name);
     if (!isProspect) {
       customAxios
         .post(createProspectURL, prospect)
