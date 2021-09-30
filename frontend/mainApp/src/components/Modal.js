@@ -54,7 +54,7 @@ export default function Modal({
                   </span>
                 </Dialog.Title>
                 <div className="mt-2">
-                  <p className="text-sm mb-5 capitalize text-gray-600">{description}</p>
+                  <p className="text-sm mb-5 text-gray-600">{description}</p>
                 </div>
                 <div className="capitalize">{children}</div>
               </div>
