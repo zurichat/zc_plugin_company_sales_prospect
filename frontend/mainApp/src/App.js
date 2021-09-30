@@ -3,17 +3,15 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Prospects from "./containers/Prospects";
 // import Test from "./containers/Test";
 import Deals from "./containers/Deals";
-import SubHeader from "./components/SubHeader";
-import MobileHeader from "./components/MobileHeader";
 import { PluginProvider } from "./context/store";
+import PluginHeader from "./components/PluginHeader";
 
 function App() {
   return (
     <PluginProvider>
       <Router basename="/sales">
         <div className="App font-lato" >
-          <SubHeader />
-          <MobileHeader />
+          <PluginHeader/>
           <Switch>
             <Route exact path="/" component={Prospects} />
             <Route exact path="/prospects" component={Prospects} />
