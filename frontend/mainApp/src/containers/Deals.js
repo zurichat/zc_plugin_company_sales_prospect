@@ -8,7 +8,6 @@ import FilterDeal from "../components/FilterDeal";
 import FilterDeals from "../components/FilterDeals";
 import FilterButton from "../components/FilterButton";
 import { PluginContext } from "../context/store";
-import axios from "axios";
 
 import { Input, Select } from "./Prospects";
 import { customAlert } from "../utils";
@@ -43,7 +42,7 @@ const Deals = () => {
 
   useEffect(() => {
     customAxios
-      .get(dealsURL)
+      .get(dealsURL, {headers:{Authorization: `Bearer ${sessionStorage.getItem("token")}`}})
       .then((r) => {
         console.log(r.data);
 
@@ -309,35 +308,15 @@ const Deals = () => {
             </div>
           ) : (
             <div className="mt-4">
-              <div className="overflow-x-auto overflow-y-hidden rounded-md">
-                <table className="text-left border-gray-100 w-full">
-                  <thead className="border-b cursor-pointer">
-                    <tr>
-                      <th className="px-3 py-4 flex items-center">
-                        <input
-                          className="mr-4"
-                          type="checkbox"
-                          name=""
-                          id="all"
-                        />
-                        <label htmlFor="all">Name</label>
-                      </th>
-                      <th className="px-3 py-4">Email</th>
-                      <th className="px-3 py-4">Phone Number</th>
-                      <th className="px-3 py-4">All stages</th>
-                      <th className="px-3 py-4"> Actions </th>
-                    </tr>
-                  </thead>
-                </table>
                 <div className="flex w-100 items-center justify-center flex-col text-center pt-32">
                   <div className="shadow-lg w-96 justify-center flex p-10 flex-col items-center">
                     <FileIcon />
                     <p className="font-bold text-xl mt-5">
-                      You have no contact yet!
+                      You have no deal yet!
                     </p>
                     <p className="max-w-sm py-3 flex-wrap text-gray-400">
-                      Keep track of business transactions with all your contacts
-                      in an organised manner. Quickly add a contact to get
+                      Keep track of business transactions with all your deals
+                      in an organised manner. Quickly add a deal to get
                       started.
                     </p>
                     <div className="flex">
@@ -354,7 +333,6 @@ const Deals = () => {
                   </div>
                 </div>
               </div>
-            </div>
           )}
         </>}
     </div>

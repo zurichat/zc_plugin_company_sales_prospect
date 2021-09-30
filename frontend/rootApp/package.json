@@ -9,7 +9,8 @@
 
     "build": "concurrently yarn:build:*",
     "build:webpack": "webpack --mode=production",
-    "relocate":"yarn build && rm -rf ../../backend/build/root && mv dist ../../backend/build/root"
+    "relocate":"yarn build && rm -rf ../../backend/build/root && mv dist ../../backend/build/root",
+    "run-main": "cd ../mainApp && yarn start"
   },
   "devDependencies": {
     "@babel/core": "^7.15.0",
