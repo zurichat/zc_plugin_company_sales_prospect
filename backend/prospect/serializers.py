@@ -1,4 +1,3 @@
-from typing_extensions import required
 from rest_framework import serializers
 
 
