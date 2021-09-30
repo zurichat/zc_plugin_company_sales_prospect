@@ -16,15 +16,15 @@ export const PluginProvider = ({ children }) => {
     const [deals, setDeals] = useState([])
 
     const [inRoom, setInRoom] = useState(false);
-    const [token, setToken] = useState(null);
-    const [currentWorkspace, setCurrentWorkspace] = useState(null);
+    // const [token, setToken] = useState(null);
+    // const [currentWorkspace, setCurrentWorkspace] = useState(null);
 
     useEffect(() => {
         GetUserInfo()
             .then(data => {
                 console.log("getUserInfo >>>", data);
-                setCurrentWorkspace(data.currentWorkspace)
-                setToken(data.token)
+                // setCurrentWorkspace(data.currentWorkspace)
+                // setToken(data.token)
             })
 
         // Prospects listener
