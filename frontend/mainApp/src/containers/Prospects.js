@@ -207,7 +207,7 @@ function Prospects() {
         })
         .catch((e) => {
           console.log(e);
-          customAlert("Oops, something went wrong", "error")
+          customAlert("Error Creating Contact", "error")
         });
     } else {
       alert("Prospect already exists");
@@ -332,6 +332,7 @@ function Prospects() {
             <label className="block">Email</label>
             <Input
               placeholder="Enter Email"
+              type="email"
               onChange={handleChange}
               id="email"
             />
