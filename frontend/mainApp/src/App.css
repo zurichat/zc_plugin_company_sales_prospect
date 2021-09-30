@@ -174,3 +174,7 @@ input[type="checkbox"]:checked:after {
 .swal2-styled.swal2-deny {
     display: block !important;
 }
+
+.swal2-actions{
+    display: none !important;
+}
