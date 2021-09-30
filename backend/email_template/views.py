@@ -4,7 +4,7 @@ from django.conf import settings
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .serializers import EmailSerializer
+from .serializers import EmailSerializer, EmailUpdateSerializer
 from common.utils import isAuthorized
 from common.utils import isValidOrganisation
 
@@ -21,11 +21,11 @@ class EmailTemplateCreateView(APIView):
 
     def post(self, request, *args, **kwargs):
         # check if user is authenticated
-        if not isAuthorized(request):
-            return Response(data={"message":"Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
+        # if not isAuthorized(request):
+        #     return Response(data={"message":"Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
 
-        if not isValidOrganisation(ORGANISATION_ID, request):
-            return Response(data={"message":"Invalid/Missing organization id"}, status=status.HTTP_401_UNAUTHORIZED)
+        # if not isValidOrganisation(ORGANISATION_ID, request):
+        #     return Response(data={"message":"Invalid/Missing organization id"}, status=status.HTTP_401_UNAUTHORIZED)
 
         serializer = EmailSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -64,11 +64,11 @@ class EmailTemplateListView(APIView):
 
     def get(self, request, *args, **kwargs):
         # check if user is authenticated        
-        if not isAuthorized(request):
-            return Response(data={"message":"Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
+        # if not isAuthorized(request):
+        #     return Response(data={"message":"Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
 
-        if not isValidOrganisation(ORGANISATION_ID, request):
-            return Response(data={"message":"Invalid/Missing organization id"}, status=status.HTTP_401_UNAUTHORIZED)
+        # if not isValidOrganisation(ORGANISATION_ID, request):
+        #     return Response(data={"message":"Invalid/Missing organization id"}, status=status.HTTP_401_UNAUTHORIZED)
 
         url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/email_template/{ORGANISATION_ID}"
         response = requests.request("GET", url)
@@ -83,19 +83,19 @@ class EmailTemplateUpdateView(APIView):
     """
     update created templates
     """
-    serializer_class = EmailSerializer
+    serializer_class = EmailUpdateSerializer
     queryset = None
 
     def put(self, request, template_id, *args, **kwargs):
         # check if user is authenticated        
-        if not isAuthorized(request):
-            return Response(data={"message":"Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
+        # if not isAuthorized(request):
+        #     return Response(data={"message":"Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
 
-        if not isValidOrganisation(ORGANISATION_ID, request):
-            return Response(data={"message":"Invalid/Missing organization id"}, status=status.HTTP_401_UNAUTHORIZED)      
+        # if not isValidOrganisation(ORGANISATION_ID, request):
+        #     return Response(data={"message":"Invalid/Missing organization id"}, status=status.HTTP_401_UNAUTHORIZED)      
 
         url = "https://api.zuri.chat/data/write"
-        serializer = EmailSerializer(data=request.data)
+        serializer = EmailUpdateSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
         # object_id = serializer.data.get("object_id")
@@ -125,11 +125,11 @@ class EmailTemplateDeleteView(APIView):
     """
     def delete(self, request, template_id, *args, **kwargs):
         # check if user is authenticated
-        if not isAuthorized(request):
-            return Response(data={"message":"Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
+        # if not isAuthorized(request):
+        #     return Response(data={"message":"Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
 
-        if not isValidOrganisation(ORGANISATION_ID, request):
-            return Response(data={"message":"Invalid/Missing organization id"}, status=status.HTTP_401_UNAUTHORIZED)
+        # if not isValidOrganisation(ORGANISATION_ID, request):
+        #     return Response(data={"message":"Invalid/Missing organization id"}, status=status.HTTP_401_UNAUTHORIZED)
 
         url = "https://api.zuri.chat/data/delete"
         data = {
