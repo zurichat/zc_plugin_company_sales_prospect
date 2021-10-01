@@ -7,6 +7,11 @@ CENTRIFUGO_LIVE_ENDPOINT = settings.CENTRIFUGO_LIVE_ENDPOINT
 API_KEY = settings.API_KEY
 CENTRIFUGO_DEBUG_ENDPOINT = settings.CENTRIFUGO_DEBUG_ENDPOINT
 
+PLUGIN_ID = settings.PLUGIN_ID
+ORGANISATION_ID = settings.ORGANISATION_ID
+
+from dataclasses import dataclass
+
 def centrifugo_post(room, data):
     command = {
         "method": "publish",
@@ -45,6 +50,58 @@ def isValidOrganisation(organisationId, request):
             return True
     except:
         return False
+
+@dataclass
+class CustomRequest:
+    @staticmethod
+    def get(org_id, collection_name, params=None):
+        url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/{collection_name}/{org_id}"
+        response = requests.get(url)
+        r = response.json()
+        if response.status_code == 200:
+            return response.json()
+
+    @staticmethod
+    def post(payload):
+        url = f"https://api.zuri.chat/data/write"
+        data = {
+            "plugin_id": PLUGIN_ID,
+            "organization_id": ORGANISATION_ID,
+            "collection_name": "prospects",
+            "bulk_write": False,
+            "payload": payload,
+        }
+        response = requests.request("POST", url, data=json.dumps(data))
+
+    @staticmethod
+    def put(payload):
+        url = f"https://api.zuri.chat/data/write"
+        data = {
+            "plugin_id": PLUGIN_ID,
+            "organization_id": ORGANISATION_ID,
+            "collection_name": "prospects",
+            "bulk_write": False,
+            "payload": payload,
+        }
+        response = requests.request("PUT", url, data=json.dumps(data))
+        r = response.json()
+
+    @staticmethod
+    def delete(payload):
+        url = f"https://api.zuri.chat/data/delete"
+        data = {
+            "plugin_id": PLUGIN_ID,
+            "organization_id": ORGANISATION_ID,
+            "collection_name": "prospects",
+            "bulk_write": False,
+            "payload": payload,
+        }
+        response = requests.request("DELETE", url, data=json.dumps(data))
+        r = response.json()
+
+
+
+
 # write data ( collect_name, objr.ect_) r
 # read data
 # commons/constants.py

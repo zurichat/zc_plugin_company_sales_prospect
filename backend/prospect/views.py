@@ -13,7 +13,7 @@ from rest_framework import status
 
 from .serializers import ProspectSerializer
 # changed the import to a single import
-from common.utils import centrifugo_post
+from common.utils import centrifugo_post, CustomRequest
 from rest_framework.permissions import AllowAny
 from common.utils import isAuthorized
 from common.utils import isValidOrganisation
@@ -71,7 +71,7 @@ class ProspectsListView(APIView):
     queryset = None
     paginate_by = 20
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request, org_id):
         # # check authentication
         if not isAuthorized(request):
             return Response(data={"message":"Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
@@ -80,10 +80,12 @@ class ProspectsListView(APIView):
             return Response(data={"message":"Invalid/Missing organization id"}, status=status.HTTP_401_UNAUTHORIZED)
         
 
-        url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/prospects/{ORGANISATION_ID}"
-        response = requests.request("GET", url)
+        # url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/prospects/{ORGANISATION_ID}"
+        # response = requests.request("GET", url)
+        data = {}
+        response = CustomRequest.get(org_id, 'prospects', data) or []
         if response.status_code == 200:
-            r = response.json()
+            return response.json()['data']
             # centrifugo_post("Prospects", {"event": "join", "token": "elijah"})
             # serializer = ProspectSerializer(data=r['data'], many=True)
             # serializer.is_valid(raise_exception=True)
@@ -96,7 +98,7 @@ class ProspectsListView(APIView):
                 "next": page_obj.has_next(),
                 "prev": page_obj.has_previous(),
             }
-            return Response(data=paginated_data, status=status.HTTP_200_OK)
+            # return Response(data=paginated_data, status=status.HTTP_200_OK)
         return Response(
             data={"message": "Try again later"},
             status=status.HTTP_500_INTERNAL_SERVER_ERROR,
