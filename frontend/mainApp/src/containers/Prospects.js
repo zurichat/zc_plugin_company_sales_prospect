@@ -19,6 +19,7 @@ import { customAlert, doesProspectExist } from "../utils";
 import Loader from "../components/svg/Loader.svg";
 
 import { PluginContext } from "../context/store";
+import TemplateItem from "../pages/TemplateItem";
 // import { useForm } from "react-hook-form";
 // import { yupResolver } from '@hookform/resolvers/yup';
 // import * as yup from "yup";
@@ -60,7 +61,7 @@ export const Input = ({
       />
     </div>
   );
-}
+};
 
 export const Select = ({
   id,
@@ -70,7 +71,7 @@ export const Select = ({
   disabled,
   onChange,
   value,
-  defaultValue
+  defaultValue,
 }) => {
   return (
     <div className="mb-6" id={title}>
@@ -92,10 +93,10 @@ export const Select = ({
       </select>
     </div>
   );
-}
+};
 
 function Prospects() {
-  const { prospects, setProspects } = useContext(PluginContext)
+  const { prospects, setProspects } = useContext(PluginContext);
 
   const [prospect, setProspect] = useState({
     id: "",
@@ -123,7 +124,7 @@ function Prospects() {
   const [open3, setOpen3] = useState(false);
   const handleOpenDeleteModal = (e, prospect) => {
     setProspect(prospect);
-    setOpen3(true)
+    setOpen3(true);
   };
 
   const [open4, setOpen4] = useState(false);
@@ -131,21 +132,21 @@ function Prospects() {
     setProspect(prospect);
     const newDeal = {
       prospect_id: prospect._id,
-      name: prospect.name
-    }
-    setDeal(newDeal)
+      name: prospect.name,
+    };
+    setDeal(newDeal);
     setOpen4(true);
   };
 
   const handleCloseModal = () => {
-    setDeal(null)
+    setDeal(null);
     setProspect({
       id: "",
       name: "",
       email: "",
       phone_number: "",
       company: "",
-    })
+    });
     setOpen(false);
     setOpen2(false);
     setOpen3(false);
@@ -155,26 +156,26 @@ function Prospects() {
   const pageForward = () => {
     setLoading(true);
     setPage(prospects.pageNum + 1);
-  }
+  };
 
   const pageBackward = () => {
     setLoading(true);
     setPage(prospects.pageNum - 1);
-  }
+  };
 
   useEffect(() => {
     customAxios
       .get(prospectsURL, {
-        params: { page: page }
+        params: { page: page },
       })
-      .then(({data}) => {
-        console.log(data.contacts)
+      .then(({ data }) => {
+        console.log(data.contacts);
         setProspects({
           contacts: data.contacts,
           next: data.next,
           pageNum: data.pageNum,
-          prev: data.prev
-        })
+          prev: data.prev,
+        });
         setLoading(false);
       })
       .catch((e) => {
@@ -191,43 +192,47 @@ function Prospects() {
         .post(createProspectURL, prospect)
         .then((r) => {
           handleCloseModal();
-          customAxios.get(prospectsURL)
+          customAxios
+            .get(prospectsURL)
             .then(({ data }) => {
               setProspects({
                 contacts: data.contacts,
                 next: data.next,
                 pageNum: data.pageNum,
-                prev: data.prev
-              })
+                prev: data.prev,
+              });
             })
-            .catch(e => console.log(e.response))
+            .catch((e) => console.log(e.response));
           // const latestProspect = formatProspect(prospect)
           // setProspects([...prospects, latestProspect]);
-          customAlert("Contact Created Successfully", "success")
+          customAlert("Contact Created Successfully", "success");
         })
         .catch((e) => {
           console.log(e);
-          customAlert("Error Creating Contact", "error")
+          customAlert("Error Creating Contact", "error");
         });
     } else {
       alert("Prospect already exists");
     }
   };
 
-
   const handleDealCreate = (e) => {
     e.preventDefault();
-    const dealInfo = { ...deal, prospect_id: prospect._id, name: prospect.name };
+    const dealInfo = {
+      ...deal,
+      prospect_id: prospect._id,
+      name: prospect.name,
+    };
     customAxios
       .post(createDealURL, dealInfo)
       .then((r) => {
         handleCloseModal();
-        customAlert("Deal created successfully", "success")
+        customAlert("Deal created successfully", "success");
         // history.push("/deals");
       })
       .catch((e) => {
         console.log(e);
-        customAlert("Oops, something went wrong", "error")
+        customAlert("Oops, something went wrong", "error");
       });
   };
 
@@ -243,7 +248,7 @@ function Prospects() {
     customAxios
       .put(editProspectURL, apiProspect)
       .then((r) => {
-        customAlert("Contact Edited Successfully", "success")
+        customAlert("Contact Edited Successfully", "success");
         handleCloseModal();
         customAxios
           .get(prospectsURL)
@@ -252,43 +257,42 @@ function Prospects() {
               contacts: data.contacts,
               next: data.next,
               pageNum: data.pageNum,
-              prev: data.prev
-            })
+              prev: data.prev,
+            });
           })
           .catch((e) => console.log(e.response));
       })
 
       .catch((e) => {
-        console.log(e)
-        customAlert("Oops, something went wrong", "error")
-
+        console.log(e);
+        customAlert("Oops, something went wrong", "error");
       });
   };
 
   const handleDelete = (e) => {
     e.preventDefault();
     customAxios
-      .post(`${deleteProspectURL}`, { 'object_id': prospect._id })
+      .post(`${deleteProspectURL}`, { object_id: prospect._id })
       .then((r) => {
         handleCloseModal();
         customAxios
           .get(prospectsURL)
           .then(({ data }) => {
-            customAlert("Contact Deleted Successfully", "success")
+            customAlert("Contact Deleted Successfully", "success");
             setProspects({
               contacts: data.contacts,
               next: data.next,
               pageNum: data.pageNum,
-              prev: data.prev
-            })
+              prev: data.prev,
+            });
           })
           .catch((e) => console.log(e.response));
       })
       // .catch(e => console.log(e))
 
       .catch((e) => {
-        console.log(e)
-        customAlert("Oops, something went wrong", "error")
+        console.log(e);
+        customAlert("Oops, something went wrong", "error");
       });
   };
 
@@ -362,7 +366,6 @@ function Prospects() {
           </div>
         </form>
       </Modal>
-
       {/* EDIT MODAL */}
       <Modal
         title="Edit Contact"
@@ -415,7 +418,6 @@ function Prospects() {
           </div>
         </form>
       </Modal>
-
       {/* DELETE MODAL */}
       <Modal
         title="Delete Prospect"
@@ -479,7 +481,6 @@ function Prospects() {
           </button>
         </div>
       </Modal>
-
       {/* CREATE DEAL MODAL */}
       <Modal
         title="Create a deal"
@@ -540,7 +541,6 @@ function Prospects() {
           </div>
         </form>
       </Modal>
-
       {prospects.contacts.length > 0 && !loading ? (
         <div className="mt-4">
           <div className="overflow-x-auto overflow-y-hidden rounded-md">
@@ -549,7 +549,12 @@ function Prospects() {
                 <tr>
                   <th className="px-3 py-4">
                     <span className="flex items-center">
-                      <input className="mr-4" type="checkbox" name="" id="all" />
+                      <input
+                        className="mr-4"
+                        type="checkbox"
+                        name=""
+                        id="all"
+                      />
                       <label htmlFor="all">Name</label>
                     </span>
                   </th>
@@ -575,14 +580,23 @@ function Prospects() {
 
           {/* Pagination */}
           <div className="flex list-none justify-end items-center mt-5">
-            <button onClick={() => pageBackward()} disabled={!prospects.prev} className="flex items-center py-2 px-3 cursor-pointer border-0 disabled:text-gray-300">
+            <button
+              onClick={() => pageBackward()}
+              disabled={!prospects.prev}
+              className="flex items-center py-2 px-3 cursor-pointer border-0 disabled:text-gray-300"
+            >
               {" "}
-              <ChevronLeft strokeWidth={1} />{" "} <span className="py-2 px-3">Prev</span>
+              <ChevronLeft strokeWidth={1} />{" "}
+              <span className="py-2 px-3">Prev</span>
             </button>
             <div className="bg-green-light text-green rounded-sm py-2 px-4">
               {prospects.pageNum}
             </div>
-            <button onClick={() => pageForward()} disabled={!prospects.next} className="flex items-center py-2 px-3 cursor-pointer border-0 disabled:text-gray-300">
+            <button
+              onClick={() => pageForward()}
+              disabled={!prospects.next}
+              className="flex items-center py-2 px-3 cursor-pointer border-0 disabled:text-gray-300"
+            >
               <span className="py-2 px-3">Next</span>{" "}
               <ChevronRight strokeWidth={1} />{" "}
             </button>
@@ -657,6 +671,7 @@ function Prospects() {
           )}
         </>
       )}
+      // <TemplateItem />
     </div>
   );
 }
