@@ -217,8 +217,6 @@ class ReArrangeDeals(APIView):
         }
         response = requests.put(url, data=json.dumps(data))
         r = response.json()
-        print(response.status_code)
-        print(r)
         if response.status_code >= 200 and response.status_code < 300:
             # centrifugo_post(
             #     "Deals",
