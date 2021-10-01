@@ -20,6 +20,7 @@ export const leaveRoomURL = `${API_ENDPOINT}/leave-room/`;
 
 const customAxios = axios.create({
   baseURL: API_ENDPOINT,
+  headers: { Authorization: `Bearer ${sessionStorage.getItem("token")}` }
 });
 
 export default customAxios;

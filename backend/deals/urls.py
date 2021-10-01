@@ -6,13 +6,15 @@ from deals.views import (
     DealsDeleteView,
     # DealsStageListView,
     DealsFilterListView,
+    ReArrangeDeals
 )
 
 urlpatterns = [
     path("create/", DealCreateView.as_view()),
-    path("update/<str:id>/", DealUpdateView.as_view()),
+    path("update/", DealUpdateView.as_view()),
     path("", DealsListView.as_view()),
-    path("delete/<str:id>/", DealsDeleteView.as_view()),
+    path("re-arrange/", ReArrangeDeals.as_view()),
+    path("delete/", DealsDeleteView.as_view()),
     # path("stage/", DealsStageListView.as_view()),
-    path("filter/<str:search>/", DealsFilterListView.as_view()),
+    path("filter/", DealsFilterListView.as_view()),
 ]

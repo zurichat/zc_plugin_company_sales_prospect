@@ -31,9 +31,9 @@ function ProspectRow({
       </td>
 
       <td className="p-3 text-sm">{prospect.email}</td>
-      <td className="p-3 text-sm">{prospect.phone}</td>
+      <td className="p-3 text-sm">{prospect.phone_number}</td>
 
-      <td className="p-3 text-sm"> {prospect.status}</td>
+      <td className="p-3 text-sm"> {prospect.company}</td>
 
       <td className="p-3 text-sm font-medium">
         <span className="flex items-center">

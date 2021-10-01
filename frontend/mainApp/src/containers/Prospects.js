@@ -15,7 +15,7 @@ import customAxios, {
 } from "../axios";
 import FileIcon from "../components/svg/FileIcon";
 // import { Link } from 'react-router-dom'
-import { customAlert, doesProspectExist, formatAPIProspect, formatProspect, formatProspects } from "../utils";
+import { customAlert, doesProspectExist } from "../utils";
 import Loader from "../components/svg/Loader.svg";
 
 import { PluginContext } from "../context/store";
@@ -27,7 +27,7 @@ import { PluginContext } from "../context/store";
 //   name: yup.string().required(),
 //   email: yup.string().required(),
 //   phone_number: yup.string().required(),
-//   deal_stage: yup.string().required(),
+//   company: yup.string().required(),
 // });
 // const { register,handleSubmit, formState: { errors }, } = useForm({resolver: yupResolver(schema)});
 
@@ -102,8 +102,10 @@ function Prospects() {
     name: "",
     email: "",
     phone_number: "",
-    deal_stage: "",
+    company: "",
   });
+
+  const [page, setPage] = useState(1);
 
   const [deal, setDeal] = useState(null);
 
@@ -114,21 +116,21 @@ function Prospects() {
 
   const [open2, setOpen2] = useState(false);
   const handleOpenEditModal = (e, prospect) => {
-    setProspect(formatAPIProspect(prospect));
+    setProspect(prospect);
     setOpen2(true);
   };
 
   const [open3, setOpen3] = useState(false);
   const handleOpenDeleteModal = (e, prospect) => {
-    setProspect(formatAPIProspect(prospect));
+    setProspect(prospect);
     setOpen3(true)
   };
 
   const [open4, setOpen4] = useState(false);
   const handleOpenDealCreateModal = (e, prospect) => {
-    setProspect(formatAPIProspect(prospect));
+    setProspect(prospect);
     const newDeal = {
-      prospect_id: prospect.id,
+      prospect_id: prospect._id,
       name: prospect.name
     }
     setDeal(newDeal)
@@ -142,7 +144,7 @@ function Prospects() {
       name: "",
       email: "",
       phone_number: "",
-      deal_stage: "",
+      company: "",
     })
     setOpen(false);
     setOpen2(false);
@@ -150,37 +152,62 @@ function Prospects() {
     setOpen4(false);
   };
 
+  const pageForward = () => {
+    setLoading(true);
+    setPage(prospects.pageNum + 1);
+  }
+
+  const pageBackward = () => {
+    setLoading(true);
+    setPage(prospects.pageNum - 1);
+  }
+
   useEffect(() => {
     customAxios
-      .get(prospectsURL)
-      .then((r) => {
-        setProspects(formatProspects(r.data));
+      .get(prospectsURL, {
+        params: { page: page }
+      })
+      .then(({data}) => {
+        console.log(data.contacts)
+        setProspects({
+          contacts: data.contacts,
+          next: data.next,
+          pageNum: data.pageNum,
+          prev: data.prev
+        })
         setLoading(false);
       })
       .catch((e) => {
         setLoading(false);
-        console.log(e.response);
+        // console.warn("Error fetching prospects!")
       });
-  }, []);
+  }, [page]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const isProspect = doesProspectExist(prospects, prospect.name);
+    const isProspect = doesProspectExist(prospects.contacts, prospect.name);
     if (!isProspect) {
       customAxios
         .post(createProspectURL, prospect)
         .then((r) => {
           handleCloseModal();
           customAxios.get(prospectsURL)
-              .then(r => setProspects(formatProspects(r.data)))
-              .catch(e => console.log(e.response))
+            .then(({ data }) => {
+              setProspects({
+                contacts: data.contacts,
+                next: data.next,
+                pageNum: data.pageNum,
+                prev: data.prev
+              })
+            })
+            .catch(e => console.log(e.response))
           // const latestProspect = formatProspect(prospect)
           // setProspects([...prospects, latestProspect]);
           customAlert("Contact Created Successfully", "success")
         })
         .catch((e) => {
           console.log(e);
-          customAlert("Oops, something went wrong", "error")
+          customAlert("Error Creating Contact", "error")
         });
     } else {
       alert("Prospect already exists");
@@ -190,7 +217,7 @@ function Prospects() {
 
   const handleDealCreate = (e) => {
     e.preventDefault();
-    const dealInfo = { ...deal, prospect_id: prospect.id, name: prospect.name };
+    const dealInfo = { ...deal, prospect_id: prospect._id, name: prospect.name };
     customAxios
       .post(createDealURL, dealInfo)
       .then((r) => {
@@ -207,11 +234,11 @@ function Prospects() {
   const handleUpdate = (e) => {
     e.preventDefault();
     const apiProspect = {
-      object_id: prospect.id,
+      object_id: prospect._id,
       name: prospect.name,
       email: prospect.email,
       phone_number: prospect.phone_number,
-      deal_stage: prospect.deal_stage,
+      company: prospect.company,
     };
     customAxios
       .put(editProspectURL, apiProspect)
@@ -220,7 +247,14 @@ function Prospects() {
         handleCloseModal();
         customAxios
           .get(prospectsURL)
-          .then((r) => setProspects(formatProspects(r.data)))
+          .then(({ data }) => {
+            setProspects({
+              contacts: data.contacts,
+              next: data.next,
+              pageNum: data.pageNum,
+              prev: data.prev
+            })
+          })
           .catch((e) => console.log(e.response));
       })
 
@@ -234,14 +268,19 @@ function Prospects() {
   const handleDelete = (e) => {
     e.preventDefault();
     customAxios
-      .post(`${deleteProspectURL}`, { 'object_id': prospect.id })
+      .post(`${deleteProspectURL}`, { 'object_id': prospect._id })
       .then((r) => {
         handleCloseModal();
         customAxios
           .get(prospectsURL)
-          .then((r) => {
+          .then(({ data }) => {
             customAlert("Contact Deleted Successfully", "success")
-            setProspects(formatPropsects(r.data))
+            setProspects({
+              contacts: data.contacts,
+              next: data.next,
+              pageNum: data.pageNum,
+              prev: data.prev
+            })
           })
           .catch((e) => console.log(e.response));
       })
@@ -280,7 +319,7 @@ function Prospects() {
         open={open}
         closeModal={handleCloseModal}
       >
-        <form className="mt-2" onSubmit={handleSubmit}>
+        <form className="my-auto" onSubmit={handleSubmit}>
           <div>
             <label className="block">Name</label>
             <Input
@@ -293,6 +332,7 @@ function Prospects() {
             <label className="block">Email</label>
             <Input
               placeholder="Enter Email"
+              type="email"
               onChange={handleChange}
               id="email"
             />
@@ -307,18 +347,12 @@ function Prospects() {
             />
           </div>
           <div>
-            <Select
-              title="stage"
-              label="Deal stage"
-              id="deal_stage"
+            <label className="block">Company</label>
+            <Input
+              placeholder="Enter Company"
               onChange={handleChange}
-            >
-              <option>Select a stage</option>
-              <option>Active</option>
-              <option>Closed</option>
-              <option>Negotiation</option>
-              <option>Prospect</option>
-            </Select>
+              id="company"
+            />
           </div>
 
           <div className="mt-4 flex justify-end">
@@ -366,18 +400,13 @@ function Prospects() {
             />
           </div>
           <div>
-            <Select
-              title="stage"
-              label="Deal stage"
-              id="deal_stage"
-              defaultValue={prospect.deal_stage}
+            <label className="block">Company</label>
+            <Input
+              placeholder="Enter Company"
               onChange={handleChange}
-            >
-              <option>Active</option>
-              <option>Closed</option>
-              <option>Negotiation</option>
-              <option>Prospect</option>
-            </Select>
+              id="company"
+              defaultValue={prospect.company}
+            />
           </div>
           <div className="mt-4 flex justify-end">
             <button type="submit" className="bg-green text-white px-10 py-2">
@@ -417,18 +446,19 @@ function Prospects() {
             <label className="block">Phone Number</label>
             <Input
               placeholder="09093527277"
-              id="phone"
+              id="phone_number"
               value={prospect.phone_number}
               disabled
             />
           </div>
           <div>
-            <Select title="stage" label="Deal stage" value={prospect.deal_stage} disabled>
-              <option>Active</option>
-              <option>Closed</option>
-              <option>Negotiation</option>
-              <option>Prospect</option>
-            </Select>
+            <label className="block">Company</label>
+            <Input
+              placeholder="Enter Company"
+              onChange={handleChange}
+              id="company"
+              defaultValue={prospect.company}
+            />
           </div>
         </div>
 
@@ -511,7 +541,7 @@ function Prospects() {
         </form>
       </Modal>
 
-      {prospects.length > 0 && !loading ? (
+      {prospects.contacts.length > 0 && !loading ? (
         <div className="mt-4">
           <div className="overflow-x-auto overflow-y-hidden rounded-md">
             <table className="text-left border-gray-100 w-full">
@@ -525,12 +555,12 @@ function Prospects() {
                   </th>
                   <th className="px-3 py-4">Email</th>
                   <th className="px-3 py-4">Phone Number</th>
-                  <th className="px-3 py-4">Stages</th>
+                  <th className="px-3 py-4">Company</th>
                   <th className="px-3 py-4"> Actions </th>
                 </tr>
               </thead>
               <tbody className="bg-white">
-                {prospects.map((prospect, i) => (
+                {prospects.contacts.map((prospect, i) => (
                   <ProspectRow
                     key={i}
                     openEditModal={handleOpenEditModal}
@@ -544,21 +574,19 @@ function Prospects() {
           </div>
 
           {/* Pagination */}
-          <ul className="flex list-none justify-end mt-5">
-            <li className="py-2 px-3">
+          <div className="flex list-none justify-end items-center mt-5">
+            <button onClick={() => pageBackward()} disabled={!prospects.prev} className="flex items-center py-2 px-3 cursor-pointer border-0 disabled:text-gray-300">
               {" "}
-              <ChevronLeft strokeWidth={1} />{" "}
-            </li>
-            <li className="py-2 px-3">Prev</li>
-            <li className="bg-green-light text-green rounded-sm py-2 px-4">
-              2
-            </li>
-            <li className="py-2 px-3">Next</li>
-            <li className="py-2 px-3">
-              {" "}
+              <ChevronLeft strokeWidth={1} />{" "} <span className="py-2 px-3">Prev</span>
+            </button>
+            <div className="bg-green-light text-green rounded-sm py-2 px-4">
+              {prospects.pageNum}
+            </div>
+            <button onClick={() => pageForward()} disabled={!prospects.next} className="flex items-center py-2 px-3 cursor-pointer border-0 disabled:text-gray-300">
+              <span className="py-2 px-3">Next</span>{" "}
               <ChevronRight strokeWidth={1} />{" "}
-            </li>
-          </ul>
+            </button>
+          </div>
         </div>
       ) : (
         <>
@@ -595,7 +623,7 @@ function Prospects() {
                       </th>
                       <th className="px-3 py-4">Email</th>
                       <th className="px-3 py-4">Phone Number</th>
-                      <th className="px-3 py-4">All stages</th>
+                      <th className="px-3 py-4">Company</th>
                       <th className="px-3 py-4"> Actions </th>
                     </tr>
                   </thead>
@@ -618,7 +646,7 @@ function Prospects() {
                       >
                         Skip
                       </button>
-                      <Button outline className="" onClick={handleOpenCreateModal}>
+                      <Button onClick={handleOpenCreateModal}>
                         Add Contact
                       </Button>
                     </div>
