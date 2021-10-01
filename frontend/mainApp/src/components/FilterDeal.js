@@ -14,7 +14,7 @@ export default function Index() {
      
         {({ open }) => (
           <>
-            <Listbox.Label className="text-sm font-medium text-gray-700 relative top-5 ">
+            <Listbox.Label className="font-medium font-bold text-gray-700 relative top-5 ">
             Conditions
             </Listbox.Label>
             <div className="relative">

@@ -26,17 +26,17 @@ const schema = yup.object().shape({
 });
 
 const Deals = () => {
-  const { register,handleSubmit, formState: { errors },reset } = useForm({resolver: yupResolver(schema)});
+  const { register, handleSubmit, formState: { errors }, reset } = useForm({ resolver: yupResolver(schema) });
   const [loading, setLoading] = useState(true);
   const [prospectsLoading, setprospectsLoading] = useState(false)
   const [loadingError, setloadingError] = useState("")
   const { deals, setDeals, prospects, setProspects } = useContext(PluginContext)
   const [dealContacts, setdealContacts] = useState([])
   const [openCreate, setOpenCreate] = useState(false);
-  const ProspectStage= deals.filter(x => x.deal_stage && x.deal_stage.toLowerCase() === "prospect")
-  const NegotiationStage= deals.filter(x => x.deal_stage && x.deal_stage.toLowerCase() === "negotiation")
-  const ProposalStage= deals.filter(x => x.deal_stage && x.deal_stage.toLowerCase() === "proposal")
-  const ClosedStage= deals.filter(x => x.deal_stage && x.deal_stage.toLowerCase() === "closed")
+  const ProspectStage = deals.filter(x => x.deal_stage && x.deal_stage.toLowerCase() === "prospect")
+  const NegotiationStage = deals.filter(x => x.deal_stage && x.deal_stage.toLowerCase() === "negotiation")
+  const ProposalStage = deals.filter(x => x.deal_stage && x.deal_stage.toLowerCase() === "proposal")
+  const ClosedStage = deals.filter(x => x.deal_stage && x.deal_stage.toLowerCase() === "closed")
 
   const handleOpenCreateModal = () => {
     setOpenCreate(true);
@@ -44,32 +44,32 @@ const Deals = () => {
     setloadingError("")
     reset()
     customAxios
-        .get(prospectsURL)
-        .then(({data}) => {
-          setdealContacts(data.contacts)
-          setprospectsLoading(false)
-          //console.log(data.contacts)
-         })
-        .catch((e) => {
-          console.log(e.response);
-          setloadingError(e.response)
-          setprospectsLoading(false)
-        });
+      .get(prospectsURL)
+      .then(({ data }) => {
+        setdealContacts(data.contacts)
+        setprospectsLoading(false)
+        //console.log(data.contacts)
+      })
+      .catch((e) => {
+        console.log(e.response);
+        setloadingError(e.response)
+        setprospectsLoading(false)
+      });
   }
-
 
   const [openFilter, setOpenFilter] = useState(false);
   const handleOpenFilterModal = () => setOpenFilter(true);
 
   const handleCloseModal = () => {
-    setOpenCreate(false)
-    setOpenFilter(false)
+    setOpenCreate(false);
+    setOpenFilter(false);
   };
-
 
   useEffect(() => {
     customAxios
-      .get(dealsURL, {headers:{Authorization: `Bearer ${sessionStorage.getItem("token")}`}})
+      .get(dealsURL, {
+        headers: { Authorization: `Bearer ${sessionStorage.getItem("token")}` },
+      })
       .then((r) => {
         console.log(r.data);
 
@@ -84,13 +84,13 @@ const Deals = () => {
     if (prospects.length <= 0) {
       customAxios
         .get(prospectsURL)
-        .then(({data}) => {
+        .then(({ data }) => {
           setProspects({
             contacts: data.contacts,
             next: data.next,
             pageNum: data.pageNum,
-            prev: data.prev
-          })
+            prev: data.prev,
+          });
           setLoading(false);
         })
         .catch((e) => {
@@ -98,12 +98,11 @@ const Deals = () => {
           console.log(e.response);
         });
     }
-
   }, []);
 
   const onSubmit = (data) => {
-    var val= (data.name).split(",")
-    var arr=[val]
+    var val = (data.name).split(",")
+    var arr = [val]
     const newDeal = {
       amount: data.amount,
       close_date: data.close_date,
@@ -112,7 +111,7 @@ const Deals = () => {
       name: arr[0][0],
       prospect_id: arr[0][1]
     }
-    
+
     customAxios.post(createDealURL, newDeal)
       .then((r) => {
         handleCloseModal();
@@ -123,10 +122,9 @@ const Deals = () => {
       })
       .catch((e) => {
         console.log(e);
-        customAlert("Oops, something went wrong", "error")
+        customAlert("Oops, something went wrong", "error");
       });
   };
-
 
   return (
     <div className="p-6">
@@ -166,32 +164,32 @@ const Deals = () => {
         open={openCreate}
         closeModal={handleCloseModal}>
         <form className="mt-2" onSubmit={handleSubmit(onSubmit)}>
-          <div>
+          <div className="text-base">
             <Select
               label="Name"
               id="prospect_id"
               title="name"
-              register={register} 
+              register={register}
               required
             >
               <option selected disabled value="">Select a contact</option>
-              {prospectsLoading && dealContacts.length==0 ?
-              (<option disabled value="">Fetching all prospects ...</option>) : null
-            }
-            {!prospectsLoading && dealContacts.length==0 ?
-              (<option disabled value="">No Prospects Found</option>) : null
-            }
-            {loadingError?
-              (<option disabled value="">Error encountered while loading prospects</option>) : null
-            }
+              {prospectsLoading && dealContacts.length == 0 ?
+                (<option disabled value="">Fetching all prospects ...</option>) : null
+              }
+              {!prospectsLoading && dealContacts.length == 0 ?
+                (<option disabled value="">No Prospects Found</option>) : null
+              }
+              {loadingError ?
+                (<option disabled value="">Error encountered while loading prospects</option>) : null
+              }
 
-              {dealContacts.map(dealContact=> (
+              {dealContacts.map(dealContact => (
                 <option
-                key={dealContact._id}
-                value={`${dealContact.name}, ${dealContact._id}`}
-              >
-                {dealContact.name}
-              </option>
+                  key={dealContact._id}
+                  value={`${dealContact.name}, ${dealContact._id}`}
+                >
+                  {dealContact.name}
+                </option>
               ))}
               {/* {prospects.length > 0 && prospects.map((prospect, i) => (
                 <option key={i} value={`${prospect._id}-${prospect.name}`}>{prospect.name}</option>
@@ -200,12 +198,12 @@ const Deals = () => {
             </Select>
             <p className="text-error text-xs mb-2 -mt-3 capitalize">{errors.name?.message}</p>
           </div>
-          <div>
+          <div className="text-gray-800 rounded">
             <Select
               title="deal_stage"
               label="Deal stage"
               id="deal_stage"
-              register={register} 
+              register={register}
               required
             >
               <option selected disabled value="">Select a stage</option>
@@ -216,14 +214,14 @@ const Deals = () => {
             </Select>
             <p className="text-error text-xs mb-2 -mt-3 capitalize">{errors.deal_stage?.message}</p>
           </div>
-          <div>
+          <div className='text-gray-800'>
             <Input
-            label="Amount"
+              label="Amount"
               placeholder="Enter Amount"
               id="amount"
               type="number"
               title="amount"
-              register={register} 
+              register={register}
               required
             />
             <p className="text-error text-xs mb-2 -mt-3 capitalize">{errors.amount?.message}</p>
@@ -235,25 +233,28 @@ const Deals = () => {
               id="close_date"
               type="date"
               title="close_date"
-              register={register} 
+              register={register}
               required
             />
             <p className="text-error text-xs mb-2 -mt-3 capitalize">{errors.close_date?.message}</p>
           </div>
           <div>
             <Input
-            label="Description"
+              label="Description"
               placeholder="Additional Info"
               id="description"
               title="description"
-              register={register} 
+              register={register}
               required
             />
             <p className="text-error text-xs mb-2 -mt-3 capitalize">{errors.description?.message}</p>
           </div>
 
           <div className="mt-4 flex justify-end">
-            <button type="submit" className="bg-green text-white px-10 py-2">
+            <button
+              type="submit"
+              className="bg-green rounded text-white px-10 py-2"
+            >
               Create
             </button>
           </div>
@@ -261,24 +262,22 @@ const Deals = () => {
       </Modal>
 
       <div className="flex gap-2 justify-end">
-        <Button outline outlineColor="gray-500" onClick={handleOpenFilterModal}>Filter</Button>
+        <Button outline outlineColor="gray-500" onClick={handleOpenFilterModal}>
+          Filter
+        </Button>
         <Button onClick={handleOpenCreateModal}>Create New</Button>
       </div>
 
-
-      {deals.length > 0 && !loading ?
-
+      {deals.length > 0 && !loading ? (
         <div className="overflow-x-auto">
-
           <div className="w-max lg:w-full">
-
             <div className="grid grid-cols-4 mt-5 border-gray-300">
               <div className="px-24 lg:px-8 border-b border-gray-300 py-2 text-left">
                 <span className="block font-bold text-lg text-gray-700">
                   Prospects
                 </span>
                 <span className="text-sm text-gray-500">
-                {ProspectStage.length} deals • $ 1,500,000
+                  {ProspectStage.length} deals • $ 1,500,000
                 </span>
               </div>
               <div className="px-24 lg:px-8 text-left border-b border-gray-300 py-2">
@@ -286,7 +285,7 @@ const Deals = () => {
                   Proposal
                 </span>
                 <span className="text-sm text-gray-500">
-                {ProposalStage.length} deals • $ 1,500,000
+                  {ProposalStage.length} deals • $ 1,500,000
                 </span>
               </div>
               <div className="px-24 lg:px-8 text-left border-b border-gray-300 py-2">
@@ -294,7 +293,7 @@ const Deals = () => {
                   Negotiation
                 </span>
                 <span className="text-sm text-gray-500">
-                {NegotiationStage.length} deals • $ 1,500,000
+                  {NegotiationStage.length} deals • $ 1,500,000
                 </span>
               </div>
               <div className="px-24 lg:px-8 text-left border-b border-gray-300 py-2">
@@ -302,7 +301,7 @@ const Deals = () => {
                   Closed
                 </span>
                 <span className="text-sm text-gray-500">
-                {ClosedStage.length} deals • $ 1,500,000
+                  {ClosedStage.length} deals • $ 1,500,000
                 </span>
               </div>
             </div>
@@ -316,7 +315,6 @@ const Deals = () => {
                   ))}
               </div>
               <div className=" border-r border-gray-300 overflow-y-auto rounded py-2 flex flex-col items-center gap-4">
-
                 {deals
                   .filter(x => x.deal_stage && x.deal_stage.toLowerCase() === "proposal")
                   .map((deal, i) => (
@@ -329,7 +327,6 @@ const Deals = () => {
                   .map((deal, i) => (
                     <DealCard key={deal._id} deal={deal} index={i} />
                   ))}
-
               </div>
               <div className=" border-r border-gray-300 overflow-y-auto rounded py-2 flex flex-col items-center gap-4">
                 {deals
@@ -340,9 +337,8 @@ const Deals = () => {
               </div>
             </div>
           </div>
-
         </div>
-        :
+      ) : (
         <>
           {loading ? (
             <div>
@@ -362,35 +358,38 @@ const Deals = () => {
             </div>
           ) : (
             <div className="mt-4">
-                <div className="flex w-100 items-center justify-center flex-col text-center pt-32">
-                  <div className="shadow-lg w-96 justify-center flex p-10 flex-col items-center">
-                    <FileIcon />
-                    <p className="font-bold text-xl mt-5">
-                      You have no deal yet!
-                    </p>
-                    <p className="max-w-sm py-3 flex-wrap text-gray-400">
-                      Keep track of business transactions with all your deals
-                      in an organised manner. Quickly add a deal to get
-                      started.
-                    </p>
-                    <div className="flex">
-                      <button
-                        className="border-green px-4 rounded-sm text-green mr-2"
-                        onClick={handleCloseModal}
-                      >
-                        Skip
-                      </button>
-                      <Button outline className="" onClick={handleOpenCreateModal}>
-                        Add Deal
-                      </Button>
-                    </div>
+              <div className="flex w-100 items-center justify-center flex-col text-center pt-32">
+                <div className="shadow-lg w-96 justify-center flex p-10 flex-col items-center">
+                  <FileIcon />
+                  <p className="font-bold text-xl mt-5">
+                    You have no deal yet!
+                  </p>
+                  <p className="max-w-sm py-3 flex-wrap text-gray-400">
+                    Keep track of business transactions with all your deals in
+                    an organised manner. Quickly add a deal to get started.
+                  </p>
+                  <div className="flex">
+                    <button
+                      className="border-green px-4 rounded-sm text-green mr-2"
+                      onClick={handleCloseModal}
+                    >
+                      Skip
+                    </button>
+                    <Button
+                      outline
+                      className=""
+                      onClick={handleOpenCreateModal}
+                    >
+                      Add Deal
+                    </Button>
                   </div>
                 </div>
               </div>
+            </div>
           )}
-        </>}
+        </>
+      )}
     </div>
-
   );
 };
 export default Deals;
