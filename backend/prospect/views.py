@@ -194,6 +194,12 @@ class ProspectsUpdateView(APIView):
                     data={"message": "There is no prospect with the 'object_id' you supplied."},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
+
+            if r["data"]["modified_documents"] == 0:
+                return Response(
+                    data={"message": "Prospect update failed. Empty data or invalid values was passed."},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
             centrifugo_post(
                 "Prospects",
                 {
