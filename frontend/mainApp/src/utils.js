@@ -5,7 +5,7 @@ export const capitalize = (word) => {
     const lower = word.toLowerCase();
     word = word.charAt(0).toUpperCase() + lower.slice(1);
   }
-  return word
+  return word;
 };
 
 export const doesProspectExist = (contacts, name) => {
@@ -22,15 +22,17 @@ export const updateProspects = (contacts, id, newDetails) => {
   return p;
 };
 
-export const customAlert = (message, type = "success" || "warning" || "info" || "error") => {
-
+export const customAlert = (
+  message,
+  type = "success" || "warning" || "info" || "error"
+) => {
   Swal.fire({
     text: message,
     icon: type,
     showCancelButton: false,
-    timer: 2000
+    timer: 2000,
   });
-}
+};
 
 //Store token in sessionStorage
 // export const token = sessionStorage.getItem("token");
@@ -49,13 +51,52 @@ export const customAlert = (message, type = "success" || "warning" || "info" || 
 
 export const dummyProspects = {
   contacts: [
-    { id: "0", name: "Jane Cooper", email: "jane.cooper@example.com", phone_number: "09093527277", status: "Prospect" },
-    { id: "1", name: "Jane Cooper", email: "jane.cooper@example.com", phone_number: "09093527277", status: "Closed" },
-    { id: "2", name: "Jane Cooper", email: "jane.cooper@example.com", phone_number: "09093527277", status: "Negotiation" },
-    { id: "3", name: "Jane Cooper", email: "jane.cooper@example.com", phone_number: "09093527277", status: "Proposal" },
-    { id: "4", name: "Jane Cooper", email: "jane.cooper@example.com", phone_number: "09093527277", status: "Negotiation" },
-    { id: "5", name: "Jane Cooper", email: "jane.cooper@example.com", phone_number: "09093527277", status: "Prospect" }
-  ], pageNum: 1, next: false, prev: false
-}
+    {
+      id: "0",
+      name: "Jane Cooper",
+      email: "jane.cooper@example.com",
+      phone_number: "09093527277",
+      status: "Prospect",
+    },
+    {
+      id: "1",
+      name: "Jane Cooper",
+      email: "jane.cooper@example.com",
+      phone_number: "09093527277",
+      status: "Closed",
+    },
+    {
+      id: "2",
+      name: "Jane Cooper",
+      email: "jane.cooper@example.com",
+      phone_number: "09093527277",
+      status: "Negotiation",
+    },
+    {
+      id: "3",
+      name: "Jane Cooper",
+      email: "jane.cooper@example.com",
+      phone_number: "09093527277",
+      status: "Proposal",
+    },
+    {
+      id: "4",
+      name: "Jane Cooper",
+      email: "jane.cooper@example.com",
+      phone_number: "09093527277",
+      status: "Negotiation",
+    },
+    {
+      id: "5",
+      name: "Jane Cooper",
+      email: "jane.cooper@example.com",
+      phone_number: "09093527277",
+      status: "Prospect",
+    },
+  ],
+  pageNum: 1,
+  next: false,
+  prev: false,
+};
 
-export const pluginID = "614105b66173056af01b4cca"
+export const pluginID = "614105b66173056af01b4cca";
