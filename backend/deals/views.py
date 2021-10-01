@@ -24,12 +24,12 @@ class DealCreateView(APIView):
     queryset = None
 
     def post(self, request, *args, **kwargs):
-        # # check authentication
-        # if not isAuthorized(request):
-        #     return Response(data={"message":"Missing Cookie/token header or session expired"}, status=st.HTTP_401_UNAUTHORIZED)
+        # check authentication
+        if not isAuthorized(request):
+            return Response(data={"message":"Missing Cookie/token header or session expired"}, status=st.HTTP_401_UNAUTHORIZED)
         
-        # if not isValidOrganisation(ORGANISATION_ID, request):
-        #     return Response(data={"message":"Invalid/Missing organization id"}, status=st.HTTP_401_UNAUTHORIZED)
+        if not isValidOrganisation(ORGANISATION_ID, request):
+            return Response(data={"message":"Invalid/Missing organization id"}, status=st.HTTP_401_UNAUTHORIZED)
         serializer = DealSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         url = "https://api.zuri.chat/data/write"
@@ -100,12 +100,12 @@ class DealUpdateView(APIView):
     queryset = None
 
     def put(self, request, *args, **kwargs):
-        # # check authentication
-        # if not isAuthorized(request):
-        #     return Response(data={"message":"Missing Cookie/token header or session expired"}, status=st.HTTP_401_UNAUTHORIZED)
+        # check authentication
+        if not isAuthorized(request):
+            return Response(data={"message":"Missing Cookie/token header or session expired"}, status=st.HTTP_401_UNAUTHORIZED)
         
-        # if not isValidOrganisation(ORGANISATION_ID, request):
-        #     return Response(data={"message":"Invalid/Missing organization id"}, status=st.HTTP_401_UNAUTHORIZED)
+        if not isValidOrganisation(ORGANISATION_ID, request):
+            return Response(data={"message":"Invalid/Missing organization id"}, status=st.HTTP_401_UNAUTHORIZED)
         
         _id = self.request.query_params.get("id")
         url = "https://api.zuri.chat/data/write"
@@ -169,12 +169,12 @@ class DealsListView(APIView):
     queryset = None
 
     def get(self, request, *args, **kwargs):
-        # # check authentication
-        # if not isAuthorized(request):
-        #     return Response(data={"message":"Missing Cookie/token header or session expired"}, status=st.HTTP_401_UNAUTHORIZED)
+        # check authentication
+        if not isAuthorized(request):
+            return Response(data={"message":"Missing Cookie/token header or session expired"}, status=st.HTTP_401_UNAUTHORIZED)
         
-        # if not isValidOrganisation(ORGANISATION_ID, request):
-        #     return Response(data={"message":"Invalid/Missing organization id"}, status=st.HTTP_401_UNAUTHORIZED)
+        if not isValidOrganisation(ORGANISATION_ID, request):
+            return Response(data={"message":"Invalid/Missing organization id"}, status=st.HTTP_401_UNAUTHORIZED)
         
         # centrifugo_post("Deals", {"event": "join", "token": "elijah"})
         url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/deals/{ORGANISATION_ID}"
@@ -201,6 +201,12 @@ class ReArrangeDeals(APIView):
     queryset = None
 
     def put(self, request, *args, **kwargs):
+        # check authentication
+        if not isAuthorized(request):
+            return Response(data={"message":"Missing Cookie/token header or session expired"}, status=st.HTTP_401_UNAUTHORIZED)
+        
+        if not isValidOrganisation(ORGANISATION_ID, request):
+            return Response(data={"message":"Invalid/Missing organization id"}, status=st.HTTP_401_UNAUTHORIZED)
         url = "https://api.zuri.chat/data/write"
         serializer = DealUpdateSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -245,12 +251,12 @@ class DealsFilterListView(APIView):
     filter params can be anything on the deal name,stage,etc.
     """
     def get(self, request, *args, **kwargs):
-        # # check authentication
-        # if not isAuthorized(request):
-        #     return Response(data={"message":"Missing Cookie/token header or session expired"}, status=st.HTTP_401_UNAUTHORIZED)
+        # check authentication
+        if not isAuthorized(request):
+            return Response(data={"message":"Missing Cookie/token header or session expired"}, status=st.HTTP_401_UNAUTHORIZED)
         
-        # if not isValidOrganisation(ORGANISATION_ID, request):
-        #     return Response(data={"message":"Invalid/Missing organization id"}, status=st.HTTP_401_UNAUTHORIZED)
+        if not isValidOrganisation(ORGANISATION_ID, request):
+            return Response(data={"message":"Invalid/Missing organization id"}, status=st.HTTP_401_UNAUTHORIZED)
 
         search = self.request.query_params.get("filter")
         url = "https://api.zuri.chat/data/read"
@@ -292,13 +298,15 @@ class DealsDeleteView(APIView):
     """
 
     def post(self, request):
-        id = self.request.query_params.get("id")
-         # # check authentication
-        # if not isAuthorized(request):
-        #     return Response(data={"message":"Missing Cookie/token header or session expired"}, status=st.HTTP_401_UNAUTHORIZED)
+         # check authentication
+        if not isAuthorized(request):
+            return Response(data={"message":"Missing Cookie/token header or session expired"}, status=st.HTTP_401_UNAUTHORIZED)
         
-        # if not isValidOrganisation(ORGANISATION_ID, request):
-        #     return Response(data={"message":"Invalid/Missing organization id"}, status=st.HTTP_401_UNAUTHORIZED)
+        if not isValidOrganisation(ORGANISATION_ID, request):
+            return Response(data={"message":"Invalid/Missing organization id"}, status=st.HTTP_401_UNAUTHORIZED)
+
+        id = self.request.query_params.get("id")
+        
         
         url = "https://api.zuri.chat/data/delete"
         data = {
