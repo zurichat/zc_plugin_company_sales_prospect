@@ -29,8 +29,7 @@ export const customAlert = (
   Swal.fire({
     text: message,
     icon: type,
-    showCancelButton: false,
-    timer: 2000,
+    showCancelButton: false
   });
 };
 
