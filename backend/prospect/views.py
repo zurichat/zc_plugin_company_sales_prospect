@@ -116,7 +116,7 @@ class ProspectsCreateView(APIView):
     serializer_class = ProspectSerializer
     queryset = None
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request, org_id):
         # # check authentication
         # if not isAuthorized(request):
         #     return Response(data={"message":"Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
@@ -124,30 +124,20 @@ class ProspectsCreateView(APIView):
         # if not isValidOrganisation(ORGANISATION_ID, request):
         #     return Response(data={"message":"Invalid/Missing organization id"}, status=status.HTTP_401_UNAUTHORIZED)
 
+        data = {}
+     
         serializer = ProspectSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        url = "https://api.zuri.chat/data/write"
-        name = request.data.get("name")
-        email = request.data.get("email")
-        phone_number = request.data.get("phone_number")
-        company = request.data.get("company")
-        data = {
-            "plugin_id": PLUGIN_ID,
-            "organization_id": ORGANISATION_ID,
-            "collection_name": "prospects",
-            "bulk_write": False,
-            "payload": {
-                "name": name,
-                "phone_number": phone_number,
-                "email": email,
-                "company": company,
-            },
+        payload = {
+            
+                "name": serializer.data['name'],
+                "phone_number": serializer.data['phone_number'],
+                "email": serializer.data['email'],
+                "company": serializer.data['company'],
         }
-        response = requests.request("POST", url, data=json.dumps(data))
-        r = response.json()
-        print(response.status_code)
-        if response.status_code == 201:
-            new_prospect = request.data
+        response = CustomRequest.get(org_id, 'prospects', data) or []
+        if response['status_code'] == 201:
+            
             # request.data._mutable = True
             # new_prospect["_id"] = r["data"]["object_id"]
             # request.data._mutable = False
@@ -157,8 +147,12 @@ class ProspectsCreateView(APIView):
         #     #     "Prospects",
         #     #     {"event": "new_prospect", "token": "elijah", "object": new_prospect},
         #     # )
-            print(response.status_code)
-            return Response(data=r, status=status.HTTP_201_CREATED)
+
+            # print(response.status_code)
+            return Response(
+                data=response['data'],
+                status=status.HTTP_201_CREATED
+            )
         return Response(
             data={"message": "Try again later"},
             status=response.status_code,

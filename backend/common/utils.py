@@ -64,16 +64,21 @@ class CustomRequest:
             return result
 
     @staticmethod
-    def post(payload):
-        url = f"https://api.zuri.chat/data/write"
-        data = {
-            "plugin_id": PLUGIN_ID,
-            "organization_id": ORGANISATION_ID,
-            "collection_name": "prospects",
-            "bulk_write": False,
-            "payload": payload,
-        }
-        response = requests.request("POST", url, data=json.dumps(data))
+    def post(org_id, collection_name, params=None):
+        url = f"https://api.zuri.chat/data/write/{PLUGIN_ID}"
+        data.update(
+            {
+                'organization_id': org_id,
+                'collection_name': collection_name,
+                'payload' : params
+            }
+        )
+        response = requests.post(url)
+        r = response.json()
+        if response.status_code == 201:
+            result = response.json()
+            result['status_code'] = response.status_code
+            return result
 
     @staticmethod
     def put(payload):
