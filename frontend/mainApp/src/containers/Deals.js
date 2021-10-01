@@ -39,7 +39,9 @@ const Deals = () => {
 
   useEffect(() => {
     customAxios
-      .get(dealsURL, {headers:{Authorization: `Bearer ${sessionStorage.getItem("token")}`}})
+      .get(dealsURL, {
+        headers: { Authorization: `Bearer ${sessionStorage.getItem("token")}` },
+      })
       .then((r) => {
         console.log(r.data);
 
@@ -54,13 +56,13 @@ const Deals = () => {
     if (prospects.length <= 0) {
       customAxios
         .get(prospectsURL)
-        .then(({data}) => {
+        .then(({ data }) => {
           setProspects({
             contacts: data.contacts,
             next: data.next,
             pageNum: data.pageNum,
-            prev: data.prev
-          })
+            prev: data.prev,
+          });
           setLoading(false);
         })
         .catch((e) => {
@@ -148,16 +150,18 @@ const Deals = () => {
         closeModal={handleCloseModal}
       >
         <form className="mt-2" onSubmit={handleSubmit}>
-          <div className="font-bold mt-7 text-gray-700">
+          <div className="font-bold mt-7 text-gray-800">
             <Select label="Name" id="prospect_id" onChange={handleChange}>
               <option>Select a contact</option>
-              {prospects.length > 0 && prospects.map((prospect, i) => (
-                <option key={i} value={`${prospect._id}-${prospect.name}`}>{prospect.name}</option>
-              ))}
-
+              {prospects.length > 0 &&
+                prospects.map((prospect, i) => (
+                  <option key={i} value={`${prospect._id}-${prospect.name}`}>
+                    {prospect.name}
+                  </option>
+                ))}
             </Select>
           </div>
-          <div className="font-bold text-gray-700 rounded">
+          <div className="font-bold text-gray-800 rounded">
             <Select
               title="stage"
               label="Deal stage"
@@ -172,7 +176,7 @@ const Deals = () => {
             </Select>
           </div>
           <div>
-            <label className="block font-bold text-gray-700 rounded">
+            <label className="block font-bold text-base text-gray-800 rounded">
               Amount
             </label>
             <Input
@@ -182,7 +186,7 @@ const Deals = () => {
             />
           </div>
           <div>
-            <label className="block font-bold text-gray-700">
+            <label className="block font-bold text-base text-gray-800">
               Expected close date
             </label>
             <Input
@@ -193,7 +197,9 @@ const Deals = () => {
             />
           </div>
           <div>
-            <label className="block font-bold text-gray-700 ">Description</label>
+            <label className="block font-bold text-base text-gray-800 ">
+              Description
+            </label>
             <Input
               placeholder="Additional Info"
               onChange={handleChange}
@@ -202,7 +208,10 @@ const Deals = () => {
           </div>
 
           <div className="mt-4 flex justify-end">
-            <button type="submit" className="bg-green rounded text-white px-10 py-2">
+            <button
+              type="submit"
+              className="bg-green rounded text-white px-10 py-2"
+            >
               Create
             </button>
           </div>
@@ -210,7 +219,9 @@ const Deals = () => {
       </Modal>
 
       <div className="flex gap-2 justify-end">
-        <Button outline outlineColor="gray-500" onClick={handleOpenFilterModal}>Filter</Button>
+        <Button outline outlineColor="gray-500" onClick={handleOpenFilterModal}>
+          Filter
+        </Button>
         <Button onClick={handleOpenCreateModal}>Create New</Button>
       </div>
 
@@ -317,35 +328,34 @@ const Deals = () => {
             </div>
           ) : (
             <div className="mt-4">
-                <div className="flex w-100 items-center justify-center flex-col text-center pt-32">
-                  <div className="shadow-lg w-96 justify-center flex p-10 flex-col items-center">
-                    <FileIcon />
-                    <p className="font-bold text-xl mt-5">
-                      You have no deal yet!
-                    </p>
-                    <p className="max-w-sm py-3 flex-wrap text-gray-400">
-                      Keep track of business transactions with all your deals
-                      in an organised manner. Quickly add a deal to get
-                      started.
-                    </p>
-                    <div className="flex">
-                      <button
-                        className="border-green px-4 rounded-sm text-green mr-2"
-                        onClick={handleCloseModal}
-                      >
-                        Skip
-                      </button>
-                      <Button
-                        outline
-                        className=""
-                        onClick={handleOpenCreateModal}
-                      >
-                        Add Deal
-                      </Button>
-                    </div>
+              <div className="flex w-100 items-center justify-center flex-col text-center pt-32">
+                <div className="shadow-lg w-96 justify-center flex p-10 flex-col items-center">
+                  <FileIcon />
+                  <p className="font-bold text-xl mt-5">
+                    You have no deal yet!
+                  </p>
+                  <p className="max-w-sm py-3 flex-wrap text-gray-400">
+                    Keep track of business transactions with all your deals in
+                    an organised manner. Quickly add a deal to get started.
+                  </p>
+                  <div className="flex">
+                    <button
+                      className="border-green px-4 rounded-sm text-green mr-2"
+                      onClick={handleCloseModal}
+                    >
+                      Skip
+                    </button>
+                    <Button
+                      outline
+                      className=""
+                      onClick={handleOpenCreateModal}
+                    >
+                      Add Deal
+                    </Button>
                   </div>
                 </div>
               </div>
+            </div>
           )}
         </>
       )}

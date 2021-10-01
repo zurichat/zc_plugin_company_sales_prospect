@@ -56,7 +56,7 @@ export default function Modal({
                 <div className="mt-2">
                   <p className="text-sm mb-5 text-gray-600">{description}</p>
                 </div>
-                <div className="capitalize">{children}</div>
+                <div className="text-sm">{children}</div>
               </div>
             </Transition.Child>
           </div>

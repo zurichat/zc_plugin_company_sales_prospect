@@ -48,7 +48,7 @@ export const Input = ({
         {label}
       </label>
       <input
-        className="border border-gray-500 outline-none placeholder-gray-400 rounded-sm h-12  w-full px-5 focus:border-green"
+        className="border border-gray-500 outline-none placeholder-gray-400 rounded-sm h-12 text-sm w-full px-5 focus:border-green"
         onChange={onChange}
         id={id}
         value={value}
@@ -123,7 +123,7 @@ function Prospects() {
   const [open3, setOpen3] = useState(false);
   const handleOpenDeleteModal = (e, prospect) => {
     setProspect(prospect);
-    setOpen3(true)
+    setOpen3(true);
   };
 
   const [open4, setOpen4] = useState(false);
@@ -131,9 +131,9 @@ function Prospects() {
     setProspect(prospect);
     const newDeal = {
       prospect_id: prospect._id,
-      name: prospect.name
-    }
-    setDeal(newDeal)
+      name: prospect.name,
+    };
+    setDeal(newDeal);
     setOpen4(true);
   };
 
@@ -145,7 +145,7 @@ function Prospects() {
       email: "",
       phone_number: "",
       company: "",
-    })
+    });
     setOpen(false);
     setOpen2(false);
     setOpen3(false);
@@ -155,26 +155,26 @@ function Prospects() {
   const pageForward = () => {
     setLoading(true);
     setPage(prospects.pageNum + 1);
-  }
+  };
 
   const pageBackward = () => {
     setLoading(true);
     setPage(prospects.pageNum - 1);
-  }
+  };
 
   useEffect(() => {
     customAxios
       .get(prospectsURL, {
-        params: { page: page }
+        params: { page: page },
       })
-      .then(({data}) => {
-        console.log(data.contacts)
+      .then(({ data }) => {
+        console.log(data.contacts);
         setProspects({
           contacts: data.contacts,
           next: data.next,
           pageNum: data.pageNum,
-          prev: data.prev
-        })
+          prev: data.prev,
+        });
         setLoading(false);
       })
       .catch((e) => {
@@ -191,23 +191,24 @@ function Prospects() {
         .post(createProspectURL, prospect)
         .then((r) => {
           handleCloseModal();
-          customAxios.get(prospectsURL)
+          customAxios
+            .get(prospectsURL)
             .then(({ data }) => {
               setProspects({
                 contacts: data.contacts,
                 next: data.next,
                 pageNum: data.pageNum,
-                prev: data.prev
-              })
+                prev: data.prev,
+              });
             })
-            .catch(e => console.log(e.response))
+            .catch((e) => console.log(e.response));
           // const latestProspect = formatProspect(prospect)
           // setProspects([...prospects, latestProspect]);
           customAlert("Contact Created Successfully", "success");
         })
         .catch((e) => {
           console.log(e);
-          customAlert("Error Creating Contact", "error")
+          customAlert("Error Creating Contact", "error");
         });
     } else {
       alert("Prospect already exists");
@@ -216,7 +217,11 @@ function Prospects() {
 
   const handleDealCreate = (e) => {
     e.preventDefault();
-    const dealInfo = { ...deal, prospect_id: prospect._id, name: prospect.name };
+    const dealInfo = {
+      ...deal,
+      prospect_id: prospect._id,
+      name: prospect.name,
+    };
     customAxios
       .post(createDealURL, dealInfo)
       .then((r) => {
@@ -251,8 +256,8 @@ function Prospects() {
               contacts: data.contacts,
               next: data.next,
               pageNum: data.pageNum,
-              prev: data.prev
-            })
+              prev: data.prev,
+            });
           })
           .catch((e) => console.log(e.response));
       })
@@ -266,19 +271,19 @@ function Prospects() {
   const handleDelete = (e) => {
     e.preventDefault();
     customAxios
-      .post(`${deleteProspectURL}`, { 'object_id': prospect._id })
+      .post(`${deleteProspectURL}`, { object_id: prospect._id })
       .then((r) => {
         handleCloseModal();
         customAxios
           .get(prospectsURL)
           .then(({ data }) => {
-            customAlert("Contact Deleted Successfully", "success")
+            customAlert("Contact Deleted Successfully", "success");
             setProspects({
               contacts: data.contacts,
               next: data.next,
               pageNum: data.pageNum,
-              prev: data.prev
-            })
+              prev: data.prev,
+            });
           })
           .catch((e) => console.log(e.response));
       })
@@ -319,15 +324,20 @@ function Prospects() {
       >
         <form className="my-auto" onSubmit={handleSubmit}>
           <div>
-            <label className="block font-bold text-gray-700">Name</label>
+            <label className="block font-bold text-base text-gray-800">
+              Name
+            </label>
             <Input
+              className="text-sm"
               placeholder="Enter Full Name"
               onChange={handleChange}
               id="name"
             />
           </div>
           <div>
-            <label className="block font-bold text-gray-700">Email</label>
+            <label className="block font-bold text-base text-gray-800">
+              Email
+            </label>
             <Input
               placeholder="Enter Email"
               type="email"
@@ -336,7 +346,7 @@ function Prospects() {
             />
           </div>
           <div>
-            <label className="block font-bold text-gray-700">
+            <label className="block font-bold text-base text-gray-800">
               Phone Number
             </label>
             <Input
@@ -347,7 +357,9 @@ function Prospects() {
             />
           </div>
           <div>
-            <label className="block font-bold text-gray-700">Company</label>
+            <label className="block font-bold text-base text-gray-800">
+              Company
+            </label>
             <Input
               placeholder="Enter Company"
               onChange={handleChange}
@@ -375,7 +387,9 @@ function Prospects() {
       >
         <form className="mt-2" onSubmit={handleUpdate}>
           <div className="text-gray-500">
-            <label className="block font-bold text-gray-700">Name</label>
+            <label className="block font-bold text-base text-gray-800">
+              Name
+            </label>
             <Input
               placeholder="Jane Cooper"
               id="name"
@@ -384,7 +398,9 @@ function Prospects() {
             />
           </div>
           <div className="text-gray-500">
-            <label className="block font-bold text-gray-700">Email</label>
+            <label className="block font-bold text-base text-gray-800">
+              Email
+            </label>
             <Input
               placeholder="jane.cooper@example.com"
               id="email"
@@ -393,7 +409,7 @@ function Prospects() {
             />
           </div>
           <div className="text-gray-500">
-            <label className="block font-bold text-gray-700">
+            <label className="block font-bold text-base text-gray-800">
               Phone Number
             </label>
             <Input
@@ -405,7 +421,9 @@ function Prospects() {
             />
           </div>
           <div>
-            <label className="block font-bold text-gray-700">Company</label>
+            <label className="block font-bold text-base text-gray-800">
+              Company
+            </label>
             <Input
               placeholder="Enter Company"
               onChange={handleChange}
@@ -433,7 +451,9 @@ function Prospects() {
       >
         <div className="mt-2 text-gray-500">
           <div>
-            <label className="block font-bold text-gray-700">Name</label>
+            <label className="block font-bold text-base text-gray-800">
+              Name
+            </label>
             <Input
               placeholder="Jane Cooper"
               id="name"
@@ -442,7 +462,9 @@ function Prospects() {
             />
           </div>
           <div className="text-gray-500">
-            <label className="block text-gray-700 font-bold">Email</label>
+            <label className="block text-base text-gray-800 font-bold">
+              Email
+            </label>
             <Input
               placeholder="jane.cooper@example.com"
               id="email"
@@ -451,7 +473,7 @@ function Prospects() {
             />
           </div>
           <div className="text-gray-500">
-            <label className="block text-gray-700 font-bold">
+            <label className="block text-base text-gray-800 font-bold">
               Phone Number
             </label>
             <Input
@@ -462,7 +484,9 @@ function Prospects() {
             />
           </div>
           <div>
-            <label className="block">Company</label>
+            <label className="block text-base text-gray-800 font-bold">
+              Company
+            </label>
             <Input
               placeholder="Enter Company"
               onChange={handleChange}
@@ -498,7 +522,7 @@ function Prospects() {
         closeModal={handleCloseModal}
       >
         <form className="mt-2" onSubmit={handleDealCreate}>
-          <div className="text-gray-700">
+          <div className="text-gray-800">
             <Select
               title="stage"
               label="Deal stage"
@@ -513,7 +537,9 @@ function Prospects() {
             </Select>
           </div>
           <div className="text-gray-500">
-            <label className="block font-bold text-gray-700">Amount</label>
+            <label className="block font-bold text-base text-gray-800">
+              Amount
+            </label>
             <Input
               type="number"
               onChange={handleDealChange}
@@ -522,7 +548,7 @@ function Prospects() {
             />
           </div>
           <div className="text-gray-500">
-            <label className="block font-bold text-gray-700">
+            <label className="block font-bold text-base text-gray-800">
               Expected close date
             </label>
             <Input
@@ -533,7 +559,9 @@ function Prospects() {
             />
           </div>
           <div className="text-gray-500">
-            <label className="block font-bold text-gray-700">Description</label>
+            <label className="block font-bold text-base text-gray-800">
+              Description
+            </label>
             <Input
               placeholder="Additional info"
               onChange={handleDealChange}

@@ -18,7 +18,7 @@ export default function Input({
         {label}
       </label>
       <input
-        className="border border-gray-300 outline-none placeholder-gray-400 rounded-lg h-12 w-full px-5 focus:border-primary"
+        className="border border-gray-300 text-sm outline-none placeholder-gray-400 rounded-sm h-12 w-full px-5 focus:border-primary"
         id={title}
         type="text"
         placeholder={placeholder}

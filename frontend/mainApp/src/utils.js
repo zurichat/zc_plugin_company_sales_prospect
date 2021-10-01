@@ -1,4 +1,3 @@
-
 import Swal from "sweetalert2";
 
 export const capitalize = (word) => {
@@ -29,6 +28,7 @@ export const customAlert = (message, type = "success" || "warning" || "info" || 
     text: message,
     icon: type,
     showCancelButton: false,
+    timer: 2000
   });
 }
 
