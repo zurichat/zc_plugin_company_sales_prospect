@@ -1,6 +1,11 @@
 import json, requests#, time
+import logging
 
 from django.conf import settings
+
+from rest_framework.views import exception_handler
+from rest_framework.response import Response
+from rest_framework import status
 
 ZURI_API_KEY = settings.ZURI_API_KEY
 CENTRIFUGO_LIVE_ENDPOINT = settings.CENTRIFUGO_LIVE_ENDPOINT
@@ -59,3 +64,20 @@ def isValidOrganisation(organisationId, request):
 #  Views should use serializers in returning data except ListViews
 
 # Centrifugo in Views
+
+def custom_exception_handler(exc, context):
+    response = exception_handler(exc, context)
+
+    if isinstance(exc, requests.ConnectionError):
+        logging.error("An Error occurred while connecting to ZURI server: {}".format(exc))
+        response = Response(
+            data={"message": "An Error occurred while connecting to ZURI server. Try again later."},
+            status=status.HTTP_503_SERVICE_UNAVAILABLE)
+
+    if not response:
+        logging.error("Something unexpected happened: {}".format(exc))
+        response = Response(
+            data={"message": "Something unexpected happened. Try again later."},
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    return response
+
