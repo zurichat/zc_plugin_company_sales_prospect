@@ -24,12 +24,12 @@ class DealCreateView(APIView):
     queryset = None
 
     def post(self, request, *args, **kwargs):
-        # # check authentication
-        # if not isAuthorized(request):
-        #     return Response(data={"message":"Missing Cookie/token header or session expired"}, status=st.HTTP_401_UNAUTHORIZED)
+        # check authentication
+        if not isAuthorized(request):
+            return Response(data={"message":"Missing Cookie/token header or session expired"}, status=st.HTTP_401_UNAUTHORIZED)
         
-        # if not isValidOrganisation(ORGANISATION_ID, request):
-        #     return Response(data={"message":"Invalid/Missing organization id"}, status=st.HTTP_401_UNAUTHORIZED)
+        if not isValidOrganisation(ORGANISATION_ID, request):
+            return Response(data={"message":"Invalid/Missing organization id"}, status=st.HTTP_401_UNAUTHORIZED)
         serializer = DealSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         url = "https://api.zuri.chat/data/write"
@@ -100,12 +100,12 @@ class DealUpdateView(APIView):
     queryset = None
 
     def put(self, request, *args, **kwargs):
-        # # check authentication
-        # if not isAuthorized(request):
-        #     return Response(data={"message":"Missing Cookie/token header or session expired"}, status=st.HTTP_401_UNAUTHORIZED)
+        # check authentication
+        if not isAuthorized(request):
+            return Response(data={"message":"Missing Cookie/token header or session expired"}, status=st.HTTP_401_UNAUTHORIZED)
         
-        # if not isValidOrganisation(ORGANISATION_ID, request):
-        #     return Response(data={"message":"Invalid/Missing organization id"}, status=st.HTTP_401_UNAUTHORIZED)
+        if not isValidOrganisation(ORGANISATION_ID, request):
+            return Response(data={"message":"Invalid/Missing organization id"}, status=st.HTTP_401_UNAUTHORIZED)
         
         _id = self.request.query_params.get("id")
         url = "https://api.zuri.chat/data/write"
@@ -169,12 +169,12 @@ class DealsListView(APIView):
     queryset = None
 
     def get(self, request, *args, **kwargs):
-        # # check authentication
-        # if not isAuthorized(request):
-        #     return Response(data={"message":"Missing Cookie/token header or session expired"}, status=st.HTTP_401_UNAUTHORIZED)
+        # check authentication
+        if not isAuthorized(request):
+            return Response(data={"message":"Missing Cookie/token header or session expired"}, status=st.HTTP_401_UNAUTHORIZED)
         
-        # if not isValidOrganisation(ORGANISATION_ID, request):
-        #     return Response(data={"message":"Invalid/Missing organization id"}, status=st.HTTP_401_UNAUTHORIZED)
+        if not isValidOrganisation(ORGANISATION_ID, request):
+            return Response(data={"message":"Invalid/Missing organization id"}, status=st.HTTP_401_UNAUTHORIZED)
         
         # centrifugo_post("Deals", {"event": "join", "token": "elijah"})
         url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/deals/{ORGANISATION_ID}"
@@ -197,46 +197,110 @@ class ReArrangeDeals(APIView):
     """
         This view re-arrange the deals card
     """
-    serializer_class = DealUpdateSerializer
+    serializer_class = DealSerializer
     queryset = None
 
     def put(self, request, *args, **kwargs):
+        # check authentication
+        if not isAuthorized(request):
+            return Response(data={"message":"Missing Cookie/token header or session expired"}, status=st.HTTP_401_UNAUTHORIZED)
+        
+        if not isValidOrganisation(ORGANISATION_ID, request):
+            return Response(data={"message":"Invalid/Missing organization id"}, status=st.HTTP_401_UNAUTHORIZED)
+        _id = self.request.query_params.get("id")
         url = "https://api.zuri.chat/data/write"
-        serializer = DealUpdateSerializer(data=request.data)
+        serializer = DealSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        get_id = serializer.data
-        get_all_data = serializer.data
-        del get_all_data["_id"]
-        data = {
-            "plugin_id": PLUGIN_ID,
-            "organization_id": ORGANISATION_ID,
-            "collection_name": "deals",
-            "bulk_write": False,
-            "filter": {},
-            "object_id": get_id['_id'],
-            "payload": get_all_data,
-        }
-        response = requests.put(url, data=json.dumps(data))
-        r = response.json()
-        print(response.status_code)
-        print(r)
-        if response.status_code >= 200 and response.status_code < 300:
-            # centrifugo_post(
-            #     "Deals",
-            #     {
-            #         "event": "edit_deal",
-            #         "token": "elijah",
-            #         "object": r,
-            #     },
-            # )
+
+        ######## check if the re-arrangement data has close deal date
+        if request.data.get('close_date'):
+            data = {
+                "plugin_id": PLUGIN_ID,
+                "organization_id": ORGANISATION_ID,
+                "collection_name": "deals",
+                "bulk_write": False,
+                "object_id": _id,
+                "payload": {
+                    "deal_stage": request.data.get("deal_stage"),
+                    "close_date": request.data.get("close_date"),
+                },
+            }
+            response = requests.put(url, data=json.dumps(data))
+            r = response.json()
+            if ((response.status_code in [200, 201]) and (r["data"]["matched_documents"]>0)):
+                centrifugo_post(
+                    "Deals",
+                    {
+                        "event": "edit_deal",
+                        "token": "elijah",
+                        "object": r,
+                    },
+                )
+                return Response(
+                    data={"message": "Deal Updated Successfully","data":request.data},
+                    status=st.HTTP_200_OK,
+                )
+            elif response.status_code == 422:
+                return Response(
+                    data={"message": "error processing request:invalid characters present"
+                    },
+                    status=st.HTTP_422_UNPROCESSABLE_ENTITY
+                    )
+            elif ((response.status_code in [200, 201]) and (r["data"]["matched_documents"]<1)):
+                return Response(
+                    data={"message": "no deal with that id found"
+                    },
+                    status=st.HTTP_400_BAD_REQUEST
+                    )
             return Response(
-                data={"message": "Deal Updated Successfully"},
-                status=st.HTTP_201_CREATED,
+                data={"message": "Check Prospects Field and try again"},
+                status=st.HTTP_500_INTERNAL_SERVER_ERROR,
             )
-        return Response(
-            data={"message": "Try again later"},
-            status=st.HTTP_500_INTERNAL_SERVER_ERROR,
-        )
+
+
+        else: ############ the deal card has not been drag to close deal section
+            data = {
+                "plugin_id": PLUGIN_ID,
+                "organization_id": ORGANISATION_ID,
+                "collection_name": "deals",
+                "bulk_write": False,
+                "object_id": _id,
+                "payload": {
+                    "deal_stage": request.data.get("deal_stage"),
+                },
+            }
+            response = requests.put(url, data=json.dumps(data))
+            r = response.json()
+            if ((response.status_code in [200, 201]) and (r["data"]["matched_documents"]>0)):
+                centrifugo_post(
+                    "Deals",
+                    {
+                        "event": "edit_deal",
+                        "token": "elijah",
+                        "object": r,
+                    },
+                )
+                return Response(
+                    data={"message": "Deal Updated Successfully","data":request.data},
+                    status=st.HTTP_200_OK,
+                )
+            elif response.status_code == 422:
+                return Response(
+                    data={"message": "error processing request:invalid characters present"
+                    },
+                    status=st.HTTP_422_UNPROCESSABLE_ENTITY
+                    )
+            elif ((response.status_code in [200, 201]) and (r["data"]["matched_documents"]<1)):
+                return Response(
+                    data={"message": "no deal with that id found"
+                    },
+                    status=st.HTTP_400_BAD_REQUEST
+                    )
+            return Response(
+                data={"message": "Check Prospects Field and try again"},
+                status=st.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
+
 
 class DealsFilterListView(APIView):
     """
@@ -245,12 +309,12 @@ class DealsFilterListView(APIView):
     filter params can be anything on the deal name,stage,etc.
     """
     def get(self, request, *args, **kwargs):
-        # # check authentication
-        # if not isAuthorized(request):
-        #     return Response(data={"message":"Missing Cookie/token header or session expired"}, status=st.HTTP_401_UNAUTHORIZED)
+        # check authentication
+        if not isAuthorized(request):
+            return Response(data={"message":"Missing Cookie/token header or session expired"}, status=st.HTTP_401_UNAUTHORIZED)
         
-        # if not isValidOrganisation(ORGANISATION_ID, request):
-        #     return Response(data={"message":"Invalid/Missing organization id"}, status=st.HTTP_401_UNAUTHORIZED)
+        if not isValidOrganisation(ORGANISATION_ID, request):
+            return Response(data={"message":"Invalid/Missing organization id"}, status=st.HTTP_401_UNAUTHORIZED)
 
         search = self.request.query_params.get("filter")
         url = "https://api.zuri.chat/data/read"
@@ -292,13 +356,15 @@ class DealsDeleteView(APIView):
     """
 
     def post(self, request):
-        id = self.request.query_params.get("id")
-         # # check authentication
-        # if not isAuthorized(request):
-        #     return Response(data={"message":"Missing Cookie/token header or session expired"}, status=st.HTTP_401_UNAUTHORIZED)
+         # check authentication
+        if not isAuthorized(request):
+            return Response(data={"message":"Missing Cookie/token header or session expired"}, status=st.HTTP_401_UNAUTHORIZED)
         
-        # if not isValidOrganisation(ORGANISATION_ID, request):
-        #     return Response(data={"message":"Invalid/Missing organization id"}, status=st.HTTP_401_UNAUTHORIZED)
+        if not isValidOrganisation(ORGANISATION_ID, request):
+            return Response(data={"message":"Invalid/Missing organization id"}, status=st.HTTP_401_UNAUTHORIZED)
+
+        id = self.request.query_params.get("id")
+        
         
         url = "https://api.zuri.chat/data/delete"
         data = {
