@@ -204,7 +204,7 @@ function Prospects() {
             .catch((e) => console.log(e.response));
           // const latestProspect = formatProspect(prospect)
           // setProspects([...prospects, latestProspect]);
-          customAlert("Contact Created Successfully", "success");
+          customAlert("Prospects Successfully Created", "success");
         })
         .catch((e) => {
           console.log(e);
@@ -317,7 +317,7 @@ function Prospects() {
       </div>
       {/* CREATE MODAL */}
       <Modal
-        title="Create a Contact"
+        title="Create Contact"
         description="Please input your contact infomation"
         open={open}
         closeModal={handleCloseModal}
@@ -370,7 +370,7 @@ function Prospects() {
           <div className="mt-4 flex justify-end">
             <button
               type="submit"
-              className="bg-green rounded text-white px-10 py-2"
+              className="bg-green rounded mt-5 text-white px-10 py-2"
             >
               Create
             </button>
