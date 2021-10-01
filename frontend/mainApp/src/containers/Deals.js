@@ -221,6 +221,7 @@ const Deals = () => {
             label="Amount"
               placeholder="Enter Amount"
               id="amount"
+              type="number"
               title="amount"
               register={register} 
               required
