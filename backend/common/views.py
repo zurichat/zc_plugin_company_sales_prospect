@@ -42,45 +42,75 @@ class SidebarView(APIView):
                 public_response = json.loads(public_r.text)
                 private_response = json.loads(private_r.text)
                 if private_response['status']!=200:
-                    return Response({"name": PLUGIN_NAME,
-                    "description": DESCRIPTION,
-                    "plugin_id": PLUGIN_ID,
-                    "organisation_id": org,
-                    "user_id": user,
-                    "group_name": "SALES",
-                    "show_group": False,
-                    "public_rooms":[],
-                    "joined_rooms":public_response['data']})
+                    return Response({
+                    "event":"sidebar_update",
+                    "plugin_id": "sales.zuri.chat",
+                    "data":{
+                        "name": PLUGIN_NAME,
+                        "description": DESCRIPTION,
+                        "plugin_id": PLUGIN_ID,
+                        "organisation_id": org,
+                        "user_id": user,
+                        "group_name": "SALES",
+                        "show_group": False,
+                        "button_url": "/sales",
+                        "public_rooms":[],
+                        "joined_rooms":public_response['data']
+                    }
+                    })
                 else:
-                    return Response({"name": PLUGIN_NAME,
-                    "description": DESCRIPTION,
-                    "plugin_id": PLUGIN_ID,
-                    "organisation_id": org,
-                    "user_id": user,
-                    "group_name": "SALES",
-                    "show_group": False,
-                    "public_rooms":private_response['data'],
-                    "joined_rooms":public_response['data']})
+                    return Response({
+                    "event":"sidebar_update",
+                    "plugin_id": "sales.zuri.chat",
+                    "data":{
+                        "name": PLUGIN_NAME,
+                        "description": DESCRIPTION,
+                        "plugin_id": PLUGIN_ID,
+                        "organisation_id": org,
+                        "user_id": user,
+                        "group_name": "SALES",
+                        "show_group": False,
+                        "button_url": "/sales",
+                        "public_rooms":private_response['data'],
+                        "joined_rooms":public_response['data']
+                    }
+                   })
             else:
-                return Response({"name": PLUGIN_NAME,
+                return Response({
+                "event":"sidebar_update",
+                "plugin_id": "sales.zuri.chat",
+                "data":{
+                    "name": PLUGIN_NAME,
                     "description": DESCRIPTION,
                     "plugin_id": PLUGIN_ID,
                     "organisation_id": org,
                     "user_id": user,
                     "group_name": "SALES",
                     "show_group": False,
+                    "button_url": "/sales",
                     "public_rooms":[],
-                    "joined_rooms":[]})
+                    "joined_rooms":[]
+                }
+                
+            })
         else:
-            return Response({"name": PLUGIN_NAME,
+            return Response({
+                "event":"sidebar_update",
+                "plugin_id": "sales.zuri.chat",
+                "data":{
+                    "name": PLUGIN_NAME,
                     "description": DESCRIPTION,
                     "plugin_id": PLUGIN_ID,
                     "organisation_id": org,
                     "user_id": user,
                     "group_name": "SALES",
                     "show_group": False,
+                    "button_url": "/sales",
                     "public_rooms":[],
-                    "joined_rooms":[]})
+                    "joined_rooms":[]
+                }
+                
+            })
 
 
 def is_valid(param):
