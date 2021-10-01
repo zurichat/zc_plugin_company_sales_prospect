@@ -29,7 +29,6 @@ export const PluginProvider = ({ children }) => {
 
         // Prospects listener
         // centrifuge.subscribe("Prospects", );
-        SubscribeToChannel("Prospects", prospectsSubscriber)
         const prospectsSubscriber = (ctx) => {
             const data = ctx.data;
             console.log(data);
@@ -109,9 +108,9 @@ export const PluginProvider = ({ children }) => {
                 }
             }
         }
+        SubscribeToChannel("Prospects", prospectsSubscriber)
         // Deals listener
         // centrifuge.subscribe("Deals",  )
-        SubscribeToChannel("Deals", dealsSubscriber)
         const dealsSubscriber = (ctx) => {
             const data = ctx.data;
             console.log(data);
@@ -160,6 +159,7 @@ export const PluginProvider = ({ children }) => {
                 }
             }
         };
+        SubscribeToChannel("Deals", dealsSubscriber)
         // centrifuge.connect();
 
     }, [])
