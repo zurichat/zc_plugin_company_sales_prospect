@@ -164,7 +164,7 @@ const Deals = () => {
         open={openCreate}
         closeModal={handleCloseModal}>
         <form className="mt-2" onSubmit={handleSubmit(onSubmit)}>
-          <div>
+          <div className="text-base">
             <Select
               label="Name"
               id="prospect_id"
@@ -198,7 +198,7 @@ const Deals = () => {
             </Select>
             <p className="text-error text-xs mb-2 -mt-3 capitalize">{errors.name?.message}</p>
           </div>
-          <div className="font-bold text-gray-800 rounded">
+          <div className="text-gray-800 rounded">
             <Select
               title="deal_stage"
               label="Deal stage"
@@ -214,7 +214,7 @@ const Deals = () => {
             </Select>
             <p className="text-error text-xs mb-2 -mt-3 capitalize">{errors.deal_stage?.message}</p>
           </div>
-          <div>
+          <div className='text-gray-800'>
             <Input
             label="Amount"
               placeholder="Enter Amount"

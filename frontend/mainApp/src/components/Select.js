@@ -5,7 +5,7 @@ export default function Select({ title, label, children, register, required }) {
   return (
     <div className="mb-6 rounded-md" id={title}>
       <label
-        className=" mb-2 block font-bold text-gray-700 "
+        className=" mb-2 block font-bold text-base text-gray-800 "
         htmlFor={title}
       >
         {label}
