@@ -48,7 +48,7 @@ export const Input = ({
         {label}
       </label>
       <input
-        className="border border-gray-500 outline-none placeholder-gray-400 rounded-sm h-12 text-sm w-full px-5 focus:border-green"
+        className="border border-gray-500 outline-none placeholder-opacity-50 placeholder-gray-400 rounded-sm h-12 text-sm w-full px-5 focus:border-green"
         onChange={onChange}
         id={id}
         value={value}
