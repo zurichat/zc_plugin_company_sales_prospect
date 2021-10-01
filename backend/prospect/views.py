@@ -11,7 +11,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 
-from .serializers import ProspectSerializer
+from .serializers import ProspectSerializer, ProspectUpdateSerializer
 # changed the import to a single import
 from common.utils import centrifugo_post
 from rest_framework.permissions import AllowAny
@@ -173,14 +173,10 @@ class ProspectsUpdateView(APIView):
             return Response(data={"message":"Invalid/Missing organization id"}, status=status.HTTP_401_UNAUTHORIZED)
         
         url = "https://api.zuri.chat/data/write"
-        serializer = ProspectSerializer(data=request.data)
+        serializer = ProspectUpdateSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        object_id = serializer.data.get("object_id")
-        try:
-            del request.data["object_id"]
-        except:
-            pass
+        object_id = serializer.data.pop("object_id")
         data = {
             "plugin_id": PLUGIN_ID,
             "organization_id": ORGANISATION_ID,
@@ -192,13 +188,16 @@ class ProspectsUpdateView(APIView):
         response = requests.put(url, data=json.dumps(data))
 
         if response.status_code in [200, 201]:
-            response = response.json()
-            print(response)
-            if response["data"]["modified_documents"] == 0:
+            r = response.json()
+            if r["data"]["matched_documents"] == 0:
                 return Response(
-                    data={
-                        "message": "There is no prospect with this object id you supplied"
-                    },
+                    data={"message": "There is no prospect with the 'object_id' you supplied."},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+
+            if r["data"]["modified_documents"] == 0:
+                return Response(
+                    data={"message": "Prospect update failed. Empty data or invalid values was passed."},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
             centrifugo_post(
@@ -209,7 +208,7 @@ class ProspectsUpdateView(APIView):
                     "object": serializer.data,
                 },
             )
-            return Response(data=response, status=status.HTTP_200_OK)
+            return Response(data=r, status=status.HTTP_200_OK)
 
         return Response(
             data={"message": "Try again later", "data": request.data},
