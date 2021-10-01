@@ -59,7 +59,9 @@ class CustomRequest:
         response = requests.get(url)
         r = response.json()
         if response.status_code == 200:
-            return response.json()
+            result = response.json()
+            result['status_code'] = response.status_code
+            return result
 
     @staticmethod
     def post(payload):
