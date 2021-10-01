@@ -268,7 +268,7 @@ function Prospects() {
   const handleDelete = (e) => {
     e.preventDefault();
     customAxios
-      .post(`${deleteProspectURL}`, { 'object_id': prospect._id })
+      .delete(`${deleteProspectURL}${prospect._id}/`)
       .then((r) => {
         handleCloseModal();
         customAxios
