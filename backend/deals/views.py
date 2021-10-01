@@ -208,39 +208,7 @@ class ReArrangeDeals(APIView):
         if not isValidOrganisation(ORGANISATION_ID, request):
             return Response(data={"message":"Invalid/Missing organization id"}, status=st.HTTP_401_UNAUTHORIZED)
         url = "https://api.zuri.chat/data/write"
-        serializer = DealUpdateSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        get_id = serializer.data
-        get_all_data = serializer.data
-        del get_all_data["_id"]
-        data = {
-            "plugin_id": PLUGIN_ID,
-            "organization_id": ORGANISATION_ID,
-            "collection_name": "deals",
-            "bulk_write": False,
-            "filter": {},
-            "object_id": get_id['_id'],
-            "payload": get_all_data,
-        }
-        response = requests.put(url, data=json.dumps(data))
-        r = response.json()
-        if response.status_code >= 200 and response.status_code < 300:
-            # centrifugo_post(
-            #     "Deals",
-            #     {
-            #         "event": "edit_deal",
-            #         "token": "elijah",
-            #         "object": r,
-            #     },
-            # )
-            return Response(
-                data={"message": "Deal Updated Successfully"},
-                status=st.HTTP_201_CREATED,
-            )
-        return Response(
-            data={"message": "Try again later"},
-            status=st.HTTP_500_INTERNAL_SERVER_ERROR,
-        )
+        
 
 class DealsFilterListView(APIView):
     """
