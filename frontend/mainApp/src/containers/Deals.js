@@ -2,32 +2,60 @@ import React, { useContext, useEffect, useState } from "react";
 import Button from "../components/Button";
 import DealCard from "../components/DealCard";
 import Modal from "../components/Modal";
-import customAxios, { createDealURL, dealsURL } from "../axios";
+import customAxios, { createDealURL, dealsURL, prospectsURL } from "../axios";
 
 import FilterDeal from "../components/FilterDeal";
 import FilterDeals from "../components/FilterDeals";
 import { PluginContext } from "../context/store";
-
-import { Input, Select } from "./Prospects";
+import Input from "../components/Input";
+import Select from "../components/Select";
+//import { Input, Select } from "./Prospects";
 import { customAlert } from "../utils";
 import FileIcon from "../components/svg/FileIcon";
 import Loader from "../components/svg/Loader.svg";
-const Deals = () => {
-  const [loading, setLoading] = useState(true);
-  const [deal, setDeal] = useState({
-    id: "",
-    amount: "",
-    close_date: "",
-    deal_stage: "",
-    description: "",
-    name: "",
-    prospect_id: "",
-  });
-  const { deals, setDeals, prospects, setProspects } =
-    useContext(PluginContext);
+import { useForm } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
 
+const schema = yup.object().shape({
+  name: yup.string().required(),
+  deal_stage: yup.string().required(),
+  close_date: yup.string().required(),
+  amount: yup.string().required(),
+  description: yup.string().required(),
+});
+
+const Deals = () => {
+  const { register,handleSubmit, formState: { errors },reset } = useForm({resolver: yupResolver(schema)});
+  const [loading, setLoading] = useState(true);
+  const [prospectsLoading, setprospectsLoading] = useState(false)
+  const [loadingError, setloadingError] = useState("")
+  const { deals, setDeals, prospects, setProspects } = useContext(PluginContext)
+  const [dealContacts, setdealContacts] = useState([])
   const [openCreate, setOpenCreate] = useState(false);
-  const handleOpenCreateModal = () => setOpenCreate(true);
+  const ProspectStage= deals.filter(x => x.deal_stage && x.deal_stage.toLowerCase() === "prospect")
+  const NegotiationStage= deals.filter(x => x.deal_stage && x.deal_stage.toLowerCase() === "negotiation")
+  const ProposalStage= deals.filter(x => x.deal_stage && x.deal_stage.toLowerCase() === "proposal")
+  const ClosedStage= deals.filter(x => x.deal_stage && x.deal_stage.toLowerCase() === "closed")
+
+  const handleOpenCreateModal = () => {
+    setOpenCreate(true);
+    setprospectsLoading(true)
+    setloadingError("")
+    reset()
+    customAxios
+        .get(prospectsURL)
+        .then(({data}) => {
+          setdealContacts(data.contacts)
+          setprospectsLoading(false)
+          //console.log(data.contacts)
+         })
+        .catch((e) => {
+          console.log(e.response);
+          setloadingError(e.response)
+          setprospectsLoading(false)
+        });
+  }
 
   const [openFilter, setOpenFilter] = useState(false);
   const handleOpenFilterModal = () => setOpenFilter(true);
@@ -72,38 +100,25 @@ const Deals = () => {
     }
   }, []);
 
-  const handleChange = ({ target }) => {
-    if (target.id === "prospect_id") {
-      const prospect_id = target.value.split("-")[0];
-      const name = target.value.split("-")[1];
-      setDeal({
-        ...deal,
-        prospect_id,
-        name,
-      });
-    } else {
-      setDeal({
-        ...deal,
-        [target.id]: target.value,
-      });
+  const onSubmit = (data) => {
+    var val= (data.name).split(",")
+    var arr=[val]
+    const newDeal = {
+      amount: data.amount,
+      close_date: data.close_date,
+      deal_stage: data.deal_stage,
+      description: data.description,
+      name: arr[0][0],
+      prospect_id: arr[0][1]
     }
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(deal);
-
-    customAxios
-      .post(createDealURL, deal)
+    
+    customAxios.post(createDealURL, newDeal)
       .then((r) => {
         handleCloseModal();
-        customAxios
-          .get(dealsURL)
-          .then((r) => setDeals(r.data))
-          .catch((e) => console.log(e.response));
-        // const latestDeal = formatProspect(prospect)
-        // setProspects([...prospects, latestProspect]);
-        customAlert("Deal Created Successfully", "success");
+        customAxios.get(dealsURL)
+          .then(r => setDeals(r.data))
+          .catch(e => console.log(e.response))
+        customAlert("Deal Created Successfully", "success")
       })
       .catch((e) => {
         console.log(e);
@@ -147,64 +162,92 @@ const Deals = () => {
         title="Create a deal"
         description="Create a deal for your prospect. Please provide all necessary information."
         open={openCreate}
-        closeModal={handleCloseModal}
-      >
-        <form className="mt-2" onSubmit={handleSubmit}>
-          <div className="font-bold mt-7 text-gray-800">
-            <Select label="Name" id="prospect_id" onChange={handleChange}>
-              <option>Select a contact</option>
-              {prospects.length > 0 &&
-                prospects.map((prospect, i) => (
-                  <option key={i} value={`${prospect._id}-${prospect.name}`}>
-                    {prospect.name}
-                  </option>
-                ))}
+        closeModal={handleCloseModal}>
+        <form className="mt-2" onSubmit={handleSubmit(onSubmit)}>
+          <div>
+            <Select
+              label="Name"
+              id="prospect_id"
+              title="name"
+              register={register} 
+              required
+            >
+              <option selected disabled value="">Select a contact</option>
+              {prospectsLoading && dealContacts.length==0 ?
+              (<option disabled value="">Fetching all prospects ...</option>) : null
+            }
+            {!prospectsLoading && dealContacts.length==0 ?
+              (<option disabled value="">No Prospects Found</option>) : null
+            }
+            {loadingError?
+              (<option disabled value="">Error encountered while loading prospects</option>) : null
+            }
+
+              {dealContacts.map(dealContact=> (
+                <option
+                key={dealContact._id}
+                value={`${dealContact.name}, ${dealContact._id}`}
+              >
+                {dealContact.name}
+              </option>
+              ))}
+              {/* {prospects.length > 0 && prospects.map((prospect, i) => (
+                <option key={i} value={`${prospect._id}-${prospect.name}`}>{prospect.name}</option>
+              ))} */}
+
             </Select>
+            <p className="text-error text-xs mb-2 -mt-3 capitalize">{errors.name?.message}</p>
           </div>
           <div className="font-bold text-gray-800 rounded">
             <Select
-              title="stage"
+              title="deal_stage"
               label="Deal stage"
               id="deal_stage"
-              onChange={handleChange}
+              register={register} 
+              required
             >
-              <option>Select a stage</option>
-              <option>Active</option>
+              <option selected disabled value="">Select a stage</option>
+              <option>Proposal</option>
               <option>Closed</option>
               <option>Negotiation</option>
               <option>Prospect</option>
             </Select>
+            <p className="text-error text-xs mb-2 -mt-3 capitalize">{errors.deal_stage?.message}</p>
           </div>
           <div>
-            <label className="block font-bold text-base text-gray-800 rounded">
-              Amount
-            </label>
             <Input
+            label="Amount"
               placeholder="Enter Amount"
-              onChange={handleChange}
               id="amount"
+              type="number"
+              title="amount"
+              register={register} 
+              required
             />
+            <p className="text-error text-xs mb-2 -mt-3 capitalize">{errors.amount?.message}</p>
           </div>
           <div>
-            <label className="block font-bold text-base text-gray-800">
-              Expected close date
-            </label>
             <Input
+              label="Expected close date"
               placeholder="dd-mm-yy"
-              onChange={handleChange}
               id="close_date"
               type="date"
+              title="close_date"
+              register={register} 
+              required
             />
+            <p className="text-error text-xs mb-2 -mt-3 capitalize">{errors.close_date?.message}</p>
           </div>
           <div>
-            <label className="block font-bold text-base text-gray-800 ">
-              Description
-            </label>
             <Input
+            label="Description"
               placeholder="Additional Info"
-              onChange={handleChange}
               id="description"
+              title="description"
+              register={register} 
+              required
             />
+            <p className="text-error text-xs mb-2 -mt-3 capitalize">{errors.description?.message}</p>
           </div>
 
           <div className="mt-4 flex justify-end">
@@ -234,7 +277,7 @@ const Deals = () => {
                   Prospects
                 </span>
                 <span className="text-sm text-gray-500">
-                  3 deals • $ 1,500,000
+                {ProspectStage.length} deals • $ 1,500,000
                 </span>
               </div>
               <div className="px-24 lg:px-8 text-left border-b border-gray-300 py-2">
@@ -242,7 +285,7 @@ const Deals = () => {
                   Proposal
                 </span>
                 <span className="text-sm text-gray-500">
-                  3 deals • $ 1,500,000
+                {ProposalStage.length} deals • $ 1,500,000
                 </span>
               </div>
               <div className="px-24 lg:px-8 text-left border-b border-gray-300 py-2">
@@ -250,7 +293,7 @@ const Deals = () => {
                   Negotiation
                 </span>
                 <span className="text-sm text-gray-500">
-                  3 deals • $ 1,500,000
+                {NegotiationStage.length} deals • $ 1,500,000
                 </span>
               </div>
               <div className="px-24 lg:px-8 text-left border-b border-gray-300 py-2">
@@ -258,7 +301,7 @@ const Deals = () => {
                   Closed
                 </span>
                 <span className="text-sm text-gray-500">
-                  3 deals • $ 1,500,000
+                {ClosedStage.length} deals • $ 1,500,000
                 </span>
               </div>
             </div>
@@ -315,7 +358,7 @@ const Deals = () => {
               <img
                 src={Loader}
                 alt="loader"
-                className="animate-ping"
+                className="animate-spin"
                 id="loader"
               />
               <h2 className="font-medium text-2xl text-black-500 text-center">
