@@ -3,6 +3,7 @@ import logging
 
 from django.conf import settings
 
+from rest_framework.exceptions import ParseError, AuthenticationFailed
 from rest_framework.views import exception_handler
 from rest_framework.response import Response
 from rest_framework import status
@@ -36,6 +37,14 @@ def isAuthorized(request):
         print(r.status_code)
         if r.status_code == 200:
             return True
+        raise AuthenticationFailed(detail="Invalid Authorization type or token.")
+
+    except KeyError:
+        raise ParseError(detail="Missing 'Authorization' header.")
+
+    except AuthenticationFailed as e:
+        raise e
+
     except:
         return False
 
@@ -48,6 +57,14 @@ def isValidOrganisation(organisationId, request):
         print(r.status_code)
         if r.status_code == 200:
             return True
+        raise AuthenticationFailed(detail="Invalid organizationId.")
+
+    except KeyError:
+        raise ParseError(detail="Missing 'Authorization' header.")
+
+    except AuthenticationFailed as e:
+        raise e
+
     except:
         return False
 # write data ( collect_name, objr.ect_) r
