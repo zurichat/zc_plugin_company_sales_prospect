@@ -216,19 +216,16 @@ class ProspectsUpdateView(APIView):
         )
 
 
-class ProspectsDeleteView(APIView):
-    permission_classes = [AllowAny]
-    authentication_classes = []
+class ProspectsBatchDeleteView(APIView):
 
     def delete(self, request, **kwargs):
-        # # check authentication
+        # check authentication
         if not isAuthorized(request):
             return Response(data={"message": "Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
 
         if not isValidOrganisation(ORGANISATION_ID, request):
             return Response(data={"message": "Invalid/Missing organization id"}, status=status.HTTP_401_UNAUTHORIZED)
         filterData = request.data.get('filter')
-        print(filterData)
 
         url = "https://api.zuri.chat/data/delete"
         data = {
@@ -244,7 +241,6 @@ class ProspectsDeleteView(APIView):
         }
 
         response = requests.request("POST", url, data=json.dumps(data))
-        print(response.text)
         if response.status_code == 200:
             r = response.json()
             if r["data"]["deleted_count"] == 0:
@@ -259,17 +255,17 @@ class ProspectsDeleteView(APIView):
                 {
                     "event": "delete_prospect",
                     "token": "elijah",
-                    "id": kwargs.get("object_id"),
+                    "object": filterData,
                 },
             )
-            return Response(data={"message":" Prospect list  deleted successful"}, status=status.HTTP_200_OK)
+            return Response(data={"message": " Prospect list  deleted successful"}, status=status.HTTP_200_OK)
         return Response(
             data={"message": "Try again later"},
-            status=response.status_code,
+            status=status.HTTP_400_BAD_REQUEST
         )
 
 
-class ProspectsBatchDeleteView(APIView):
+class ProspectsDeleteView(APIView):
     permission_classes = [AllowAny]
     authentication_classes = []
 
