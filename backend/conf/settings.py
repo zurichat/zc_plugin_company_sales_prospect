@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "deals",
     "prospect",
     "onboarding",
+    'email_template',
     # Centrifugo
     # "instant",
     # "cent",
@@ -192,6 +193,7 @@ REST_FRAMEWORK = {
     ],
 
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'EXCEPTION_HANDLER': 'common.utils.custom_exception_handler'
 }
 
 # API DOCS SETTINGS
