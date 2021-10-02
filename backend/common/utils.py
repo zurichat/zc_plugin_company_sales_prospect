@@ -22,23 +22,13 @@ from dataclasses import dataclass
 class CustomRequest:
     @staticmethod
     def get(org_id, collection_name, params=None):
-        print(org_id)
-        print(collection_name)
-        print(params)
         url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/{collection_name}/{org_id}"
-        print(url)
         response = requests.get(url) # the important function
-        print(response)
-        r = response.json() # important result # first json() block
-        print(r)
+        r = response.json()
         if response.status_code == 200:
-            print(response.status_code)
             result = response.json()
-            print(result) # second json() block
             result['status_code'] = response.status_code
-            print(result['status_code'])
-            print(response.status_code)
-            return result # storage of that important result. That SECOND block of code.
+            return result # storage of that important result.
 
     @staticmethod
     def post(org_id, collection_name, payload):
