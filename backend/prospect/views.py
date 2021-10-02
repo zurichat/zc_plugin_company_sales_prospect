@@ -73,12 +73,12 @@ class ProspectsListView(APIView):
     paginate_by = 20
 
     def get(self, request, org_id, *args, **kwargs):
-        # # check authentication
-        if not isAuthorized(request):
-            return handle_failed_request(response=None)
+        # # # check authentication
+        # if not isAuthorized(request):
+        #     return handle_failed_request(response=None)
 
-        if not isValidOrganisation(ORGANISATION_ID, request):
-            return handle_failed_request(response=None)
+        # if not isValidOrganisation(ORGANISATION_ID, request):
+        #     return handle_failed_request(response=None)
 
         # url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/prospects/{ORGANISATION_ID}"
         # response = requests.request("GET", url)
@@ -138,12 +138,12 @@ class ProspectsCreateView(APIView):
     queryset = None
 
     def post(self, request, org_id, *args, **kwargs):
-        # # check authentication
-        if not isAuthorized(request):
-            return handle_failed_request(response=None)
+        # # # check authentication
+        # if not isAuthorized(request):
+        #     return handle_failed_request(response=None)
 
-        if not isValidOrganisation(ORGANISATION_ID, request):
-            return handle_failed_request(response=None)
+        # if not isValidOrganisation(ORGANISATION_ID, request):
+        #     return handle_failed_request(response=None)
 
         serializer = ProspectSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -187,12 +187,12 @@ class ProspectsUpdateView(APIView):
     queryset = None
 
     def put(self, request, *args, **kwargs):
-        # check authorization
-        if not isAuthorized(request):
-            return handle_failed_request(response=None)
+        # # check authorization
+        # if not isAuthorized(request):
+        #     return handle_failed_request(response=None)
 
-        if not isValidOrganisation(ORGANISATION_ID, request):
-            return handle_failed_request(response=None)
+        # if not isValidOrganisation(ORGANISATION_ID, request):
+        #     return handle_failed_request(response=None)
 
         url = "https://api.zuri.chat/data/write"
         serializer = ProspectUpdateSerializer(data=request.data)
@@ -237,12 +237,12 @@ class ProspectsUpdateView(APIView):
 class ProspectsBatchDeleteView(APIView):
 
     def post(self, request, **kwargs):
-        # check authentication
-        if not isAuthorized(request):
-            return handle_failed_request(response=None)
+        # # check authentication
+        # if not isAuthorized(request):
+        #     return handle_failed_request(response=None)
 
-        if not isValidOrganisation(ORGANISATION_ID, request):
-            return handle_failed_request(response=None)
+        # if not isValidOrganisation(ORGANISATION_ID, request):
+        #     return handle_failed_request(response=None)
 
         filterData = request.data.get('filter')
 
@@ -287,11 +287,11 @@ class ProspectsDeleteView(APIView):
 
     def delete(self, request, search, *args, **kwargs):
         # # check authentication
-        if not isAuthorized(request):
-            return handle_failed_request(response=None)
+        # if not isAuthorized(request):
+        #     return handle_failed_request(response=None)
 
-        if not isValidOrganisation(ORGANISATION_ID, request):
-            return handle_failed_request(response=None)
+        # if not isValidOrganisation(ORGANISATION_ID, request):
+        #     return handle_failed_request(response=None)
 
         url = "https://api.zuri.chat/data/delete"
         data = {
