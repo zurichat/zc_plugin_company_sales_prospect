@@ -1,11 +1,12 @@
 import React from "react";
-import { Trash2, Edit, PlusSquare } from "react-feather";
+import { Trash2, Edit, PlusSquare, MoreHorizontal } from "react-feather";
 
 function ProspectRow({
   openEditModal,
   openDealCreateModal,
   openDeleteModal,
   prospect,
+  openAdditionalInfoModal
 }) {
   return (
     <tr className="hover:bg-gray-100 cursor-pointer text-gray-900">
@@ -56,6 +57,13 @@ function ProspectRow({
             <Trash2
               className="inline-block text-gray-500"
               onClick={(e) => openDeleteModal(e, prospect)}
+              strokeWidth={1}
+            />
+          </span>
+          <span>
+            <MoreHorizontal
+              className="inline-block text-gray-500"
+              onClick={(e) => openAdditionalInfoModal(e, prospect)}
               strokeWidth={1}
             />
           </span>

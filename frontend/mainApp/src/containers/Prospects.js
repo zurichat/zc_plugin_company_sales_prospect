@@ -1,10 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import Button from "../components/Button";
 // import Input from '../components/Input'
 import Modal from "../components/Modal";
 import ProspectRow from "../components/ProspectRow";
-import { ChevronLeft, ChevronRight } from "react-feather";
+import ExtraInfo from "../components/ExtraInfo";
+import { ChevronLeft, ChevronRight, ChevronDown } from "react-feather";
 // import Select from '../components/Select'
 import customAxios, {
   createProspectURL,
@@ -94,7 +95,9 @@ export const Select = ({
   );
 };
 
+
 function Prospects() {
+  // debugger
   const { prospects, setProspects } = useContext(PluginContext);
 
   const [prospect, setProspect] = useState({
@@ -104,12 +107,22 @@ function Prospects() {
     phone_number: "",
     company: "",
   });
+  const additionalInfoForm = useRef();
+  const[showInfoForm, setShowInfoForm] = useState(false)
+  const infoFormOpen = () => {
+    !showInfoForm ? 
+    additionalInfoForm.current.className="flex justify-between" : null ;
+  }
+
+  const infoFormClose = () => {
+    additionalInfoForm.current.className="hidden justify-between"
+  }
 
   const [page, setPage] = useState(1);
 
   const [deal, setDeal] = useState(null);
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const [open, setOpen] = useState(false);
   const handleOpenCreateModal = () => setOpen(true);
@@ -126,7 +139,7 @@ function Prospects() {
     setOpen3(true);
   };
 
-  const [open4, setOpen4] = useState(false);
+  const [open4, setOpen4] = useState(false);  
   const handleOpenDealCreateModal = (e, prospect) => {
     setProspect(prospect);
     const newDeal = {
@@ -136,6 +149,12 @@ function Prospects() {
     setDeal(newDeal);
     setOpen4(true);
   };
+  const [openAdditionalInfoModal, setOpenAdditionalInfoModal] = useState(false);
+
+  const handleOpenAdditionalInfoModal = (e, prospect) => {
+    setProspect(prospect);
+    setOpenAdditionalInfoModal(true);
+  }
 
   const handleCloseModal = () => {
     setDeal(null);
@@ -150,6 +169,7 @@ function Prospects() {
     setOpen2(false);
     setOpen3(false);
     setOpen4(false);
+    setOpenAdditionalInfoModal(false);
   };
 
   const pageForward = () => {
@@ -179,7 +199,7 @@ function Prospects() {
       })
       .catch((e) => {
         setLoading(false);
-        // console.warn("Error fetching prospects!")
+        console.warn("Error fetching prospects!")
       });
   }, [page]);
 
@@ -580,8 +600,69 @@ function Prospects() {
           </div>
         </form>
       </Modal>
+      {/* Additional Info Modal  */}
+      <Modal
+        title={prospect.name}
+        description="Additional information"
+        open={openAdditionalInfoModal}
+        closeModal={handleCloseModal}
+      >        
+      
+          {prospect.additionalInfo ?
+          <div>
+            {prospect.additionalInfo.map((prospect, i) => (              
+              <ExtraInfo 
+              key={i}
+              fieldLabel={prospect.label}
+              fieldValue={prospect.value}
+               />
+            ))} 
+          </div> : 
+          <div className=" flex border-t h-80 w-full border-gray-500">
+          <div className="m-auto">
+            <h2>No additional info for this contact</h2>            
+          </div>
+          </div> }         
 
-      {prospects.contacts.length > 0 && !loading ? (
+        <div className="mt-4 flex-col justify-end">
+        <div className="flex w-full border-b border-green justify-between">
+              <h2>Add New Field</h2>
+              <button className="border-0" onClick={infoFormOpen}>
+                <ChevronDown strokeWidth={1} />
+              </button>
+              
+          </div>  
+          <div ref={additionalInfoForm} className="hidden justify-between">
+            <div className="flex-col">              
+            <label className="block font-bold text-base text-gray-800">  
+            Field Label            
+            </label>
+            <Input
+              type="text"
+              placeholder="Enter a Title"
+              id="fieldLabel"
+            />          
+            </div>
+            <div className="flex-col">
+            <label className="block font-bold text-base text-gray-800">
+              Field Value              
+            </label>
+            <Input
+              type="text"
+              placeholder="Enter a Value"
+              id="fieldValue"
+            />
+              </div>
+              <div className="flex-col">
+             
+            <button className="bg-green border-0 text-white mt-9" onClick={infoFormClose}>Add Field</button>
+              </div>
+              
+            </div>           
+        </div>
+      </Modal>
+
+      {prospects.contacts.length > 0 && !loading ? ( 
         <div className="mt-4">
           <div className="overflow-x-auto overflow-y-hidden rounded-md">
             <table className="text-left border-gray-100 w-full">
@@ -605,12 +686,13 @@ function Prospects() {
                 </tr>
               </thead>
               <tbody className="bg-white">
-                {prospects.contacts.map((prospect, i) => (
+                {prospects.contacts.map((prospect, i) => ( 
                   <ProspectRow
                     key={i}
                     openEditModal={handleOpenEditModal}
                     openDealCreateModal={handleOpenDealCreateModal}
                     openDeleteModal={handleOpenDeleteModal}
+                    openAdditionalInfoModal={handleOpenAdditionalInfoModal}
                     prospect={prospect}
                   />
                 ))}
