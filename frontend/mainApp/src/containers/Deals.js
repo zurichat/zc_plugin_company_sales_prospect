@@ -205,12 +205,12 @@ const Deals = () => {
 							<option selected disabled value="">
 								Select a contact
 							</option>
-							{prospectsLoading && dealContacts.length == 0 ? (
+							{prospectsLoading && dealContacts?.length == 0 ? (
 								<option disabled value="">
 									Fetching all prospects ...
 								</option>
 							) : null}
-							{!prospectsLoading && dealContacts.length == 0 ? (
+							{!prospectsLoading && dealContacts?.length == 0 ? (
 								<option disabled value="">
 									No Prospects Found
 								</option>
@@ -221,7 +221,7 @@ const Deals = () => {
 								</option>
 							) : null}
 
-							{dealContacts.map((dealContact) => (
+							{dealContacts?.map((dealContact) => (
 								<option
 									key={dealContact._id}
 									value={`${dealContact.name}, ${dealContact._id}`}
