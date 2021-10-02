@@ -45,6 +45,9 @@ def isAuthorized(request):
     except AuthenticationFailed as e:
         raise e
 
+    except requests.ConnectionError as e:
+        raise e
+
     except:
         return False
 
@@ -63,6 +66,9 @@ def isValidOrganisation(organisationId, request):
         raise ParseError(detail="Missing 'Authorization' header.")
 
     except AuthenticationFailed as e:
+        raise e
+
+    except requests.ConnectionError as e:
         raise e
 
     except:
@@ -97,4 +103,35 @@ def custom_exception_handler(exc, context):
             data={"message": "Something unexpected happened. Try again later."},
             status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     return response
+
+
+def handle_failed_request(response=None):
+    UNEXPECTED_ERROR_MESSAGE = "Something unexpected happened. Try again later."
+
+    if response is None:
+        return Response(
+            data={"message": UNEXPECTED_ERROR_MESSAGE},
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    status_code = response.status_code
+
+    if status_code >= 500:
+        return Response(
+            data={"message": "ZURI server returned a {} error. Try again later.".format(status_code)},
+            status=status.HTTP_502_BAD_GATEWAY)
+
+    try:
+        r = response.json()
+    except:
+        return Response(
+            data={"message": "ZURI server returned an invalid response.".format(status_code)},
+            status=status.HTTP_502_BAD_GATEWAY)
+
+    if status_code >= 400:
+        Response(
+            data={"message": "Something was wrong with your request. Check your payload."},
+            status=status_code)
+    return Response(
+            data={"message": UNEXPECTED_ERROR_MESSAGE},
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 

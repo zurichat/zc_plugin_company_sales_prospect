@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react"
 import Parcel from 'single-spa-react/parcel'
 import { pluginHeader } from '@zuri/plugin-header'
-import { GetWorkspaceUsers } from '@zuri/zuri-control'
+import { GetWorkspaceUsers } from '@zuri/control'
 
 
 
 function PluginHeader() {
-    const [workspaceUsers, setWorkspaceUsers] = useState();
+    const [workspaceUsers, setWorkspaceUsers] = useState(0);
     useEffect(() => {
         async function call() {
             try {
