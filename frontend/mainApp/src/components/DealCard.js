@@ -11,14 +11,14 @@ const stages = {
   "Proposal": "border-pink"
 }
 
-const DealCard = ({ deal, index,  Delete }) => {
+const DealCard = ({ deal }) => {
 
   const [open, setOpen] = useState(false);
   const handleOpenModal = () => setOpen(true);
 
   const handleCloseModal = () => {
     setOpen(false);
-    setOpen2(false);
+    // setOpen2(false);
   };
 
   return (
@@ -31,6 +31,7 @@ const DealCard = ({ deal, index,  Delete }) => {
           handleCloseModal={handleCloseModal}
           handleCloseDeleteModal={handleCloseModal}
           id ={deal._id}
+          deal ={deal}
         />
       </div>
       <div>

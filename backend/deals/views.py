@@ -176,7 +176,7 @@ class DealsListView(APIView):
         if not isValidOrganisation(ORGANISATION_ID, request):
             return Response(data={"message":"Invalid/Missing organization id"}, status=st.HTTP_401_UNAUTHORIZED)
         
-        # centrifugo_post("Deals", {"event": "join", "token": "elijah"})
+        centrifugo_post("Deals", {"event": "join", "token": "elijah"})
         url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/deals/{ORGANISATION_ID}"
         response = requests.request("GET", url)
         r = response.json()
@@ -197,7 +197,7 @@ class ReArrangeDeals(APIView):
     """
         This view re-arrange the deals card
     """
-    serializer_class = DealSerializer
+    serializer_class = DealUpdateSerializer
     queryset = None
 
     def put(self, request, *args, **kwargs):
@@ -209,7 +209,7 @@ class ReArrangeDeals(APIView):
             return Response(data={"message":"Invalid/Missing organization id"}, status=st.HTTP_401_UNAUTHORIZED)
         _id = self.request.query_params.get("id")
         url = "https://api.zuri.chat/data/write"
-        serializer = DealSerializer(data=request.data)
+        serializer = DealUpdateSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
         ######## check if the re-arrangement data has close deal date

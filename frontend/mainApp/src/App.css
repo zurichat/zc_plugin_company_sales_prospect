@@ -173,10 +173,6 @@ input[type="checkbox"]:checked:after {
   display: block !important;
 }
 
-.swal2-actions {
-  display: none !important;
-}
-
-::placeholder {
-  font-size: small;
-}
+/* .swal2-actions{
+    display: none !important;
+} */
