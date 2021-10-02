@@ -740,11 +740,11 @@ function Prospects() {
 
 			{prospects?.contacts?.length > 0 && !loading ? (
 				<div className='mt-4'>
-					<div className='overflow-x-auto overflow-y-hidden rounded-md'>
-						<table className='text-left border-gray-100 w-full'>
-							<thead className='border-b cursor-pointer'>
+					<div className='overflow-x-auto overflow-y-hidden rounded-md '>
+						<table className='text-left border-gray-100 w-full sm:shadow-2xl border-collapse w-fullxx'>
+							<thead className='border-b cursor-pointer '>
 								<tr>
-									<th className='px-3 py-4'>
+									<th className='px-3 py-4 sm:absolute sm:block'>
 										<span className='flex items-center'>
 											<input
 												className='mr-4'
@@ -752,13 +752,13 @@ function Prospects() {
 												name=''
 												id='all'
 											/>
-											<label htmlFor='all'>Name</label>
+											<label htmlFor='all  sm:text-sm'>Name</label>
 										</span>
 									</th>
-									<th className='px-3 py-4'>Email</th>
-									<th className='px-3 py-4'>Phone Number</th>
-									<th className='px-3 py-4'>Company</th>
-									<th className='px-3 py-4'> Actions </th>
+									<th className='px-3 py-4 hidden sm:table-cell sm:text-sm '>Email</th>
+									<th className='px-3 py- hidden sm:table-cell sm:text-sm  '>Phone Number</th>
+									<th className='px-3 py-4 hidden sm:table-cell  sm:text-sm'>Company</th>
+									<th className='px-3 py-4   sm:text-sm sm:justify-between '> Actions </th>
 								</tr>
 							</thead>
 							<tbody className='bg-white'>
@@ -780,7 +780,7 @@ function Prospects() {
 						<button
 							onClick={() => pageBackward()}
 							disabled={!prospects.prev}
-							className='flex items-center py-2 px-3 cursor-pointer border-0 disabled:text-gray-300'
+							className='flex items-center py-2 px-3 cursor-pointer border-0 disabled:text-gray-300 sm:hidden'
 						>
 							{" "}
 							<ChevronLeft strokeWidth={1} />{" "}
@@ -832,7 +832,7 @@ function Prospects() {
 												/>
 												<label htmlFor='all'>Name</label>
 											</th>
-											<th className='px-3 py-4'>Email</th>
+											<th className='px-3 py-4 block md:hidden '>Email</th>
 											<th className='px-3 py-4'>Phone Number</th>
 											<th className='px-3 py-4'>Company</th>
 											<th className='px-3 py-4'> Actions </th>
