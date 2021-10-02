@@ -11,7 +11,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 
-from .serializers import ProspectSerializer, ProspectUpdateSerializer
+from .serializers import ProspectSerializer, ProspectUpdateSerializer, ProspectDetailsSerializer
 # changed the import to a single import
 from common.utils import centrifugo_post
 from rest_framework.permissions import AllowAny
@@ -115,11 +115,11 @@ class ProspectsCreateView(APIView):
 
     def post(self, request, *args, **kwargs):
         # # check authentication
-        if not isAuthorized(request):
-            return handle_failed_request(response=None)
+        #if not isAuthorized(request):
+            #return handle_failed_request(response=None)
 
-        if not isValidOrganisation(ORGANISATION_ID, request):
-            return handle_failed_request(response=None)
+        #if not isValidOrganisation(ORGANISATION_ID, request):
+            #return handle_failed_request(response=None)
 
         serializer = ProspectSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -298,16 +298,16 @@ class ProspectsDeleteView(APIView):
 
 
 class ProspectDetailsView(APIView):
-    serializer_class = ProspectSerializer
+    serializer_class = ProspectDetailsSerializer
     queryset = None
 
     def put(self, request, *args, **kwargs):
         # check authorization
-        if not isAuthorized(request):
-            return handle_failed_request(response=None)
+        #if not isAuthorized(request):
+            #return handle_failed_request(response=None)
 
-        if not isValidOrganisation(ORGANISATION_ID, request):
-            return handle_failed_request(response=None)
+        #if not isValidOrganisation(ORGANISATION_ID, request):
+            #return handle_failed_request(response=None)
 
         url = "https://api.zuri.chat/data/write"
         serializer = ProspectDetailsSerializer(data=request.data)
