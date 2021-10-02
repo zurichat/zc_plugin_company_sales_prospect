@@ -44,10 +44,13 @@ class CustomRequest:
     def post(org_id, collection_name, payload):
         print('org_id:')
         print(org_id)   ###############
+
         print('collection_name:')
         print(collection_name) ##############
+        
         print('payload:')
         print(payload) ###############
+
         print('url:')
         url = f"https://api.zuri.chat/data/write"
         print(url)
@@ -76,9 +79,10 @@ class CustomRequest:
         #     }
         # )
         print(payload)
-        print('response:')
+        print('json.dumps(data):')
         print(json.dumps(data))
         response = requests.post(url, data=json.dumps(data)) #######################
+        print('response = requests.post(url, data=json.dumps(data):')
         print(response)
         print('response.json():')
         r = response.json()
