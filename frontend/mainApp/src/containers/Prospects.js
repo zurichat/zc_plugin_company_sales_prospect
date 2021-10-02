@@ -1,10 +1,18 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import Button from "../components/Button";
+import axios from "axios";
 // import Input from '../components/Input'
 import Modal from "../components/Modal";
 import ProspectRow from "../components/ProspectRow";
-import { ChevronLeft, ChevronRight } from "react-feather";
+import {
+	ChevronLeft,
+	ChevronRight,
+	Twitter,
+	Linkedin,
+	Facebook,
+	Instagram,
+} from "react-feather";
 // import Select from '../components/Select'
 import customAxios, {
 	createProspectURL,
@@ -44,12 +52,12 @@ export const Input = ({
 	type,
 }) => {
 	return (
-		<div className='mb-6'>
-			<label className=' mb-2 block font-bold text-base' htmlFor={title}>
+		<div className="mb-6">
+			<label className=" mb-2 block font-bold text-base" htmlFor={title}>
 				{label}
 			</label>
 			<input
-				className='border border-gray-500 outline-none placeholder-opacity-50 placeholder-gray-400 rounded-sm h-12 text-sm w-full px-5 focus:border-green'
+				className="border border-gray-500 outline-none placeholder-opacity-50 placeholder-gray-400 rounded-sm h-12 text-sm w-full px-5 focus:border-green"
 				onChange={onChange}
 				id={id}
 				value={value}
@@ -74,8 +82,8 @@ export const Select = ({
 	defaultValue,
 }) => {
 	return (
-		<div className='mb-6' id={title}>
-			<label className=' mb-2 block font-bold text-base' htmlFor={title}>
+		<div className="mb-6" id={title}>
+			<label className=" mb-2 block font-bold text-base" htmlFor={title}>
 				{label}
 			</label>
 
@@ -83,7 +91,7 @@ export const Select = ({
 				id={id}
 				value={value}
 				required
-				className='border border-gray-500 text-gray-500 outline-none rounded-sm px-5 h-12 w-full  focus:border-green'
+				className="border border-gray-500 text-gray-500 outline-none rounded-sm px-5 h-12 w-full  focus:border-green"
 				onChange={onChange}
 				defaultValue={defaultValue}
 				disabled={disabled}
@@ -110,6 +118,7 @@ function Prospects() {
 		instagram: "",
 	});
 
+
 	const [page, setPage] = useState(1);
 
 	const [deal, setDeal] = useState(null);
@@ -131,6 +140,11 @@ function Prospects() {
 		setOpen3(true);
 	};
 
+	const [open5, setOpen5] = useState(false);
+	const handleOpenSocialModal = (e, social) => {
+		setOpen5(true);
+	};
+
 	const [open4, setOpen4] = useState(false);
 	const handleOpenDealCreateModal = (e, prospect) => {
 		setProspect(prospect);
@@ -141,6 +155,8 @@ function Prospects() {
 		setDeal(newDeal);
 		setOpen4(true);
 	};
+
+	const [socialInfo, setSocialInfo] = useState(null);
 
 	const handleCloseModal = () => {
 		setDeal(null);
@@ -159,7 +175,10 @@ function Prospects() {
 		setOpen2(false);
 		setOpen3(false);
 		setOpen4(false);
+		setOpen5(false);
 	};
+
+	console.log(socialInfo)
 
 	const pageForward = () => {
 		setLoading(true);
@@ -209,6 +228,16 @@ function Prospects() {
 								pageNum: data.pageNum,
 								prev: data.prev,
 							});
+						})
+						.then(() => {
+							axios.post("https://sales.zuri.chat/api/v1/scraping/", prospect.facebook)
+								.then(res => {
+									setSocialInfo(res.data);
+								})
+								.catch(err => {
+									console.log(err);
+									setSocialInfo(err.message)
+								})
 						})
 						.catch((e) => console.log(e.response));
 					// const latestProspect = formatProspect(prospect)
@@ -273,6 +302,17 @@ function Prospects() {
 						});
 					})
 					.catch((e) => console.log(e.response));
+			})
+			.then(() => {
+				axios
+					.post("https://sales.zuri.chat/api/v1/scraping/", apiProspect.facebook)
+					.then((res) => {
+						setSocialInfo(res.data);
+					})
+					.catch((err) => {
+						console.log(err);
+						setSocialInfo(err.message);
+					});
 			})
 
 			.catch((e) => {
@@ -339,107 +379,116 @@ function Prospects() {
 	};
 
 	return (
-		<div className='p-10 w-screen'>
-			<div className='flex justify-between items-center'>
-				<h3 className='text-2xl font-bold'>Contact</h3>
+		<div className="p-10 w-screen">
+			<div className="flex justify-between items-center">
+				<h3 className="text-2xl font-bold">Contact</h3>
 				<Button onClick={handleOpenCreateModal}>Create New</Button>
 			</div>
+
 			{/* CREATE MODAL */}
 			<Modal
-				title='Create Contact'
-				description='Please input your contact infomation'
+				title="Create Contact"
+				description="Please input your contact information"
 				open={open}
 				closeModal={handleCloseModal}
 			>
-				<form className='my-auto' onSubmit={handleSubmit}>
+				<form className="my-auto" onSubmit={handleSubmit}>
 					<div>
-						<label className='block font-bold text-base text-gray-800'>
+						<label className="block font-bold text-base text-gray-800">
 							Name
 						</label>
 						<Input
-							className='text-sm'
-							placeholder='Enter Full Name'
+							className="text-sm"
+							placeholder="Enter Full Name"
 							onChange={handleChange}
-							id='name'
+							id="name"
 						/>
 					</div>
 					<div>
-						<label className='block font-bold text-base text-gray-800'>
+						<label className="block font-bold text-base text-gray-800">
 							Email
 						</label>
 						<Input
-							placeholder='Enter Email'
-							type='email'
+							placeholder="Enter Email"
+							type="email"
 							onChange={handleChange}
-							id='email'
+							id="email"
 						/>
 					</div>
 					<div>
-						<label className='block font-bold text-base text-gray-800'>
+						<label className="block font-bold text-base text-gray-800">
 							Phone Number
 						</label>
 						<Input
-							placeholder='Enter Phone Number'
+							placeholder="Enter Phone Number"
 							onChange={handleChange}
-							id='phone_number'
-							type='tel'
+							id="phone_number"
+							type="tel"
 						/>
 					</div>
 					<div>
-						<label className='block font-bold text-base text-gray-800'>
+						<label className="block font-bold text-base text-gray-800">
 							Company
 						</label>
 						<Input
-							placeholder='Enter Company'
+							placeholder="Enter Company"
 							onChange={handleChange}
-							id='company'
+							id="company"
 						/>
 					</div>
-					<div>
+					<div className="mb-6">
 						<label className="block font-bold text-base text-gray-800">
 							Twitter Username
 						</label>
-						<Input
-							placeholder="Enter Twitter Username"
+						<input
+							className="border border-gray-500 outline-none placeholder-opacity-50 placeholder-gray-400 rounded-sm h-12 text-sm w-full px-5 focus:border-green"
 							onChange={handleChange}
 							id="twitter"
+							type="text"
+							placeholder="Enter Twitter Username"
 						/>
 					</div>
-					<div>
+					<div className="mb-6">
 						<label className="block font-bold text-base text-gray-800">
 							Facebook Username
 						</label>
-						<Input
-							placeholder="Enter Facebook Username"
+						<input
+							className="border border-gray-500 outline-none placeholder-opacity-50 placeholder-gray-400 rounded-sm h-12 text-sm w-full px-5 focus:border-green"
 							onChange={handleChange}
 							id="facebook"
+							type="text"
+							placeholder="Enter Facebook Username"
 						/>
 					</div>
-					<div>
+					<div className="mb-6">
 						<label className="block font-bold text-base text-gray-800">
 							LinkedIn Username
 						</label>
-						<Input
-							placeholder="Enter LinkedIn Username"
+						<input
+							className="border border-gray-500 outline-none placeholder-opacity-50 placeholder-gray-400 rounded-sm h-12 text-sm w-full px-5 focus:border-green"
 							onChange={handleChange}
 							id="linkedin"
+							type="text"
+							placeholder="Enter LinkedIn Username"
 						/>
 					</div>
-					<div>
+					<div className="mb-6">
 						<label className="block font-bold text-base text-gray-800">
 							Instagram Username
 						</label>
-						<Input
-							placeholder="Enter Instagram Username"
+						<input
+							className="border border-gray-500 outline-none placeholder-opacity-50 placeholder-gray-400 rounded-sm h-12 text-sm w-full px-5 focus:border-green"
 							onChange={handleChange}
 							id="instagram"
+							type="text"
+							placeholder="Enter Instagram Username"
 						/>
 					</div>
 
-					<div className='mt-4 flex justify-end'>
+					<div className="mt-4 flex justify-end">
 						<button
-							type='submit'
-							className='bg-green rounded mt-5 text-white px-10 py-2'
+							type="submit"
+							className="bg-green rounded mt-5 text-white px-10 py-2"
 						>
 							Create
 						</button>
@@ -447,56 +496,81 @@ function Prospects() {
 				</form>
 			</Modal>
 
+			{socialInfo !== null ? (
+				<Modal
+					title="Your Social Information"
+					description="Your profile information from Facebook"
+					open={open5}
+					closeModal={handleCloseModal}
+				>
+					{socialInfo.map((info, index) => (
+						<div key={index} className="flex flex-col">
+							<h1>FaceBook</h1>
+							<p>Name: {info.data.name}</p>
+							<p>Education: {info.education}</p>
+							<p>Address: {info.data.address}</p>
+							<p>Favourite Quote: {info.data.favourite_quote}</p>
+						</div>
+					))}
+				</Modal>
+			) : (
+				<Modal open={open5} closeModal={handleCloseModal}>
+					<h1 className="text-xl text-center font-bold">
+						No Social Information
+					</h1>
+				</Modal>
+			)}
+
 			{/* EDIT MODAL */}
 			<Modal
-				title='Edit Contact'
-				description='Provide information about your contact.'
+				title="Edit Contact"
+				description="Provide information about your contact."
 				open={open2}
 				closeModal={handleCloseModal}
 			>
-				<form className='mt-2' onSubmit={handleUpdate}>
-					<div className='text-gray-500'>
-						<label className='block font-bold text-base text-gray-800'>
+				<form className="mt-2" onSubmit={handleUpdate}>
+					<div className="text-gray-500">
+						<label className="block font-bold text-base text-gray-800">
 							Name
 						</label>
 						<Input
-							placeholder='Jane Cooper'
-							id='name'
+							placeholder="Jane Cooper"
+							id="name"
 							defaultValue={prospect.name}
 							onChange={handleChange}
 						/>
 					</div>
-					<div className='text-gray-500'>
-						<label className='block font-bold text-base text-gray-800'>
+					<div className="text-gray-500">
+						<label className="block font-bold text-base text-gray-800">
 							Email
 						</label>
 						<Input
-							placeholder='jane.cooper@example.com'
-							id='email'
+							placeholder="jane.cooper@example.com"
+							id="email"
 							defaultValue={prospect.email}
 							onChange={handleChange}
 						/>
 					</div>
-					<div className='text-gray-500'>
-						<label className='block font-bold text-base text-gray-800'>
+					<div className="text-gray-500">
+						<label className="block font-bold text-base text-gray-800">
 							Phone Number
 						</label>
 						<Input
-							placeholder='09093527277'
-							id='phone_number'
-							type='tel'
+							placeholder="09093527277"
+							id="phone_number"
+							type="tel"
 							defaultValue={prospect.phone_number}
 							onChange={handleChange}
 						/>
 					</div>
 					<div>
-						<label className='block font-bold text-base text-gray-800'>
+						<label className="block font-bold text-base text-gray-800">
 							Company
 						</label>
 						<Input
-							placeholder='Enter Company'
+							placeholder="Enter Company"
 							onChange={handleChange}
-							id='company'
+							id="company"
 							defaultValue={prospect.company}
 						/>
 					</div>
@@ -546,8 +620,8 @@ function Prospects() {
 					</div>
 					<div className='mt-8 flex justify-end'>
 						<button
-							type='submit'
-							className='bg-green text-white rounded px-10 py-2'
+							type="submit"
+							className="bg-green text-white rounded px-10 py-2"
 						>
 							Edit
 						</button>
@@ -557,53 +631,53 @@ function Prospects() {
 
 			{/* DELETE MODAL */}
 			<Modal
-				title='Delete Prospect'
-				description='This prospect will be deleted, this action cannot be undone.'
+				title="Delete Prospect"
+				description="This prospect will be deleted, this action cannot be undone."
 				open={open3}
 				closeModal={handleCloseModal}
 			>
-				<div className='mt-2 text-gray-500'>
+				<div className="mt-2 text-gray-500">
 					<div>
-						<label className='block font-bold text-base text-gray-800'>
+						<label className="block font-bold text-base text-gray-800">
 							Name
 						</label>
 						<Input
-							placeholder='Jane Cooper'
-							id='name'
+							placeholder="Jane Cooper"
+							id="name"
 							value={prospect.name}
 							disabled
 						/>
 					</div>
-					<div className='text-gray-500'>
-						<label className='block text-base text-gray-800 font-bold'>
+					<div className="text-gray-500">
+						<label className="block text-base text-gray-800 font-bold">
 							Email
 						</label>
 						<Input
-							placeholder='jane.cooper@example.com'
-							id='email'
+							placeholder="jane.cooper@example.com"
+							id="email"
 							value={prospect.email}
 							disabled
 						/>
 					</div>
-					<div className='text-gray-500'>
-						<label className='block text-base text-gray-800 font-bold'>
+					<div className="text-gray-500">
+						<label className="block text-base text-gray-800 font-bold">
 							Phone Number
 						</label>
 						<Input
-							placeholder='09093527277'
-							id='phone_number'
+							placeholder="09093527277"
+							id="phone_number"
 							value={prospect.phone_number}
 							disabled
 						/>
 					</div>
 					<div>
-						<label className='block text-base text-gray-800 font-bold'>
+						<label className="block text-base text-gray-800 font-bold">
 							Company
 						</label>
 						<Input
-							placeholder='Enter Company'
+							placeholder="Enter Company"
 							onChange={handleChange}
-							id='company'
+							id="company"
 							defaultValue={prospect.company}
 						/>
 					</div>
@@ -653,17 +727,17 @@ function Prospects() {
 					</div>
 				</div>
 
-				<div className='mt-4 flex justify-end'>
+				<div className="mt-4 flex justify-end">
 					<button
-						type='button'
-						className='text-green rounded px-10 py-2 mr-2'
+						type="button"
+						className="text-green rounded px-10 py-2 mr-2"
 						onClick={handleCloseModal}
 					>
 						No, Keep
 					</button>
 					<button
-						type='button'
-						className='bg-error rounded text-white px-10 py-2'
+						type="button"
+						className="bg-error rounded text-white px-10 py-2"
 						onClick={handleDelete}
 					>
 						Yes, Delete
@@ -673,17 +747,17 @@ function Prospects() {
 
 			{/* CREATE DEAL MODAL */}
 			<Modal
-				title='Create a deal'
+				title="Create a deal"
 				description={`Create a deal for ${prospect.name}.`}
 				open={open4}
 				closeModal={handleCloseModal}
 			>
-				<form className='mt-2' onSubmit={handleDealCreate}>
-					<div className='text-gray-800'>
+				<form className="mt-2" onSubmit={handleDealCreate}>
+					<div className="text-gray-800">
 						<Select
-							title='stage'
-							label='Deal stage'
-							id='deal_stage'
+							title="stage"
+							label="Deal stage"
+							id="deal_stage"
 							onChange={handleDealChange}
 						>
 							<option>Select a stage</option>
@@ -693,44 +767,44 @@ function Prospects() {
 							<option>Prospect</option>
 						</Select>
 					</div>
-					<div className='text-gray-500'>
-						<label className='block font-bold text-base text-gray-800'>
+					<div className="text-gray-500">
+						<label className="block font-bold text-base text-gray-800">
 							Amount
 						</label>
 						<Input
-							type='number'
+							type="number"
 							onChange={handleDealChange}
-							placeholder='Enter Amount'
-							id='amount'
+							placeholder="Enter Amount"
+							id="amount"
 						/>
 					</div>
-					<div className='text-gray-500'>
-						<label className='block font-bold text-base text-gray-800'>
+					<div className="text-gray-500">
+						<label className="block font-bold text-base text-gray-800">
 							Expected close date
 						</label>
 						<Input
-							placeholder='dd-mm-yy'
+							placeholder="dd-mm-yy"
 							onChange={handleDealChange}
-							id='close_date'
-							type='date'
+							id="close_date"
+							type="date"
 						/>
 					</div>
-					<div className='text-gray-500'>
-						<label className='block font-bold text-base text-gray-800'>
+					<div className="text-gray-500">
+						<label className="block font-bold text-base text-gray-800">
 							Description
 						</label>
 						<Input
-							placeholder='Additional info'
+							placeholder="Additional info"
 							onChange={handleDealChange}
-							id='description'
+							id="description"
 						/>
 					</div>
 
-					<div className='mt-4 flex justify-end'>
+					<div className="mt-4 flex justify-end">
 						<button
-							type='submit'
+							type="submit"
 							onClick={() => handleDealCreate()}
-							className='bg-green rounded text-white px-10 py-2'
+							className="bg-green rounded text-white px-10 py-2"
 						>
 							Create
 						</button>
@@ -740,34 +814,35 @@ function Prospects() {
 
 			{prospects?.contacts?.length > 0 && !loading ? (
 				<div className='mt-4'>
-					<div className='overflow-x-auto overflow-y-hidden rounded-md'>
-						<table className='text-left border-gray-100 w-full'>
-							<thead className='border-b cursor-pointer'>
+					<div className='overflow-x-auto overflow-y-hidden rounded-md '>
+						<table className='text-left border-gray-100 w-full sm:shadow-2xl border-collapse w-fullxx'>
+							<thead className='border-b cursor-pointer '>
 								<tr>
-									<th className='px-3 py-4'>
+									<th className='px-3 py-4 sm:absolute sm:block'>
 										<span className='flex items-center'>
 											<input
-												className='mr-4'
-												type='checkbox'
-												name=''
-												id='all'
+												className="mr-4"
+												type="checkbox"
+												name=""
+												id="all"
 											/>
-											<label htmlFor='all'>Name</label>
+											<label htmlFor='all  sm:text-sm'>Name</label>
 										</span>
 									</th>
-									<th className='px-3 py-4'>Email</th>
-									<th className='px-3 py-4'>Phone Number</th>
-									<th className='px-3 py-4'>Company</th>
-									<th className='px-3 py-4'> Actions </th>
+									<th className='px-3 py-4 hidden sm:table-cell sm:text-sm '>Email</th>
+									<th className='px-3 py- hidden sm:table-cell sm:text-sm  '>Phone Number</th>
+									<th className='px-3 py-4 hidden sm:table-cell  sm:text-sm'>Company</th>
+									<th className='px-3 py-4   sm:text-sm sm:justify-between '> Actions </th>
 								</tr>
 							</thead>
-							<tbody className='bg-white'>
+							<tbody className="bg-white">
 								{prospects?.contacts?.map((prospect, i) => (
 									<ProspectRow
 										key={i}
 										openEditModal={handleOpenEditModal}
 										openDealCreateModal={handleOpenDealCreateModal}
 										openDeleteModal={handleOpenDeleteModal}
+										openSocialInfo={handleOpenSocialModal}
 										prospect={prospect}
 									/>
 								))}
@@ -776,25 +851,25 @@ function Prospects() {
 					</div>
 
 					{/* Pagination */}
-					<div className='flex list-none justify-end items-center mt-5'>
+					<div className="flex list-none justify-end items-center mt-5">
 						<button
 							onClick={() => pageBackward()}
 							disabled={!prospects.prev}
-							className='flex items-center py-2 px-3 cursor-pointer border-0 disabled:text-gray-300'
+							className='flex items-center py-2 px-3 cursor-pointer border-0 disabled:text-gray-300 sm:hidden'
 						>
 							{" "}
 							<ChevronLeft strokeWidth={1} />{" "}
-							<span className='py-2 px-3'>Prev</span>
+							<span className="py-2 px-3">Prev</span>
 						</button>
-						<div className='bg-green-light text-green rounded-sm py-2 px-4'>
+						<div className="bg-green-light text-green rounded-sm py-2 px-4">
 							{prospects.pageNum}
 						</div>
 						<button
 							onClick={() => pageForward()}
 							disabled={!prospects.next}
-							className='flex items-center py-2 px-3 cursor-pointer border-0 disabled:text-gray-300'
+							className="flex items-center py-2 px-3 cursor-pointer border-0 disabled:text-gray-300"
 						>
-							<span className='py-2 px-3'>Next</span>{" "}
+							<span className="py-2 px-3">Next</span>{" "}
 							<ChevronRight strokeWidth={1} />{" "}
 						</button>
 					</div>
@@ -805,54 +880,54 @@ function Prospects() {
 						<div>
 							<img
 								src={Loader}
-								alt='loader'
-								className='animate-ping'
-								id='loader'
+								alt="loader"
+								className="animate-ping"
+								id="loader"
 							/>
-							<h2 className='font-medium text-2xl text-black-500 text-center'>
+							<h2 className="font-medium text-2xl text-black-500 text-center">
 								Loading available prospects
 							</h2>
 							<br />
-							<p className='text-base text-gray-400 text-center'>
+							<p className="text-base text-gray-400 text-center">
 								Please wait a while
 							</p>
 						</div>
 					) : (
-						<div className='mt-4'>
-							<div className='overflow-x-auto overflow-y-hidden rounded-md'>
-								<table className='text-left border-gray-100 w-full'>
-									<thead className='border-b cursor-pointer'>
+						<div className="mt-4">
+							<div className="overflow-x-auto overflow-y-hidden rounded-md">
+								<table className="text-left border-gray-100 w-full">
+									<thead className="border-b cursor-pointer">
 										<tr>
-											<th className='px-3 py-4 flex items-center'>
+											<th className="px-3 py-4 flex items-center">
 												<input
-													className='mr-4'
-													type='checkbox'
-													name=''
-													id='all'
+													className="mr-4"
+													type="checkbox"
+													name=""
+													id="all"
 												/>
-												<label htmlFor='all'>Name</label>
+												<label htmlFor="all">Name</label>
 											</th>
-											<th className='px-3 py-4'>Email</th>
+											<th className='px-3 py-4 block md:hidden '>Email</th>
 											<th className='px-3 py-4'>Phone Number</th>
 											<th className='px-3 py-4'>Company</th>
 											<th className='px-3 py-4'> Actions </th>
 										</tr>
 									</thead>
 								</table>
-								<div className='flex w-100 items-center justify-center flex-col text-center pt-32'>
-									<div className='shadow-lg w-96 justify-center flex p-10 flex-col items-center'>
+								<div className="flex w-100 items-center justify-center flex-col text-center pt-32">
+									<div className="shadow-lg w-96 justify-center flex p-10 flex-col items-center">
 										<FileIcon />
-										<p className='font-bold text-xl mt-5'>
+										<p className="font-bold text-xl mt-5">
 											You have no contact yet!
 										</p>
-										<p className='max-w-sm py-3 flex-wrap text-gray-400'>
+										<p className="max-w-sm py-3 flex-wrap text-gray-400">
 											Keep track of business transactions with all your contacts
 											in an organised manner. Quickly add a contact to get
 											started.
 										</p>
-										<div className='flex'>
+										<div className="flex">
 											<button
-												className='border-green px-4 rounded-sm text-green mr-2'
+												className="border-green px-4 rounded-sm text-green mr-2"
 												onClick={handleCloseModal}
 											>
 												Skip
