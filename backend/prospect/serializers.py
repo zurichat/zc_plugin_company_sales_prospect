@@ -6,10 +6,10 @@ class ProspectSerializer(serializers.Serializer):
     email = serializers.EmailField(max_length=100)
     phone_number = serializers.CharField(max_length=100)
     company = serializers.CharField(max_length=100)
-    twitter = serializers.CharField(max_length=30)
-    facebook = serializers.CharField(max_length=30)
-    linkedin = serializers.CharField(max_length=30)
-    instagram = serializers.CharField(max_length=30)
+    twitter = serializers.CharField(max_length=30, required=False, allow_blank=True)
+    facebook = serializers.CharField(max_length=30, required=False, allow_blank=True)
+    linkedin = serializers.CharField(max_length=30, required=False, allow_blank=True)
+    instagram = serializers.CharField(max_length=30, required=False, allow_blank=True)
 
 
     def validate_name(self, name):
@@ -38,7 +38,7 @@ class ProspectUpdateSerializer(ProspectSerializer):
     email = serializers.CharField(max_length=100, required=False)
     phone_number = serializers.CharField(max_length=100, required=False)
     company = serializers.CharField(max_length=100, required=False)
-    twitter = serializers.CharField(max_length=30, required=False)
-    facebook = serializers.CharField(max_length=30, required=False)
-    linkedin = serializers.CharField(max_length=30, required=False)
-    instagram = serializers.CharField(max_length=30, required=False)
+    twitter = serializers.CharField(max_length=30, required=False, allow_blank=True)
+    facebook = serializers.CharField(max_length=30, required=False, allow_blank=True)
+    linkedin = serializers.CharField(max_length=30, required=False, allow_blank=True)
+    instagram = serializers.CharField(max_length=30, required=False, allow_blank=True)

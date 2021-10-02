@@ -4,7 +4,7 @@ from django.conf import settings
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .serializers import EmailSerializer, EmailUpdateSerializer
+from .serializers import EmailSerializer, EmailUpdateSerializer, SendEmailSerializer
 from common.utils import isAuthorized
 from common.utils import isValidOrganisation
 
@@ -31,8 +31,8 @@ class EmailTemplateCreateView(APIView):
         serializer.is_valid(raise_exception=True)
         url = "https://api.zuri.chat/data/write"
         subject = request.data.get("subject")
-        to_email = request.data.get("to_email")
-        from_email = request.data.get("from_email")
+        email = request.data.get("email")
+        template_name = request.data.get("template_name")
         message = request.data.get("message")
         data = {
             "plugin_id": PLUGIN_ID,
@@ -41,8 +41,8 @@ class EmailTemplateCreateView(APIView):
             "bulk_write": False,
             "payload": {
                 "subject": subject,
-                "from_email": from_email,
-                # "to_email": to_email,
+                "template_name": template_name,
+                "email": email,
                 "message": message,
             },
         }
@@ -78,14 +78,31 @@ class EmailTemplateListView(APIView):
                 status=status.HTTP_200_OK
             )
 
+class EmailDetailView(APIView):
+    def get(self, request, id):
+        url = f"https://api.zuri.chat/data/read"
+        data = {
+            "plugin_id": PLUGIN_ID,
+            "organization_id": ORGANISATION_ID,
+            "collection_name": "email_template",
+            "filter": {},
+            "object_id": id
+        }
 
+        response = requests.post(url, data=json.dumps(data))
+        print(response.json())
+        if response.status_code == 200:
+            return Response(
+                data = response.json(),
+                status = status.HTTP_200_OK
+            )
 class EmailTemplateUpdateView(APIView):
     """
     update created templates
     """
     serializer_class = EmailUpdateSerializer
     queryset = None
-
+    
     def put(self, request, template_id, *args, **kwargs):
         # check if user is authenticated        
         # if not isAuthorized(request):
@@ -93,7 +110,7 @@ class EmailTemplateUpdateView(APIView):
 
         # if not isValidOrganisation(ORGANISATION_ID, request):
         #     return Response(data={"message":"Invalid/Missing organization id"}, status=status.HTTP_401_UNAUTHORIZED)      
-
+        
         url = "https://api.zuri.chat/data/write"
         serializer = EmailUpdateSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -140,10 +157,39 @@ class EmailTemplateDeleteView(APIView):
         }
         response = requests.post(url, data=json.dumps(data))
         print(response.text)
+        r = response.json()
+        if ((response.status_code == 200) and (r["data"]["deleted_count"])) == 0:
+            return Response(
+                data={
+                    "message": "There is no template with the object id you supplied"
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
         if response.status_code == 200:
             r = response.json()
             return Response(data={"message": f"{template_id} was deleted successfully"}, status=status.HTTP_200_OK)
         return Response(
             data={"message": "Try again later"},
             status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+        )
+
+class EmailSendView(APIView):
+    """
+    This is an endpoint to send emails to prospects.
+    """
+
+    def post(self, request, *args, **kwargs):
+        url = f"https://api.zuri.chat/external/send-mail"
+        
+        # 
+        response = requests.post(url)
+        print(response.json())
+        if response.status_code == 200:
+            return Response(
+                data={"message": "Mail sent Successfully"}, 
+                status=status.HTTP_200_OK
+            )
+        return Response(
+            data = {"message": "Try again later"},
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR
         )

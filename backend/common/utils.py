@@ -13,6 +13,68 @@ CENTRIFUGO_LIVE_ENDPOINT = settings.CENTRIFUGO_LIVE_ENDPOINT
 API_KEY = settings.API_KEY
 CENTRIFUGO_DEBUG_ENDPOINT = settings.CENTRIFUGO_DEBUG_ENDPOINT
 
+PLUGIN_ID = settings.PLUGIN_ID
+ORGANISATION_ID = settings.ORGANISATION_ID
+
+from dataclasses import dataclass
+
+@dataclass
+class CustomRequest:
+    @staticmethod
+    def get(org_id, collection_name, params=None):
+        url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/{collection_name}/{org_id}"
+        response = requests.get(url) # the important function
+        r = response.json()
+        if response.status_code == 200:
+            result = response.json()
+            result['status_code'] = response.status_code
+            return result # storage of that important result.
+
+    @staticmethod
+    def post(org_id, collection_name, payload):
+        url = f"https://api.zuri.chat/data/write"
+        data = {
+            "plugin_id": PLUGIN_ID,
+            "organization_id": ORGANISATION_ID,
+            "collection_name": collection_name,
+            "bulk_write": False,
+            "payload": payload,
+        }
+
+        response = requests.post(url, data=json.dumps(data))
+        r = response.json()
+        print(r)
+        if response.status_code == 201:
+            result = response.json()
+            result['status_code'] = response.status_code
+            return result
+
+    @staticmethod
+    def put(payload):
+        url = f"https://api.zuri.chat/data/write"
+        data = {
+            "plugin_id": PLUGIN_ID,
+            "organization_id": ORGANISATION_ID,
+            "collection_name": collection_name,
+            "bulk_write": False,
+            "payload": payload,
+        }
+        response = requests.request("PUT", url, data=json.dumps(data))
+        r = response.json()
+
+    @staticmethod
+    def delete(payload):
+        url = f"https://api.zuri.chat/data/delete"
+        data = {
+            "plugin_id": PLUGIN_ID,
+            "organization_id": ORGANISATION_ID,
+            "collection_name": "prospects",
+            "bulk_write": False,
+            "payload": payload,
+        }
+        response = requests.request("DELETE", url, data=json.dumps(data))
+        r = response.json()
+
 def centrifugo_post(room, data):
     command = {
         "method": "publish",
@@ -45,9 +107,6 @@ def isAuthorized(request):
     except AuthenticationFailed as e:
         raise e
 
-    except requests.ConnectionError as e:
-        raise e
-
     except:
         return False
 
@@ -68,25 +127,8 @@ def isValidOrganisation(organisationId, request):
     except AuthenticationFailed as e:
         raise e
 
-    except requests.ConnectionError as e:
-        raise e
-
     except:
         return False
-# write data ( collect_name, objr.ect_) r
-# read data
-# commons/constants.py
-# class ResponseText:
-#     success = "",
-#     error = ""
-
-# {"message":ResponseText.error}
-# ResponseText.error
-
-#  Proper error responses for each view
-#  Views should use serializers in returning data except ListViews
-
-# Centrifugo in Views
 
 def custom_exception_handler(exc, context):
     response = exception_handler(exc, context)
@@ -103,6 +145,31 @@ def custom_exception_handler(exc, context):
             data={"message": "Something unexpected happened. Try again later."},
             status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     return response
+
+
+
+
+
+
+
+
+
+# write data ( collect_name, objr.ect_) r
+# read data
+# commons/constants.py
+# class ResponseText:
+#     success = "",
+#     error = ""
+
+# {"message":ResponseText.error}
+# ResponseText.error
+
+#  Proper error responses for each view
+#  Views should use serializers in returning data except ListViews
+
+# Centrifugo in Views
+
+
 
 
 def handle_failed_request(response=None):
