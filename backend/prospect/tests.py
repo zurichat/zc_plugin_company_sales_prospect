@@ -3,6 +3,7 @@ from rest_framework.test import APITestCase
 from faker import Faker
 import requests
 
+
 # Genereate your token by logging to zurichat and inspect element
 # Get token from local storage tab and insert in front of "Bearer" 
 # Ps, the space is important.
