@@ -352,11 +352,11 @@ class DealsBatchDeleteView(APIView):
 
     def post(self, request, **kwargs):
         # check authentication
-        # if not isAuthorized(request):
-        #     return Response(data={"message": "Missing Cookie/token header or session expired"}, status=st.HTTP_401_UNAUTHORIZED)
+        if not isAuthorized(request):
+            return Response(data={"message": "Missing Cookie/token header or session expired"}, status=st.HTTP_401_UNAUTHORIZED)
 
-        # if not isValidOrganisation(ORGANISATION_ID, request):
-        #     return Response(data={"message": "Invalid/Missing organization id"}, status=st.HTTP_401_UNAUTHORIZED)
+        if not isValidOrganisation(ORGANISATION_ID, request):
+            return Response(data={"message": "Invalid/Missing organization id"}, status=st.HTTP_401_UNAUTHORIZED)
         filterData = request.data.get('filter')
 
         url = "https://api.zuri.chat/data/delete"
