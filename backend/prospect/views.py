@@ -71,7 +71,7 @@ class ProspectsListView(APIView):
     queryset = None
     paginate_by = 20
 
-    def get(self, request, org_id):
+    def get(self, request, org_id, *args, **kwargs):
         # # check authentication
         # if not isAuthorized(request):
         #     return Response(data={"message":"Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
@@ -82,13 +82,32 @@ class ProspectsListView(APIView):
 
         # url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/prospects/{ORGANISATION_ID}"
         # response = requests.request("GET", url)
+        print(request)
+        print(org_id)
         data = {}
+        print(data)
         response = CustomRequest.get(org_id, 'prospects', data) or []
+        print('before CustomRequest.get(org_id, prospects, data)')
+        print(response) # THIRD block of code
+        print('after CustomRequest.get(org_id, prospects, data)')
         if response['status_code'] == 200:
-            return Response(
-                data=response['data'],
-                status=status.HTTP_200_OK
+            print(response['status_code'])
+            # return Response(
+            #     data=response['data'],
+            #     status=status.HTTP_200_OK
+            # )
+
+            FinalResponse = Response(
+                data=response['data'], # the data is from print(response), line 91.
+                status=status.HTTP_200_OK,
+                # template_name=None, 
+                # headers=None, 
+                # content_type=None
             )
+
+            print(FinalResponse) # this is what appears on the APIView?
+
+            return FinalResponse
             # centrifugo_post("Prospects", {"event": "join", "token": "elijah"})
             # serializer = ProspectSerializer(data=r['data'], many=True)
             # serializer.is_valid(raise_exception=True)
@@ -116,18 +135,30 @@ class ProspectsCreateView(APIView):
     serializer_class = ProspectSerializer
     queryset = None
 
-    def post(self, request, org_id):
+    def post(self, request, org_id, *args, **kwargs):
         # # check authentication
         # if not isAuthorized(request):
         #     return Response(data={"message":"Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
 
         # if not isValidOrganisation(ORGANISATION_ID, request):
         #     return Response(data={"message":"Invalid/Missing organization id"}, status=status.HTTP_401_UNAUTHORIZED)
-
-        data = {}
-     
-        serializer = ProspectSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
+        print('request:')
+        print(request) ################
+        print('org_id:')
+        print(org_id)  ################
+        print('data:')
+        data = {}       ##############
+        print(data)
+        print('request.data:')
+        print(request.data)
+        print("ProspectSerializer(data=request.data):")   
+        serializer = ProspectSerializer(data=request.data) ####################
+        print(serializer)
+        validity = serializer.is_valid(raise_exception=True) ##################
+        print('BEFORE VALIDITY')
+        print(validity)
+        print('AFTER VALIDITY')
+        print('payload:')
         payload = {
             
                 "name": serializer.data['name'],
@@ -135,8 +166,13 @@ class ProspectsCreateView(APIView):
                 "email": serializer.data['email'],
                 "company": serializer.data['company'],
         }
-        response = CustomRequest.get(org_id, 'prospects', data) or []
+        print(payload)
+        print("CustomRequest.post(org_id,'prospects', data):")
+        response = CustomRequest.post(org_id,'prospects', payload) ##################
+        print(response)
         if response['status_code'] == 201:
+            print("response['status_code']:")
+            print(response['status_code'])
             
             # request.data._mutable = True
             # new_prospect["_id"] = r["data"]["object_id"]
@@ -149,13 +185,18 @@ class ProspectsCreateView(APIView):
         #     # )
 
             # print(response.status_code)
-            return Response(
+            print("Response(data=response['data'],status=status.HTTP_201_CREATED):")
+            finalResponse = Response(
                 data=response['data'],
                 status=status.HTTP_201_CREATED
             )
+
+            print(finalResponse)
+
+            return finalResponse
         return Response(
             data={"message": "Try again later"},
-            status=response.status_code,
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR,
         )
 
 
