@@ -48,7 +48,7 @@ export const Input = ({
         {label}
       </label>
       <input
-        className="border border-gray-500 outline-none placeholder-gray-400 rounded-sm h-12  w-full px-5 focus:border-green"
+        className="border border-gray-500 outline-none placeholder-opacity-50 placeholder-gray-400 rounded-sm h-12 text-sm w-full px-5 focus:border-green"
         onChange={onChange}
         id={id}
         value={value}
@@ -60,7 +60,7 @@ export const Input = ({
       />
     </div>
   );
-}
+};
 
 export const Select = ({
   id,
@@ -70,7 +70,7 @@ export const Select = ({
   disabled,
   onChange,
   value,
-  defaultValue
+  defaultValue,
 }) => {
   return (
     <div className="mb-6" id={title}>
@@ -92,10 +92,10 @@ export const Select = ({
       </select>
     </div>
   );
-}
+};
 
 function Prospects() {
-  const { prospects, setProspects } = useContext(PluginContext)
+  const { prospects, setProspects } = useContext(PluginContext);
 
   const [prospect, setProspect] = useState({
     id: "",
@@ -123,7 +123,7 @@ function Prospects() {
   const [open3, setOpen3] = useState(false);
   const handleOpenDeleteModal = (e, prospect) => {
     setProspect(prospect);
-    setOpen3(true)
+    setOpen3(true);
   };
 
   const [open4, setOpen4] = useState(false);
@@ -131,21 +131,21 @@ function Prospects() {
     setProspect(prospect);
     const newDeal = {
       prospect_id: prospect._id,
-      name: prospect.name
-    }
-    setDeal(newDeal)
+      name: prospect.name,
+    };
+    setDeal(newDeal);
     setOpen4(true);
   };
 
   const handleCloseModal = () => {
-    setDeal(null)
+    setDeal(null);
     setProspect({
       id: "",
       name: "",
       email: "",
       phone_number: "",
       company: "",
-    })
+    });
     setOpen(false);
     setOpen2(false);
     setOpen3(false);
@@ -155,26 +155,26 @@ function Prospects() {
   const pageForward = () => {
     setLoading(true);
     setPage(prospects.pageNum + 1);
-  }
+  };
 
   const pageBackward = () => {
     setLoading(true);
     setPage(prospects.pageNum - 1);
-  }
+  };
 
   useEffect(() => {
     customAxios
       .get(prospectsURL, {
-        params: { page: page }
+        params: { page: page },
       })
-      .then(({data}) => {
-        console.log(data.contacts)
+      .then(({ data }) => {
+        console.log(data.contacts);
         setProspects({
           contacts: data.contacts,
           next: data.next,
           pageNum: data.pageNum,
-          prev: data.prev
-        })
+          prev: data.prev,
+        });
         setLoading(false);
       })
       .catch((e) => {
@@ -191,43 +191,47 @@ function Prospects() {
         .post(createProspectURL, prospect)
         .then((r) => {
           handleCloseModal();
-          customAxios.get(prospectsURL)
+          customAxios
+            .get(prospectsURL)
             .then(({ data }) => {
               setProspects({
                 contacts: data.contacts,
                 next: data.next,
                 pageNum: data.pageNum,
-                prev: data.prev
-              })
+                prev: data.prev,
+              });
             })
-            .catch(e => console.log(e.response))
+            .catch((e) => console.log(e.response));
           // const latestProspect = formatProspect(prospect)
           // setProspects([...prospects, latestProspect]);
-          customAlert("Contact Created Successfully", "success")
+          customAlert("Prospects Successfully Created", "success");
         })
         .catch((e) => {
           console.log(e);
-          customAlert("Error Creating Contact", "error")
+          customAlert("Error Creating Contact", "error");
         });
     } else {
       alert("Prospect already exists");
     }
   };
 
-
   const handleDealCreate = (e) => {
     e.preventDefault();
-    const dealInfo = { ...deal, prospect_id: prospect._id, name: prospect.name };
+    const dealInfo = {
+      ...deal,
+      prospect_id: prospect._id,
+      name: prospect.name,
+    };
     customAxios
       .post(createDealURL, dealInfo)
       .then((r) => {
         handleCloseModal();
-        customAlert("Deal created successfully", "success")
+        customAlert("Deal created successfully", "success");
         // history.push("/deals");
       })
       .catch((e) => {
         console.log(e);
-        customAlert("Oops, something went wrong", "error")
+        customAlert("Oops, something went wrong", "error");
       });
   };
 
@@ -243,7 +247,7 @@ function Prospects() {
     customAxios
       .put(editProspectURL, apiProspect)
       .then((r) => {
-        customAlert("Contact Edited Successfully", "success")
+        customAlert("Contact Edited Successfully", "success");
         handleCloseModal();
         customAxios
           .get(prospectsURL)
@@ -252,43 +256,42 @@ function Prospects() {
               contacts: data.contacts,
               next: data.next,
               pageNum: data.pageNum,
-              prev: data.prev
-            })
+              prev: data.prev,
+            });
           })
           .catch((e) => console.log(e.response));
       })
 
       .catch((e) => {
-        console.log(e)
-        customAlert("Oops, something went wrong", "error")
-
+        console.log(e);
+        customAlert("Oops, something went wrong", "error");
       });
   };
 
   const handleDelete = (e) => {
     e.preventDefault();
     customAxios
-      .post(`${deleteProspectURL}`, { 'object_id': prospect._id })
+      .delete(`${deleteProspectURL}${prospect._id}/`)
       .then((r) => {
         handleCloseModal();
         customAxios
           .get(prospectsURL)
           .then(({ data }) => {
-            customAlert("Contact Deleted Successfully", "success")
+            customAlert("Contact Deleted Successfully", "success");
             setProspects({
               contacts: data.contacts,
               next: data.next,
               pageNum: data.pageNum,
-              prev: data.prev
-            })
+              prev: data.prev,
+            });
           })
           .catch((e) => console.log(e.response));
       })
       // .catch(e => console.log(e))
 
       .catch((e) => {
-        console.log(e)
-        customAlert("Oops, something went wrong", "error")
+        console.log(e);
+        customAlert("Oops, something went wrong", "error");
       });
   };
 
@@ -314,22 +317,27 @@ function Prospects() {
       </div>
       {/* CREATE MODAL */}
       <Modal
-        title="Create a Contact"
-        description="Provide information about your contact."
+        title="Create Contact"
+        description="Please input your contact infomation"
         open={open}
         closeModal={handleCloseModal}
       >
         <form className="my-auto" onSubmit={handleSubmit}>
           <div>
-            <label className="block">Name</label>
+            <label className="block font-bold text-base text-gray-800">
+              Name
+            </label>
             <Input
+              className="text-sm"
               placeholder="Enter Full Name"
               onChange={handleChange}
               id="name"
             />
           </div>
           <div>
-            <label className="block">Email</label>
+            <label className="block font-bold text-base text-gray-800">
+              Email
+            </label>
             <Input
               placeholder="Enter Email"
               type="email"
@@ -338,7 +346,9 @@ function Prospects() {
             />
           </div>
           <div>
-            <label className="block">Phone Number</label>
+            <label className="block font-bold text-base text-gray-800">
+              Phone Number
+            </label>
             <Input
               placeholder="Enter Phone Number"
               onChange={handleChange}
@@ -347,7 +357,9 @@ function Prospects() {
             />
           </div>
           <div>
-            <label className="block">Company</label>
+            <label className="block font-bold text-base text-gray-800">
+              Company
+            </label>
             <Input
               placeholder="Enter Company"
               onChange={handleChange}
@@ -356,7 +368,10 @@ function Prospects() {
           </div>
 
           <div className="mt-4 flex justify-end">
-            <button type="submit" className="bg-green text-white px-10 py-2">
+            <button
+              type="submit"
+              className="bg-green rounded mt-5 text-white px-10 py-2"
+            >
               Create
             </button>
           </div>
@@ -371,8 +386,10 @@ function Prospects() {
         closeModal={handleCloseModal}
       >
         <form className="mt-2" onSubmit={handleUpdate}>
-          <div>
-            <label className="block">Name</label>
+          <div className="text-gray-500">
+            <label className="block font-bold text-base text-gray-800">
+              Name
+            </label>
             <Input
               placeholder="Jane Cooper"
               id="name"
@@ -380,8 +397,10 @@ function Prospects() {
               onChange={handleChange}
             />
           </div>
-          <div>
-            <label className="block">Email</label>
+          <div className="text-gray-500">
+            <label className="block font-bold text-base text-gray-800">
+              Email
+            </label>
             <Input
               placeholder="jane.cooper@example.com"
               id="email"
@@ -389,8 +408,10 @@ function Prospects() {
               onChange={handleChange}
             />
           </div>
-          <div>
-            <label className="block">Phone Number</label>
+          <div className="text-gray-500">
+            <label className="block font-bold text-base text-gray-800">
+              Phone Number
+            </label>
             <Input
               placeholder="09093527277"
               id="phone_number"
@@ -400,7 +421,9 @@ function Prospects() {
             />
           </div>
           <div>
-            <label className="block">Company</label>
+            <label className="block font-bold text-base text-gray-800">
+              Company
+            </label>
             <Input
               placeholder="Enter Company"
               onChange={handleChange}
@@ -408,8 +431,11 @@ function Prospects() {
               defaultValue={prospect.company}
             />
           </div>
-          <div className="mt-4 flex justify-end">
-            <button type="submit" className="bg-green text-white px-10 py-2">
+          <div className="mt-8 flex justify-end">
+            <button
+              type="submit"
+              className="bg-green text-white rounded px-10 py-2"
+            >
               Edit
             </button>
           </div>
@@ -423,9 +449,11 @@ function Prospects() {
         open={open3}
         closeModal={handleCloseModal}
       >
-        <div className="mt-2">
+        <div className="mt-2 text-gray-500">
           <div>
-            <label className="block">Name</label>
+            <label className="block font-bold text-base text-gray-800">
+              Name
+            </label>
             <Input
               placeholder="Jane Cooper"
               id="name"
@@ -433,8 +461,10 @@ function Prospects() {
               disabled
             />
           </div>
-          <div>
-            <label className="block">Email</label>
+          <div className="text-gray-500">
+            <label className="block text-base text-gray-800 font-bold">
+              Email
+            </label>
             <Input
               placeholder="jane.cooper@example.com"
               id="email"
@@ -442,8 +472,10 @@ function Prospects() {
               disabled
             />
           </div>
-          <div>
-            <label className="block">Phone Number</label>
+          <div className="text-gray-500">
+            <label className="block text-base text-gray-800 font-bold">
+              Phone Number
+            </label>
             <Input
               placeholder="09093527277"
               id="phone_number"
@@ -452,7 +484,9 @@ function Prospects() {
             />
           </div>
           <div>
-            <label className="block">Company</label>
+            <label className="block text-base text-gray-800 font-bold">
+              Company
+            </label>
             <Input
               placeholder="Enter Company"
               onChange={handleChange}
@@ -465,14 +499,14 @@ function Prospects() {
         <div className="mt-4 flex justify-end">
           <button
             type="button"
-            className="text-green px-10 py-2 mr-2"
+            className="text-green rounded px-10 py-2 mr-2"
             onClick={handleCloseModal}
           >
             No, Keep
           </button>
           <button
             type="button"
-            className="bg-error text-white px-10 py-2"
+            className="bg-error rounded text-white px-10 py-2"
             onClick={handleDelete}
           >
             Yes, Delete
@@ -483,12 +517,12 @@ function Prospects() {
       {/* CREATE DEAL MODAL */}
       <Modal
         title="Create a deal"
-        description={`Create a deal for ${prospect.name}. Please provide all necessary information.`}
+        description={`Create a deal for ${prospect.name}.`}
         open={open4}
         closeModal={handleCloseModal}
       >
         <form className="mt-2" onSubmit={handleDealCreate}>
-          <div>
+          <div className="text-gray-800">
             <Select
               title="stage"
               label="Deal stage"
@@ -502,8 +536,10 @@ function Prospects() {
               <option>Prospect</option>
             </Select>
           </div>
-          <div>
-            <label className="block">Amount</label>
+          <div className="text-gray-500">
+            <label className="block font-bold text-base text-gray-800">
+              Amount
+            </label>
             <Input
               type="number"
               onChange={handleDealChange}
@@ -511,8 +547,10 @@ function Prospects() {
               id="amount"
             />
           </div>
-          <div>
-            <label className="block">Expected close date</label>
+          <div className="text-gray-500">
+            <label className="block font-bold text-base text-gray-800">
+              Expected close date
+            </label>
             <Input
               placeholder="dd-mm-yy"
               onChange={handleDealChange}
@@ -520,8 +558,10 @@ function Prospects() {
               type="date"
             />
           </div>
-          <div>
-            <label className="block">Description</label>
+          <div className="text-gray-500">
+            <label className="block font-bold text-base text-gray-800">
+              Description
+            </label>
             <Input
               placeholder="Additional info"
               onChange={handleDealChange}
@@ -533,7 +573,7 @@ function Prospects() {
             <button
               type="submit"
               onClick={() => handleDealCreate()}
-              className="bg-green text-white px-10 py-2"
+              className="bg-green rounded text-white px-10 py-2"
             >
               Create
             </button>
@@ -549,7 +589,12 @@ function Prospects() {
                 <tr>
                   <th className="px-3 py-4">
                     <span className="flex items-center">
-                      <input className="mr-4" type="checkbox" name="" id="all" />
+                      <input
+                        className="mr-4"
+                        type="checkbox"
+                        name=""
+                        id="all"
+                      />
                       <label htmlFor="all">Name</label>
                     </span>
                   </th>
@@ -575,14 +620,23 @@ function Prospects() {
 
           {/* Pagination */}
           <div className="flex list-none justify-end items-center mt-5">
-            <button onClick={() => pageBackward()} disabled={!prospects.prev} className="flex items-center py-2 px-3 cursor-pointer border-0 disabled:text-gray-300">
+            <button
+              onClick={() => pageBackward()}
+              disabled={!prospects.prev}
+              className="flex items-center py-2 px-3 cursor-pointer border-0 disabled:text-gray-300"
+            >
               {" "}
-              <ChevronLeft strokeWidth={1} />{" "} <span className="py-2 px-3">Prev</span>
+              <ChevronLeft strokeWidth={1} />{" "}
+              <span className="py-2 px-3">Prev</span>
             </button>
             <div className="bg-green-light text-green rounded-sm py-2 px-4">
               {prospects.pageNum}
             </div>
-            <button onClick={() => pageForward()} disabled={!prospects.next} className="flex items-center py-2 px-3 cursor-pointer border-0 disabled:text-gray-300">
+            <button
+              onClick={() => pageForward()}
+              disabled={!prospects.next}
+              className="flex items-center py-2 px-3 cursor-pointer border-0 disabled:text-gray-300"
+            >
               <span className="py-2 px-3">Next</span>{" "}
               <ChevronRight strokeWidth={1} />{" "}
             </button>

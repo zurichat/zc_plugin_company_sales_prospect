@@ -6,12 +6,13 @@ from rest_framework import serializers
 
 class EmailSerializer(serializers.Serializer):
     subject = serializers.CharField(max_length=200, allow_blank=False, required=True)
-    # from_email = serializers.EmailField(max_length=50)
-    to_email = serializers.CharField(max_length=50)
+    from_email = serializers.EmailField(max_length=50)
+    # to_email = serializers.CharField(max_length=50)
     message = serializers.CharField(max_length=None, allow_blank=False)
 
 
 class EmailUpdateSerializer(serializers.Serializer):
     subject = serializers.CharField(max_length=200, allow_blank=False, required=False)
-    to_email = serializers.CharField(max_length=50, required=False)
+    from_email = serializers.EmailField(max_length=50)
+    # to_email = serializers.CharField(max_length=50, required=False)
     message = serializers.CharField(max_length=None, required=False)
