@@ -28,60 +28,6 @@ def centrifugo_post(room, data):
     # time.sleep(10)
     return resp.json()
 
-def isAuthorized(request):
-    try:
-        authorization_content = request.headers['Authorization']
-        url = 'https://api.zuri.chat/auth/verify-token/'
-        headers = {"Authorization":authorization_content}
-        r = requests.request("GET", url=url, headers=headers)
-        print(r.status_code)
-        if r.status_code == 200:
-            return True
-        raise AuthenticationFailed(detail="Invalid Authorization type or token.")
-
-    except KeyError:
-        raise ParseError(detail="Missing 'Authorization' header.")
-
-    except AuthenticationFailed as e:
-        raise e
-
-    except:
-        return False
-
-def isValidOrganisation(organisationId, request):
-    try:
-        authorization_content = request.headers['Authorization']
-        url = f"https://api.zuri.chat/organizations/{organisationId}"
-        headers = {"Authorization":authorization_content}
-        r = requests.get(url, headers=headers)
-        print(r.status_code)
-        if r.status_code == 200:
-            return True
-        raise AuthenticationFailed(detail="Invalid organizationId.")
-
-    except KeyError:
-        raise ParseError(detail="Missing 'Authorization' header.")
-
-    except AuthenticationFailed as e:
-        raise e
-
-    except:
-        return False
-# write data ( collect_name, objr.ect_) r
-# read data
-# commons/constants.py
-# class ResponseText:
-#     success = "",
-#     error = ""
-
-# {"message":ResponseText.error}
-# ResponseText.error
-
-#  Proper error responses for each view
-#  Views should use serializers in returning data except ListViews
-
-# Centrifugo in Views
-
 def custom_exception_handler(exc, context):
     response = exception_handler(exc, context)
 
@@ -97,4 +43,67 @@ def custom_exception_handler(exc, context):
             data={"message": "Something unexpected happened. Try again later."},
             status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     return response
+
+
+
+
+
+
+
+
+# def isAuthorized(request):
+#     try:
+#         authorization_content = request.headers['Authorization']
+#         url = 'https://api.zuri.chat/auth/verify-token/'
+#         headers = {"Authorization":authorization_content}
+#         r = requests.request("GET", url=url, headers=headers)
+#         print(r.status_code)
+#         if r.status_code == 200:
+#             return True
+#         raise AuthenticationFailed(detail="Invalid Authorization type or token.")
+
+#     except KeyError:
+#         raise ParseError(detail="Missing 'Authorization' header.")
+
+#     except AuthenticationFailed as e:
+#         raise e
+
+#     except:
+#         return False
+
+# def isValidOrganisation(organisationId, request):
+#     try:
+#         authorization_content = request.headers['Authorization']
+#         url = f"https://api.zuri.chat/organizations/{organisationId}"
+#         headers = {"Authorization":authorization_content}
+#         r = requests.get(url, headers=headers)
+#         print(r.status_code)
+#         if r.status_code == 200:
+#             return True
+#         raise AuthenticationFailed(detail="Invalid organizationId.")
+
+#     except KeyError:
+#         raise ParseError(detail="Missing 'Authorization' header.")
+
+#     except AuthenticationFailed as e:
+#         raise e
+
+#     except:
+#         return False
+# write data ( collect_name, objr.ect_) r
+# read data
+# commons/constants.py
+# class ResponseText:
+#     success = "",
+#     error = ""
+
+# {"message":ResponseText.error}
+# ResponseText.error
+
+#  Proper error responses for each view
+#  Views should use serializers in returning data except ListViews
+
+# Centrifugo in Views
+
+
 
