@@ -305,35 +305,35 @@ const Deals = () => {
 			</div>
 
 			{deals.length > 0 && !loading ? (
-				<div className='overflow-x-auto'>
-					<div className='w-max lg:w-full'>
-						<div className='grid grid-cols-4 mt-5 border-gray-300'>
-							<div className='px-24 lg:px-8 border-b border-gray-300 py-2 text-left'>
-								<span className='block font-bold text-lg text-gray-700'>
+				<div className=' lg:overflow-x-auto'>
+					<div className='w-max lg:w-full '>
+						<div className='grid grid-cols-4 mt-5 border-gray-300  '>
+							<div className='px-4 lg:px-8 border-b border-gray-300 py-2 text-left '>
+								<span className='block font-bold text-sm lg:text-lg text-gray-700'>
 									Prospects
 								</span>
 								<span className='text-sm text-gray-500'>
 									{ProspectStage.length} deals • $ 1,500,000
 								</span>
 							</div>
-							<div className='px-24 lg:px-8 text-left border-b border-gray-300 py-2'>
-								<span className='block font-bold text-lg text-gray-700'>
+							<div className='px-4 lg:px-8 text-left border-b border-gray-300 py-2'>
+								<span className='block font-bold text-sm lg:text-lg   text-gray-700'>
 									Proposal
 								</span>
 								<span className='text-sm text-gray-500'>
 									{ProposalStage.length} deals • $ 1,500,000
 								</span>
 							</div>
-							<div className='px-24 lg:px-8 text-left border-b border-gray-300 py-2'>
-								<span className='block font-bold text-lg text-gray-700'>
+							<div className='px-4 lg:px-8 text-left border-b border-gray-300 py-2'>
+								<span className='block font-bold text-sm lg:text-lg  text-gray-700'>
 									Negotiation
 								</span>
 								<span className='text-sm text-gray-500'>
 									{NegotiationStage.length} deals • $ 1,500,000
 								</span>
 							</div>
-							<div className='px-24 lg:px-8 text-left border-b border-gray-300 py-2'>
-								<span className='block font-bold text-lg text-gray-700'>
+							<div className='px-4 lg:px-8 text-left border-b border-gray-300 py-2'>
+								<span className='block font-bold text-sm lg:text-lg  text-gray-700'>
 									Closed
 								</span>
 								<span className='text-sm text-gray-500'>
@@ -342,8 +342,8 @@ const Deals = () => {
 							</div>
 						</div>
 
-						<div className='grid grid-cols-4 border border-t-0 border-gray-300 rounded h-screen2'>
-							<div className='border-r border-gray-300 overflow-y-auto rounded py-2 flex flex-col items-center gap-4'>
+						<div className='grid grid-cols-1 lg:grid-cols-4 border border-t-0 border-gray-300 rounded h-screen '>
+							<div className='border-r border-gray-300 overflow-y-auto rounded py-2 flex flex-col items-center lg:gap-4 h-60 lg:h-auto my-8 gap-y-2'>
 								{deals
 									.filter(
 										(x) =>
