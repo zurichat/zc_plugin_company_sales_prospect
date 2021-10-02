@@ -26,4 +26,34 @@ const customAxios = axios.create({
 	headers: { Authorization: `Bearer ${sessionStorage.getItem("token")}` },
 });
 
+customAxios.interceptors.request.use((res) =>{
+	console.log(res)
+    return res;
+  }, (err) => {
+  
+    return Promise.reject(err);
+  });
+
+ customAxios.interceptors.response.use((res) =>{
+   
+    return res;
+  },(err) => {
+
+    return Promise.reject(err);
+  });
+
+  customAxios.get('/user/12345')
+  .catch(function (err) {
+    if (error.response) {
+      console.log(error.response.data);
+      console.log(error.response.status);
+      console.log(error.response.headers);
+    } else if (err.request) {
+      console.log(err.request);
+    } else {
+           console.log('Err', err.message);
+    }
+    console.log(err.res);
+  });
+
 export default customAxios;
