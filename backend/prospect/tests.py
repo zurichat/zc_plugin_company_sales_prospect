@@ -6,35 +6,50 @@ import requests
 # Genereate your token by logging to zurichat and inspect element
 # Get token from local storage tab and insert in front of "Bearer" 
 # Ps, the space is important.
-header_token = "Bearer "
+header_token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb29raWUiOiJNVFl6TXpBNE1ETTJPSHhIZDNkQlIwUlplRTVVV210T1JFMTNXa1JWTWxwSFVYcFplbEpyVDBkRk5VNXFTbTFaZHowOWZOd1ZOUzFORzlGRG9QQk90T3plWV96V3RkZHVsY0NNMUxlTmFnajU1Nm5jIiwiZW1haWwiOiJzcGFya2RraWxsZXJAZ21haWwuY29tIiwiaWQiOiI2MTU2ZDQzMGQ1NmRkM2M0ZDhhOTYyZmMiLCJvcHRpb25zIjp7IlBhdGgiOiIvIiwiRG9tYWluIjoiIiwiTWF4QWdlIjo3OTQwMjc1MTMzLCJTZWN1cmUiOmZhbHNlLCJIdHRwT25seSI6ZmFsc2UsIlNhbWVTaXRlIjowfSwic2Vzc2lvbl9uYW1lIjoiZjY4MjJhZjk0ZTI5YmExMTJiZTMxMGQzYWY0NWQ1YzcifQ.BxqWLa9rOq471S7J25QkJnA0oazWtc9pekMXGrKnz-M"
 fake = Faker()
 
-print(fake.email())
 class ProspectTests(APITestCase):
     def setUp(self):
         self.data_valid = {
             "name": "Sparkle",
             "email": "spark@gmail.com",
             "company": "Tesla",
-            "phone_number": fake.random_number()
+            "phone_number": fake.random_number(),
+            "twitter": fake.url(),
+            "facebook": fake.url(),
+            "linkedin": fake.url(),
+            "instagram": fake.url(),
         }
         self.data_invalid = {
             "name": fake.random_number(),
             "email": fake.company(),
             "company": fake.email(),
-            "phone_number": fake.email()
+            "phone_number": fake.email(),
+            "twitter": fake.url(),
+            "facebook": fake.url(),
+            "linkedin": fake.url(),
+            "instagram": fake.url(),
         }
         self.data_null = {
             "company": "",
             "email": "",
             "name": "",
-            "phone_number": ""
+            "phone_number": "",
+            "twitter": "",
+            "facebook": "",
+            "linkedin": "",
+            "instagram": "",
         }
         self.data_excess = {
             "name": fake.text(),
             "email": fake.text(),
             "company": fake.text(),
-            "phone_number": fake.text()
+            "phone_number": fake.text(),
+            "twitter": fake.url(),
+            "facebook": fake.url(),
+            "linkedin": fake.url(),
+            "instagram": fake.url(),
         }
         self.welcome_msg = "welcome mail has been sent successfully"
 
@@ -47,13 +62,24 @@ class ProspectTests(APITestCase):
         print(res.status_code)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
    
-     # Test welcome endpoint
+    #  # Test welcome endpoint
     def test_welcome_endpoint(self):
         url = "https://sales.zuri.chat/api/v1/prospects/welcome/"
         headers = {'Authorization': header_token}
         res = self.client.get(url, headers = headers)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(res.json()['message'], self.welcome_msg)
+
+    ######   Test Delete Endpoint   ##########
+
+    def test_delete_valid_data(self):
+
+        param = {"id" : "615835e087540d8d01ffc738" }
+        url = "https://sales.zuri.chat/api/v1/prospects/delete/"
+        headers = {'Authorization': header_token}
+        res = requests.delete(url, data = param, headers = headers)
+        print(res.status_code)
+        self.assertEqual(res.status_code, status.HTTP_200_OK, "Delete Endpoint not working...")
     
     # Test Create Endpoint
 
@@ -94,7 +120,7 @@ class ProspectTests(APITestCase):
     def test_update_valid_data(self):
         # If data is the same it raise a 400 bad request so randomize the phn number
 
-        self.data_valid['object_id'] = "61576983d56dd3c4d8a9687a"
+        self.data_valid['object_id'] = "615835e087540d8d01ffc738"
         data = self.data_valid
         url = "https://sales.zuri.chat/api/v1/prospects/update/"
         headers = {'Authorization': header_token}
