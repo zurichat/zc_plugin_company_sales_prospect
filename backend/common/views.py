@@ -26,14 +26,18 @@ class SidebarView(APIView):
     def get(self,request,*args, **kwargs):
         user = request.GET.get('user')
         org = request.GET.get('org')
+        print(user, org)
         if request.GET.get('org') and request.GET.get('user'):
             url = f'https://api.zuri.chat/organizations/{org}/members/{user}'
             headers = {
                 "Authorization" : "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb29raWUiOiJNVFl6TXpFMU9EazNOM3hIZDNkQlIwUlplRTVVWkcxTlZFWnNUMWRKZWs5SFNYZFBWMVV3VFVSS2JGbHRSbWhPWnowOWZMa0hCYlk1d1RwNDJQV0pmVS03ejNta1dkOElTMEx6ZjU5d0paVy1ZOUZOIiwiZW1haWwiOiJkZXZqb3NlcGhjaGluZWR1QGdtYWlsLmNvbSIsImlkIjoiNjE1N2YxMWU5YjM4YjA5ZTQwMmViYWE2Iiwib3B0aW9ucyI6eyJQYXRoIjoiLyIsIkRvbWFpbiI6IiIsIk1heEFnZSI6Nzk0MDM1NDI2NSwiU2VjdXJlIjpmYWxzZSwiSHR0cE9ubHkiOmZhbHNlLCJTYW1lU2l0ZSI6MH0sInNlc3Npb25fbmFtZSI6ImY2ODIyYWY5NGUyOWJhMTEyYmUzMTBkM2FmNDVkNWM3In0.F5_qKjQUVJtsd3aLbdO-pbjdkiKPVFzyW-Dbkr9Tp44",
                 "Content-Type" : "application/json",
                 }
+            
+            print("hello wrold!")
             r = requests.get(url,headers=headers)
             print(r.status_code)
+            
             if r.status_code:
                 public_url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/{ROOM_COLLECTION_NAME}/{ORGANISATION_ID}"
                 private_url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/{ADDED_ROOM_COLLECTION_NAME}/{ORGANISATION_ID}"
@@ -41,6 +45,7 @@ class SidebarView(APIView):
                 private_r = requests.get(private_url)
                 public_response = json.loads(public_r.text)
                 private_response = json.loads(private_r.text)
+                print(private_response)
                 if private_response['status']!=200:
                     return Response({
                         "event": "sidebar_update",
@@ -55,7 +60,7 @@ class SidebarView(APIView):
                             "show_group": False,
                             "button_url": "/sales",
                             "public_rooms":[],
-                            "joined_rooms":public_response['data']
+                            "joined_rooms":public_response['data'] if public_response['status'] != 404 else []
                         }
                     })
                 else:
@@ -72,7 +77,7 @@ class SidebarView(APIView):
                             "show_group": False,
                             "button_url": "/sales",
                             "public_rooms":private_response['data'],
-                            "joined_rooms":public_response['data']
+                            "joined_rooms":public_response['data'] if public_response['status'] != 404 else []
                             }
                         })
             else:
