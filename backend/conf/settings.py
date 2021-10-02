@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     # Centrifugo
     # "instant",
     # "cent",
+    'social_media_scraping',
 ]
 
 MIDDLEWARE = [
