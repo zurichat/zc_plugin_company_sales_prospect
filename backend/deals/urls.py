@@ -6,7 +6,8 @@ from deals.views import (
     DealsDeleteView,
     # DealsStageListView,
     DealsFilterListView,
-    ReArrangeDeals
+    ReArrangeDeals,
+    DealsBatchDeleteView
 )
 
 urlpatterns = [
@@ -15,6 +16,7 @@ urlpatterns = [
     path("", DealsListView.as_view()),
     path("re-arrange/", ReArrangeDeals.as_view()),
     path("delete/", DealsDeleteView.as_view()),
+    path("delete/batch/", DealsBatchDeleteView.as_view()),
     # path("stage/", DealsStageListView.as_view()),
     path("filter/", DealsFilterListView.as_view()),
 ]

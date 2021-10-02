@@ -4,7 +4,7 @@ const DEBUG = false;
 let API_ENDPOINT = "https://sales.zuri.chat/api/v1";
 
 if (DEBUG) {
-  API_ENDPOINT = "http://127.0.0.1:8200/api/v1";
+	API_ENDPOINT = "http://127.0.0.1:8200/api/v1";
 }
 
 export const prospectsURL = `${API_ENDPOINT}/prospects/`;
@@ -17,10 +17,12 @@ export const deleteProspectURL = `${API_ENDPOINT}/prospects/delete/`;
 export const addToRoomURL = `${API_ENDPOINT}/add-to-room/`;
 export const roomsURL = `${API_ENDPOINT}/rooms/`;
 export const leaveRoomURL = `${API_ENDPOINT}/leave-room/`;
+export const deleteDealURL = `${API_ENDPOINT}/deals/delete/?id=`;
+export const bashDeleteDealsURL = `${API_ENDPOINT}/deals/delete/batch/`;
 
 const customAxios = axios.create({
-  baseURL: API_ENDPOINT,
-  headers: { Authorization: `Bearer ${sessionStorage.getItem("token")}` }
+	baseURL: API_ENDPOINT,
+	headers: { Authorization: `Bearer ${sessionStorage.getItem("token")}` },
 });
 
 export default customAxios;

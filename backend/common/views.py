@@ -26,43 +26,57 @@ class SidebarView(APIView):
     def get(self,request,*args, **kwargs):
         user = request.GET.get('user')
         org = request.GET.get('org')
+        
         if request.GET.get('org') and request.GET.get('user'):
             url = f'https://api.zuri.chat/organizations/{org}/members/{user}'
             headers = {
-                "Authorization" : "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb29raWUiOiJNVFl6TWpVMk5UY3pPSHhIZDNkQlIwUlplRTVIVm0xUFYxWm9XbFJOTVZsdFNUTk5Na1V6VGpKS2FrMXRSWGxPZHowOWZERHRMWFpqWlRUU1VLSHNPNzItTjNVSlVZNmlVaDlTMUhveXcwbl8zaWNUIiwiZW1haWwiOiJhbGFzaGltdXlpd2FAZ21haWwuY29tIiwiaWQiOiI2MTRlZjllYWUzNWJiNzNhNzdiYzJhMjciLCJvcHRpb25zIjp7IlBhdGgiOiIvIiwiRG9tYWluIjoiIiwiTWF4QWdlIjo3OTM5NzY1MjQ0LCJTZWN1cmUiOmZhbHNlLCJIdHRwT25seSI6ZmFsc2UsIlNhbWVTaXRlIjowfSwic2Vzc2lvbl9uYW1lIjoiZjY4MjJhZjk0ZTI5YmExMTJiZTMxMGQzYWY0NWQ1YzcifQ.ZAFc8PUEnHveRyGzDPB_TXP0qzGhd2ymhDx44ECdDA4",
+                "Authorization" : "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb29raWUiOiJNVFl6TXpFMU9EazNOM3hIZDNkQlIwUlplRTVVWkcxTlZFWnNUMWRKZWs5SFNYZFBWMVV3VFVSS2JGbHRSbWhPWnowOWZMa0hCYlk1d1RwNDJQV0pmVS03ejNta1dkOElTMEx6ZjU5d0paVy1ZOUZOIiwiZW1haWwiOiJkZXZqb3NlcGhjaGluZWR1QGdtYWlsLmNvbSIsImlkIjoiNjE1N2YxMWU5YjM4YjA5ZTQwMmViYWE2Iiwib3B0aW9ucyI6eyJQYXRoIjoiLyIsIkRvbWFpbiI6IiIsIk1heEFnZSI6Nzk0MDM1NDI2NSwiU2VjdXJlIjpmYWxzZSwiSHR0cE9ubHkiOmZhbHNlLCJTYW1lU2l0ZSI6MH0sInNlc3Npb25fbmFtZSI6ImY2ODIyYWY5NGUyOWJhMTEyYmUzMTBkM2FmNDVkNWM3In0.F5_qKjQUVJtsd3aLbdO-pbjdkiKPVFzyW-Dbkr9Tp44",
                 "Content-Type" : "application/json",
                 }
+            
+           
             r = requests.get(url,headers=headers)
             print(r.status_code)
+            
             if r.status_code:
-                public_url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/{ROOM_COLLECTION_NAME}/{ORGANISATION_ID}"
-                private_url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/{ADDED_ROOM_COLLECTION_NAME}/{ORGANISATION_ID}"
+                print(r.status_code)
+                public_url = f'http://api.zuri.chat/data/read/{PLUGIN_ID}/{ROOM_COLLECTION_NAME}/{ORGANISATION_ID}'
+                private_url = f'http://api.zuri.chat/data/read/{PLUGIN_ID}/{ADDED_ROOM_COLLECTION_NAME}/{ORGANISATION_ID}'
                 public_r = requests.get(public_url)
                 private_r = requests.get(private_url)
+                print(private_r,public_r)
                 public_response = json.loads(public_r.text)
                 private_response = json.loads(private_r.text)
-                if private_response['status']!=200:
-                    return Response({"name": PLUGIN_NAME,
-                    "description": DESCRIPTION,
-                    "plugin_id": PLUGIN_ID,
-                    "organisation_id": org,
-                    "user_id": user,
-                    "group_name": "SALES",
-                    "show_group": False,
-                    "public_rooms":[],
-                    "joined_rooms":public_response['data']})
+                
+                if private_response['status']==200:
+                    print(r.status_code)
+
+                    return Response({
+                        "name": PLUGIN_NAME,
+                        "description": DESCRIPTION,
+                        "plugin_id": PLUGIN_ID,
+                        "organisation_id": org,
+                        "user_id": user,
+                        "group_name": "SALES",
+                        "show_group": False,
+                        "public_rooms":[],
+                        "joined_rooms":public_response['data'] if public_response['status'] != 404 else []
+                    })
                 else:
-                    return Response({"name": PLUGIN_NAME,
-                    "description": DESCRIPTION,
-                    "plugin_id": PLUGIN_ID,
-                    "organisation_id": org,
-                    "user_id": user,
-                    "group_name": "SALES",
-                    "show_group": False,
-                    "public_rooms":private_response['data'],
-                    "joined_rooms":public_response['data']})
+                    return Response({
+                        "name": PLUGIN_NAME,
+                        "description": DESCRIPTION,
+                        "plugin_id": PLUGIN_ID,
+                        "organisation_id": org,
+                        "user_id": user,
+                        "group_name": "SALES",
+                        "show_group": False,
+                        "public_rooms":private_response['data'],
+                        "joined_rooms":public_response['data'] if public_response['status'] != 404 else []
+                    })
             else:
-                return Response({"name": PLUGIN_NAME,
+                return Response({
+                    "name": PLUGIN_NAME,
                     "description": DESCRIPTION,
                     "plugin_id": PLUGIN_ID,
                     "organisation_id": org,
@@ -70,17 +84,21 @@ class SidebarView(APIView):
                     "group_name": "SALES",
                     "show_group": False,
                     "public_rooms":[],
-                    "joined_rooms":[]})
+                    "joined_rooms":[]
+                })
         else:
-            return Response({"name": PLUGIN_NAME,
-                    "description": DESCRIPTION,
-                    "plugin_id": PLUGIN_ID,
-                    "organisation_id": org,
-                    "user_id": user,
-                    "group_name": "SALES",
-                    "show_group": False,
-                    "public_rooms":[],
-                    "joined_rooms":[]})
+            return Response({
+                
+                "name": PLUGIN_NAME,
+                "description": DESCRIPTION,
+                "plugin_id": PLUGIN_ID,
+                "organisation_id": org,
+                "user_id": user,
+                "group_name": "SALES",
+                "show_group": False,
+                "public_rooms":[],
+                "joined_rooms":[]
+            })
 
 
 def is_valid(param):

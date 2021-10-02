@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     # Centrifugo
     # "instant",
     # "cent",
+    'social_media_scraping',
 ]
 
 MIDDLEWARE = [
@@ -193,6 +194,7 @@ REST_FRAMEWORK = {
     ],
 
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'EXCEPTION_HANDLER': 'common.utils.custom_exception_handler'
 }
 
 # API DOCS SETTINGS

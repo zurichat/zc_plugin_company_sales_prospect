@@ -6,6 +6,7 @@ from .views import (
     WelcomeView,
     ProspectsListView,
     ProspectsDeleteView,
+    ProspectsBatchDeleteView,
 )
 
 
@@ -14,8 +15,9 @@ urlpatterns = [
     path("<str:org_id>/create/", ProspectsCreateView.as_view()),
     path("<str:org_id>/", ProspectsListView.as_view(), name="prospects"),
     path("welcome/", WelcomeView.as_view(), name="welcome_mail"),
-    path("<str:org>/update/", ProspectsUpdateView.as_view()),
-    path("delete/<str:search>/", ProspectsDeleteView.as_view())
+    path("update/", ProspectsUpdateView.as_view()),
+    path("delete/batch/", ProspectsBatchDeleteView.as_view()),
+    path("delete/<str:search>/", ProspectsDeleteView.as_view()),
 ]
 
 # reminder to remove the org_id
