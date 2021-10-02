@@ -3,9 +3,10 @@ from rest_framework.test import APITestCase
 from faker import Faker
 import requests
 
-# # Genereate your token by logging to zurichat and inspect element
-# # Get token from local storage tab and insert in front of "Bearer" 
-# # Ps, the space is important.
+
+# Genereate your token by logging to zurichat and inspect element
+# Get token from local storage tab and insert in front of "Bearer" 
+# Ps, the space is important.
 header_token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb29raWUiOiJNVFl6TXpBNE1ETTJPSHhIZDNkQlIwUlplRTVVV210T1JFMTNXa1JWTWxwSFVYcFplbEpyVDBkRk5VNXFTbTFaZHowOWZOd1ZOUzFORzlGRG9QQk90T3plWV96V3RkZHVsY0NNMUxlTmFnajU1Nm5jIiwiZW1haWwiOiJzcGFya2RraWxsZXJAZ21haWwuY29tIiwiaWQiOiI2MTU2ZDQzMGQ1NmRkM2M0ZDhhOTYyZmMiLCJvcHRpb25zIjp7IlBhdGgiOiIvIiwiRG9tYWluIjoiIiwiTWF4QWdlIjo3OTQwMjc1MTMzLCJTZWN1cmUiOmZhbHNlLCJIdHRwT25seSI6ZmFsc2UsIlNhbWVTaXRlIjowfSwic2Vzc2lvbl9uYW1lIjoiZjY4MjJhZjk0ZTI5YmExMTJiZTMxMGQzYWY0NWQ1YzcifQ.BxqWLa9rOq471S7J25QkJnA0oazWtc9pekMXGrKnz-M"
 fake = Faker()
 
