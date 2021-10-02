@@ -74,12 +74,39 @@ class ProspectTests(APITestCase):
 
     def test_delete_valid_data(self):
 
-        param = {"id" : "615835e087540d8d01ffc738" }
-        url = "https://sales.zuri.chat/api/v1/prospects/delete/"
+        id = "615835e087540d8d01ffc738"
+        url = f"https://sales.zuri.chat/api/v1/prospects/delete/?{id}"
         headers = {'Authorization': header_token}
-        res = requests.delete(url, data = param, headers = headers)
+        res = requests.delete(url, headers = headers)
         print(res.status_code)
         self.assertEqual(res.status_code, status.HTTP_200_OK, "Delete Endpoint not working...")
+
+    def test_delete_invalid_data(self):
+        id = fake.random_number()
+        url = f"https://sales.zuri.chat/api/v1/prospects/delete/?{id}"
+        headers = {'Authorization': header_token}
+        res = requests.delete(url, headers = headers)
+        print(res.status_code)
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+
+    
+       ######   Test Search Endpoint   ##########
+
+    def test_search_valid_data(self):
+        id = "615835e087540d8d01ffc738"
+        url = f"https://sales.zuri.chat/api/v1/prospects/search/?{id}"
+        headers = {'Authorization': header_token}
+        res = requests.get(url, headers = headers)
+        print(res.status_code)
+        self.assertEqual(res.status_code, status.HTTP_200_OK, "Search Endpoint not working...")
+
+    def test_search_invalid_data(self):
+        id = fake.random_number()
+        url = f"https://sales.zuri.chat/api/v1/prospects/search/?{id}"
+        headers = {'Authorization': header_token}
+        res = requests.get(url, headers = headers)
+        print(res.status_code)
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
     
     # Test Create Endpoint
 
