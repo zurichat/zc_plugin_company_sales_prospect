@@ -1,4 +1,4 @@
-from django.urls import path,re_path
+from django.urls import path
 
 from common.views import (
     RoomCreateView,
@@ -12,7 +12,7 @@ from common.views import (
 app_name = "common"
 
 urlpatterns = [
-    re_path(r'sidebar/?$', SidebarView.as_view()),
+    path('sidebar/', SidebarView.as_view()),
     path("info/", InfoView.as_view()),
 
     path("create-room/", RoomCreateView.as_view()),
