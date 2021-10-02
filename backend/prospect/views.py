@@ -134,7 +134,7 @@ class ProspectsCreateView(APIView):
                 "name": serializer.data.get("name"),
                 "email": serializer.data.get("email"),
                 "phone_number": serializer.data.get("phone_number"),
-                "company": serializer.data.get("company")
+                "company": serializer.data.get("company"),
                 "twitter": serializer.data.get("twitter"),
                 "facebook": serializer.data.get("facebook"),
                 "linkedin": serializer.data.get("linkedin"),
