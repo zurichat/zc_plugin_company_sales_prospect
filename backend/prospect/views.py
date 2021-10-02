@@ -225,7 +225,7 @@ class ProspectsUpdateView(APIView):
 
 class ProspectsBatchDeleteView(APIView):
 
-    def delete(self, request, **kwargs):
+    def post(self, request, **kwargs):
         # check authentication
         if not isAuthorized(request):
             return Response(data={"message": "Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
@@ -253,7 +253,7 @@ class ProspectsBatchDeleteView(APIView):
             if r["data"]["deleted_count"] == 0:
                 return Response(
                     data={
-                        "message": "There is no prospect with this object id you supplied"
+                        "message": "There is no prospect with this email you supplied"
                     },
                     status=status.HTTP_400_BAD_REQUEST,
                 )
@@ -262,7 +262,9 @@ class ProspectsBatchDeleteView(APIView):
                 {
                     "event": "delete_prospect",
                     "token": "elijah",
-                    "object": filterData,
+                    "object": {
+                        "data": filterData,
+                    },
                 },
             )
             return Response(data={"message": " Prospect list  deleted successful"}, status=status.HTTP_200_OK)
