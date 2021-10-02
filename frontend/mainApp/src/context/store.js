@@ -2,7 +2,7 @@ import { createContext, useState } from 'react'
 
 import customAxios, { addToRoomURL, dealsURL, leaveRoomURL, prospectsURL } from '../axios';
 import { useEffect } from 'react';
-import { SubscribeToChannel, GetUserInfo } from "@zuri/zuri-control";
+import { SubscribeToChannel, GetUserInfo } from "@zuri/control";
 
 
 export const PluginContext = createContext(null)
