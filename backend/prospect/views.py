@@ -42,11 +42,11 @@ class WelcomeView(APIView):
 def SearchProspects(request, search):
 
     # # check authentication
-    # if not isAuthorized(request):
-    #     return Response(data={"message":"Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
+    if not isAuthorized(request):
+        return Response(data={"message":"Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
 
-    # if not isValidOrganisation(ORGANISATION_ID, request):
-    #     return Response(data={"message":"Invalid/Missing organization id"}, status=status.HTTP_401_UNAUTHORIZED)
+    if not isValidOrganisation(ORGANISATION_ID, request):
+        return Response(data={"message":"Invalid/Missing organization id"}, status=status.HTTP_401_UNAUTHORIZED)
 
     # import requests
     url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/prospects/{ORGANISATION_ID}/"
@@ -125,6 +125,10 @@ class ProspectsCreateView(APIView):
         email = request.data.get("email")
         phone_number = request.data.get("phone_number")
         company = request.data.get("company")
+        twitter = request.data.get("twitter")
+        facebook = request.data.get("facebook")
+        linkedin = request.data.get("linkedin")
+        instagram = request.data.get("instagram")
         data = {
             "plugin_id": PLUGIN_ID,
             "organization_id": ORGANISATION_ID,
@@ -135,6 +139,10 @@ class ProspectsCreateView(APIView):
                 "phone_number": phone_number,
                 "email": email,
                 "company": company,
+                "twitter": twitter,
+                "facebook": facebook,
+                "linkedin": linkedin,
+                "instagram": instagram,
             },
         }
         response = requests.request("POST", url, data=json.dumps(data))
