@@ -45,9 +45,6 @@ def isAuthorized(request):
     except AuthenticationFailed as e:
         raise e
 
-    except requests.ConnectionError as e:
-        raise e
-
     except:
         return False
 
@@ -68,25 +65,8 @@ def isValidOrganisation(organisationId, request):
     except AuthenticationFailed as e:
         raise e
 
-    except requests.ConnectionError as e:
-        raise e
-
     except:
         return False
-# write data ( collect_name, objr.ect_) r
-# read data
-# commons/constants.py
-# class ResponseText:
-#     success = "",
-#     error = ""
-
-# {"message":ResponseText.error}
-# ResponseText.error
-
-#  Proper error responses for each view
-#  Views should use serializers in returning data except ListViews
-
-# Centrifugo in Views
 
 def custom_exception_handler(exc, context):
     response = exception_handler(exc, context)
@@ -103,6 +83,31 @@ def custom_exception_handler(exc, context):
             data={"message": "Something unexpected happened. Try again later."},
             status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     return response
+
+
+
+
+
+
+
+
+
+# write data ( collect_name, objr.ect_) r
+# read data
+# commons/constants.py
+# class ResponseText:
+#     success = "",
+#     error = ""
+
+# {"message":ResponseText.error}
+# ResponseText.error
+
+#  Proper error responses for each view
+#  Views should use serializers in returning data except ListViews
+
+# Centrifugo in Views
+
+
 
 
 def handle_failed_request(response=None):
