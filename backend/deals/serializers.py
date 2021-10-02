@@ -9,6 +9,8 @@ class DealSerializer(serializers.Serializer):
     close_date= serializers.CharField(write_only=True,max_length=100, help_text="yyyy-mm-dd")
     description= serializers.CharField(write_only=True,max_length=300)
 
+    
+
 class DealUpdateSerializer(serializers.Serializer):
     prospect_id= serializers.CharField(max_length=100, required=False)
     name= serializers.CharField(max_length=100, required=False)
@@ -16,3 +18,5 @@ class DealUpdateSerializer(serializers.Serializer):
     amount= serializers.IntegerField(max_value=None, min_value=None,required=False)
     close_date= serializers.CharField(max_length=100, help_text="dd-mm-yyyy", required=False)
     description= serializers.CharField(max_length=300, required=False)
+
+    
