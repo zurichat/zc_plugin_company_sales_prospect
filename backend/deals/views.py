@@ -360,7 +360,6 @@ class DealsBatchDeleteView(APIView):
 
         if not isValidOrganisation(ORGANISATION_ID, request):
             return Response(data={"message": "Invalid/Missing organization id"}, status=st.HTTP_401_UNAUTHORIZED)
-
         filterData = request.data.get('filter')
 
         url = "https://api.zuri.chat/data/delete"
