@@ -111,6 +111,13 @@ function Prospects() {
 
   const [loading, setLoading] = useState(true);
 
+  const [socialInfo, setSocialInfo] = useState({
+    name: "Mark Essien",
+    education: "Landmark University",
+    address: "Lagos, Nigeria",
+    favourite_quote: "I am a great person",
+  });
+
   const [open, setOpen] = useState(false);
   const handleOpenCreateModal = () => setOpen(true);
 
@@ -125,6 +132,13 @@ function Prospects() {
     setProspect(prospect);
     setOpen3(true);
   };
+
+  const [open5, setOpen5] = useState(false);
+  const handleOpenSocialModal = (e, social) => {
+    setOpen5(true);
+  };
+
+  
 
   const [open4, setOpen4] = useState(false);
   const handleOpenDealCreateModal = (e, prospect) => {
@@ -150,6 +164,7 @@ function Prospects() {
     setOpen2(false);
     setOpen3(false);
     setOpen4(false);
+    setOpen5(false);
   };
 
   const pageForward = () => {
@@ -310,409 +325,497 @@ function Prospects() {
   };
 
   return (
-    <div className="p-10 w-screen">
-      <div className="flex justify-between items-center">
-        <h3 className="text-2xl font-bold">Contact</h3>
-        <Button onClick={handleOpenCreateModal}>Create New</Button>
-      </div>
-      {/* CREATE MODAL */}
-      <Modal
-        title="Create Contact"
-        description="Please input your contact infomation"
-        open={open}
-        closeModal={handleCloseModal}
-      >
-        <form className="my-auto" onSubmit={handleSubmit}>
-          <div>
-            <label className="block font-bold text-base text-gray-800">
-              Name
-            </label>
-            <Input
-              className="text-sm"
-              placeholder="Enter Full Name"
-              onChange={handleChange}
-              id="name"
-            />
-          </div>
-          <div>
-            <label className="block font-bold text-base text-gray-800">
-              Email
-            </label>
-            <Input
-              placeholder="Enter Email"
-              type="email"
-              onChange={handleChange}
-              id="email"
-            />
-          </div>
-          <div>
-            <label className="block font-bold text-base text-gray-800">
-              Phone Number
-            </label>
-            <Input
-              placeholder="Enter Phone Number"
-              onChange={handleChange}
-              id="phone_number"
-              type="tel"
-            />
-          </div>
-          <div>
-            <label className="block font-bold text-base text-gray-800">
-              Company
-            </label>
-            <Input
-              placeholder="Enter Company"
-              onChange={handleChange}
-              id="company"
-            />
-          </div>
+		<div className="p-10 w-screen">
+			<div className="flex justify-between items-center">
+				<h3 className="text-2xl font-bold">Contact</h3>
+				<div className="flex gap-3">
+					<Button onClick={handleOpenCreateModal}>Create New</Button>
+					{socialInfo !== null ? (
+						<Button onClick={handleOpenSocialModal}>
+							Show my Social Information
+						</Button>
+					) : (
+						<Button onClick={handleOpenSocialModal}>Add Social Info</Button>
+					)}
+				</div>
+			</div>
 
-          <div className="mt-4 flex justify-end">
-            <button
-              type="submit"
-              className="bg-green rounded mt-5 text-white px-10 py-2"
-            >
-              Create
-            </button>
-          </div>
-        </form>
-      </Modal>
+			{/* CREATE MODAL */}
+			<Modal
+				title="Create Contact"
+				description="Please input your contact infomation"
+				open={open}
+				closeModal={handleCloseModal}
+			>
+				<form className="my-auto" onSubmit={handleSubmit}>
+					<div>
+						<label className="block font-bold text-base text-gray-800">
+							Name
+						</label>
+						<Input
+							className="text-sm"
+							placeholder="Enter Full Name"
+							onChange={handleChange}
+							id="name"
+						/>
+					</div>
+					<div>
+						<label className="block font-bold text-base text-gray-800">
+							Email
+						</label>
+						<Input
+							placeholder="Enter Email"
+							type="email"
+							onChange={handleChange}
+							id="email"
+						/>
+					</div>
+					<div>
+						<label className="block font-bold text-base text-gray-800">
+							Phone Number
+						</label>
+						<Input
+							placeholder="Enter Phone Number"
+							onChange={handleChange}
+							id="phone_number"
+							type="tel"
+						/>
+					</div>
+					<div>
+						<label className="block font-bold text-base text-gray-800">
+							Company
+						</label>
+						<Input
+							placeholder="Enter Company"
+							onChange={handleChange}
+							id="company"
+						/>
+					</div>
 
-      {/* EDIT MODAL */}
-      <Modal
-        title="Edit Contact"
-        description="Provide information about your contact."
-        open={open2}
-        closeModal={handleCloseModal}
-      >
-        <form className="mt-2" onSubmit={handleUpdate}>
-          <div className="text-gray-500">
-            <label className="block font-bold text-base text-gray-800">
-              Name
-            </label>
-            <Input
-              placeholder="Jane Cooper"
-              id="name"
-              defaultValue={prospect.name}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="text-gray-500">
-            <label className="block font-bold text-base text-gray-800">
-              Email
-            </label>
-            <Input
-              placeholder="jane.cooper@example.com"
-              id="email"
-              defaultValue={prospect.email}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="text-gray-500">
-            <label className="block font-bold text-base text-gray-800">
-              Phone Number
-            </label>
-            <Input
-              placeholder="09093527277"
-              id="phone_number"
-              type="tel"
-              defaultValue={prospect.phone_number}
-              onChange={handleChange}
-            />
-          </div>
-          <div>
-            <label className="block font-bold text-base text-gray-800">
-              Company
-            </label>
-            <Input
-              placeholder="Enter Company"
-              onChange={handleChange}
-              id="company"
-              defaultValue={prospect.company}
-            />
-          </div>
-          <div className="mt-8 flex justify-end">
-            <button
-              type="submit"
-              className="bg-green text-white rounded px-10 py-2"
-            >
-              Edit
-            </button>
-          </div>
-        </form>
-      </Modal>
+					<div className="mt-4 flex justify-end">
+						<button
+							type="submit"
+							className="bg-green rounded mt-5 text-white px-10 py-2"
+						>
+							Create
+						</button>
+					</div>
+				</form>
+			</Modal>
 
-      {/* DELETE MODAL */}
-      <Modal
-        title="Delete Prospect"
-        description="This prospect will be deleted, this action cannot be undone."
-        open={open3}
-        closeModal={handleCloseModal}
-      >
-        <div className="mt-2 text-gray-500">
-          <div>
-            <label className="block font-bold text-base text-gray-800">
-              Name
-            </label>
-            <Input
-              placeholder="Jane Cooper"
-              id="name"
-              value={prospect.name}
-              disabled
-            />
-          </div>
-          <div className="text-gray-500">
-            <label className="block text-base text-gray-800 font-bold">
-              Email
-            </label>
-            <Input
-              placeholder="jane.cooper@example.com"
-              id="email"
-              value={prospect.email}
-              disabled
-            />
-          </div>
-          <div className="text-gray-500">
-            <label className="block text-base text-gray-800 font-bold">
-              Phone Number
-            </label>
-            <Input
-              placeholder="09093527277"
-              id="phone_number"
-              value={prospect.phone_number}
-              disabled
-            />
-          </div>
-          <div>
-            <label className="block text-base text-gray-800 font-bold">
-              Company
-            </label>
-            <Input
-              placeholder="Enter Company"
-              onChange={handleChange}
-              id="company"
-              defaultValue={prospect.company}
-            />
-          </div>
-        </div>
+			{socialInfo !== null ? (
+				<Modal
+					title="Your Social Information"
+					description="Your profile information from Facebook"
+					open={open5}
+					closeModal={handleCloseModal}
+				>
+					<div className="flex flex-col">
+						<p>Name: {socialInfo.name}</p>
+						<p>Education: {socialInfo.education}</p>
+						<p>Address: {socialInfo.address}</p>
+						<p>Favourite Quote: {socialInfo.favourite_quote}</p>
+					</div>
+				</Modal>
+			) : (
+				<Modal
+					title="Create Contact"
+					description="Please input your contact infomation"
+					open={open5}
+					closeModal={handleCloseModal}
+				>
+					<form className="my-auto" onSubmit={handleSubmit}>
+						<div>
+							<label className="block font-bold text-base text-gray-800">
+								Name
+							</label>
+							<Input
+								className="text-sm"
+								placeholder="Enter Full Name"
+								onChange={handleChange}
+								id="name"
+							/>
+						</div>
+						<div>
+							<label className="block font-bold text-base text-gray-800">
+								Email
+							</label>
+							<Input
+								placeholder="Enter Email"
+								type="email"
+								onChange={handleChange}
+								id="email"
+							/>
+						</div>
+						<div>
+							<label className="block font-bold text-base text-gray-800">
+								Phone Number
+							</label>
+							<Input
+								placeholder="Enter Phone Number"
+								onChange={handleChange}
+								id="phone_number"
+								type="tel"
+							/>
+						</div>
+						<div>
+							<label className="block font-bold text-base text-gray-800">
+								Company
+							</label>
+							<Input
+								placeholder="Enter Company"
+								onChange={handleChange}
+								id="company"
+							/>
+						</div>
 
-        <div className="mt-4 flex justify-end">
-          <button
-            type="button"
-            className="text-green rounded px-10 py-2 mr-2"
-            onClick={handleCloseModal}
-          >
-            No, Keep
-          </button>
-          <button
-            type="button"
-            className="bg-error rounded text-white px-10 py-2"
-            onClick={handleDelete}
-          >
-            Yes, Delete
-          </button>
-        </div>
-      </Modal>
+						<div className="mt-4 flex justify-end">
+							<button
+								type="submit"
+								className="bg-green rounded mt-5 text-white px-10 py-2"
+							>
+								Create
+							</button>
+						</div>
+					</form>
+				</Modal>
+			)}
 
-      {/* CREATE DEAL MODAL */}
-      <Modal
-        title="Create a deal"
-        description={`Create a deal for ${prospect.name}.`}
-        open={open4}
-        closeModal={handleCloseModal}
-      >
-        <form className="mt-2" onSubmit={handleDealCreate}>
-          <div className="text-gray-800">
-            <Select
-              title="stage"
-              label="Deal stage"
-              id="deal_stage"
-              onChange={handleDealChange}
-            >
-              <option>Select a stage</option>
-              <option>Proposal</option>
-              <option>Closed</option>
-              <option>Negotiation</option>
-              <option>Prospect</option>
-            </Select>
-          </div>
-          <div className="text-gray-500">
-            <label className="block font-bold text-base text-gray-800">
-              Amount
-            </label>
-            <Input
-              type="number"
-              onChange={handleDealChange}
-              placeholder="Enter Amount"
-              id="amount"
-            />
-          </div>
-          <div className="text-gray-500">
-            <label className="block font-bold text-base text-gray-800">
-              Expected close date
-            </label>
-            <Input
-              placeholder="dd-mm-yy"
-              onChange={handleDealChange}
-              id="close_date"
-              type="date"
-            />
-          </div>
-          <div className="text-gray-500">
-            <label className="block font-bold text-base text-gray-800">
-              Description
-            </label>
-            <Input
-              placeholder="Additional info"
-              onChange={handleDealChange}
-              id="description"
-            />
-          </div>
+			{/* EDIT MODAL */}
+			<Modal
+				title="Edit Contact"
+				description="Provide information about your contact."
+				open={open2}
+				closeModal={handleCloseModal}
+			>
+				<form className="mt-2" onSubmit={handleUpdate}>
+					<div className="text-gray-500">
+						<label className="block font-bold text-base text-gray-800">
+							Name
+						</label>
+						<Input
+							placeholder="Jane Cooper"
+							id="name"
+							defaultValue={prospect.name}
+							onChange={handleChange}
+						/>
+					</div>
+					<div className="text-gray-500">
+						<label className="block font-bold text-base text-gray-800">
+							Email
+						</label>
+						<Input
+							placeholder="jane.cooper@example.com"
+							id="email"
+							defaultValue={prospect.email}
+							onChange={handleChange}
+						/>
+					</div>
+					<div className="text-gray-500">
+						<label className="block font-bold text-base text-gray-800">
+							Phone Number
+						</label>
+						<Input
+							placeholder="09093527277"
+							id="phone_number"
+							type="tel"
+							defaultValue={prospect.phone_number}
+							onChange={handleChange}
+						/>
+					</div>
+					<div>
+						<label className="block font-bold text-base text-gray-800">
+							Company
+						</label>
+						<Input
+							placeholder="Enter Company"
+							onChange={handleChange}
+							id="company"
+							defaultValue={prospect.company}
+						/>
+					</div>
+					<div className="mt-8 flex justify-end">
+						<button
+							type="submit"
+							className="bg-green text-white rounded px-10 py-2"
+						>
+							Edit
+						</button>
+					</div>
+				</form>
+			</Modal>
 
-          <div className="mt-4 flex justify-end">
-            <button
-              type="submit"
-              onClick={() => handleDealCreate()}
-              className="bg-green rounded text-white px-10 py-2"
-            >
-              Create
-            </button>
-          </div>
-        </form>
-      </Modal>
+			{/* DELETE MODAL */}
+			<Modal
+				title="Delete Prospect"
+				description="This prospect will be deleted, this action cannot be undone."
+				open={open3}
+				closeModal={handleCloseModal}
+			>
+				<div className="mt-2 text-gray-500">
+					<div>
+						<label className="block font-bold text-base text-gray-800">
+							Name
+						</label>
+						<Input
+							placeholder="Jane Cooper"
+							id="name"
+							value={prospect.name}
+							disabled
+						/>
+					</div>
+					<div className="text-gray-500">
+						<label className="block text-base text-gray-800 font-bold">
+							Email
+						</label>
+						<Input
+							placeholder="jane.cooper@example.com"
+							id="email"
+							value={prospect.email}
+							disabled
+						/>
+					</div>
+					<div className="text-gray-500">
+						<label className="block text-base text-gray-800 font-bold">
+							Phone Number
+						</label>
+						<Input
+							placeholder="09093527277"
+							id="phone_number"
+							value={prospect.phone_number}
+							disabled
+						/>
+					</div>
+					<div>
+						<label className="block text-base text-gray-800 font-bold">
+							Company
+						</label>
+						<Input
+							placeholder="Enter Company"
+							onChange={handleChange}
+							id="company"
+							defaultValue={prospect.company}
+						/>
+					</div>
+				</div>
 
-      {prospects.contacts.length > 0 && !loading ? (
-        <div className="mt-4">
-          <div className="overflow-x-auto overflow-y-hidden rounded-md">
-            <table className="text-left border-gray-100 w-full">
-              <thead className="border-b cursor-pointer">
-                <tr>
-                  <th className="px-3 py-4">
-                    <span className="flex items-center">
-                      <input
-                        className="mr-4"
-                        type="checkbox"
-                        name=""
-                        id="all"
-                      />
-                      <label htmlFor="all">Name</label>
-                    </span>
-                  </th>
-                  <th className="px-3 py-4">Email</th>
-                  <th className="px-3 py-4">Phone Number</th>
-                  <th className="px-3 py-4">Company</th>
-                  <th className="px-3 py-4"> Actions </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white">
-                {prospects.contacts.map((prospect, i) => (
-                  <ProspectRow
-                    key={i}
-                    openEditModal={handleOpenEditModal}
-                    openDealCreateModal={handleOpenDealCreateModal}
-                    openDeleteModal={handleOpenDeleteModal}
-                    prospect={prospect}
-                  />
-                ))}
-              </tbody>
-            </table>
-          </div>
+				<div className="mt-4 flex justify-end">
+					<button
+						type="button"
+						className="text-green rounded px-10 py-2 mr-2"
+						onClick={handleCloseModal}
+					>
+						No, Keep
+					</button>
+					<button
+						type="button"
+						className="bg-error rounded text-white px-10 py-2"
+						onClick={handleDelete}
+					>
+						Yes, Delete
+					</button>
+				</div>
+			</Modal>
 
-          {/* Pagination */}
-          <div className="flex list-none justify-end items-center mt-5">
-            <button
-              onClick={() => pageBackward()}
-              disabled={!prospects.prev}
-              className="flex items-center py-2 px-3 cursor-pointer border-0 disabled:text-gray-300"
-            >
-              {" "}
-              <ChevronLeft strokeWidth={1} />{" "}
-              <span className="py-2 px-3">Prev</span>
-            </button>
-            <div className="bg-green-light text-green rounded-sm py-2 px-4">
-              {prospects.pageNum}
-            </div>
-            <button
-              onClick={() => pageForward()}
-              disabled={!prospects.next}
-              className="flex items-center py-2 px-3 cursor-pointer border-0 disabled:text-gray-300"
-            >
-              <span className="py-2 px-3">Next</span>{" "}
-              <ChevronRight strokeWidth={1} />{" "}
-            </button>
-          </div>
-        </div>
-      ) : (
-        <>
-          {loading ? (
-            <div>
-              <img
-                src={Loader}
-                alt="loader"
-                className="animate-ping"
-                id="loader"
-              />
-              <h2 className="font-medium text-2xl text-black-500 text-center">
-                Loading available prospects
-              </h2>
-              <br />
-              <p className="text-base text-gray-400 text-center">
-                Please wait a while
-              </p>
-            </div>
-          ) : (
-            <div className="mt-4">
-              <div className="overflow-x-auto overflow-y-hidden rounded-md">
-                <table className="text-left border-gray-100 w-full">
-                  <thead className="border-b cursor-pointer">
-                    <tr>
-                      <th className="px-3 py-4 flex items-center">
-                        <input
-                          className="mr-4"
-                          type="checkbox"
-                          name=""
-                          id="all"
-                        />
-                        <label htmlFor="all">Name</label>
-                      </th>
-                      <th className="px-3 py-4">Email</th>
-                      <th className="px-3 py-4">Phone Number</th>
-                      <th className="px-3 py-4">Company</th>
-                      <th className="px-3 py-4"> Actions </th>
-                    </tr>
-                  </thead>
-                </table>
-                <div className="flex w-100 items-center justify-center flex-col text-center pt-32">
-                  <div className="shadow-lg w-96 justify-center flex p-10 flex-col items-center">
-                    <FileIcon />
-                    <p className="font-bold text-xl mt-5">
-                      You have no contact yet!
-                    </p>
-                    <p className="max-w-sm py-3 flex-wrap text-gray-400">
-                      Keep track of business transactions with all your contacts
-                      in an organised manner. Quickly add a contact to get
-                      started.
-                    </p>
-                    <div className="flex">
-                      <button
-                        className="border-green px-4 rounded-sm text-green mr-2"
-                        onClick={handleCloseModal}
-                      >
-                        Skip
-                      </button>
-                      <Button onClick={handleOpenCreateModal}>
-                        Add Contact
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-        </>
-      )}
-    </div>
-  );
+			{/* CREATE DEAL MODAL */}
+			<Modal
+				title="Create a deal"
+				description={`Create a deal for ${prospect.name}.`}
+				open={open4}
+				closeModal={handleCloseModal}
+			>
+				<form className="mt-2" onSubmit={handleDealCreate}>
+					<div className="text-gray-800">
+						<Select
+							title="stage"
+							label="Deal stage"
+							id="deal_stage"
+							onChange={handleDealChange}
+						>
+							<option>Select a stage</option>
+							<option>Proposal</option>
+							<option>Closed</option>
+							<option>Negotiation</option>
+							<option>Prospect</option>
+						</Select>
+					</div>
+					<div className="text-gray-500">
+						<label className="block font-bold text-base text-gray-800">
+							Amount
+						</label>
+						<Input
+							type="number"
+							onChange={handleDealChange}
+							placeholder="Enter Amount"
+							id="amount"
+						/>
+					</div>
+					<div className="text-gray-500">
+						<label className="block font-bold text-base text-gray-800">
+							Expected close date
+						</label>
+						<Input
+							placeholder="dd-mm-yy"
+							onChange={handleDealChange}
+							id="close_date"
+							type="date"
+						/>
+					</div>
+					<div className="text-gray-500">
+						<label className="block font-bold text-base text-gray-800">
+							Description
+						</label>
+						<Input
+							placeholder="Additional info"
+							onChange={handleDealChange}
+							id="description"
+						/>
+					</div>
+
+					<div className="mt-4 flex justify-end">
+						<button
+							type="submit"
+							onClick={() => handleDealCreate()}
+							className="bg-green rounded text-white px-10 py-2"
+						>
+							Create
+						</button>
+					</div>
+				</form>
+			</Modal>
+
+			{prospects.contacts.length > 0 && !loading ? (
+				<div className="mt-4">
+					<div className="overflow-x-auto overflow-y-hidden rounded-md">
+						<table className="text-left border-gray-100 w-full">
+							<thead className="border-b cursor-pointer">
+								<tr>
+									<th className="px-3 py-4">
+										<span className="flex items-center">
+											<input
+												className="mr-4"
+												type="checkbox"
+												name=""
+												id="all"
+											/>
+											<label htmlFor="all">Name</label>
+										</span>
+									</th>
+									<th className="px-3 py-4">Email</th>
+									<th className="px-3 py-4">Phone Number</th>
+									<th className="px-3 py-4">Company</th>
+									<th className="px-3 py-4"> Actions </th>
+								</tr>
+							</thead>
+							<tbody className="bg-white">
+								{prospects.contacts.map((prospect, i) => (
+									<ProspectRow
+										key={i}
+										openEditModal={handleOpenEditModal}
+										openDealCreateModal={handleOpenDealCreateModal}
+										openDeleteModal={handleOpenDeleteModal}
+										prospect={prospect}
+									/>
+								))}
+							</tbody>
+						</table>
+					</div>
+
+					{/* Pagination */}
+					<div className="flex list-none justify-end items-center mt-5">
+						<button
+							onClick={() => pageBackward()}
+							disabled={!prospects.prev}
+							className="flex items-center py-2 px-3 cursor-pointer border-0 disabled:text-gray-300"
+						>
+							{" "}
+							<ChevronLeft strokeWidth={1} />{" "}
+							<span className="py-2 px-3">Prev</span>
+						</button>
+						<div className="bg-green-light text-green rounded-sm py-2 px-4">
+							{prospects.pageNum}
+						</div>
+						<button
+							onClick={() => pageForward()}
+							disabled={!prospects.next}
+							className="flex items-center py-2 px-3 cursor-pointer border-0 disabled:text-gray-300"
+						>
+							<span className="py-2 px-3">Next</span>{" "}
+							<ChevronRight strokeWidth={1} />{" "}
+						</button>
+					</div>
+				</div>
+			) : (
+				<>
+					{loading ? (
+						<div>
+							<img
+								src={Loader}
+								alt="loader"
+								className="animate-ping"
+								id="loader"
+							/>
+							<h2 className="font-medium text-2xl text-black-500 text-center">
+								Loading available prospects
+							</h2>
+							<br />
+							<p className="text-base text-gray-400 text-center">
+								Please wait a while
+							</p>
+						</div>
+					) : (
+						<div className="mt-4">
+							<div className="overflow-x-auto overflow-y-hidden rounded-md">
+								<table className="text-left border-gray-100 w-full">
+									<thead className="border-b cursor-pointer">
+										<tr>
+											<th className="px-3 py-4 flex items-center">
+												<input
+													className="mr-4"
+													type="checkbox"
+													name=""
+													id="all"
+												/>
+												<label htmlFor="all">Name</label>
+											</th>
+											<th className="px-3 py-4">Email</th>
+											<th className="px-3 py-4">Phone Number</th>
+											<th className="px-3 py-4">Company</th>
+											<th className="px-3 py-4"> Actions </th>
+										</tr>
+									</thead>
+								</table>
+								<div className="flex w-100 items-center justify-center flex-col text-center pt-32">
+									<div className="shadow-lg w-96 justify-center flex p-10 flex-col items-center">
+										<FileIcon />
+										<p className="font-bold text-xl mt-5">
+											You have no contact yet!
+										</p>
+										<p className="max-w-sm py-3 flex-wrap text-gray-400">
+											Keep track of business transactions with all your contacts
+											in an organised manner. Quickly add a contact to get
+											started.
+										</p>
+										<div className="flex">
+											<button
+												className="border-green px-4 rounded-sm text-green mr-2"
+												onClick={handleCloseModal}
+											>
+												Skip
+											</button>
+											<Button onClick={handleOpenCreateModal}>
+												Add Contact
+											</Button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					)}
+				</>
+			)}
+		</div>
+	);
 }
 
 export default Prospects;
