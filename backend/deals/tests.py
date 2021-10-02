@@ -61,8 +61,8 @@ class DealsTests(APITestCase):
             "description": "description",
         }
         self.serializer_data_rearrange = {
-            "deal_stage": "deal_stage",
-            "close_date": "close_date",
+            "close_date": "2001-25-02",
+            "description": "description"
             }
 
 
@@ -139,6 +139,16 @@ class DealsTests(APITestCase):
 
 
 # FOR UPDATE VIEW
+
+    def test_deals_update_view(self):
+        data = self.serializer_data
+        url = "http://sales.zuri.chat/api/v1/deals/update/?id=61588af4995de0bb93b94f4e"
+        res = requests.put(url,data,headers = headers)
+        response = res.json()
+        print(res,response)
+        self.assertEqual(res.status_code,status.HTTP_200_OK)
+
+
     def test_deals_update_view_incorrect(self):
         data = self.serializer_data
         url = "http://sales.zuri.chat/api/v1/deals/update/?id=wrongid"#using the wrong id
@@ -178,6 +188,15 @@ class DealsTests(APITestCase):
         response = res.json()
         print(res,response)
         self.assertEqual(res.status_code,status.HTTP_400_BAD_REQUEST)
+        
+    def test_deals_rearrange_update_view(self):
+        data = self.serializer_data_rearrange
+        url = "http://sales.zuri.chat/api/v1/deals/re-arrange/?id=61588af4995de0bb93b94f4e"
+        res = requests.put(url,data,headers = headers)
+        response = res.json()
+        print(res,response)
+        self.assertEqual(res.status_code,status.HTTP_200_OK)
+
 
 
 
