@@ -12,7 +12,7 @@ from common.views import (
 app_name = "common"
 
 urlpatterns = [
-    path('sidebar/', SidebarView.as_view()),
+    path('sidebar', SidebarView.as_view()),
     path("info/", InfoView.as_view()),
 
     path("create-room/", RoomCreateView.as_view()),
