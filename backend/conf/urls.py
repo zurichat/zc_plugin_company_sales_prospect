@@ -31,7 +31,7 @@ urlpatterns = [
     path("api/v1/prospects/", include("prospect.urls")),
     path("api/v1/email-template/",include("email_template.urls")),
     path("api/v1/api-auth/", include("rest_framework.urls")),
-    path('sidebar/', SidebarView.as_view(), name='sidebar'),
+    path('sidebar', SidebarView.as_view(), name='sidebar'),
     path("api/v1/scraping/", include("social_media_scraping.urls")),
     # DOCUMENTATION
     # path('api/v1/schema/', SpectacularAPIView.as_view(), name='schema'),
