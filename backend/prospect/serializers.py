@@ -42,3 +42,8 @@ class ProspectUpdateSerializer(ProspectSerializer):
     facebook = serializers.CharField(max_length=30, required=False)
     linkedin = serializers.CharField(max_length=30, required=False)
     instagram = serializers.CharField(max_length=30, required=False)
+
+
+class ProspectDetailsSerializer(ProspectSerializer):
+     title = serializers.CharField(max_length=100)
+     message = serializers.CharField(max_length=100)

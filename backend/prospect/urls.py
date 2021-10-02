@@ -7,6 +7,7 @@ from .views import (
     ProspectsListView,
     ProspectsDeleteView,
     ProspectsBatchDeleteView,
+    ProspectDetailsView,
 )
 
 
@@ -18,5 +19,7 @@ urlpatterns = [
     path("update/", ProspectsUpdateView.as_view()),
     path("delete/batch/", ProspectsBatchDeleteView.as_view()),
     path("delete/<str:search>/", ProspectsDeleteView.as_view()),
+    path("details/<str:id>/", ProspectDetailsView.as_view()),
+
 ]
 
