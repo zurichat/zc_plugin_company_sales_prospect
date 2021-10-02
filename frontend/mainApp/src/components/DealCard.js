@@ -18,7 +18,7 @@ const DealCard = ({ deal }) => {
 
   const handleCloseModal = () => {
     setOpen(false);
-    setOpen2(false);
+    // setOpen2(false);
   };
 
   return (
@@ -31,6 +31,7 @@ const DealCard = ({ deal }) => {
           handleCloseModal={handleCloseModal}
           handleCloseDeleteModal={handleCloseModal}
           id ={deal._id}
+          deal ={deal}
         />
       </div>
       <div>

@@ -175,6 +175,6 @@ input[type="checkbox"]:checked:after {
     display: block !important;
 }
 
-.swal2-actions{
+/* .swal2-actions{
     display: none !important;
-}
+} */
