@@ -1,5 +1,13 @@
+
+*{
+  box-sizing: border-box;
+}
+
+
 table {
   border-collapse: collapse;
+  overflow-x:auto;
+  width: 100%;
 }
 
 .modal {
@@ -113,18 +121,33 @@ button:disabled {
   .mar {
     margin-left: initial;
   }
+    
 }
 
 @media only screen and (max-width: 600px) {
   .box-xs {
     box-shadow: none;
   }
-}
-@media only screen and (max-width: 600px) {
+
   #position {
     display: block;
   }
+  
 }
+
+
+
+@media only screen and (max-width: 320px) {
+  #position{
+    display: block;
+  }
+  
+  
+}
+
+
+
+
 
 input[type="checkbox"]:checked {
   background: #00b87c !important;

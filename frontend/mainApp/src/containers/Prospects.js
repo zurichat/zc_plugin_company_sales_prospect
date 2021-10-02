@@ -598,7 +598,7 @@ function Prospects() {
                       <label htmlFor="all">Name</label>
                     </span>
                   </th>
-                  <th className="px-3 py-4">Email</th>
+                  <th className="px-3 py-4 ">Email</th>
                   <th className="px-3 py-4">Phone Number</th>
                   <th className="px-3 py-4">Company</th>
                   <th className="px-3 py-4"> Actions </th>
@@ -666,7 +666,7 @@ function Prospects() {
                 <table className="text-left border-gray-100 w-full">
                   <thead className="border-b cursor-pointer">
                     <tr>
-                      <th className="px-3 py-4 flex items-center">
+                      <th className="px-3 py-4 flex items-center sm:px-5">
                         <input
                           className="mr-4"
                           type="checkbox"
@@ -675,10 +675,10 @@ function Prospects() {
                         />
                         <label htmlFor="all">Name</label>
                       </th>
-                      <th className="px-3 py-4">Email</th>
-                      <th className="px-3 py-4">Phone Number</th>
-                      <th className="px-3 py-4">Company</th>
-                      <th className="px-3 py-4"> Actions </th>
+                      <th className="px-3 py-4 hidden sm:table-cell">Email</th>
+                      <th className="px-3 py-4 hidden sm:table-cell">Phone Number</th>
+                      <th className="px-3 py-4 hidden sm:table-cell">Company</th>
+                      <th className="px-3 py-4 sm:absolute"> Actions </th>
                     </tr>
                   </thead>
                 </table>
