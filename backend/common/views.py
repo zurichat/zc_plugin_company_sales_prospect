@@ -39,14 +39,18 @@ class SidebarView(APIView):
             print(r.status_code)
             
             if r.status_code:
-                public_url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/{ROOM_COLLECTION_NAME}/{ORGANISATION_ID}"
-                private_url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/{ADDED_ROOM_COLLECTION_NAME}/{ORGANISATION_ID}"
+                print(r.status_code)
+                public_url = f'http://api.zuri.chat/data/read/{PLUGIN_ID}/{ROOM_COLLECTION_NAME}/{ORGANISATION_ID}'
+                private_url = f'http://api.zuri.chat/data/read/{PLUGIN_ID}/{ADDED_ROOM_COLLECTION_NAME}/{ORGANISATION_ID}'
                 public_r = requests.get(public_url)
                 private_r = requests.get(private_url)
+                print(private_r,public_r)
                 public_response = json.loads(public_r.text)
                 private_response = json.loads(private_r.text)
-                print(private_response)
-                if private_response['status']!=200:
+                
+                if private_response['status']==200:
+                    print(r.status_code)
+
                     return Response({
                         "name": PLUGIN_NAME,
                         "description": DESCRIPTION,
