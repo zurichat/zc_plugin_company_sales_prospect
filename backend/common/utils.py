@@ -32,19 +32,7 @@ class CustomRequest:
 
     @staticmethod
     def post(org_id, collection_name, payload):
-        print('org_id:')
-        print(org_id)   ###############
-
-        print('collection_name:')
-        print(collection_name) ##############
-        
-        print('payload:')
-        print(payload) ###############
-
-        print('url:')
         url = f"https://api.zuri.chat/data/write"
-        print(url)
-
         data = {
             "plugin_id": PLUGIN_ID,
             "organization_id": ORGANISATION_ID,
@@ -52,42 +40,13 @@ class CustomRequest:
             "bulk_write": False,
             "payload": payload,
         }
-        print('Data:')
-        print(data)
-        print('Payload:')
-        # payload.update(
-        #     {
-        #         # 'organization_id': org_id,
-        #         # 'collection_name': collection_name,
-        #         # 'bulk_write':False,
-        #         #'payload' : payload,
 
-        #         "plugin_id": PLUGIN_ID,
-        #         "organization_id": ORGANISATION_ID,
-        #         "collection_name": "prospects",
-        #         "bulk_write": False,
-        #     }
-        # )
-        print(payload)
-        print('json.dumps(data):')
-        print(json.dumps(data))
         response = requests.post(url, data=json.dumps(data)) #######################
-        print('response = requests.post(url, data=json.dumps(data):')
-        print(response)
-        print('response.json():')
         r = response.json()
         print(r)
         if response.status_code == 201:
-            print('response.status_code:')
-            print(response.status_code)
-            print('response.json():')
             result = response.json()
-            print(response.json())
             result['status_code'] = response.status_code
-            print("result['status_code']:")
-            print(result['status_code'])
-            print('response.status_code')
-            print(response.status_code)
             return result
 
     @staticmethod
