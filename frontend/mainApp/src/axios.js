@@ -17,6 +17,7 @@ export const deleteProspectURL = `${API_ENDPOINT}/prospects/delete/`;
 export const addToRoomURL = `${API_ENDPOINT}/add-to-room/`;
 export const roomsURL = `${API_ENDPOINT}/rooms/`;
 export const leaveRoomURL = `${API_ENDPOINT}/leave-room/`;
+export const deleteDealURL = `${API_ENDPOINT}/deals/delete/?id=`;
 
 const customAxios = axios.create({
   baseURL: API_ENDPOINT,
