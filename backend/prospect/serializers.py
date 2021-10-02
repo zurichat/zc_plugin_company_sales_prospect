@@ -6,10 +6,10 @@ class ProspectSerializer(serializers.Serializer):
     email = serializers.EmailField(max_length=100)
     phone_number = serializers.CharField(max_length=100)
     company = serializers.CharField(max_length=100)
-    twitter = serializers.CharField(max_length=30)
-    facebook = serializers.CharField(max_length=30)
-    linkedin = serializers.CharField(max_length=30)
-    instagram = serializers.CharField(max_length=30)
+    twitter = serializers.CharField(max_length=30, required=False)
+    facebook = serializers.CharField(max_length=30, required=False)
+    linkedin = serializers.CharField(max_length=30, required=False)
+    instagram = serializers.CharField(max_length=30, required=False)
 
 
     def validate_name(self, name):

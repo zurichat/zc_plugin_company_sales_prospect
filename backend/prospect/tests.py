@@ -6,7 +6,7 @@ import requests
 # Genereate your token by logging to zurichat and inspect element
 # Get token from local storage tab and insert in front of "Bearer" 
 # Ps, the space is important.
-header_token = "Bearer " 
+header_token = "Bearer "
 fake = Faker()
 
 print(fake.email())
