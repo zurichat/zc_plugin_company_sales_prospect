@@ -17,6 +17,7 @@ from common.utils import centrifugo_post
 from rest_framework.permissions import AllowAny
 from common.utils import isAuthorized
 from common.utils import isValidOrganisation
+from common.utils import handle_failed_request
 
 PLUGIN_ID = settings.PLUGIN_ID
 ORGANISATION_ID = settings.ORGANISATION_ID
@@ -74,10 +75,10 @@ class ProspectsListView(APIView):
     def get(self, request, *args, **kwargs):
         # # check authentication
         if not isAuthorized(request):
-            return Response(data={"message": "Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
+            return handle_failed_request(response=None)
 
         if not isValidOrganisation(ORGANISATION_ID, request):
-            return Response(data={"message": "Invalid/Missing organization id"}, status=status.HTTP_401_UNAUTHORIZED)
+            return handle_failed_request(response=None)
 
         url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/prospects/{ORGANISATION_ID}"
         response = requests.request("GET", url)
@@ -86,6 +87,11 @@ class ProspectsListView(APIView):
             # centrifugo_post("Prospects", {"event": "join", "token": "elijah"})
             # serializer = ProspectSerializer(data=r['data'], many=True)
             # serializer.is_valid(raise_exception=True)
+            if not r["data"]:
+                return Response(
+                    data={"message": "This Organization's Prospect list is currently empty."},
+                    status=status.HTTP_204_NO_CONTENT)
+
             paginator = Paginator(r["data"], self.paginate_by)
             page_num = request.query_params.get('page', 1)
             page_obj = paginator.get_page(page_num)
@@ -96,10 +102,7 @@ class ProspectsListView(APIView):
                 "prev": page_obj.has_previous(),
             }
             return Response(data=paginated_data, status=status.HTTP_200_OK)
-        return Response(
-            data={"message": "Try again later"},
-            status=status.HTTP_500_INTERNAL_SERVER_ERROR,
-        )
+        return handle_failed_request(response=response)
 
 
 class ProspectsCreateView(APIView):
@@ -113,41 +116,33 @@ class ProspectsCreateView(APIView):
     def post(self, request, *args, **kwargs):
         # # check authentication
         if not isAuthorized(request):
-            return Response(data={"message": "Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
+            return handle_failed_request(response=None)
 
         if not isValidOrganisation(ORGANISATION_ID, request):
-            return Response(data={"message": "Invalid/Missing organization id"}, status=status.HTTP_401_UNAUTHORIZED)
+            return handle_failed_request(response=None)
 
         serializer = ProspectSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         url = "https://api.zuri.chat/data/write"
-        name = request.data.get("name")
-        email = request.data.get("email")
-        phone_number = request.data.get("phone_number")
-        company = request.data.get("company")
-        twitter = request.data.get("twitter")
-        facebook = request.data.get("facebook")
-        linkedin = request.data.get("linkedin")
-        instagram = request.data.get("instagram")
+        
         data = {
             "plugin_id": PLUGIN_ID,
             "organization_id": ORGANISATION_ID,
             "collection_name": "prospects",
             "bulk_write": False,
             "payload": {
-                "name": name,
-                "phone_number": phone_number,
-                "email": email,
-                "company": company,
-                "twitter": twitter,
-                "facebook": facebook,
-                "linkedin": linkedin,
-                "instagram": instagram,
+                "name": serializer.data.get("name"),
+                "email": serializer.data.get("email"),
+                "phone_number": serializer.data.get("phone_number"),
+                "company": serializer.data.get("company")
+                "twitter": serializer.data.get("twitter"),
+                "facebook": serializer.data.get("facebook"),
+                "linkedin": serializer.data.get("linkedin"),
+                "instagram": serializer.data.get("instagram")
             },
         }
         response = requests.request("POST", url, data=json.dumps(data))
         r = response.json()
-        print(response.status_code)
         if response.status_code == 201:
             new_prospect = request.data
             # request.data._mutable = True
@@ -159,12 +154,8 @@ class ProspectsCreateView(APIView):
         #     #     "Prospects",
         #     #     {"event": "new_prospect", "token": "elijah", "object": new_prospect},
         #     # )
-            print(response.status_code)
             return Response(data=r, status=status.HTTP_201_CREATED)
-        return Response(
-            data={"message": "Try again later"},
-            status=response.status_code,
-        )
+        return handle_failed_request(response=response)
 
 
 class ProspectsUpdateView(APIView):
@@ -174,10 +165,10 @@ class ProspectsUpdateView(APIView):
     def put(self, request, *args, **kwargs):
         # check authorization
         if not isAuthorized(request):
-            return Response(data={"message": "Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
+            return handle_failed_request(response=None)
 
         if not isValidOrganisation(ORGANISATION_ID, request):
-            return Response(data={"message": "Invalid/Missing organization id"}, status=status.HTTP_401_UNAUTHORIZED)
+            return handle_failed_request(response=None)
 
         url = "https://api.zuri.chat/data/write"
         serializer = ProspectUpdateSerializer(data=request.data)
@@ -216,11 +207,7 @@ class ProspectsUpdateView(APIView):
                 },
             )
             return Response(data=r, status=status.HTTP_200_OK)
-
-        return Response(
-            data={"message": "Try again later", "data": request.data},
-            status=status.HTTP_500_INTERNAL_SERVER_ERROR,
-        )
+        return handle_failed_request(response=response)
 
 
 class ProspectsBatchDeleteView(APIView):
@@ -228,10 +215,11 @@ class ProspectsBatchDeleteView(APIView):
     def post(self, request, **kwargs):
         # check authentication
         if not isAuthorized(request):
-            return Response(data={"message": "Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
+            return handle_failed_request(response=None)
 
         if not isValidOrganisation(ORGANISATION_ID, request):
-            return Response(data={"message": "Invalid/Missing organization id"}, status=status.HTTP_401_UNAUTHORIZED)
+            return handle_failed_request(response=None)
+
         filterData = request.data.get('filter')
 
         url = "https://api.zuri.chat/data/delete"
@@ -252,9 +240,7 @@ class ProspectsBatchDeleteView(APIView):
             r = response.json()
             if r["data"]["deleted_count"] == 0:
                 return Response(
-                    data={
-                        "message": "There is no prospect with this email you supplied"
-                    },
+                    data={"message": "There is no prospect matching the 'filter' you supplied."},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
             centrifugo_post(
@@ -267,11 +253,8 @@ class ProspectsBatchDeleteView(APIView):
                     },
                 },
             )
-            return Response(data={"message": " Prospect list  deleted successful"}, status=status.HTTP_200_OK)
-        return Response(
-            data={"message": "Try again later"},
-            status=status.HTTP_400_BAD_REQUEST
-        )
+            return Response(data={"message": " Prospect list  deleted successful."}, status=status.HTTP_200_OK)
+        return handle_failed_request(response=response)
 
 
 class ProspectsDeleteView(APIView):
@@ -281,10 +264,10 @@ class ProspectsDeleteView(APIView):
     def delete(self, request, search, *args, **kwargs):
         # # check authentication
         if not isAuthorized(request):
-            return Response(data={"message": "Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
+            return handle_failed_request(response=None)
 
         if not isValidOrganisation(ORGANISATION_ID, request):
-            return Response(data={"message": "Invalid/Missing organization id"}, status=status.HTTP_401_UNAUTHORIZED)
+            return handle_failed_request(response=None)
 
         url = "https://api.zuri.chat/data/delete"
         data = {
@@ -294,14 +277,11 @@ class ProspectsDeleteView(APIView):
             "object_id": search,
         }
         response = requests.request("POST", url, data=json.dumps(data))
-        print(response.text)
         if response.status_code == 200:
             r = response.json()
             if r["data"]["deleted_count"] == 0:
                 return Response(
-                    data={
-                        "message": "There is no prospect with this object id you supplied"
-                    },
+                    data={"message": "There is no prospect with the 'object_id' you supplied."},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
             centrifugo_post(
@@ -313,7 +293,4 @@ class ProspectsDeleteView(APIView):
                 },
             )
             return Response(data={"message": "successful"}, status=status.HTTP_200_OK)
-        return Response(
-            data={"message": "Try again later"},
-            status=status.HTTP_500_INTERNAL_SERVER_ERROR,
-        )
+        return handle_failed_request(response=response)
