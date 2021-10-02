@@ -14,6 +14,9 @@ export const dealsURL = `${API_ENDPOINT}/deals/`;
 export const createDealURL = `${API_ENDPOINT}/deals/create/`;
 export const onboardingURL = `${API_ENDPOINT}/onboarding/`;
 export const deleteProspectURL = `${API_ENDPOINT}/prospects/delete/`;
+export const batchDeleteProspectURL = `${API_ENDPOINT}/prospects/delete/batch/`;
+
+
 export const addToRoomURL = `${API_ENDPOINT}/add-to-room/`;
 export const roomsURL = `${API_ENDPOINT}/rooms/`;
 export const leaveRoomURL = `${API_ENDPOINT}/leave-room/`;
