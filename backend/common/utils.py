@@ -41,7 +41,7 @@ class CustomRequest:
             "payload": payload,
         }
 
-        response = requests.post(url, data=json.dumps(data)) #######################
+        response = requests.post(url, data=json.dumps(data))
         r = response.json()
         print(r)
         if response.status_code == 201:

@@ -210,29 +210,12 @@ class ProspectsUpdateView(APIView):
 
         # if not isValidOrganisation(ORGANISATION_ID, request):
         #     return handle_failed_request(response=None)
-        print('request:')
-        print(request)
-
-        print('org_id')
-        print(org_id)
-
-        print('url:')
         url = "https://api.zuri.chat/data/write"
-        print(url)
-
-        print('serializer:')
+        
         serializer = ProspectUpdateSerializer(data=request.data)
-        print(serializer)
-
-        print('validity:')
         serializer.is_valid(raise_exception=True)
-        print(serializer.is_valid(raise_exception=True))
-
-        print('object_id:')
         object_id = serializer.data.pop("object_id")
-        print(object_id)
-
-        print('data:')
+       
         data = {
             "plugin_id": PLUGIN_ID,
             "organization_id": ORGANISATION_ID,
@@ -241,22 +224,11 @@ class ProspectsUpdateView(APIView):
             "object_id": object_id,
             "payload": serializer.data,
         }
-        print(data)
-
-        print("response = requests.put(url, data=json.dumps(data)):")
+        
         response = requests.put(url, data=json.dumps(data))
-        print(response)
-
-        print("response['status_code']:")
-        if response['status_code'] == 204:
-        # if response.status_code in [200, 201]:
-        # if response['status_code'] in [200, 201]:
-            print(response['status_code'])
-
-            print('response.json():')
+        
+        if response.status_code in [200, 201]:
             r = response.json()
-            print(r)
-
             if r["data"]["matched_documents"] == 0:
                 return Response(
                     data={"message": "There is no prospect with the 'object_id' you supplied."},
