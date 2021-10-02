@@ -328,8 +328,7 @@ const Deals = () => {
 								<span className="text-sm text-gray-500">
 									{getStage("prospect").length} deals • $ 1,500,000
 								</span>
-							</div>
-							<div className="px-24 lg:px-8 text-left border-b border-gray-300 py-2">
+							</div>			<div className="px-24 lg:px-8 text-left border-b border-gray-300 py-2">
 								<span className="block font-bold text-lg text-gray-700">
 									Proposal
 								</span>
@@ -369,7 +368,6 @@ const Deals = () => {
 										</div>
 									)}
 								</Droppable>
-
 								<Droppable droppableId="proposal">
 									{(provided, snapshot) => (
 										<div
@@ -411,6 +409,7 @@ const Deals = () => {
 										</div>
 									)}
 								</Droppable>
+
 							</div>
 						</DragDropContext>
 					</div>
