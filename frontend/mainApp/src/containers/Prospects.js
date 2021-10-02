@@ -104,10 +104,10 @@ function Prospects() {
 		email: "",
 		phone_number: "",
 		company: "",
-    twitter: "",
-    facebook: "",
-    linkedin: "",
-    instagram: "",
+		twitter: "",
+		facebook: "",
+		linkedin: "",
+		instagram: "",
 	});
 
 	const [page, setPage] = useState(1);
@@ -150,10 +150,10 @@ function Prospects() {
 			email: "",
 			phone_number: "",
 			company: "",
-      twitter: "",
-      facebook: "",
-      linkedin: "",
-      instagram: "",
+			twitter: "",
+			facebook: "",
+			linkedin: "",
+			instagram: "",
 		});
 		setOpen(false);
 		setOpen2(false);
@@ -252,10 +252,10 @@ function Prospects() {
 			email: prospect.email,
 			phone_number: prospect.phone_number,
 			company: prospect.company,
-      twitter: prospect.twitter,
-      facebook: prospect.facebook,
-      linkedin: prospect.linkedin,
-      instagram: prospect.instagram,
+			twitter: prospect.twitter,
+			facebook: prospect.facebook,
+			linkedin: prospect.linkedin,
+			instagram: prospect.instagram,
 		};
 		customAxios
 			.put(editProspectURL, apiProspect)
@@ -395,46 +395,46 @@ function Prospects() {
 							id='company'
 						/>
 					</div>
-          <div>
-            <label className="block font-bold text-base text-gray-800">
-              Twitter Username
-            </label>
-            <Input
-              placeholder="Enter Twitter Username"
-              onChange={handleChange}
-              id="twitter"
-            />
-          </div>
-          <div>
-            <label className="block font-bold text-base text-gray-800">
-              Facebook Username
-            </label>
-            <Input
-              placeholder="Enter Facebook Username"
-              onChange={handleChange}
-              id="facebook"
-            />
-          </div>
-          <div>
-            <label className="block font-bold text-base text-gray-800">
-              LinkedIn Username
-            </label>
-            <Input
-              placeholder="Enter LinkedIn Username"
-              onChange={handleChange}
-              id="linkedin"
-            />
-          </div>
-          <div>
-            <label className="block font-bold text-base text-gray-800">
-              Instagram Username
-            </label>
-            <Input
-              placeholder="Enter Instagram Username"
-              onChange={handleChange}
-              id="instagram"
-            />
-          </div>
+					<div>
+						<label className="block font-bold text-base text-gray-800">
+							Twitter Username
+						</label>
+						<Input
+							placeholder="Enter Twitter Username"
+							onChange={handleChange}
+							id="twitter"
+						/>
+					</div>
+					<div>
+						<label className="block font-bold text-base text-gray-800">
+							Facebook Username
+						</label>
+						<Input
+							placeholder="Enter Facebook Username"
+							onChange={handleChange}
+							id="facebook"
+						/>
+					</div>
+					<div>
+						<label className="block font-bold text-base text-gray-800">
+							LinkedIn Username
+						</label>
+						<Input
+							placeholder="Enter LinkedIn Username"
+							onChange={handleChange}
+							id="linkedin"
+						/>
+					</div>
+					<div>
+						<label className="block font-bold text-base text-gray-800">
+							Instagram Username
+						</label>
+						<Input
+							placeholder="Enter Instagram Username"
+							onChange={handleChange}
+							id="instagram"
+						/>
+					</div>
 
 					<div className='mt-4 flex justify-end'>
 						<button
@@ -500,50 +500,50 @@ function Prospects() {
 							defaultValue={prospect.company}
 						/>
 					</div>
-          <div>
-            <label className="block font-bold text-base text-gray-800">
-              Twitter Username
-            </label>
-            <Input
-              placeholder="Enter Twitter Username"
-              onChange={handleChange}
-              id="twitter"
-              defaultValue={prospect.twitter}
-            />
-          </div>
-          <div>
-            <label className="block font-bold text-base text-gray-800">
-              Facebook Username
-            </label>
-            <Input
-              placeholder="Enter Facebook Username"
-              onChange={handleChange}
-              id="facebook"
-              defaultValue={prospect.facebook}
-            />
-          </div>
-          <div>
-            <label className="block font-bold text-base text-gray-800">
-              LinkedIn Username
-            </label>
-            <Input
-              placeholder="Enter LinkedIn Username"
-              onChange={handleChange}
-              id="linkedin"
-              defaultValue={prospect.linkedin}
-            />
-          </div>
-          <div>
-            <label className="block font-bold text-base text-gray-800">
-              Instagram Username
-            </label>
-            <Input
-              placeholder="Enter Instagram Username"
-              onChange={handleChange}
-              id="instagram"
-              defaultValue={prospect.instagram}
-            />
-          </div>
+					<div>
+						<label className="block font-bold text-base text-gray-800">
+							Twitter Username
+						</label>
+						<Input
+							placeholder="Enter Twitter Username"
+							onChange={handleChange}
+							id="twitter"
+							defaultValue={prospect.twitter}
+						/>
+					</div>
+					<div>
+						<label className="block font-bold text-base text-gray-800">
+							Facebook Username
+						</label>
+						<Input
+							placeholder="Enter Facebook Username"
+							onChange={handleChange}
+							id="facebook"
+							defaultValue={prospect.facebook}
+						/>
+					</div>
+					<div>
+						<label className="block font-bold text-base text-gray-800">
+							LinkedIn Username
+						</label>
+						<Input
+							placeholder="Enter LinkedIn Username"
+							onChange={handleChange}
+							id="linkedin"
+							defaultValue={prospect.linkedin}
+						/>
+					</div>
+					<div>
+						<label className="block font-bold text-base text-gray-800">
+							Instagram Username
+						</label>
+						<Input
+							placeholder="Enter Instagram Username"
+							onChange={handleChange}
+							id="instagram"
+							defaultValue={prospect.instagram}
+						/>
+					</div>
 					<div className='mt-8 flex justify-end'>
 						<button
 							type='submit'
@@ -607,50 +607,50 @@ function Prospects() {
 							defaultValue={prospect.company}
 						/>
 					</div>
-          <div>
-            <label className="block text-base text-gray-800 font-bold">
-              Twitter Username
-            </label>
-            <Input
-              placeholder="Twitter Username"
-              onChange={handleChange}
-              id="twitter"
-              defaultValue={prospect.twitter}
-            />
-          </div>
-          <div>
-            <label className="block text-base text-gray-800 font-bold">
-              Facebook Username
-            </label>
-            <Input
-              placeholder="Facebook Username"
-              onChange={handleChange}
-              id="facebook"
-              defaultValue={prospect.facebook}
-            />
-          </div>
-          <div>
-            <label className="block text-base text-gray-800 font-bold">
-              LinkedIn Username
-            </label>
-            <Input
-              placeholder="LinkedIn Username"
-              onChange={handleChange}
-              id="linkedin"
-              defaultValue={prospect.linkedin}
-            />
-          </div>
-          <div>
-            <label className="block text-base text-gray-800 font-bold">
-              Instagram Username
-            </label>
-            <Input
-              placeholder="Instagram Username"
-              onChange={handleChange}
-              id="instagram"
-              defaultValue={prospect.instagram}
-            />
-          </div>
+					<div>
+						<label className="block text-base text-gray-800 font-bold">
+							Twitter Username
+						</label>
+						<Input
+							placeholder="Twitter Username"
+							onChange={handleChange}
+							id="twitter"
+							defaultValue={prospect.twitter}
+						/>
+					</div>
+					<div>
+						<label className="block text-base text-gray-800 font-bold">
+							Facebook Username
+						</label>
+						<Input
+							placeholder="Facebook Username"
+							onChange={handleChange}
+							id="facebook"
+							defaultValue={prospect.facebook}
+						/>
+					</div>
+					<div>
+						<label className="block text-base text-gray-800 font-bold">
+							LinkedIn Username
+						</label>
+						<Input
+							placeholder="LinkedIn Username"
+							onChange={handleChange}
+							id="linkedin"
+							defaultValue={prospect.linkedin}
+						/>
+					</div>
+					<div>
+						<label className="block text-base text-gray-800 font-bold">
+							Instagram Username
+						</label>
+						<Input
+							placeholder="Instagram Username"
+							onChange={handleChange}
+							id="instagram"
+							defaultValue={prospect.instagram}
+						/>
+					</div>
 				</div>
 
 				<div className='mt-4 flex justify-end'>
