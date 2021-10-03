@@ -1,6 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 
 const TemplateItem = () => {
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
+  const [subject, setSubject] = useState("");
+  const [message, setMessage] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const emailData = {
+      from,
+      to,
+      subject,
+      message,
+    };
+
+    console.log(emailData);
+  };
   return (
     <div class="newsletter">
       <div class="newsHeader flex py-4 px-4 justify-between items-center">
@@ -24,7 +41,7 @@ const TemplateItem = () => {
             about your template.
           </p>
 
-          <form class="w-full">
+          <form onSubmit={handleSubmit} class="w-full">
             <div class="formControl">
               <label class="block text-gray-700 text-sm font-bold mb-2 mt-4">
                 From
@@ -44,6 +61,7 @@ const TemplateItem = () => {
                   mb-4
                 "
                 type="text"
+                onChange={(e) => setFrom(e.target.value)}
               />
             </div>
 
@@ -67,6 +85,7 @@ const TemplateItem = () => {
                 "
                 type="text"
                 id="toInput"
+                onChange={(e) => setTo(e.target.value)}
               />
             </div>
 
@@ -90,6 +109,7 @@ const TemplateItem = () => {
                 "
                 type="text"
                 value="The New Way To Collaborate"
+                onChange={(e) => setSubject(e.target.value)}
               />
             </div>
 
@@ -112,9 +132,10 @@ const TemplateItem = () => {
                   mb-4
                 "
                 type="text"
-                value="The New Way To Collaborate"
+                onChange={(e) => setMessage(e.target.value)}
               ></textarea>
             </div>
+
             <div class="buttonAlign flex items-end justify-end flex-end">
               <button class="bg-green-500 text-white py-3 px-7 rounded mr-4 mb-4">
                 Send
