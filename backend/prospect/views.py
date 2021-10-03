@@ -70,7 +70,7 @@ def SearchProspects(request, search):
 
 class GetPropects(APIView):
      def get(self,request, *args, **kwargs):
-         check authentication
+        #  check authentication
         if not isAuthorized(request):
             return handle_failed_request(response=None)
 
