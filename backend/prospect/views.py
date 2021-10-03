@@ -70,7 +70,7 @@ def SearchProspects(request, search):
 
 class GetPropects(APIView):
      def get(self,request, *args, **kwargs):
-         # check authentication
+         check authentication
         if not isAuthorized(request):
             return handle_failed_request(response=None)
 
@@ -78,8 +78,10 @@ class GetPropects(APIView):
             return handle_failed_request(response=None)
         url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/prospects/{ORGANISATION_ID}"
         response = requests.request("GET", url)
-        if response.status_code ==200:
-            return Response(response.json())
+        if response.status_code==200:
+            response= response.json()
+            contacts = "contacts"
+            return Response({"data":{contacts:response['data']}})
         return Response({"data":"no prospects found"})
          
 
