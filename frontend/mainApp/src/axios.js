@@ -11,9 +11,13 @@ export const prospectsURL = `${API_ENDPOINT}/prospects/`;
 export const createProspectURL = `${API_ENDPOINT}/prospects/create/`;
 export const editProspectURL = `${API_ENDPOINT}/prospects/update/`;
 export const dealsURL = `${API_ENDPOINT}/deals/`;
+export const editDealURL = `${API_ENDPOINT}/deals/update/`;
 export const createDealURL = `${API_ENDPOINT}/deals/create/`;
 export const onboardingURL = `${API_ENDPOINT}/onboarding/`;
 export const deleteProspectURL = `${API_ENDPOINT}/prospects/delete/`;
+export const batchDeleteProspectURL = `${API_ENDPOINT}/prospects/delete/batch/`;
+
+
 export const addToRoomURL = `${API_ENDPOINT}/add-to-room/`;
 export const roomsURL = `${API_ENDPOINT}/rooms/`;
 export const leaveRoomURL = `${API_ENDPOINT}/leave-room/`;

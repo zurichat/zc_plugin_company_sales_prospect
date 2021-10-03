@@ -1,45 +1,28 @@
 import "./App.css";
-import { BrowserRouter as Router, Route, Switch, useHistory } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Prospects from "./containers/Prospects";
 // import Test from "./containers/Test";
 import Deals from "./containers/Deals";
 import { PluginProvider } from "./context/store";
 import PluginHeader from "./components/PluginHeader";
-import { getUserToken } from "./auth/user";
-
-const AuthenticatedRoute = ({ component: Component, ...otherProps }) => {
-  const history = useHistory();
-
-  return <Route
-    {...otherProps}
-    render={props =>
-      getUserToken()
-        ? <Component {...props} />
-        : history.push("/login")}
-  />
-};
 
 function App() {
-  const baseName = '/sales';
-
   return (
     <PluginProvider>
-      <Router>
+      <Router basename="/sales">
         <div className="App font-lato" >
-          <PluginHeader />
+          <PluginHeader/>
           <Switch>
-            <AuthenticatedRoute exact path={`${baseName}/`} component={Prospects} />
-            <AuthenticatedRoute exact path={`${baseName}/prospects`} component={Prospects} />
-            <AuthenticatedRoute exact path={`${baseName}/614f651dcf2c0f1ad7585002`} component={Prospects} />
+            <Route exact path="/" component={Prospects} />
+            <Route exact path="/prospects" component={Prospects} />
+            <Route exact path="/615832ad87540d8d01ffc700" component={Prospects} />
 
-            <AuthenticatedRoute exact path={`${baseName}/deals`} component={Deals} />
-            <AuthenticatedRoute exact path={`${baseName}/614f63b8cf2c0f1ad7584ffe`} component={Deals} />
-
-           {/*for undeclared /sales/ routes */}
-            <AuthenticatedRoute exact path={`${baseName}/*`} component={Prospects} />
+            <Route exact path="/deals" component={Deals} />
+            <Route exact path="/6158326387540d8d01ffc6fb" component={Deals} />
 
             {/* <Route exact path="/test" component={Test} /> */}
           </Switch>
+
 
         </div>
       </Router>

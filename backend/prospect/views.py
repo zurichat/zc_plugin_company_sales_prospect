@@ -13,7 +13,7 @@ from rest_framework import status
 
 from .serializers import ProspectSerializer, ProspectUpdateSerializer
 # changed the import to a single import
-from common.utils import centrifugo_post
+from common.utils import centrifugo_post, CustomRequest
 from rest_framework.permissions import AllowAny
 from common.utils import isAuthorized
 from common.utils import isValidOrganisation
@@ -67,12 +67,30 @@ def SearchProspects(request, search):
         return JsonResponse(liste, safe=False)
 
 
+
+class GetPropects(APIView):
+     def get(self,request, *args, **kwargs):
+         # check authentication
+        if not isAuthorized(request):
+            return handle_failed_request(response=None)
+
+        if not isValidOrganisation(ORGANISATION_ID, request):
+            return handle_failed_request(response=None)
+        url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/prospects/{ORGANISATION_ID}"
+        response = requests.request("GET", url)
+        if response.status_code ==200:
+            return Response(response.json())
+        return Response({"data":"no prospects found"})
+         
+
+
+
 class ProspectsListView(APIView):
     serializer_class = ProspectSerializer
     queryset = None
     paginate_by = 20
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request, org_id, *args, **kwargs):
         # # check authentication
         if not isAuthorized(request):
             return handle_failed_request(response=None)
@@ -80,10 +98,35 @@ class ProspectsListView(APIView):
         if not isValidOrganisation(ORGANISATION_ID, request):
             return handle_failed_request(response=None)
 
-        url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/prospects/{ORGANISATION_ID}"
-        response = requests.request("GET", url)
-        if response.status_code == 200:
-            r = response.json()
+        # url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/prospects/{ORGANISATION_ID}"
+        # response = requests.request("GET", url)
+        print(request)
+        print(org_id)
+        data = {}
+        print(data)
+        response = CustomRequest.get(org_id, 'prospects', data) or []
+        print('before CustomRequest.get(org_id, prospects, data)')
+        print(response) # THIRD block of code
+        print('after CustomRequest.get(org_id, prospects, data)')
+        if response['status_code'] == 200:
+            # print(response['status_code'])
+            return Response(
+                data=response['data'],
+                status=status.HTTP_200_OK
+            )
+
+            # FinalResponse = Response(
+            #     data=response['data'], # the data is from print(response), line 91.
+            #     status=status.HTTP_200_OK,
+            #     # template_name=None, 
+            #     # headers=None, 
+            #     # content_type=None
+            # )
+
+            # print(FinalResponse) # this is what appears on the APIView?
+
+            # return FinalResponse
+            
             # centrifugo_post("Prospects", {"event": "join", "token": "elijah"})
             # serializer = ProspectSerializer(data=r['data'], many=True)
             # serializer.is_valid(raise_exception=True)
@@ -113,7 +156,7 @@ class ProspectsCreateView(APIView):
     serializer_class = ProspectSerializer
     queryset = None
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request, org_id, *args, **kwargs):
         # # check authentication
         if not isAuthorized(request):
             return handle_failed_request(response=None)
@@ -121,16 +164,18 @@ class ProspectsCreateView(APIView):
         if not isValidOrganisation(ORGANISATION_ID, request):
             return handle_failed_request(response=None)
 
+        print(request)
+        print(org_id)
+
+
         serializer = ProspectSerializer(data=request.data)
+        print(serializer)
+
         serializer.is_valid(raise_exception=True)
-        url = "https://api.zuri.chat/data/write"
+        print(serializer.is_valid(raise_exception=True))
         
-        data = {
-            "plugin_id": PLUGIN_ID,
-            "organization_id": ORGANISATION_ID,
-            "collection_name": "prospects",
-            "bulk_write": False,
-            "payload": {
+        payload = {
+
                 "name": serializer.data.get("name"),
                 "email": serializer.data.get("email"),
                 "phone_number": serializer.data.get("phone_number"),
@@ -139,12 +184,25 @@ class ProspectsCreateView(APIView):
                 "facebook": serializer.data.get("facebook"),
                 "linkedin": serializer.data.get("linkedin"),
                 "instagram": serializer.data.get("instagram")
-            },
         }
-        response = requests.request("POST", url, data=json.dumps(data))
-        r = response.json()
-        if response.status_code == 201:
-            new_prospect = request.data
+        print(payload)
+
+        response = CustomRequest.post(org_id,'prospects', payload)
+        print(response)
+        
+        
+
+        # r = response.json()
+        # print(r)
+
+        # if response.status_code == 201: # .status_code is not a method. It's a key. that returns a value.
+        if response['status_code'] == 201:
+        
+
+            # new_prospect = request.data
+            # print(new_prospect)
+
+            return Response(data=response['data'], status=status.HTTP_201_CREATED)
             # request.data._mutable = True
             # new_prospect["_id"] = r["data"]["object_id"]
             # request.data._mutable = False
@@ -154,7 +212,8 @@ class ProspectsCreateView(APIView):
         #     #     "Prospects",
         #     #     {"event": "new_prospect", "token": "elijah", "object": new_prospect},
         #     # )
-            return Response(data=r, status=status.HTTP_201_CREATED)
+
+            # return Response(data=r, status=status.HTTP_201_CREATED)
         return handle_failed_request(response=response)
 
 
@@ -162,19 +221,19 @@ class ProspectsUpdateView(APIView):
     serializer_class = ProspectSerializer
     queryset = None
 
-    def put(self, request, *args, **kwargs):
+    def put(self, request,  org_id, *args, **kwargs):
         # check authorization
         if not isAuthorized(request):
             return handle_failed_request(response=None)
 
         if not isValidOrganisation(ORGANISATION_ID, request):
             return handle_failed_request(response=None)
-
         url = "https://api.zuri.chat/data/write"
+        
         serializer = ProspectUpdateSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-
         object_id = serializer.data.pop("object_id")
+       
         data = {
             "plugin_id": PLUGIN_ID,
             "organization_id": ORGANISATION_ID,
@@ -183,8 +242,9 @@ class ProspectsUpdateView(APIView):
             "object_id": object_id,
             "payload": serializer.data,
         }
+        
         response = requests.put(url, data=json.dumps(data))
-
+        
         if response.status_code in [200, 201]:
             r = response.json()
             if r["data"]["matched_documents"] == 0:
@@ -262,7 +322,7 @@ class ProspectsDeleteView(APIView):
     authentication_classes = []
 
     def delete(self, request, search, *args, **kwargs):
-        # # check authentication
+        # check authentication
         if not isAuthorized(request):
             return handle_failed_request(response=None)
 

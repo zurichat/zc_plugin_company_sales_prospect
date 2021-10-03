@@ -9,7 +9,7 @@ import json
 from urllib.parse import parse_qs, urlparse
 
 from requests import RequestException
-from requests_html import HTMLSession
+# from requests_html import HTMLSession
 
 
 from typing import Any, Dict
