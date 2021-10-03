@@ -15,12 +15,12 @@ import {
 } from "react-feather";
 // import Select from '../components/Select'
 import customAxios, {
-	createProspectURL,
-	editProspectURL,
-	prospectsURL,
-	deleteProspectURL,
-	createDealURL,
-	bashDeleteDealsURL,
+  createProspectURL,
+  editProspectURL,
+  prospectsURL,
+  deleteProspectURL,
+  createDealURL,
+  batchDeleteProspectURL
 } from "../axios";
 import FileIcon from "../components/svg/FileIcon";
 // import { Link } from 'react-router-dom'
@@ -41,45 +41,45 @@ import { PluginContext } from "../context/store";
 // const { register,handleSubmit, formState: { errors }, } = useForm({resolver: yupResolver(schema)});
 
 export const Input = ({
-	title,
-	label,
-	placeholder,
-	disabled = false,
-	id,
-	onChange,
-	value,
-	defaultValue,
-	type,
+  title,
+  label,
+  placeholder,
+  disabled = false,
+  id,
+  onChange,
+  value,
+  defaultValue,
+  type
 }) => {
-	return (
-		<div className="mb-6">
-			<label className=" mb-2 block font-bold text-base" htmlFor={title}>
-				{label}
-			</label>
-			<input
-				className="border border-gray-500 outline-none placeholder-opacity-50 placeholder-gray-400 rounded-sm h-12 text-sm w-full px-5 focus:border-green"
-				onChange={onChange}
-				id={id}
-				value={value}
-				type={type || "text"}
-				defaultValue={defaultValue}
-				placeholder={placeholder}
-				disabled={disabled}
-				required
-			/>
-		</div>
-	);
+  return (
+    <div className="mb-6">
+      <label className=" mb-2 block font-bold text-base" htmlFor={title}>
+        {label}
+      </label>
+      <input
+        className="border border-gray-500 outline-none placeholder-opacity-50 placeholder-gray-400 rounded-sm h-12 text-sm w-full px-5 focus:border-green"
+        onChange={onChange}
+        id={id}
+        value={value}
+        type={type || "text"}
+        defaultValue={defaultValue}
+        placeholder={placeholder}
+        disabled={disabled}
+        required
+      />
+    </div>
+  );
 };
 
 export const Select = ({
-	id,
-	title,
-	label,
-	children,
-	disabled,
-	onChange,
-	value,
-	defaultValue,
+  id,
+  title,
+  label,
+  children,
+  disabled,
+  onChange,
+  value,
+  defaultValue
 }) => {
 	return (
 		<div className="mb-6" id={title}>
@@ -104,6 +104,7 @@ export const Select = ({
 };
 
 function Prospects() {
+
 	const { prospects, setProspects } = useContext(PluginContext);
 
 	const [prospect, setProspect] = useState({
@@ -377,13 +378,142 @@ function Prospects() {
 			[target.id]: target.value,
 		});
 	};
+const [BatchDeleteProspect, setBatchDeleteProspect] = useState([]);
+console.log(BatchDeleteProspect);
+console.log(BatchDeleteProspect.length);
+const [checkedBoxes, setCheckedBoxes] = useState([]);
+const [deleteAll, setDeleteAll] = useState(false);
+const [bulkDelete, setBulkDelete] = useState(false);
+const [def, setDef] = useState(true);
+const toggleCheckbox = (e, item) => {
+  //    console.log(item);
+  //  console.log(e.target.checked);
+  // if (deleteAll == true) {
+  // setDeleteAll(false)
+  //
+
+  console.log(e.target.checked);
+  // check if it is inside the BatchDeleteProspect array
+  let newArray = BatchDeleteProspect;
+
+  if (e.target.checked) {
+    const newData = { id: item._id, email: item.email };
+    newArray.push(newData);
+    setBatchDeleteProspect(newArray);
+    console.log(newArray.length);
+    if (newArray.length == prospects.contacts.length) {
+      // setDeleteAll(true);
+    }
+    if (newArray.length !== 0) {
+      setBulkDelete(true);
+    }
+
+    // setBatchDeleteProspect(newArray);
+  } else {
+    //       if (deleteAll == true) {
+    //   // setDeleteAll(false);
+    //   // e.target.checked=true
+    //   // toggleCheckbox(e,item)
+    //   setDef(false)
+    // console.log(e.target.checked);
+    // }
+
+    // let newArray = BatchDeleteProspect;
+
+    let items = newArray.filter((each) => each.id !== item._id);
+    // let items = newArray.splice(newArray.indexOf(item.id), 1);
+    if (deleteAll == true) {
+      setDeleteAll(false);
+      setBatchDeleteProspect([]);
+      setBulkDelete(false);
+    } else {
+      setBatchDeleteProspect(items);
+    }
+
+    // setDeleteAll(false);
+    if (items.length == 0) {
+      setBulkDelete(false);
+    }
+  }
+};
+
+const handleBatchDelete = (e) => {
+  e.preventDefault();
+  console.log(BatchDeleteProspect);
+  let emails = [];
+  BatchDeleteProspect.map((each) => {
+    emails.push(each.email);
+  });
+  const payload = { filter: emails };
+  customAxios
+    .post(`${batchDeleteProspectURL}`, payload)
+    .then((r) => {
+      console.log(r.data);
+      setBulkDelete(false);
+
+      customAxios.get(prospectsURL).then(({ data }) => {
+        setProspects({
+          contacts: data.contacts,
+          next: data.next,
+          pageNum: data.pageNum,
+          prev: data.prev
+        });
+      });
+    })
+
+    .catch((e) => {
+      console.log(e?.response);
+      // customAlert("Oops, something went wrong", "error");
+    });
+};
+
+const selectAll = (contacts) => {
+  setDeleteAll(!deleteAll);
+
+  const contactToBeDeleted = [];
+  contacts.map((eachContact) => {
+    contactToBeDeleted.push({
+      email: eachContact.email,
+      id: eachContact._id
+    });
+  });
+  if (deleteAll == false) {
+    setBatchDeleteProspect(contactToBeDeleted);
+    setBulkDelete(true);
+  } else {
+    setBatchDeleteProspect([]);
+    setBulkDelete(false);
+    console.log(bulkDelete);
+  }
+};
 
 	return (
-		<div className="p-10 w-screen">
-			<div className="flex justify-between items-center">
-				<h3 className="text-2xl font-bold">Contact</h3>
-				<Button onClick={handleOpenCreateModal}>Create New</Button>
-			</div>
+		// <div className='p-10 w-screen'>
+		// 	<div className='flex justify-between items-center'>
+		// 		<h3 className='text-2xl font-bold'>Contact</h3>
+		// 		<Button onClick={handleOpenCreateModal}>Create New</Button>
+		// 	</div>
+
+
+ <div className="p-10 w-screen">
+      <div className="flex justify-between items-center">
+        <h3 className="text-2xl font-bold">Contact</h3>
+        <div className="flex justify-between">
+          {bulkDelete ? (
+            <Button className="m-1 bg-error" onClick={handleBatchDelete}>
+              Delete
+            </Button>
+          ) : (
+            <div></div>
+          )}
+
+          <Button className="m-1" onClick={handleOpenCreateModal}>
+            Create New
+          </Button>
+        </div>{" "}
+      </div>
+
+
 
 			{/* CREATE MODAL */}
 			<Modal
@@ -811,45 +941,55 @@ function Prospects() {
 					</div>
 				</form>
 			</Modal>
-
-			{prospects?.contacts?.length > 0 && !loading ? (
-				<div className='mt-4'>
-					<div className='overflow-x-auto overflow-y-hidden rounded-md '>
-						<table className='text-left border-gray-100 w-full sm:shadow-2xl border-collapse w-fullxx'>
-							<thead className='border-b cursor-pointer '>
-								<tr>
-									<th className='px-3 py-4 sm:absolute sm:block'>
-										<span className='flex items-center'>
-											<input
-												className="mr-4"
-												type="checkbox"
-												name=""
-												id="all"
-											/>
-											<label htmlFor='all  sm:text-sm'>Name</label>
-										</span>
-									</th>
+       {prospects?.contacts?.length > 0 && !loading ? (
+        <div className="mt-4">
+          <div className="overflow-x-auto overflow-y-hidden rounded-md">
+            <table className="text-left border-gray-100 w-full">
+              <thead className="border-b cursor-pointer">
+                <tr>
+                  <th className="px-3 py-4">
+                    <span className="flex items-center">
+                      <input
+                        className="mr-4"
+                        type="checkbox"
+                        name=""
+                        id="all"
+                        checked={deleteAll}
+                        // checked={deleteAll}
+                        onChange={() => {
+                          selectAll(prospects.contacts);
+                        }}
+                      />
+                      <label htmlFor="all">Name</label>
+                    </span>
+                  </th>
 									<th className='px-3 py-4 hidden sm:table-cell sm:text-sm '>Email</th>
 									<th className='px-3 py- hidden sm:table-cell sm:text-sm  '>Phone Number</th>
 									<th className='px-3 py-4 hidden sm:table-cell  sm:text-sm'>Company</th>
 									<th className='px-3 py-4   sm:text-sm sm:justify-between '> Actions </th>
 								</tr>
 							</thead>
-							<tbody className="bg-white">
-								{prospects?.contacts?.map((prospect, i) => (
-									<ProspectRow
-										key={i}
-										openEditModal={handleOpenEditModal}
-										openDealCreateModal={handleOpenDealCreateModal}
-										openDeleteModal={handleOpenDeleteModal}
-										openSocialInfo={handleOpenSocialModal}
-										prospect={prospect}
-									/>
-								))}
-							</tbody>
-						</table>
-					</div>
+							<tbody className='bg-white'>
+                {prospects.contacts.map((prospect, i) => (
+                  <ProspectRow
+                    key={i}
+                    deletemany={deleteAll} //deleteAll;
+                    // deletemany = {bulkDelete}//deleteAll;
 
+                    checkedBoxes={checkedBoxes}
+                    // setCheckedBoxes={setCheckedBoxes}
+                    default={def}
+                    toggleCheckbox={toggleCheckbox}
+                    setCheckedBoxes={setCheckedBoxes}
+                    openEditModal={handleOpenEditModal}
+                    openDealCreateModal={handleOpenDealCreateModal}
+                    openDeleteModal={handleOpenDeleteModal}
+                    prospect={prospect}
+                  />
+                ))}
+              </tbody>
+            </table>
+             </div>
 					{/* Pagination */}
 					<div className="flex list-none justify-end items-center mt-5">
 						<button
@@ -945,6 +1085,7 @@ function Prospects() {
 			)}
 		</div>
 	);
+
 }
 
 export default Prospects;

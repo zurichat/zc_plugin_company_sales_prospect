@@ -6,21 +6,29 @@ function ProspectRow({
   openDealCreateModal,
   openDeleteModal,
   prospect,
-  openSocialInfo
+  checkedBoxes,
+  toggleCheckbox,
+  deletemany,
+  def
 }) {
   return (
-		<tr className="hover:bg-gray-100 cursor-pointer text-gray-900">
-			<td className="p-3 text-sm font-medium">
-				<span className="flex items-center">
-					<input
-						type="checkbox"
-						className="form-checkbox mr-4"
-						name=""
-						id="check"
-					/>
-					<label htmlFor="check">{prospect.name}</label>
-				</span>
-				{/* <span>
+    <tr className="hover:bg-gray-100 cursor-pointer text-gray-900">
+      <td className="p-3 text-sm font-medium">
+        <span className="flex items-center">
+          <input
+            type="checkbox"
+            className="form-checkbox mr-4"
+            name=""
+            id="check"
+            value={prospect.id}
+            checked={
+              deletemany || checkedBoxes.find((p) => p._id === prospect._id)
+            }
+            onChange={(e) => toggleCheckbox(e, prospect)}
+          />
+          <label htmlFor="check">{prospect.name}</label>
+        </span>
+        {/* <span>
           <label htmlFor="check">{prospect.name}</label>
           <span className="sm:hidden block">
             <span className="block">
