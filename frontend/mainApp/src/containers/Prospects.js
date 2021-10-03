@@ -452,11 +452,11 @@ function Prospects() {
     const payload = { filter: emails };
     setBulkDelete(false);
     setDeleteAll(false);
-
     customAxios
       .post(`${batchDeleteProspectURL}`, payload)
       .then((r) => {
         console.log(r.data);
+        setBatchDeleteProspect([]);
 
         customAxios.get(prospectsURL).then(({ data }) => {
           setProspects({
@@ -469,8 +469,9 @@ function Prospects() {
       })
 
       .catch((e) => {
+        setBatchDeleteProspect([]);
         console.log(e?.response);
-        // customAlert("Oops, something went wrong", "error");
+        customAlert("Oops, something went wrong", "error");
       });
   };
 
