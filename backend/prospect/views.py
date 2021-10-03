@@ -81,7 +81,7 @@ class GetPropects(APIView):
         if response.status_code==200:
             response= response.json()
             contacts = "contacts"
-            return Response({"data":{contacts:response['data']}})
+            return Response({contacts:response['data']})
         return Response({"data":"no prospects found"})
          
 
