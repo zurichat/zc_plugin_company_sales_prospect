@@ -20,6 +20,48 @@ Profile = Dict[str, Any]
 
 logger = logging.getLogger(__name__)
 
+class NotFound(Exception):
+    '''Post, page or profile not found / doesn't exist / deleted'''
+
+    pass
+
+
+class TemporarilyBanned(Exception):
+    '''User account rate limited'''
+
+    pass
+
+
+class AccountDisabled(Exception):
+    '''User account disabled, with option to appeal'''
+
+    pass
+
+
+class InvalidCookies(Exception):
+    '''Cookies file passed but missing cookies'''
+
+    pass
+
+
+class LoginRequired(Exception):
+    '''Facebook requires a login to see this'''
+
+    pass
+
+
+class LoginError(Exception):
+    '''Failed to log in'''
+
+    pass
+
+
+class UnexpectedResponse(Exception):
+    '''Facebook served something weird'''
+
+    pass
+
+
 
 class FacebookScraper:
     """Class for creating FacebookScraper Iterators"""
@@ -166,18 +208,18 @@ class FacebookScraper:
             ]
             if title:
                 if title.text.lower() in not_found_titles:
-                    raise exceptions.NotFound(title.text)
+                    raise NotFound(title.text)
                 elif title.text.lower() == "error":
-                    raise exceptions.UnexpectedResponse("Your request couldn't be processed")
+                    raise UnexpectedResponse("Your request couldn't be processed")
                 elif title.text.lower() in temp_ban_titles:
-                    raise exceptions.TemporarilyBanned(title.text)
+                    raise TemporarilyBanned(title.text)
                 elif ">your account has been disabled<" in response.html.html.lower():
-                    raise exceptions.AccountDisabled("Your Account Has Been Disabled")
+                    raise AccountDisabled("Your Account Has Been Disabled")
                 elif (
                     ">We saw unusual activity on your account. This may mean that someone has used your account without your knowledge.<"
                     in response.html.html
                 ):
-                    raise exceptions.AccountDisabled("Your Account Has Been Locked")
+                    raise AccountDisabled("Your Account Has Been Locked")
                 elif (
                     title.text == "Log in to Facebook | Facebook"
                     or response.url.startswith(urljoin('https://m.facebook.com/', "login"))
@@ -189,7 +231,7 @@ class FacebookScraper:
                         )
                     )
                 ):
-                    raise exceptions.LoginRequired(
+                    raise LoginRequired(
                         "A login (cookies) is required to see this page"
                     )
             return response
@@ -200,3 +242,4 @@ class FacebookScraper:
 
 # pro = FacebookScraper()
 # print(pro.get_profile("zuck"))
+
