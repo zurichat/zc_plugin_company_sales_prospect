@@ -43,12 +43,12 @@ class DealCreateView(APIView):
             "collection_name": "deals",
             "bulk_write": False,
             "payload": {
-                "prospect_id": serializer.data.get("prospect_id"),
-                "name": serializer.data.get("name"),
-                "deal_stage": serializer.data.get("deal_stage"),
-                "amount": serializer.data.get("amount"),
-                "close_date": serializer.data.get("close_date"),
-                "description": serializer.data.get("description"),
+                "prospect_id": request.data.get("prospect_id"),
+                "name": request.data.get("name"),
+                "deal_stage": request.data.get("deal_stage"),
+                "amount": request.data.get("amount"),
+                "close_date": request.data.get("close_date"),
+                "description": request.data.get("description"),
             },
         }
         prospect = serializer.data.get("prospect_id")
@@ -119,12 +119,12 @@ class DealUpdateView(APIView):
             "bulk_write": False,
             "object_id": _id,
             "payload": {
-                "prospect_id": serializer.data.get("prospect_id"),
-                "name": serializer.data.get("name"),
-                "deal_stage": serializer.data.get("deal_stage"),
-                "amount": serializer.data.get("amount"),
-                "close_date": serializer.data.get("close_date"),
-                "description": serializer.data.get("description"), },
+                "prospect_id": request.data.get("prospect_id"),
+                "name": request.data.get("name"),
+                "deal_stage": request.data.get("deal_stage"),
+                "amount": request.data.get("amount"),
+                "close_date": request.data.get("close_date"),
+                "description": request.data.get("description"), },
         }
         response = requests.put(url, data=json.dumps(data))
 
@@ -218,8 +218,8 @@ class ReArrangeDeals(APIView):
                 "bulk_write": False,
                 "object_id": _id,
                 "payload": {
-                    "deal_stage": serializer.data.get("deal_stage"),
-                    "close_date": serializer.data.get("close_date"),
+                    "deal_stage": request.data.get("deal_stage"),
+                    "close_date": request.data.get("close_date"),
                 },
             }
             response = requests.put(url, data=json.dumps(data))
@@ -409,7 +409,7 @@ class DealsDeleteView(APIView):
             if r["data"]["deleted_count"] == 0:
                 return Response(
                     data={"message": "There is no deals with the 'object_id' you supplied."},
-                    status=status.HTTP_400_BAD_REQUEST,
+                    status=st.HTTP_400_BAD_REQUEST,
                 )
             centrifugo_post(
                 "Prospects",
