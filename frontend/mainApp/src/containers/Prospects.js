@@ -975,6 +975,7 @@ const selectAll = (contacts) => {
     
         {prospect.additionalInfo ?
         <div>
+			{/* populating modalif prospect has additional info */}
           {prospect.additionalInfo.map((prospect, i) => (              
             <ExtraInfo 
             key={i}
