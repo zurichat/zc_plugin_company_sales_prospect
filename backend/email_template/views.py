@@ -105,11 +105,11 @@ class EmailTemplateUpdateView(APIView):
     
     def put(self, request, template_id, *args, **kwargs):
         # check if user is authenticated        
-        # if not isAuthorized(request):
-        #     return Response(data={"message":"Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
+        if not isAuthorized(request):
+            return Response(data={"message":"Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
 
-        # if not isValidOrganisation(ORGANISATION_ID, request):
-        #     return Response(data={"message":"Invalid/Missing organization id"}, status=status.HTTP_401_UNAUTHORIZED)      
+        if not isValidOrganisation(ORGANISATION_ID, request):
+            return Response(data={"message":"Invalid/Missing organization id"}, status=status.HTTP_401_UNAUTHORIZED)      
         
         url = "https://api.zuri.chat/data/write"
         serializer = EmailUpdateSerializer(data=request.data)
@@ -142,11 +142,11 @@ class EmailTemplateDeleteView(APIView):
     """
     def delete(self, request, template_id, *args, **kwargs):
         # check if user is authenticated
-        # if not isAuthorized(request):
-        #     return Response(data={"message":"Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
+        if not isAuthorized(request):
+            return Response(data={"message":"Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
 
-        # if not isValidOrganisation(ORGANISATION_ID, request):
-        #     return Response(data={"message":"Invalid/Missing organization id"}, status=status.HTTP_401_UNAUTHORIZED)
+        if not isValidOrganisation(ORGANISATION_ID, request):
+            return Response(data={"message":"Invalid/Missing organization id"}, status=status.HTTP_401_UNAUTHORIZED)
 
         url = "https://api.zuri.chat/data/delete"
         data = {
@@ -177,12 +177,31 @@ class EmailSendView(APIView):
     """
     This is an endpoint to send emails to prospects.
     """
-
+    serializer = SendEmailSerializer
+    queryset = None
     def post(self, request, *args, **kwargs):
-        url = f"https://api.zuri.chat/external/send-mail"
+
+        if not isAuthorized(request):
+            return Response(data={"message":"Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
+
+        if not isValidOrganisation(ORGANISATION_ID, request):
+            return Response(data={"message":"Invalid/Missing organization id"}, status=status.HTTP_401_UNAUTHORIZED)      
         
-        # 
-        response = requests.post(url)
+        serializer = SendEmailSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+
+        mail = request.data.get("mail_body")
+
+        url = f"https://api.zuri.chat/external/send-mail?custom_mail=1"
+        data = {
+            "email" : request.data.get("email"),
+            "subject" : request.data.get("subject"),
+            "content_type" : "text/html",
+            "mail_body" : f"<b>{mail}</b>"
+        }
+    
+        response = requests.post(url, data = json.dumps(data))
         print(response.json())
         if response.status_code == 200:
             return Response(

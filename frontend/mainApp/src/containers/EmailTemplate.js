@@ -98,7 +98,7 @@ const [templates, setTemplates] = useState([
   { id: "3153847234672", template_name: "Promotions" },
   { id: "3153847234672", template_name: "Arannt" },
   { id: "3153847234672", template_name: "Tech Creek" },
-  ];);
+  ]);
   // let templater = [
   //   { id: "3153847234672", template_name: "Promotions" },
   //   { id: "3153847234672", template_name: "Arannt" },
