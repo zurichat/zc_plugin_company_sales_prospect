@@ -122,6 +122,7 @@ function Prospects() {
 		facebook: "",
 		linkedin: "",
 		instagram: "",
+		additionalInfo:null,
 	});
 
 
@@ -166,6 +167,12 @@ function Prospects() {
 
 const additionalInfoForm = useRef();
 const[showInfoForm, setShowInfoForm] = useState(false)
+const [currentInfo, setCurrentInfo] = useState({label:"", value:""})
+
+const checkAddedInfo = (label, value) => {
+	console.log(label + " " + value)
+setCurrentInfo({...currentInfo, label:label, value:value})
+}
 
 const infoFormOpen = () => {
   !showInfoForm ? 
@@ -974,13 +981,14 @@ const selectAll = (contacts) => {
     >        
     
         {prospect.additionalInfo ?
-        <div>
-			{/* populating modalif prospect has additional info */}
+        <div className="">
+			{/* populating modal if prospect has additional info */}
           {prospect.additionalInfo.map((prospect, i) => (              
             <ExtraInfo 
             key={i}
             fieldLabel={prospect.label}
             fieldValue={prospect.value}
+			checkAddedInfo = {checkAddedInfo}
              />
           ))} 
         </div> : 
@@ -1027,7 +1035,7 @@ const selectAll = (contacts) => {
           </div>           
       </div>
     </Modal>
-       {prospects?.contacts?.length > 0 && !loading ? (
+       {prospects?.contacts?.length > 0 && !loading ? ( 
         <div className="mt-4">
           <div className="overflow-x-auto overflow-y-hidden rounded-md">
             <table className="text-left border-gray-100 w-full">
@@ -1056,7 +1064,7 @@ const selectAll = (contacts) => {
 								</tr>
 							</thead>
 							<tbody className='bg-white'>
-                {prospects.contacts.map((prospect, i) => (
+                {prospects.contacts.map((prospect, i) => ( 
                   <ProspectRow
                     key={i}
                     deletemany={deleteAll} //deleteAll;
