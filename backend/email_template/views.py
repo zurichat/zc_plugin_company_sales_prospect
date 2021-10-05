@@ -5,8 +5,15 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import EmailSerializer, EmailUpdateSerializer, SendEmailSerializer
+from common.utils import centrifugo_post
 from common.utils import isAuthorized
 from common.utils import isValidOrganisation
+
+ZURI_API_KEY = settings.ZURI_API_KEY
+CENTRIFUGO_LIVE_ENDPOINT = settings.CENTRIFUGO_LIVE_ENDPOINT
+API_KEY = settings.API_KEY
+CENTRIFUGO_DEBUG_ENDPOINT = settings.CENTRIFUGO_DEBUG_ENDPOINT
+
 
 PLUGIN_ID = settings.PLUGIN_ID
 ORGANISATION_ID = settings.ORGANISATION_ID
@@ -47,7 +54,16 @@ class EmailTemplateCreateView(APIView):
             },
         }
         response = requests.post(url, data=json.dumps(data))
+        r = response.json()
         if response.status_code == 201:
+            centrifugo_post(
+                "Email",
+                {
+                    "event": "new_template",
+                    "token": "elijah",
+                    "object": r,
+                },
+            )
             return Response(data=response.json(), status=status.HTTP_201_CREATED)
         return Response(
             data={"message": "Try again later"},
@@ -64,12 +80,13 @@ class EmailTemplateListView(APIView):
 
     def get(self, request, *args, **kwargs):
         # check if user is authenticated        
-        # if not isAuthorized(request):
-        #     return Response(data={"message":"Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
+        if not isAuthorized(request):
+            return Response(data={"message":"Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
 
-        # if not isValidOrganisation(ORGANISATION_ID, request):
-        #     return Response(data={"message":"Invalid/Missing organization id"}, status=status.HTTP_401_UNAUTHORIZED)
+        if not isValidOrganisation(ORGANISATION_ID, request):
+            return Response(data={"message":"Invalid/Missing organization id"}, status=status.HTTP_401_UNAUTHORIZED)
 
+        centrifugo_post("Email", {"event": "join", "token": "elijah"})
         url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/email_template/{ORGANISATION_ID}"
         response = requests.request("GET", url)
         if response.status_code == 200:
@@ -128,6 +145,14 @@ class EmailTemplateUpdateView(APIView):
 
         if response.status_code in [200, 201]:
             response = response.json()
+            centrifugo_post(
+                "Email",
+                {
+                    "event": "edit_email",
+                    "token": "elijah",
+                    "object": response,
+                },
+            )
             return Response(data=response, status=status.HTTP_200_OK)
 
         return Response(
@@ -167,6 +192,14 @@ class EmailTemplateDeleteView(APIView):
             )
         if response.status_code == 200:
             r = response.json()
+            centrifugo_post(
+                "Email",
+                {
+                    "event": "delete_email",
+                    "token": "elijah",
+                    "id": r,
+                },
+            )
             return Response(data={"message": f"{template_id} was deleted successfully"}, status=status.HTTP_200_OK)
         return Response(
             data={"message": "Try again later"},
@@ -198,7 +231,7 @@ class EmailSendView(APIView):
             "email" : request.data.get("email"),
             "subject" : request.data.get("subject"),
             "content_type" : "text/html",
-            "mail_body" : f"<b>{mail}</b>"
+            "mail_body" : f"<div>{mail}</div>"
         }
     
         response = requests.post(url, data = json.dumps(data))
