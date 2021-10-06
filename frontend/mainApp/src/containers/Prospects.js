@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Button from "../components/Button";
 import axios from "axios";
 // import Input from '../components/Input'
@@ -506,7 +506,11 @@ const selectAll = (contacts) => {
           ) : (
             <div></div>
           )}
-
+			<Link to="/email" >
+			<Button className="m-1">
+				Send Email
+			</Button>
+			</Link>
           <Button className="m-1" onClick={handleOpenCreateModal}>
             Create New
           </Button>
