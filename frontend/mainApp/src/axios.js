@@ -15,11 +15,22 @@ export const editDealURL = `${API_ENDPOINT}/deals/update/`;
 export const createDealURL = `${API_ENDPOINT}/deals/create/`;
 export const onboardingURL = `${API_ENDPOINT}/onboarding/`;
 export const deleteProspectURL = `${API_ENDPOINT}/prospects/delete/`;
+export const batchDeleteProspectURL = `${API_ENDPOINT}/prospects/delete/batch/`;
+
+
 export const addToRoomURL = `${API_ENDPOINT}/add-to-room/`;
 export const roomsURL = `${API_ENDPOINT}/rooms/`;
 export const leaveRoomURL = `${API_ENDPOINT}/leave-room/`;
 export const deleteDealURL = `${API_ENDPOINT}/deals/delete/?id=`;
 export const bashDeleteDealsURL = `${API_ENDPOINT}/deals/delete/batch/`;
+
+
+export const getEmailTemplateURL =`${API_ENDPOINT}/email-template/`;
+export const createEmailTemplateURL =`${API_ENDPOINT}/email-template/create/`;
+export const editEmailTemplateURL = `${API_ENDPOINT}/email-template/update/`;
+export const deleteEmailTemplateURL = `${API_ENDPOINT}/email-template/delete/`;
+export const sendEmailTemplateURL = `${API_ENDPOINT}/email-template/send/`;
+
 
 const customAxios = axios.create({
 	baseURL: API_ENDPOINT,
