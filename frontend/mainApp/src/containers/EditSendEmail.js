@@ -23,17 +23,17 @@ console.log(templateValues)
         e.preventDefault()
         console.log(templateValues)
         customAxios
-                .post(`email-template/send/${templateValues._id}/`,{
+                .post(`email-template/sendmail/${templateValues._id}/`,{
 
                         "email": templateValues.email,
                         "subject": templateValues.subject,
-                        "content_type": "text/html", 
-                        "mail_body": `<div>${templateValues.message}</div>`
+                        "mail_body": templateValues.message
 
      
                 })
                 .then(res=>{
                   console.log(res)
+                  alert('Email sent successfully')
                   
                 })
                 .catch(error=>{
@@ -53,7 +53,7 @@ console.log(templateValues)
         </div>
             <div className={styles.formContainer}>
                 <section>
-                    <h3 className={styles.templateHeader}>Newsletter Template</h3>
+                    <h3 className={styles.templateHeader}>{templateValues.template_name} Template</h3>
                     <p className={styles.templateSubHeader}>Create a template for your emails.
                         Provide all possible details about
                         your template.

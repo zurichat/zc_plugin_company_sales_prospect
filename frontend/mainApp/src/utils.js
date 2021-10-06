@@ -11,7 +11,9 @@ export const capitalize = (word) => {
 export const doesProspectExist = (contacts, name) => {
   return contacts.filter((x) => x.name === name).length > 0;
 };
-
+export const doesTemplateExist = (contacts, name) => {
+  return contacts.filter((x) => x.name === name).length > 0;
+};
 export const updateProspects = (contacts, id, newDetails) => {
   let p = contacts;
   const prospect = p.find((x) => x.id === id);

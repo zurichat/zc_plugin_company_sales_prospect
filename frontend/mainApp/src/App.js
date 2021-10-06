@@ -5,6 +5,8 @@ import Prospects from "./containers/Prospects";
 import Deals from "./containers/Deals";
 import { PluginProvider } from "./context/store";
 import PluginHeader from "./components/PluginHeader";
+import EmailTemplate from "./containers/EmailTemplate";
+import EditSendEmail from "./containers/EditSendEmail"
 
 function App() {
   return (
@@ -19,7 +21,8 @@ function App() {
 
             <Route exact path="/deals" component={Deals} />
             <Route exact path="/6158326387540d8d01ffc6fb" component={Deals} />
-
+            <Route exact path="/email" component={EmailTemplate} />
+            <Route exact path="/template" component={EditSendEmail} />
             {/* <Route exact path="/test" component={Test} /> */}
           </Switch>
 
