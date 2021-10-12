@@ -13,7 +13,8 @@ from .views import (
 
 urlpatterns = [
     path("search/<str:search>/", SearchProspects, name="search"),
-    path("<str:org_id>/create/", ProspectsCreateView.as_view()),
+    # path("search/<str:search>/", SearchProspects, name="search"),
+    path("<str:org_id>/<str:user_id>/create/", ProspectsCreateView.as_view()),
     path("<str:org_id>/", ProspectsListView.as_view(), name="prospects"),
     path("", GetPropects.as_view(), name="prospects"),
     path("welcome/", WelcomeView.as_view(), name="welcome_mail"),
@@ -23,3 +24,4 @@ urlpatterns = [
 ]
 
 # reminder to remove the org_id
+
