@@ -9,13 +9,20 @@
     <br>
 
     <div class="card w-50 center">
-        <h3 class="card-header">Overall Project Status:</h3>
+        <center>
+
+        <h3 class="">Overall Project Status:</h3>
         <h1>{{report}}</h1>    
+
+        </center>
         <br>
     </div>
     <br>
     <br>
+    <center>
     <h1>Breakdown of Reports</h1>
+
+    </center>
     
     <br>
     <br>
@@ -23,7 +30,7 @@
         <div>
             {% for k , i in response.items %}
                 <!-- <td>{{i.status_code}}</td> -->
-                <p><span class="text-muted">{{k}}</span>{{i}}</p>
+                <center><span class="text-muted">{{k}}: </span>{{i}}</center>
             {% endfor %}
             <br>
             <br>
