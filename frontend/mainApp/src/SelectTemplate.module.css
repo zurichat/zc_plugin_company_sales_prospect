@@ -1,0 +1,114 @@
+.selectemailtop{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 32.16px;
+    margin-bottom: 51.84px;
+    margin-left: 12px;
+    margin-right: 20px;
+}
+.templateTitle{
+    font-family: Lato;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 36px;
+    letter-spacing: 0em;
+    color: #1D1C1D;
+
+}
+.topbuttons{
+    display: flex;
+    gap: 20px;
+}
+.button{
+    border: none;
+    width: 115px;
+    height: 48px;
+    border-radius: 3px;
+    padding: 12px, 18px, 12px, 18px;
+    background: #00B87C;
+    color: white;
+}
+.buttonred{
+    background: #cc0a0a;
+    border: none;
+    width: 115px;
+    height: 48px;
+    border-radius: 3px;
+    padding: 12px, 18px, 12px, 18px;
+    color: white;
+}
+.templateSubHeader{
+    font-family: Lato;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 19px;
+    letter-spacing: 0em;
+    color: #8B8B8B;
+    margin-top: 18px;
+    margin-bottom: 10px;
+
+
+}
+.templateHeader{
+    color: #1D1C1D;
+    font-family: Lato;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 34px;
+    letter-spacing: 0em;
+    margin-top: 24px;
+
+
+}
+.sendbutton{
+    border: none;
+    width: 147px;
+    height: 48px;
+    border-radius: 3px;
+    padding: 12px, 18px, 12px, 18px;
+    background: #00B87C;
+    color: white;
+    margin-top: 11px;
+    margin-bottom: 24px;
+    margin-left: 651px;
+  
+
+}
+.formContainer{
+    width: 846px;
+    border: 1px solid #e7e7e7;
+    border-radius: 4px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 26px;
+    padding-right: 20px;
+
+}
+.labeltext{
+    font-family: Lato;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 19px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #1D1C1D;
+    margin-bottom: 11px;
+    margin-top: 11px;
+
+}
+.formInput{
+    display: flex;
+    flex-direction: column;
+}
+.input{
+    height: 61px;
+    border: 1px solid #a1a1a1;
+}
+.inputmessage{
+    height: 220px;
+    border: 1px solid #a1a1a1;
+}
