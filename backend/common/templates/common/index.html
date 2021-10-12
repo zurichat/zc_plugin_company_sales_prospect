@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<head>
+    <title>Status of Major Pages</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+</head>
+<body>
+    <br>
+    <br>
+
+    
+    <center>
+
+    <h3>Overall Project Status:</h3>
+    <h1>{{report}}</h1>    
+
+    </center>
+    <br>
+    <
+    <br>
+    <br>
+    <center>
+    <h1>Breakdown of Reports</h1>
+
+    </center>
+    
+    <br>
+    <br>
+    {% for response in responses %}
+        <div>
+            {% for k , i in response.items %}
+                <!-- <td>{{i.status_code}}</td> -->
+                <center><span class="text-muted">{{k}}: </span>{{i}}</center>
+            {% endfor %}
+            <br>
+            <br>
+        </div>
+    {% endfor %}
+
+</body>
