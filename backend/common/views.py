@@ -344,11 +344,11 @@ class SearchSalesInfo(APIView):
 
     def get(self, request, *args, org_id, user_id, ** kwargs):
         print(org_id)
-        # if not isAuthorized(request):
-        #     return handle_failed_request(response=None)
+        if not isAuthorized(request):
+            return handle_failed_request(response=None)
 
-        # if not isValidOrganisation(org_id, request):
-        #     return handle_failed_request(response=None)
+        if not isValidOrganisation(org_id, request):
+            return handle_failed_request(response=None)
 
         # search = request.query_params
         # if search["collection"]:
