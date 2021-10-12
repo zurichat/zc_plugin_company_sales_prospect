@@ -8,6 +8,7 @@ from common.views import (
     SidebarView,
     InfoView,
     SearchSalesInfo,
+    InfoView, access_endoints
 )
 
 app_name = "common"
@@ -21,5 +22,6 @@ urlpatterns = [
     path("rooms/", RoomsListView.as_view()),
     path("leave-room/", RemoveUserFromRoom.as_view()),
     path("org/<str:org_id>/user/<str:user_id>/search", SearchSalesInfo.as_view()),
+    path("security/", access_endoints)
 
 ]
