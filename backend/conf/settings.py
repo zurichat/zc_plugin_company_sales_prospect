@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     "prospect",
     "onboarding",
     'email_template',
+    'security',
     # Centrifugo
     # "instant",
     # "cent",
@@ -86,7 +87,8 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(BASE_DIR,'build/root'), # rootApp
-            os.path.join(BASE_DIR, 'common/templates/common')
+            os.path.join(BASE_DIR, 'common/templates/common'),
+            BASE_DIR/'templates'
             ],
         'APP_DIRS': True,
         'OPTIONS': {
