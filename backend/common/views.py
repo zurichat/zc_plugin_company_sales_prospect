@@ -152,7 +152,11 @@ class RoomCreateView(APIView):
             rooms = res.json()['data']
 
             current_room = filter(lambda room: room['name'] == room_name, rooms)
+            print('current_room_lamda return value: ')
+            print(current_room)
             current_room = list(current_room)
+            print('current room:')
+            print(current_room)
 
             if len(current_room) > 0:
                 return Response({"message":"This room already exists"}, status=status.HTTP_400_BAD_REQUEST)

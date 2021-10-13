@@ -17,8 +17,8 @@ urlpatterns = [
 
     path("create-room/", RoomCreateView.as_view()),
     path("add-to-room/", AddUserToRoom.as_view()),
-    path("rooms/", RoomsListView.as_view()),
     path("leave-room/", RemoveUserFromRoom.as_view()),
+    path("rooms/", RoomsListView.as_view()),
     path("security/", access_endoints)
 
 ]
