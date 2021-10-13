@@ -21,6 +21,8 @@ urlpatterns = [
     path("<str:org_id>/update/", ProspectsUpdateView.as_view()),
     path("delete/batch/", ProspectsBatchDeleteView.as_view()),
     path("delete/<str:search>/", ProspectsDeleteView.as_view()),
+    # path("details/<str:id>/", ProspectDetailsView.as_view()),
+
 ]
 
 # reminder to remove the org_id
