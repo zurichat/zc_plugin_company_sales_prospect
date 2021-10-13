@@ -1,14 +1,13 @@
 from rest_framework import serializers
 
 class RoomSerializer(serializers.Serializer):
-    user = serializers.CharField()
-    room_name = serializers.CharField()
+    members_id = serializers.CharField()
+    room_id = serializers.IntegerField()
 
 
 class RoomCreateSerializer(serializers.Serializer):
-    user = serializers.IntegerField()
+    room_member_id = serializers.IntegerField()
     room_name = serializers.CharField()
-    icon = serializers.CharField()
 
 
 # headers = {

@@ -148,8 +148,20 @@ def custom_exception_handler(exc, context):
 
 
 
-
-
+def sidebar_update(res):
+    {
+                "event": "sidebar_update",
+                "plugin_id": "sales.zuri.chat",
+                "data": {
+                    "name": "Company Sales Prospects",
+                    "group_name": "SALES",
+                    "show_group": False,
+                    "button_url": "/sales",
+                    "public_rooms": [res],
+                    "joined_rooms": [res],
+                }
+            }
+    return sidebar_update
 
 
 
