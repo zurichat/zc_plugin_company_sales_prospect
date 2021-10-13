@@ -8,6 +8,7 @@ from .views import (
     ProspectsDeleteView,
     ProspectsBatchDeleteView,
     GetPropects,
+    ProspectDetailsView,
 )
 
 

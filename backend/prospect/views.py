@@ -11,7 +11,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 
-from .serializers import ProspectSerializer, ProspectUpdateSerializer, ProspectDetailsSerializer
+from .serializers import ProspectSerializer   #ProspectUpdateSerializer #ProspectDetailsSerializer
 # changed the import to a single import
 from common.utils import centrifugo_post, CustomRequest
 from rest_framework.permissions import AllowAny
@@ -362,7 +362,7 @@ class ProspectsDeleteView(APIView):
 
 
 class ProspectDetailsView(APIView):
-    serializer_class = ProspectDetailsSerializer
+    serializer_class = ProspectSerializer
     queryset = None
 
     def put(self, request, *args, **kwargs):
@@ -374,7 +374,7 @@ class ProspectDetailsView(APIView):
             #return handle_failed_request(response=None)
 
         url = "https://api.zuri.chat/data/write"
-        serializer = ProspectDetailsSerializer(data=request.data)
+        serializer = ProspectSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
         object_id = request.data.get("object_id")
