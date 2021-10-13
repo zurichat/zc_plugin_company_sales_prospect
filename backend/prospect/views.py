@@ -11,7 +11,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 
-from .serializers import ProspectSerializer, ProspectUpdateSerializer
+from .serializers import ProspectSerializer, ProspectUpdateSerializer, ProspectDetailsSerializer
 # changed the import to a single import
 from common.utils import centrifugo_post, CustomRequest
 from rest_framework.permissions import AllowAny
@@ -160,11 +160,11 @@ class ProspectsCreateView(APIView):
 
     def post(self, request, org_id, *args, **kwargs):
         # # check authentication
-        if not isAuthorized(request):
-            return handle_failed_request(response=None)
+        #if not isAuthorized(request):
+            #return handle_failed_request(response=None)
 
-        if not isValidOrganisation(ORGANISATION_ID, request):
-            return handle_failed_request(response=None)
+        #if not isValidOrganisation(ORGANISATION_ID, request):
+            #return handle_failed_request(response=None)
 
         print(request)
         print(org_id)
@@ -355,4 +355,57 @@ class ProspectsDeleteView(APIView):
                 },
             )
             return Response(data={"message": "successful"}, status=status.HTTP_200_OK)
+        return handle_failed_request(response=response)
+
+
+
+class ProspectDetailsView(APIView):
+    serializer_class = ProspectDetailsSerializer
+    queryset = None
+
+    def put(self, request, *args, **kwargs):
+        # check authorization
+        #if not isAuthorized(request):
+            #return handle_failed_request(response=None)
+
+        #if not isValidOrganisation(ORGANISATION_ID, request):
+            #return handle_failed_request(response=None)
+
+        url = "https://api.zuri.chat/data/write"
+        serializer = ProspectDetailsSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        object_id = request.data.get("object_id")
+        data = {
+            "plugin_id": PLUGIN_ID,
+            "organization_id": ORGANISATION_ID,
+            "collection_name": "prospects",
+            "bulk_write": False,
+            "object_id": object_id,
+            "payload": serializer.data,
+        }
+        response = requests.put(url, data=json.dumps(data))
+
+        if response.status_code in [200, 201]:
+            r = response.json()
+            if r["data"]["matched_documents"] == 0:
+                return Response(
+                    data={"message": "There is no prospect with the 'object_id' you supplied."},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+
+            if r["data"]["modified_documents"] == 0:
+                return Response(
+                    data={"message": "Prospect update failed. Empty data or invalid values was passed."},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+            centrifugo_post(
+                "Prospects",
+                {
+                    "event": "edit_prospect",
+                    "token": "elijah",
+                    "object": serializer.data,
+                },
+            )
+            return Response(data=r, status=status.HTTP_200_OK)
         return handle_failed_request(response=response)
