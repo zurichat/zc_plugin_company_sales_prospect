@@ -11,7 +11,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 
-from .serializers import ProspectSerializer, ProspectUpdateSerializer, ProspectDetailsSerializer
+from .serializers import ProspectSerializer   #ProspectUpdateSerializer #ProspectDetailsSerializer
 # changed the import to a single import
 from common.utils import centrifugo_post, CustomRequest
 from rest_framework.permissions import AllowAny
@@ -158,13 +158,13 @@ class ProspectsCreateView(APIView):
     serializer_class = ProspectSerializer
     queryset = None
 
-    def post(self, request, org_id, *args, **kwargs):
+    def post(self, request, org_id,user_id, *args, **kwargs):
         # # check authentication
-        #if not isAuthorized(request):
-            #return handle_failed_request(response=None)
+        if not isAuthorized(request):
+            return handle_failed_request(response=None)
 
-        #if not isValidOrganisation(ORGANISATION_ID, request):
-            #return handle_failed_request(response=None)
+        if not isValidOrganisation(ORGANISATION_ID, request):
+            return handle_failed_request(response=None)
 
         print(request)
         print(org_id)
@@ -180,6 +180,8 @@ class ProspectsCreateView(APIView):
 
                 "name": serializer.data.get("name"),
                 "email": serializer.data.get("email"),
+                "organisation_id": org_id,
+                "user_id": user_id,
                 "phone_number": serializer.data.get("phone_number"),
                 "company": serializer.data.get("company"),
                 "twitter": serializer.data.get("twitter"),
@@ -360,7 +362,7 @@ class ProspectsDeleteView(APIView):
 
 
 class ProspectDetailsView(APIView):
-    serializer_class = ProspectDetailsSerializer
+    serializer_class = ProspectSerializer
     queryset = None
 
     def put(self, request, *args, **kwargs):
@@ -372,7 +374,7 @@ class ProspectDetailsView(APIView):
             #return handle_failed_request(response=None)
 
         url = "https://api.zuri.chat/data/write"
-        serializer = ProspectDetailsSerializer(data=request.data)
+        serializer = ProspectSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
         object_id = request.data.get("object_id")
