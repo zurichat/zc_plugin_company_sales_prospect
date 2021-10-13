@@ -1,8 +1,10 @@
+from django.core.paginator import Paginator
 import requests
 import json
 
 from django.http import Http404
 from django.conf import settings
+import asyncio
 from django.shortcuts import render
 # from django.views.static import serve as static_serve
 from rest_framework.decorators import api_view
@@ -343,7 +345,7 @@ class SearchSalesInfo(APIView):
     """
 
     def get(self, request, *args, org_id, user_id, ** kwargs):
-        print(org_id)
+        # print(org_id)
         if not isAuthorized(request):
             return handle_failed_request(response=None)
 
@@ -357,7 +359,7 @@ class SearchSalesInfo(APIView):
             return Response(data={"data": "collection must either be prospects  or deals "}, status=400)
         key_word = request.query_params.get("key") or []
         if key_word:
-         key_word = key_word.split(",")
+            key_word = key_word.split(",")
         url = "https://api.zuri.chat/data/read"
         data = {
             "plugin_id": PLUGIN_ID,
@@ -365,9 +367,9 @@ class SearchSalesInfo(APIView):
             "organization_id": ORGANISATION_ID,
             "filter": {},
         }
-        if len(key_word) > 0  :
+        if len(key_word) > 0:
             data["filter"] = {
-                "user_id":user_id,
+                "user_id": user_id,
                 "$or": [
                     {"name": {"$in": key_word}},
                     {"facebook": {"$in": key_word}},
@@ -382,10 +384,10 @@ class SearchSalesInfo(APIView):
                     {"phone_number": {"$in": key_word}}
                 ]
             }
-        else :
+        else:
             data["filter"] = {"user_id": user_id}
-            
-        if len(key_word) > 0 :
+
+        if len(key_word) > 0:
             data["filter"] = {
                 "user_id": user_id,
                 "$or": [
@@ -400,16 +402,45 @@ class SearchSalesInfo(APIView):
             data["filter"] = {"user_id": user_id}
         # print(data["filter"])
         response = requests.request("POST", url, data=json.dumps(data))
-        
-        print(response.status_code)
+
+        # print(response.status_code)
         if response.status_code in [200, 201]:
             # if response.status_code == 200:
             r = response.json()
-            return Response(data={"data": r["data"]}, status=response.status_code)
-        print(response.status_code)
+#    according to zuri main devs all plugins must contain this format, if it does not have it, it should be set to null
+# 	"title":"name of resource item",
+# 	"email":"can be empty if it doesn't apply",
+# 	"description":"",
+# 	"Image_url":"if any",
+# 	"created_at":"",
+# 	"url":"resource item redirect url",
+# 	"plugin":"",
+
+            # print(r["data"])
+            newProspectList = []
+            for eachProspect in r["data"]:
+                eachProspect["title"] = "Sales"
+                eachProspect["Image_url"] = ""
+                eachProspect["url"] = f"https://zuri.chat/sales/{collection_name}"
+                eachProspect["plugin"] = "Sales plugin"
+                newProspectList.append(eachProspect)
+            paginate_by = request.query_params.get('paginate_by', 20)
+            paginator = Paginator(r["data"], paginate_by)
+            page_num = request.query_params.get('page', 1)
+            page_obj = paginator.get_page(page_num)
+            paginated_data = {
+                "contacts": list(page_obj),
+                "pageNum": page_obj.number,
+                "next": page_obj.has_next(),
+                "prev": page_obj.has_previous(),
+            }
+            return Response(data={"data": paginated_data}, status=response.status_code)
+        # print(response.status_code)
         return handle_failed_request(response=response)
+
+
 def access_endoints(request):
-    
+
     # ENDPOINTS = [
     #     "https://sales.zuri.chat/api/v1/prospects/",
     #     "https://sales.zuri.chat/api/v1/prospects/{id}/",
@@ -448,7 +479,7 @@ def access_endoints(request):
 
     status_codes = []
     responses = []
-     
+
     for endpoint in GET_ENDPOINTS:
         # organisation_content = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb29raWUiOiJNVFl6TkRBeU5qazNOSHhIZDNkQlIwUlplRTVxVlRCT1YxSnNXVEpGTlUxSFZUVk5iVTVvV1ZSU2FVMVhSbXRPZHowOWZMdUpuaHVOMHZodV9Tbk13T0dXRUgwQVY5RTFNTFlCUFU2RWxwZW9Hd1BwIiwiZW1haWwiOiJrb3JkdGVjaG5vbEBnbWFpbC5jb20iLCJpZCI6IjYxNjU0NWRlY2E5MGU5MmNhYTRiMWFkNyIsIm9wdGlvbnMiOnsiUGF0aCI6Ii8iLCJEb21haW4iOiIiLCJNYXhBZ2UiOjc5NDEyMjYwNTEsIlNlY3VyZSI6ZmFsc2UsIkh0dHBPbmx5IjpmYWxzZSwiU2FtZVNpdGUiOjB9LCJzZXNzaW9uX25hbWUiOiJmNjgyMmFmOTRlMjliYTExMmJlMzEwZDNhZjQ1ZDVjNyJ9.52INh852cLlAedLPWa7Dg6n9xv9pSkvi9UcEJhNFwkc"
         # authorization_content = organisation_content
@@ -491,12 +522,13 @@ def access_endoints(request):
     #     responses.append(data)
 
     # statuses = []
-    # report = "OK!"
+    report = "OK!"
     # for i in responses:
     #     statuses.append(i["success"])
     # if not all(statuses):
     #     report = "ERROR"
-    # context = {"responses": responses, "report": report}
+    context = {"responses": responses, "report": report}
     # # print(context)
+    # return Response(data={"data": 'paginated_data'}, status='response.status_code')
 
-    return render(request, 'index.html', {"responses":responses})
+    return render(request, 'index.html', context)

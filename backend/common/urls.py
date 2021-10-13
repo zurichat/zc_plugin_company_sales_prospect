@@ -8,7 +8,8 @@ from common.views import (
     SidebarView,
     InfoView,
     SearchSalesInfo,
-    InfoView, access_endoints
+    InfoView, 
+    access_endoints
 )
 
 app_name = "common"

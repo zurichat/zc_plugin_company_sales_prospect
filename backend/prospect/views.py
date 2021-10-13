@@ -160,11 +160,11 @@ class ProspectsCreateView(APIView):
 
     def post(self, request, org_id, user_id, *args, **kwargs):
         # # # check authentication
-        # if not isAuthorized(request):
-        #     return handle_failed_request(response=None)
+        if not isAuthorized(request):
+            return handle_failed_request(response=None)
 
-        # if not isValidOrganisation(ORGANISATION_ID, request):
-        #     return handle_failed_request(response=None)
+        if not isValidOrganisation(ORGANISATION_ID, request):
+            return handle_failed_request(response=None)
 
         print(request)
         print(org_id)
