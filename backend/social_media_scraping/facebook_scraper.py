@@ -267,8 +267,8 @@ class FacebookScraper:
                 if request_url_callback:
                     request_url_callback(friend_url)
             else:
-                return
-
+                return 
+            
     def get_profile(self, account, **kwargs) -> Profile:
         account = account.replace("profile.php?id=", "")
         result = {}

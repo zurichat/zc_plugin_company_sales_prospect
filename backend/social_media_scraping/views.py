@@ -5,7 +5,7 @@ from rest_framework import status
 
 from .serializers import ScrapingSerializer
 from .facebook_scraper import FacebookScraper
-from facebook_scraper import get_profile
+# from .facebook_scraper import get_profile # fix this import 
 
 
 
