@@ -158,13 +158,13 @@ class ProspectsCreateView(APIView):
     serializer_class = ProspectSerializer
     queryset = None
 
-    def post(self, request, org_id, *args, **kwargs):
+    def post(self, request, org_id,user_id, *args, **kwargs):
         # # check authentication
-        #if not isAuthorized(request):
-            #return handle_failed_request(response=None)
+        if not isAuthorized(request):
+            return handle_failed_request(response=None)
 
-        #if not isValidOrganisation(ORGANISATION_ID, request):
-            #return handle_failed_request(response=None)
+        if not isValidOrganisation(ORGANISATION_ID, request):
+            return handle_failed_request(response=None)
 
         print(request)
         print(org_id)
@@ -180,6 +180,8 @@ class ProspectsCreateView(APIView):
 
                 "name": serializer.data.get("name"),
                 "email": serializer.data.get("email"),
+                "organisation_id": org_id,
+                "user_id": user_id,
                 "phone_number": serializer.data.get("phone_number"),
                 "company": serializer.data.get("company"),
                 "twitter": serializer.data.get("twitter"),
@@ -210,10 +212,10 @@ class ProspectsCreateView(APIView):
             # request.data._mutable = False
 
             # new_prospect["_id"] = r["data"]["object_id"]
-        #     # centrifugo_post(
-        #     #     "Prospects",
-        #     #     {"event": "new_prospect", "token": "elijah", "object": new_prospect},
-        #     # )
+            # centrifugo_post(
+            #     "Prospects",
+            #     {"event": "new_prospect", "token": "elijah", "object": new_prospect},
+            # )
 
             # return Response(data=r, status=status.HTTP_201_CREATED)
         return handle_failed_request(response=response)
