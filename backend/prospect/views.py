@@ -11,7 +11,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 
-from .serializers import ProspectSerializer, ProspectUpdateSerializer, ProspectDetailsSerializer
+from .serializers import ProspectSerializer, ProspectUpdateSerializer #ProspectDetailsSerializer
 # changed the import to a single import
 from common.utils import centrifugo_post, CustomRequest
 from rest_framework.permissions import AllowAny
