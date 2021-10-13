@@ -212,10 +212,10 @@ class ProspectsCreateView(APIView):
             # request.data._mutable = False
 
             # new_prospect["_id"] = r["data"]["object_id"]
-        #     # centrifugo_post(
-        #     #     "Prospects",
-        #     #     {"event": "new_prospect", "token": "elijah", "object": new_prospect},
-        #     # )
+            # centrifugo_post(
+            #     "Prospects",
+            #     {"event": "new_prospect", "token": "elijah", "object": new_prospect},
+            # )
 
             # return Response(data=r, status=status.HTTP_201_CREATED)
         return handle_failed_request(response=response)
