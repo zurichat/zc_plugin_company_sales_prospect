@@ -11,7 +11,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
-from .serializers import RoomSerializer, RoomCreateSerializer
+from .serializers import RoomSerializer, RoomCreateSerializer, InstallSerializer, UninstallSerializer
 from rest_framework.decorators import api_view
 from rest_framework import status
 
@@ -531,3 +531,65 @@ def access_endoints(request):
     # return Response(data={"data": 'paginated_data'}, status='response.status_code')
 
     return render(request, 'index.html', context)
+
+class InstallPlugin(APIView):
+    serializer_class = InstallSerializer
+    def post(self, request, *args, **kwargs):
+        # if not isAuthorized(request):
+        #     return handle_failed_request(response=None)
+
+        # if not isValidOrganisation(ORGANISATION_ID, request):
+        #     return handle_failed_request(response=None)
+
+        user_id = request.data.get("user_id")
+        org_id = request.data.get("org_id")
+
+        headers = {
+        "Content-Type": "application/json",
+        "Cookie": "f6822af94e29ba112be310d3af45d5c7=MTYzNDE0OTkzNnxHd3dBR0RZeE5qY3hOVFE1T1dZM1lUYzVNR013T0dReU1qSm1NUT09fLxiYT50kNCayZQN_E_MlGlI3lbTETEX07XZYa-tcttk",
+        }
+        url = f"https://api.zuri.chat/organizations/{org_id}/plugins"
+
+        payload = {
+            "org_id": ORGANISATION_ID,
+            "user_id": user_id,
+        }
+
+        response = requests.request("POST", url, json=payload, headers=headers)
+        print(response.status_code)
+
+        if response.status_code==200:
+            return Response({"success": True, "message": "Succesfully installed"}, status=status.HTTP_200_OK)
+        return Response({"message": "Plugin already installed"}, status=status.HTTP_404_NOT_FOUND)
+
+class UninstallPlugin(APIView):
+    serializer_class = UninstallSerializer
+    def delete(self, request, *args, **kwargs):
+        # if not isAuthorized(request):
+        #     return handle_failed_request(response=None)
+
+        # if not isValidOrganisation(ORGANISATION_ID, request):
+        #     return handle_failed_request(response=None)
+
+        user_id = request.data.get("user_id")
+        org_id = request.data.get("org_id")
+
+        headers = {
+        "Content-Type": "application/json",
+        "Cookie": "f6822af94e29ba112be310d3af45d5c7=MTYzNDE0OTkzNnxHd3dBR0RZeE5qY3hOVFE1T1dZM1lUYzVNR013T0dReU1qSm1NUT09fLxiYT50kNCayZQN_E_MlGlI3lbTETEX07XZYa-tcttk",
+        }
+        url = f"https://api.zuri.chat/organizations/{org_id}/plugins"
+
+        payload = {
+            "org_id": ORGANISATION_ID,
+            "user_id": user_id,
+        }
+
+        response = requests.request("DELETE", url, json=payload, headers=headers)
+        print(response.status_code)
+
+        if response.status_code==200:
+            return Response({"success": True, "message": "Succesfully deleted"}, status=status.HTTP_200_OK)
+        return Response({"message": "Plugin not found"}, status=status.HTTP_404_NOT_FOUND)
+
+
