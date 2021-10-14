@@ -9,13 +9,12 @@ import json
 
 import requests
 from django.conf import settings
-from django.http import JsonResponse
 from common.utils import centrifugo_post,sidebar_update
 from .utils import handle_failed_request, isValidOrganisation
 PLUGIN_ID = settings.PLUGIN_ID
 ORGANISATION_ID = settings.ORGANISATION_ID
 ROOM_COLLECTION_NAME = settings.ROOM_COLLECTION_NAME
-# CREATED_ROOMS = settings.CREATED_ROOMS
+CREATED_ROOMS = settings.CREATED_ROOMS
 PLUGIN_NAME = settings.PLUGIN_NAME
 DESCRIPTION = settings.DESCRIPTION
 ADDED_ROOM_COLLECTION_NAME = settings.ADDED_ROOM_COLLECTION_NAME
@@ -197,8 +196,10 @@ class RemoveUserFromRoomApi(APIView):
 class RoomDetailApi(APIView):
     def get(self,request,org_id,room_id, *args, **kwargs):
         get_url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/{ADDED_ROOM_COLLECTION_NAME}/{org_id}/"
+        print(get_url)
         room_id = room_id
         res = requests.request("GET", url=get_url)
+        print(res)
         if res.status_code == 200:
             rooms = res.json()['data']
             current_room = filter(lambda room: room.get('_id') == room_id, rooms)
@@ -214,10 +215,3 @@ class RoomDetailApi(APIView):
                 }
             return Response(data=response, status=status.HTTP_200_OK)
         return Response(data="No rooms for this Org", status=status.HTTP_404_NOT_FOUND)
-
-def sync_function_view(request):
-    print(request)
-    url = 'https://api.zuri.chat/marketplace/plugins/614105b66173056af01b4cca/'
-    response = requests.get(url)
-    print(response)
-    return JsonResponse({'foo':'bar'})

@@ -533,4 +533,3 @@ def access_endoints(request):
     # return Response(data={"data": 'paginated_data'}, status='response.status_code')
 
     return render(request, 'index.html', context)
-
