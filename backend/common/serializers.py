@@ -9,6 +9,14 @@ class RoomCreateSerializer(serializers.Serializer):
     room_member_id = serializers.IntegerField()
     room_name = serializers.CharField()
 
+class InstallSerializer(serializers.Serializer):
+    org_id=serializers.CharField()
+    user_id=serializers.CharField()
+
+class UninstallSerializer(serializers.Serializer):
+    org_id=serializers.CharField()
+    user_id=serializers.CharField()
+
 
 # headers = {
     #     'Authorization': f'Bearer {token}',
