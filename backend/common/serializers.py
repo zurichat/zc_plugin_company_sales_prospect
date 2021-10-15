@@ -1,13 +1,12 @@
 from rest_framework import serializers
 
 class RoomSerializer(serializers.Serializer):
-    members_id = serializers.CharField()
-    room_id = serializers.IntegerField()
+    members_id = serializers.ListField(required=True)
+    
 
 
 class RoomCreateSerializer(serializers.Serializer):
-    room_member_id = serializers.IntegerField()
-    room_name = serializers.CharField()
+    room_name = serializers.CharField(required=True)
 
 class InstallSerializer(serializers.Serializer):
     org_id=serializers.CharField()
