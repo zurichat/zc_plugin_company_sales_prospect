@@ -28,6 +28,7 @@ import { customAlert, doesProspectExist } from "../utils";
 import Loader from "../components/svg/Loader.svg";
 
 import { PluginContext } from "../context/store";
+// import { AddUserModal, RemoveUserModal } from "../components/SalesRoomModals";
 // import { useForm } from "react-hook-form";
 // import { yupResolver } from '@hookform/resolvers/yup';
 // import * as yup from "yup";
@@ -104,7 +105,7 @@ export const Select = ({
 };
 
 function Prospects() {
-  const { prospects, setProspects } = useContext(PluginContext);
+  const { prospects, setProspects, members } = useContext(PluginContext);
 
   const [prospect, setProspect] = useState({
     id: "",
@@ -115,12 +116,10 @@ function Prospects() {
     twitter: "",
     facebook: "",
     linkedin: "",
-    instagram: ""
+    instagram: "",
   });
 
   const [page, setPage] = useState(1);
-
-  const [deal, setDeal] = useState(null);
 
   const [loading, setLoading] = useState(true);
 
@@ -156,6 +155,11 @@ function Prospects() {
   };
 
   const [socialInfo, setSocialInfo] = useState(null);
+  const [open6, setOpen6] = useState(false);
+  const handleOpenAddRoomModal = () => {
+    setOpen6(true);
+  };
+
 
   const handleCloseModal = () => {
     setDeal(null);
@@ -177,7 +181,6 @@ function Prospects() {
     setOpen5(false);
   };
 
-  console.log(socialInfo);
 
   const pageForward = () => {
     setLoading(true);
@@ -485,6 +488,7 @@ function Prospects() {
         id: eachContact._id
       });
     });
+
     if (deleteAll == false) {
       setBatchDeleteProspect(contactToBeDeleted);
       setBulkDelete(true);
@@ -496,13 +500,7 @@ function Prospects() {
   };
 
   return (
-    // <div className='p-10 w-screen'>
-    // 	<div className='flex justify-between items-center'>
-    // 		<h3 className='text-2xl font-bold'>Contact</h3>
-    // 		<Button onClick={handleOpenCreateModal}>Create New</Button>
-    // 	</div>
-
-    <div className="p-10 w-screen">
+    <div className="p-4 pt-5">
       <div className="flex justify-between items-center">
         <h3 className="text-2xl font-bold">Contact</h3>
         <div className="flex justify-between">
@@ -513,11 +511,9 @@ function Prospects() {
           ) : (
             <div></div>
           )}
-			<Link to="/email" >
-			<Button className="m-1">
-				Send Email
-			</Button>
-			</Link>
+
+          {/* <AddUserModal/>
+		<RemoveUserModal/> */}
           <Button className="m-1" onClick={handleOpenCreateModal}>
             Create New
           </Button>

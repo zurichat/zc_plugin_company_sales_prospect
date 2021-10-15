@@ -1,36 +1,34 @@
-import ModalTwo from "./ModalTwo"
+import Modal from "./Modal"
+import { Star } from 'react-feather'
 import { useState } from "react"
+import { Tab } from "@headlessui/react"
+
 export default function ChatInfo({ workSpaceUsers, modalOpen, handleClose }) {
-
-    const users = workSpaceUsers ? Object.keys(workSpaceUsers).map((key) => {
-        if (+key || +key === 0) {
-            return workSpaceUsers[key]
-        }
-    }).filter((item) => item) : []
-    console.log(users)
+    const tabs = ["About", ("Members " + workSpaceUsers.length), "Integrations", "Settings"]
+    const [tab, setTab] = useState(2)
     return (
-        <ModalTwo open={modalOpen} closeModal={handleClose} large
-            title={<header >Sales Plugin</ header>}
-            description={
-                <div className={"flex text-lg p-3 border-b w-full justify-between border-gray-200"}>
-                    <div className={"cursor-pointer"}>About</div>
-                    <div className={"font-bold cursor-pointer text-green"}>Members</div>
-                    <div className={" cursor-pointer"} >Integration</div>
-                    <div className={"cursor-pointer"}>Settings</div>
-                </div>
-            }
-        >
+        <Modal open={modalOpen} closeModal={handleClose}>
 
-            <div className="flex w-full h-full flex-col flex-auto ">
-                {
-                    users.map((user, idx) => {
-                        return (
-                            <SingleUser key={idx} user={user} />
-                        )
-                    })
-                }
+            <div>
+                {/* {} */}
             </div>
-        </ModalTwo>
+            <Tab.Group>
+                <div className=""><Star className="inline-block mr-2"/> <span className="p-1 border">Get Notifications for @ Mentions</span></div>
+                <Tab.List className="pb-1 border-b flex justify-evenly">
+                    {tabs.map((tab, i) => (
+                        <Tab key={i} className={({ selected }) =>
+                        selected ? 'border-0 border-b-2' : 'border-0 border-b-2 border-green'
+                      }>{tab}</Tab>
+                    ))}
+                </Tab.List>
+                <Tab.Panels>
+                    <Tab.Panel>Content 1</Tab.Panel>
+                    <Tab.Panel>Content 2</Tab.Panel>
+                    <Tab.Panel>Content 3</Tab.Panel>
+                    <Tab.Panel>Content 4</Tab.Panel>
+                </Tab.Panels>
+            </Tab.Group>
+        </Modal>
     )
 }
 
@@ -38,7 +36,7 @@ const SingleUser = ({ user }) => {
     return (
         <div className="border-b flex items-center  border-gray-100 w-full py-4" >
             <div className={'h-12 w-12 overflow-hidden rounded-full mr-3'}>
-                <img 
+                <img
                     src={user?.image_url || 'https://www.kemhospitalpune.org/wp-content/uploads/2020/12/Profile_avatar_placeholder_large.png'}
                     alt=""
                     className={"h-full w-full"}

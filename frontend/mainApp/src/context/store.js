@@ -2,12 +2,11 @@ import { createContext, useState } from 'react'
 
 import customAxios, { addToRoomURL, dealsURL, leaveRoomURL, prospectsURL } from '../axios';
 import { useEffect } from 'react';
-import { SubscribeToChannel, GetUserInfo } from "@zuri/control";
-
+import { SubscribeToChannel, GetUserInfo, GetWorkspaceUsers } from "@zuri/control";
 
 export const PluginContext = createContext(null)
 export const PluginProvider = ({ children }) => {
-    const [prospects, setProspects] = useState({ 
+    const [prospects, setProspects] = useState({
         contacts: [],
         next: false,
         pageNum: 1,
@@ -16,6 +15,9 @@ export const PluginProvider = ({ children }) => {
     const [deals, setDeals] = useState([])
 
     const [inRoom, setInRoom] = useState(false);
+
+    const [members, setMembers] = useState([])
+    const [workspaceUsers, setWorkspaceUsers] = useState([]);
     // const [token, setToken] = useState(null);
     // const [currentWorkspace, setCurrentWorkspace] = useState(null);
 
@@ -25,6 +27,36 @@ export const PluginProvider = ({ children }) => {
                 console.log("getUserInfo >>>", data);
                 // setCurrentWorkspace(data.currentWorkspace)
                 // setToken(data.token)
+            })
+
+
+        // async function call() {
+        //     try {
+        //         const users = await GetWorkspaceUsers();
+        //         if( users && users['totalUsers']){
+        //             delete users['totalUsers']
+        //         }
+        //         setWorkspaceUsers(Object.values(users))
+        //     } catch (err) {
+        //         console.log(err)
+        //     }
+        // }
+        // call();
+        customAxios.get("https://api.zuri.chat/organizations/61695d8bb2cc8a9af4833d46/members")
+        .then(r => {
+            setWorkspaceUsers(r.data.data)
+            // if( users && users['totalUsers']){
+            //     delete users['totalUsers']
+            //     setWorkspaceUsers(Object.values(users))
+            // }
+        })
+        .catch(e => console.log("Organization not returning members"))
+
+
+
+        customAxios.get("/org/61695d8bb2cc8a9af4833d46/room/615832ad87540d8d01ffc700")
+            .then(r => {
+                setMembers(r.data.members)
             })
 
         // Prospects listener
@@ -165,7 +197,16 @@ export const PluginProvider = ({ children }) => {
     }, [])
 
     return (
-        <PluginContext.Provider value={{ prospects, deals, setDeals, setProspects }}>
+        <PluginContext.Provider value={{
+            prospects,
+            deals,
+            setDeals,
+            setProspects,
+            members,
+            setMembers,
+            workspaceUsers,
+            setWorkspaceUsers
+        }}>
             {children}
         </PluginContext.Provider>
     )
