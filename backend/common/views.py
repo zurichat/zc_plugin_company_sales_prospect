@@ -60,7 +60,7 @@ class SidebarView(APIView):
 
                     return Response({
                         "name": PLUGIN_NAME,
-                        "category": "sales",
+                        "category": "utility",
                         "description": DESCRIPTION,
                         "plugin_id": PLUGIN_ID,
                         "organisation_id": org,
@@ -73,7 +73,7 @@ class SidebarView(APIView):
                 else:
                     return Response({
                         "name": PLUGIN_NAME,
-                        "category": "sales",
+                        "category": "utility",
                         "description": DESCRIPTION,
                         "plugin_id": PLUGIN_ID,
                         "organisation_id": org,
@@ -86,7 +86,7 @@ class SidebarView(APIView):
             else:
                 return Response({
                     "name": PLUGIN_NAME,
-                    "category": "sales",
+                    "category": "utility",
                     "description": DESCRIPTION,
                     "plugin_id": PLUGIN_ID,
                     "organisation_id": org,
@@ -100,7 +100,7 @@ class SidebarView(APIView):
             return Response({
 
                 "name": PLUGIN_NAME,
-                "category": "sales",
+                "category": "utility",
                 "description": DESCRIPTION,
                 "plugin_id": PLUGIN_ID,
                 "organisation_id": org,
@@ -542,54 +542,30 @@ class InstallPlugin(APIView):
         #     return handle_failed_request(response=None)
 
         user_id = request.data.get("user_id")
-        org_id = request.data.get("org_id")
+        organisation_id = request.data.get("organisation_id")
 
-        headers = {
-        "Content-Type": "application/json",
-        "Cookie": "f6822af94e29ba112be310d3af45d5c7=MTYzNDE0OTkzNnxHd3dBR0RZeE5qY3hOVFE1T1dZM1lUYzVNR013T0dReU1qSm1NUT09fLxiYT50kNCayZQN_E_MlGlI3lbTETEX07XZYa-tcttk",
-        }
-        url = f"https://api.zuri.chat/organizations/{org_id}/plugins"
+        token = request.headers["Authorization"]
+
+        headers = {"Authorization": token, "Content-Type": "application/json"}
+
+        url = f"https://api.zuri.chat/organizations/{organisation_id}/plugins"
 
         payload = {
-            "org_id": ORGANISATION_ID,
+            "plugin_id": PLUGIN_ID,
             "user_id": user_id,
         }
 
         response = requests.request("POST", url, json=payload, headers=headers)
-        print(response.status_code)
+        print(response, "test1")
 
         if response.status_code==200:
-            return Response({"success": True, "message": "Succesfully installed"}, status=status.HTTP_200_OK)
-        return Response({"message": "Plugin already installed"}, status=status.HTTP_404_NOT_FOUND)
-
-class UninstallPlugin(APIView):
-    serializer_class = UninstallSerializer
-    def delete(self, request, *args, **kwargs):
-        # if not isAuthorized(request):
-        #     return handle_failed_request(response=None)
-
-        # if not isValidOrganisation(ORGANISATION_ID, request):
-        #     return handle_failed_request(response=None)
-
-        user_id = request.data.get("user_id")
-        org_id = request.data.get("org_id")
-
-        headers = {
-        "Content-Type": "application/json",
-        "Cookie": "f6822af94e29ba112be310d3af45d5c7=MTYzNDE0OTkzNnxHd3dBR0RZeE5qY3hOVFE1T1dZM1lUYzVNR013T0dReU1qSm1NUT09fLxiYT50kNCayZQN_E_MlGlI3lbTETEX07XZYa-tcttk",
-        }
-        url = f"https://api.zuri.chat/organizations/{org_id}/plugins"
-
-        payload = {
-            "org_id": ORGANISATION_ID,
-            "user_id": user_id,
-        }
-
-        response = requests.request("DELETE", url, json=payload, headers=headers)
-        print(response.status_code)
-
-        if response.status_code==200:
-            return Response({"success": True, "message": "Succesfully deleted"}, status=status.HTTP_200_OK)
-        return Response({"message": "Plugin not found"}, status=status.HTTP_404_NOT_FOUND)
-
-
+            create_room_url = f"http://sales.zuri.chat/api/v1/org/{organisation_id}/users/{user_id}/room"
+            create_room_payload = {
+                "room_name": "sales"
+            }
+            response = requests.request("POST", create_room_url, json=create_room_payload, headers=headers)
+            # if response.status_code == 200:
+            #     print(response, "test2")
+            return Response({"success": True, "message": "Succesfully installed", "data":{"redirect_url": "/sales"}}, status=status.HTTP_200_OK)
+        return Response({"message": "Plugin already installed"}, status=status.HTTP_400_BAD_REQUEST)
+        # return Response({"message": "Something went wrong"}, status=status.HTTP_400_BAD_REQUEST)
