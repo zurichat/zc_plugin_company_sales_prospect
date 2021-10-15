@@ -26,7 +26,7 @@ import FileIcon from "../components/svg/FileIcon";
 // import { Link } from 'react-router-dom'
 import { customAlert, doesProspectExist } from "../utils";
 import Loader from "../components/svg/Loader.svg";
-import UserModals from "../utilities/ManageRoom";
+// import {UserModals} from "../utilities/ManageRoom";
 
 import { PluginContext } from "../context/store";
 // import { useForm } from "react-hook-form";
@@ -531,7 +531,7 @@ function Prospects() {
 			</div>
 
 			{/* MANAGE USERS MODAL */}
-			<UserModals show={open6} setShow={setOpen6} />
+			{/* <UserModals show={open6} setShow={setOpen6} /> */}
 
 			{/* CREATE MODAL */}
 			<Modal
