@@ -60,7 +60,7 @@ class SidebarView(APIView):
 
                     return Response({
                         "name": PLUGIN_NAME,
-                        "category": "sales",
+                        "category": "utility",
                         "description": DESCRIPTION,
                         "plugin_id": PLUGIN_ID,
                         "organisation_id": org,
@@ -73,7 +73,7 @@ class SidebarView(APIView):
                 else:
                     return Response({
                         "name": PLUGIN_NAME,
-                        "category": "sales",
+                        "category": "utility",
                         "description": DESCRIPTION,
                         "plugin_id": PLUGIN_ID,
                         "organisation_id": org,
@@ -86,7 +86,7 @@ class SidebarView(APIView):
             else:
                 return Response({
                     "name": PLUGIN_NAME,
-                    "category": "sales",
+                    "category": "utility",
                     "description": DESCRIPTION,
                     "plugin_id": PLUGIN_ID,
                     "organisation_id": org,
@@ -100,7 +100,7 @@ class SidebarView(APIView):
             return Response({
 
                 "name": PLUGIN_NAME,
-                "category": "sales",
+                "category": "utility",
                 "description": DESCRIPTION,
                 "plugin_id": PLUGIN_ID,
                 "organisation_id": org,
