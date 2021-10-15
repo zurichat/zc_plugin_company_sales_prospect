@@ -10,8 +10,7 @@ from common.views import (
     SearchSalesInfo,
     InfoView, 
     access_endoints,
-    InstallPlugin,
-    UninstallPlugin
+    InstallPlugin
 )
 from common.rooms import CreateRoomApi,AddUsersToRoomApi,RemoveUserFromRoomApi,RoomDetailApi
 
@@ -29,7 +28,6 @@ urlpatterns = [
     path("leave-room/", RemoveUserFromRoom.as_view()),
     path("org/<str:org_id>/user/<str:user_id>/search", SearchSalesInfo.as_view()),
     path("security/", access_endoints),
-    path("install/", InstallPlugin.as_view()),
-    path("uninstall/", UninstallPlugin.as_view())
+    path("install/", InstallPlugin.as_view())
 
 ]
