@@ -31,14 +31,14 @@ class CreateRoomApi(APIView):
         room_name = serializer.data.get('room_name')
         member = member_id
         #checks for the room
-        get_url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/{ADDED_ROOM_COLLECTION_NAME}/{ORGANISATION_ID}/"
+        get_url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/{ROOM_COLLECTION_NAME}/{ORGANISATION_ID}/"
         res = requests.request("GET", url=get_url)
         if res.status_code == 200:
             print("sigh 2")
             data = {
                 "plugin_id": PLUGIN_ID,
                 "organization_id": org_id,
-                "collection_name": ADDED_ROOM_COLLECTION_NAME,
+                "collection_name": ROOM_COLLECTION_NAME,
                 "bulk_write": False,
                 "payload": {
                     "room_name": room_name,
@@ -59,7 +59,7 @@ class CreateRoomApi(APIView):
                 data_with_url = {
                 "plugin_id": PLUGIN_ID,
                 "organization_id": org_id,
-                "collection_name": ADDED_ROOM_COLLECTION_NAME,
+                "collection_name": ROOM_COLLECTION_NAME,
                 "object_id": room_url,
                 "bulk_write": False,
                 "payload": {
@@ -97,7 +97,7 @@ class AddUsersToRoomApi(APIView):
         object_id = None
         method = "POST"
         #checks for the room
-        get_url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/{ADDED_ROOM_COLLECTION_NAME}/{org_id}"
+        get_url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/{ROOM_COLLECTION_NAME}/{org_id}"
         res = requests.request("GET", url=get_url)
         print(res.status_code,res._content)
         print("sigh 0")
@@ -121,7 +121,7 @@ class AddUsersToRoomApi(APIView):
             data = {
                 "plugin_id": PLUGIN_ID,
                 "organization_id": ORGANISATION_ID,
-                "collection_name": ADDED_ROOM_COLLECTION_NAME,
+                "collection_name": ROOM_COLLECTION_NAME,
                 "object_id": object_id,
                 "bulk_write": False,
                 "payload": {
@@ -152,7 +152,7 @@ class RemoveUserFromRoomApi(APIView):
     def post(self, request,org_id,room_id,member_id, *args, **kwargs):
         serializer = RoomSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        get_url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/{ADDED_ROOM_COLLECTION_NAME}/{org_id}/"
+        get_url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/{ROOM_COLLECTION_NAME}/{org_id}/"
         room_id = room_id
         member_id = member_id
         user_to_remove = serializer.data.get('members_id')
@@ -180,7 +180,7 @@ class RemoveUserFromRoomApi(APIView):
                 data = {
                 "plugin_id": PLUGIN_ID,
                 "organization_id": ORGANISATION_ID,
-                "collection_name": ADDED_ROOM_COLLECTION_NAME,
+                "collection_name": ROOM_COLLECTION_NAME,
                 "object_id": object_id,
                 "bulk_write": False,
                 "payload": {
@@ -209,7 +209,7 @@ class RemoveUserFromRoomApi(APIView):
 
 class RoomDetailApi(APIView):
     def get(self,request,org_id,room_id, *args, **kwargs):
-        get_url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/{ADDED_ROOM_COLLECTION_NAME}/{org_id}/"
+        get_url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/{ROOM_COLLECTION_NAME}/{org_id}/"
         room_id = room_id
         res = requests.request("GET", url=get_url)
         if res.status_code == 200:
