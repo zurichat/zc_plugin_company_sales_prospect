@@ -215,10 +215,19 @@ class RemoveUserFromRoomApi(APIView):
 
 class RoomDetailApi(APIView):
     def get(self,request,org_id,room_id, *args, **kwargs):
+
+        print(request)
+        print(org_id)
+        print(room_id)
+
         get_url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/{ROOM_COLLECTION_NAME}/{org_id}/"
         room_id = room_id
+
+        print(room_id)
+
         res = requests.request("GET", url=get_url)
         print(res)
+        print(res.json())
         if res.status_code == 200:
             rooms = res.json()['data']
             current_room = filter(lambda room: room.get('_id') == room_id, rooms)

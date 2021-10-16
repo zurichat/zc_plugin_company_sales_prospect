@@ -32,27 +32,37 @@ def sync_function(request):
     print('response.json(): ')
     print(response.json()['data']['id'])
     return JsonResponse(response.json())
+
+def test_function(request):
+    # patch_function()
+    return Response({"status": True, "message":"OK"}, status=status.HTTP_200_OK)
     
 
-
-
-
-
-# def test_function_view(request, org_id, member_id, *args, **kwargs):
-def test_function(request):
-    result = sync_function(request)
-    return result
-
-
-
-
-
-
-
-def patch_function(request):
-    url = 'https://api.zuri.chat/marketplace/plugins/6169bdd9eb5b3de309e7e27a/'
-    response = requests.patch(url, data={"sync_request_url": "http://127.0.0.1:8200/api/v1/test/"})
+def patch_function():
+    url = 'https://api.zuri.chat/plugins/6169bdd9eb5b3de309e7e27a/sync'
+    response = requests.patch(url, data={"id": []})
     return JsonResponse(response.json())
+
+
+
+
+
+
+
+
+
+
+# # def test_function_view(request, org_id, member_id, *args, **kwargs):
+# def test_function(request):
+#     result = sync_function(request)
+#     return result
+
+
+
+
+
+
+
 
 
 

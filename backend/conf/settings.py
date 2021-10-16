@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     # "cent",
     'social_media_scraping',
     'syncapp',
+    # 'apscheduler',
 ]
 
 MIDDLEWARE = [
