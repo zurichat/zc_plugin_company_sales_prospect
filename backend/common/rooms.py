@@ -104,6 +104,7 @@ class AddUsersToRoomApi(GenericAPIView):
         room_id = room_id
         member_id = member_id
         members = serializer.data.get('members_id')
+        print(members)
         current_users = []
         object_id = None
         method = "POST"
@@ -121,17 +122,20 @@ class AddUsersToRoomApi(GenericAPIView):
             print(method)
             if len(current_room) > 0:
                 method = "PUT"
+                print(method)
             object_id = current_room[0]['_id']
             current_users = current_room[0]['room_member_id']
             room_name = current_room[0]['room_name']
+            print(object_id)
             #adds the new user for the room
             for i in members:
                 current_users.append(i)
             current_users = list(set(current_users))
+            print(current_users)
             post_url = 'https://api.zuri.chat/data/write'
             data = {
                 "plugin_id": PLUGIN_ID,
-                "organization_id": ORGANISATION_ID,
+                "organization_id": org_id,
                 "collection_name": ROOM_COLLECTION_NAME,
                 "object_id": object_id,
                 "bulk_write": False,
@@ -191,7 +195,7 @@ class RemoveUserFromRoomApi(GenericAPIView):
                 patch_url = 'https://api.zuri.chat/data/write'
                 data = {
                 "plugin_id": PLUGIN_ID,
-                "organization_id": ORGANISATION_ID,
+                "organization_id": org_id,
                 "collection_name": ROOM_COLLECTION_NAME,
                 "object_id": object_id,
                 "bulk_write": False,
