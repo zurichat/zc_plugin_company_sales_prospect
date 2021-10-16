@@ -1,3 +1,4 @@
+from rest_framework.generics import GenericAPIView
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -90,10 +91,14 @@ class CreateRoomApi(APIView):
         return Response(data={"message": "failed"}, status=status.HTTP_400_BAD_REQUEST)
 
 
-class AddUsersToRoomApi(APIView):
+class AddUsersToRoomApi(GenericAPIView):
     serializer_class = RoomSerializer
     
-    def post(self,request, org_id,room_id,member_id,*args, **kwargs):
+    def post(self,request,*args, **kwargs):
+
+        org_id = kwargs.get('org_id')
+        room_id = kwargs.get('room_id')
+        member_id = kwargs.get('member_id')
         serializer = RoomSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         room_id = room_id
@@ -152,8 +157,9 @@ class AddUsersToRoomApi(APIView):
         return Response(data={"message": "failed"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-class RemoveUserFromRoomApi(APIView):
+class RemoveUserFromRoomApi(GenericAPIView):
     serializer_class = RoomSerializer
+    http_method_names = ["get", "post"]
     
     def post(self, request,org_id,room_id,member_id, *args, **kwargs):
         serializer = RoomSerializer(data=request.data)
@@ -221,25 +227,25 @@ class RoomDetailApi(APIView):
         print(room_id)
 
         get_url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/{ROOM_COLLECTION_NAME}/{org_id}/"
-        room_id = room_id
 
-        print(room_id)
-
+        # room_id = room_id
         res = requests.request("GET", url=get_url)
         print(res)
         print(res.json())
         if res.status_code == 200:
+            print(res.json())
             rooms = res.json()['data']
-            current_room = filter(lambda room: room.get('_id') == room_id, rooms)
-            current_room = list(current_room)
-            object_id = current_room[0]['_id']
-            current_users = current_room[0]['room_member_id']
-            room_name = current_room[0]['room_name']
-            response = {
-                    "room_id":object_id,
-                    "room_name": room_name,
-                    "members": current_users,
-                    "room_url": f"/sales/{object_id}"
-                }
+            if len(rooms) > 0:
+                current_room = filter(lambda room: room.get('_id') == room_id, rooms)
+                current_room = list(current_room)
+                object_id = current_room[0]['_id']
+                current_users = current_room[0]['room_member_id']
+                room_name = current_room[0]['room_name']
+                response = {
+                        "room_id":object_id,
+                        "room_name": room_name,
+                        "members": current_users,
+                        "room_url": f"/sales/{object_id}"
+                    }
             return Response(data=response, status=status.HTTP_200_OK)
         return Response(data="No rooms for this Org", status=status.HTTP_404_NOT_FOUND)

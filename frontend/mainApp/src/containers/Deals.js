@@ -41,7 +41,7 @@ const Deals = () => {
 	const [loading, setLoading] = useState(true);
 	const [prospectsLoading, setprospectsLoading] = useState(false);
 	const [loadingError, setloadingError] = useState("");
-	const { deals, setDeals, prospects, setProspects } =
+	const { deals, setDeals, prospects, setProspects, setRoom } =
 		useContext(PluginContext);
 	const [dealContacts, setdealContacts] = useState([]);
 	const [openCreate, setOpenCreate] = useState(false);
@@ -74,6 +74,7 @@ const Deals = () => {
 	};
 
 	useEffect(() => {
+		setRoom("6169c5be2a3204f3be4a26ec")
 		customAxios
 			.get(dealsURL, {
 				headers: { Authorization: `Bearer ${sessionStorage.getItem("token")}` },
@@ -315,6 +316,11 @@ const Deals = () => {
 					Filter
 				</Button>
 				<Button onClick={handleOpenCreateModal}>Create New</Button>
+
+				{!inRoom && 
+				<Button className="m-1" onClick={()=>addUserToRoomFunction("6169c5df2a3204f3be4a26f2")}>
+					Join Room
+				</Button>}
 			</div>
 
 			{deals.length > 0 && !loading ? (
