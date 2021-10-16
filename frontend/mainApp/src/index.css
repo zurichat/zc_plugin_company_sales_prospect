@@ -3,11 +3,11 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url(https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css);
 html,
 body {
     width: 100% !important;
 }
-
 /* @media only screen and (max-width: 1380px) {
     html,
     body {
