@@ -24,7 +24,7 @@ import customAxios, {
 } from "../axios";
 import FileIcon from "../components/svg/FileIcon";
 // import { Link } from 'react-router-dom'
-import { customAlert, doesProspectExist } from "../utils";
+import { customAlert, doesProspectExist, prospectsRoom } from "../utils";
 import Loader from "../components/svg/Loader.svg";
 
 import { PluginContext } from "../context/store";
@@ -347,7 +347,7 @@ function Prospects() {
 
   const handleDelete = (e) => {
     e.preventDefault();
-    setRoom("6169c5df2a3204f3be4a26f2")
+    setRoom(prospectsRoom)
     customAxios
       .delete(`${deleteProspectURL}${prospect._id}/`)
       .then((r) => {

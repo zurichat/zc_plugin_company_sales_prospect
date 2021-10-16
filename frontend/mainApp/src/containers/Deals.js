@@ -15,7 +15,7 @@ import { PluginContext } from "../context/store";
 import Input from "../components/Input";
 import Select from "../components/Select";
 //import { Input, Select } from "./Prospects";
-import { capitalize, customAlert } from "../utils";
+import { capitalize, customAlert, dealsRoom } from "../utils";
 import FileIcon from "../components/svg/FileIcon";
 import Loader from "../components/svg/Loader.svg";
 import { useForm } from "react-hook-form";
@@ -74,7 +74,7 @@ const Deals = () => {
 	};
 
 	useEffect(() => {
-		setRoom("6169c5be2a3204f3be4a26ec")
+		setRoom(dealsRoom)
 		customAxios
 			.get(dealsURL, {
 				headers: { Authorization: `Bearer ${sessionStorage.getItem("token")}` },

@@ -101,3 +101,6 @@ export const dummyProspects = {
 };
 
 export const pluginID = "614105b66173056af01b4cca";
+
+export const dealsRoom = "6158326387540d8d01ffc6fb";
+export const prospectsRoom = "615832ad87540d8d01ffc700";
