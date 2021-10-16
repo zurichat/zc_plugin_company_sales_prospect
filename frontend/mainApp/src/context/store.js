@@ -1,13 +1,15 @@
 import { createContext, useState } from 'react'
+// import { useHistory } from "react-router-dom"
 
 import customAxios, { addToRoomURL, dealsURL, leaveRoomURL, prospectsURL } from '../axios';
 import { useEffect } from 'react';
-import { SubscribeToChannel, GetUserInfo } from "@zuri/control";
-
+import { SubscribeToChannel, GetUserInfo } from "@zuri/control"; 
 
 export const PluginContext = createContext(null)
 export const PluginProvider = ({ children }) => {
-    const [prospects, setProspects] = useState({ 
+
+    // const {pathname} = useHistory().location
+    const [prospects, setProspects] = useState({
         contacts: [],
         next: false,
         pageNum: 1,
@@ -16,19 +18,88 @@ export const PluginProvider = ({ children }) => {
     const [deals, setDeals] = useState([])
 
     const [inRoom, setInRoom] = useState(false);
-    // const [token, setToken] = useState(null);
-    // const [currentWorkspace, setCurrentWorkspace] = useState(null);
+
+    const [members, setMembers] = useState([])
+    const [workspaceUsers, setWorkspaceUsers] = useState([]);
+    const [currentWorkspace, setCurrentWorkspace] = useState(
+        localStorage.getItem("currentWorkspace") || "6169c10ceb5b3de309e7e2a6"
+    );
+    const [room, setRoom] = useState("6169c5df2a3204f3be4a26f2");
+
+    const [user, setUser] = useState(JSON.parse(sessionStorage.getItem("user")));
+
+    const addToRoomFunction = (values) => {
+        const payload = { 
+            members_id:values.map(v => v.value)
+        }
+        customAxios.post(`/api/v1/org/${currentWorkspace}/room/${room}/members/${user.id}/`,payload, {
+            headers: { Authorization: `Bearer ${user.token}` }
+        })
+        .then(()=> {
+            getMembers()
+        })
+        .catch(e => console.log(e))
+    }
+
+    const removeFromRoomFunction = id => {
+        const payload = { 
+            members_id:id
+        }
+        customAxios.post(`/api/v1/org/${currentWorkspace}/room/${room}/members/${user.id}/`,payload,{
+            headers: { Authorization: `Bearer ${user.token}` }
+        })
+        .then(()=> {
+            getMembers()
+        })
+        .catch(e => console.log(e))
+    }
+
+    const getMembers = () => {
+        customAxios.get(`/org/${currentWorkspace}/room/${room}/`, {
+            headers: { Authorization: `Bearer ${user.token}` }
+        })
+            .then(r => {
+                setMembers(r.data.members)
+                // we need to get full info not just id
+            })
+    }
+    const getWorkspaceUsers = () => {
+        customAxios.get(`https://api.zuri.chat/organizations/${currentWorkspace}/members`)
+            .then(r => {
+                setWorkspaceUsers(r.data.data)
+            })
+            .catch(e => console.log("Workspace not returning members"))
+    }
+
+    const getUserInfo = () => {
+
+        // GetUserInfo()
+        //     .then(data => {
+        //         console.log("getUserInfo >>>", data);
+        //         setUser(data)
+        //         setCurrentWorkspace(data.currentWorkspace)
+        //     })
+    }
+    
+    const getUserInfoWithEmail = email => {
+          customAxios.get(`https://api.zuri.chat/organizations/${currentWorkspace}/members/?query=${email}`,{
+            headers: { Authorization: `Bearer ${token}` }
+          })
+          .then( r => {
+              const userData = { ...r.data.data}
+              return userData
+          })
+          .catch ( () => {
+            console.warn("YOU ARE NOT LOGGED IN, PLEASE LOG IN")
+          })
+    }
 
     useEffect(() => {
-        GetUserInfo()
-            .then(data => {
-                console.log("getUserInfo >>>", data);
-                // setCurrentWorkspace(data.currentWorkspace)
-                // setToken(data.token)
-            })
+        // getUserInfo()
+        getMembers()
+        getWorkspaceUsers()
 
         // Prospects listener
-        // centrifuge.subscribe("Prospects", );
         const prospectsSubscriber = (ctx) => {
             const data = ctx.data;
             console.log(data);
@@ -108,9 +179,8 @@ export const PluginProvider = ({ children }) => {
                 }
             }
         }
-        SubscribeToChannel("Prospects", prospectsSubscriber)
+
         // Deals listener
-        // centrifuge.subscribe("Deals",  )
         const dealsSubscriber = (ctx) => {
             const data = ctx.data;
             console.log(data);
@@ -159,14 +229,50 @@ export const PluginProvider = ({ children }) => {
                 }
             }
         };
+
+        SubscribeToChannel("Prospects", prospectsSubscriber)
         SubscribeToChannel("Deals", dealsSubscriber)
-        // centrifuge.connect();
 
     }, [])
 
     return (
-        <PluginContext.Provider value={{ prospects, deals, setDeals, setProspects }}>
+        <PluginContext.Provider value={{
+            prospects,
+            deals,
+            setDeals,
+            setProspects,
+            members,
+            setMembers,
+            workspaceUsers,
+            setWorkspaceUsers,
+            addToRoomFunction,
+            removeFromRoomFunction
+        }}>
             {children}
         </PluginContext.Provider>
     )
 }
+
+// /api/v1/org/<org_id>/room/room_id/members/members_id
+// add users to a room
+// {
+// "members_id": ["32452356789","111116657111"]
+// }
+
+// /api/v1/org/<org_id>/room/room_id/members/members_id
+// remove users from a room
+// {
+// "members_id": ["32452356789","111116657111"]
+// }
+
+
+//   customAxios.get(`https://api.zuri.chat/organizations/${currentWorkspace}/members/?query=${user.email}`,{
+//     headers: { Authorization: `Bearer ${token}` }
+//   })
+//   .then( r => {
+//       const userData = {currentWorkspace, token, ...r.data.data}
+//       setUser(userData)
+//   })
+//   .catch ( () => {
+//     console.warn("YOU ARE NOT LOGGED IN, PLEASE LOG IN")
+//   })
