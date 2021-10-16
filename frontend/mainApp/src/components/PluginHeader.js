@@ -10,7 +10,7 @@ import { Music } from 'react-feather'
 function PluginHeader() {
     const [modalOpen, setModalOpen] = useState(false)
 
-    const { workspaceUsers, addToRoomFunction, removeFromRoomFunction } = useContext(PluginContext);
+    const { workspaceUsers, members, addToRoomFunction, removeFromRoomFunction } = useContext(PluginContext);
 
     const defaultImg = 'https://www.kemhospitalpune.org/wp-content/uploads/2020/12/Profile_avatar_placeholder_large.png'
     // let firstUserImg = workspaceUsers[0]?.image_url ? workspaceUsers[0].image_url : 'https://www.kemhospitalpune.org/wp-content/uploads/2020/12/Profile_avatar_placeholder_large.png'
@@ -18,13 +18,16 @@ function PluginHeader() {
     // let thirdUserImg = workspaceUsers[2]?.image_url ? workspaceUsers[2].image_url : 'https://www.kemhospitalpune.org/wp-content/uploads/2020/12/Profile_avatar_placeholder_large.png'
 
 
+    const filteredMembers = workspaceUsers.filter( user => members.find(id => user._id === id))
+    console.log("filteredMembers", filteredMembers)
 
+    console.log("workspaceUsers", workspaceUsers)
     const headerConfig = {
             name: 'Sales Plugin', //Name on header
             icon: Music, //Image on header
             thumbnailUrl: [defaultImg, defaultImg, defaultImg],
             // thumbnailUrl: workspaceUsers.length > 0 && workspaceUsers.slice(0, 3).map(user => user.image_url ? user.image_url : defaultImg), //Replace with images of users
-            userCount: workspaceUsers.length, //User count on header
+            userCount: members.length, //User count on header
             hasThumbnail: true,
             roomInfo: {
                 membersList: workspaceUsers.map(user => {
