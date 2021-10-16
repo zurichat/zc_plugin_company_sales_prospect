@@ -59,7 +59,7 @@ export const PluginProvider = ({ children }) => {
         const payload = { 
             members_id:[id]
         }
-        customAxios.post(`/org/${currentWorkspace}/room/${room}/members/${user.id}/`,payload,{
+        customAxios.post(`/org/${currentWorkspace}/rroom/${room}/members/${user.id}/`,payload,{
             headers: { Authorization: `Bearer ${user.token}` }
         })
         .then(()=> {
