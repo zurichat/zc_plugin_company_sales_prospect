@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     # "instant",
     # "cent",
     'social_media_scraping',
+    'syncapp',
 ]
 
 MIDDLEWARE = [
@@ -165,9 +166,10 @@ STATICFILES_DIRS = [
 
 
 ############### Plugin Details #######################
-PLUGIN_ID = "614105b66173056af01b4cca"
+# PLUGIN_ID = "614105b66173056af01b4cca"
+PLUGIN_ID = "6169bdd9eb5b3de309e7e27a"
 PLUGIN_NAME = "Company Sales Prospects"
-ORGANISATION_ID = "6153d9c4a999ef8386e80804"
+ORGANISATION_ID = "6169c10ceb5b3de309e7e2a6"
 DESCRIPTION = "We provide a list of potential clients for your business"
 
 PROSPECTS_COLLECTION_NAME = "prospects"
@@ -176,10 +178,10 @@ ROOM_COLLECTION_NAME = "sales_room"
 ADDED_ROOM_COLLECTION_NAME = "added_sales_room"
 CREATED_ROOMS = "created_rooms"
 PROSPECTS_ROOM_NAME = "Prospects"
-PROSPECTS_ROOM_ID = "614e65b2f31a74e068e4d6dd"
+PROSPECTS_ROOM_ID = "6169c5df2a3204f3be4a26f2"
 
 DEALS_ROOM_NAME = "Deals"
-DEALS_ROOM_ID = "614e670af31a74e068e4d6e4"
+DEALS_ROOM_ID = "6169c5be2a3204f3be4a26ec"
 
 API_KEY = "2f822967-1774-45fb-8966-97751382451f"
 CENTRIFUGO_DEBUG_ENDPOINT = "http://localhost:8400/api"
