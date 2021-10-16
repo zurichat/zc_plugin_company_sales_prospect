@@ -10,7 +10,7 @@ import { Music } from 'react-feather'
 function PluginHeader() {
     const [modalOpen, setModalOpen] = useState(false)
 
-    const { workspaceUsers, setMembers } = useContext(PluginContext);
+    const { workspaceUsers, addToRoomFunction, removeFromRoomFunction } = useContext(PluginContext);
 
     const defaultImg = 'https://www.kemhospitalpune.org/wp-content/uploads/2020/12/Profile_avatar_placeholder_large.png'
     // let firstUserImg = workspaceUsers[0]?.image_url ? workspaceUsers[0].image_url : 'https://www.kemhospitalpune.org/wp-content/uploads/2020/12/Profile_avatar_placeholder_large.png'
@@ -34,8 +34,8 @@ function PluginHeader() {
                         label:user.email
                     }
                 }),
-                addmembersevent: values => { },
-                removememberevent: id => { }
+                addmembersevent: values => addToRoomFunction(values),
+                removememberevent: id => removeFromRoomFunction(id)
             }
         }
 
