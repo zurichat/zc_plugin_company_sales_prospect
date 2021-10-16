@@ -2,6 +2,7 @@ from rest_framework.generics import GenericAPIView
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.decorators import api_view
 
 from .serializers import RoomCreateSerializer, RoomSerializer
 
@@ -10,6 +11,7 @@ import json
 
 import requests
 from django.conf import settings
+from django.http import JsonResponse
 from common.utils import centrifugo_post,sidebar_update
 from .utils import handle_failed_request, isValidOrganisation
 PLUGIN_ID = settings.PLUGIN_ID
@@ -19,6 +21,10 @@ CREATED_ROOMS = settings.CREATED_ROOMS
 PLUGIN_NAME = settings.PLUGIN_NAME
 DESCRIPTION = settings.DESCRIPTION
 ADDED_ROOM_COLLECTION_NAME = settings.ADDED_ROOM_COLLECTION_NAME
+
+
+
+
 
 def is_valid(param):
     return param != "" and param is not None
@@ -215,9 +221,17 @@ class RemoveUserFromRoomApi(GenericAPIView):
 
 class RoomDetailApi(APIView):
     def get(self,request,org_id,room_id, *args, **kwargs):
+
+        print(request)
+        print(org_id)
+        print(room_id)
+
         get_url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/{ROOM_COLLECTION_NAME}/{org_id}/"
+
         # room_id = room_id
         res = requests.request("GET", url=get_url)
+        print(res)
+        print(res.json())
         if res.status_code == 200:
             print(res.json())
             rooms = res.json()['data']
