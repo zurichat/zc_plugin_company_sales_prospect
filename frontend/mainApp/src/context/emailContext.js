@@ -6,7 +6,6 @@ import {
   deleteEmailTemplateURL,
 } from "../axios";
 import { useEffect } from "react";
-import { SubscribeToChannel, GetUserInfo } from "@zuri/control";
 
 export const PluginContext = createContext(null);
 // export const PluginProvider = ({ children }) => {

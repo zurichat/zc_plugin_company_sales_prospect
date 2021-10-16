@@ -3,7 +3,7 @@ import { createContext, useState } from 'react'
 
 import customAxios, { addToRoomURL, dealsURL, leaveRoomURL, prospectsURL } from '../axios';
 import { useEffect } from 'react';
-import { SubscribeToChannel, GetUserInfo } from "@zuri/control";
+import { SubscribeToChannel, GetUserInfo } from "@zuri/control"; 
 
 export const PluginContext = createContext(null)
 export const PluginProvider = ({ children }) => {
@@ -22,9 +22,9 @@ export const PluginProvider = ({ children }) => {
     const [members, setMembers] = useState([])
     const [workspaceUsers, setWorkspaceUsers] = useState([]);
     const [currentWorkspace, setCurrentWorkspace] = useState(
-        localStorage.getItem("currentWorkspace") || "61695d8bb2cc8a9af4833d46"
+        localStorage.getItem("currentWorkspace") || "6169c10ceb5b3de309e7e2a6"
     );
-    const [room, setRoom] = useState("615832ad87540d8d01ffc700");
+    const [room, setRoom] = useState("6169c5df2a3204f3be4a26f2");
 
     const [user, setUser] = useState(JSON.parse(sessionStorage.getItem("user")));
 
@@ -32,7 +32,7 @@ export const PluginProvider = ({ children }) => {
         const payload = { 
             members_id:values.map(v => v.value)
         }
-        customAxios.post(`/api/v1/org/${currentWorkspace}/room/${room}/members/${user.id}`,payload, {
+        customAxios.post(`/api/v1/org/${currentWorkspace}/room/${room}/members/${user.id}/`,payload, {
             headers: { Authorization: `Bearer ${user.token}` }
         })
         .then(()=> {
@@ -45,7 +45,7 @@ export const PluginProvider = ({ children }) => {
         const payload = { 
             members_id:id
         }
-        customAxios.post(`/api/v1/org/${currentWorkspace}/room/${room}/members/${user.id}`,payload,{
+        customAxios.post(`/api/v1/org/${currentWorkspace}/room/${room}/members/${user.id}/`,payload,{
             headers: { Authorization: `Bearer ${user.token}` }
         })
         .then(()=> {
@@ -55,7 +55,7 @@ export const PluginProvider = ({ children }) => {
     }
 
     const getMembers = () => {
-        customAxios.get(`/org/${currentWorkspace}/room/${room}`, {
+        customAxios.get(`/org/${currentWorkspace}/room/${room}/`, {
             headers: { Authorization: `Bearer ${user.token}` }
         })
             .then(r => {
@@ -73,12 +73,12 @@ export const PluginProvider = ({ children }) => {
 
     const getUserInfo = () => {
 
-        GetUserInfo()
-            .then(data => {
-                console.log("getUserInfo >>>", data);
-                setUser(data)
-                setCurrentWorkspace(data.currentWorkspace)
-            })
+        // GetUserInfo()
+        //     .then(data => {
+        //         console.log("getUserInfo >>>", data);
+        //         setUser(data)
+        //         setCurrentWorkspace(data.currentWorkspace)
+        //     })
     }
     
     const getUserInfoWithEmail = email => {
@@ -95,7 +95,7 @@ export const PluginProvider = ({ children }) => {
     }
 
     useEffect(() => {
-        getUserInfo()
+        // getUserInfo()
         getMembers()
         getWorkspaceUsers()
 
