@@ -12,7 +12,12 @@ from common.views import (
     access_endoints,
     InstallPlugin
 )
-from common.rooms import CreateRoomApi,AddUsersToRoomApi,RemoveUserFromRoomApi,RoomDetailApi
+from common.rooms import (
+    
+    CreateRoomApi,AddUsersToRoomApi,RemoveUserFromRoomApi,RoomDetailApi, 
+
+
+)
 
 app_name = "common"
 
@@ -24,7 +29,6 @@ urlpatterns = [
     path("org/<str:org_id>/rroom/<str:room_id>/members/<str:member_id>/", RemoveUserFromRoomApi.as_view()),
     path("org/<str:org_id>/room/<str:room_id>/", RoomDetailApi.as_view()),
     path("add-to-room/", AddUserToRoom.as_view()),
-    path("rooms/", RoomsListView.as_view()),
     path("leave-room/", RemoveUserFromRoom.as_view()),
     path("org/<str:org_id>/user/<str:user_id>/search/", SearchSalesInfo.as_view()),
     path("security/", access_endoints),

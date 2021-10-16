@@ -55,6 +55,9 @@ INSTALLED_APPS = [
     # Centrifugo
     # "instant",
     # "cent",
+    # 'social_media_scraping',
+    'syncapp',
+    # 'apscheduler',
     "social_media_scraping",
 ]
 
