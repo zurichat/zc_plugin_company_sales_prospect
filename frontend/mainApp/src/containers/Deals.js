@@ -143,14 +143,13 @@ const Deals = () => {
 
 		const deal = deals.find((x) => x._id === id);
 		const i = deals.indexOf(deal);
-		let dropStage = capitalize(deal_stage.droppableId);
+		let dealUpdate = capitalize(deal_stage.droppableId);
+		delete dealUpdate._id;
+		customAxios.put(`${editDealURL}?id=${id}`, dealUpdate);
 		// const sortedDeals = deals.filter(x => x._id !== id)
 		// console.log(deal, sortedDeals, i)
 		if (deal && i > 0) {
-			let movedDeal = deal;
-			movedDeal.deal_stage = dropStage;
-			delete movedDeal._id;
-			customAxios.put(`${editDealURL}?id=${id}`, movedDeal);
+			deal.deal_stage = capitalize(deal_stage.droppableId);
 			deals[i] = deal;
 			setDeals(deals);
 		}
