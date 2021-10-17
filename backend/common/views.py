@@ -11,7 +11,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
-from .serializers import RoomSerializer, RoomCreateSerializer, InstallSerializer, UninstallSerializer
+from .serializers import RoomSerializer, RoomCreateSerializer, InstallSerializer
 from rest_framework.decorators import api_view
 from rest_framework import status
 
@@ -541,7 +541,7 @@ class InstallPlugin(APIView):
         nHeaders = request.headers["Authorization"]
         if serializer.is_valid():
             install_payload = serializer.data
-            org_id = install_payload["org_id"]
+            org_id = install_payload["organisation_id"]
             user_id = install_payload["user_id"]
             print(org_id, user_id)
 
@@ -570,7 +570,7 @@ class InstallPlugin(APIView):
                     {
                         "success": True,
                         "data": {"redirect_url": "/sales"},
-                        "message": "sucessfully retrieved",
+                        "message": "sucessfully installed",
                     },
                     status=status.HTTP_200_OK,
                 )
