@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     # 'social_media_scraping',
     'syncapp',
     # 'apscheduler',
+    # "APscheduler",
     "social_media_scraping",
 ]
 
