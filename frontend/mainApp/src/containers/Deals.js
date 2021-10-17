@@ -8,7 +8,6 @@ import customAxios, {
 	editDealURL,
 	prospectsURL,
 } from "../axios";
-
 import FilterDeal from "../components/FilterDeal";
 import FilterDeals from "../components/FilterDeals";
 import { PluginContext } from "../context/store";
@@ -318,7 +317,7 @@ const Deals = () => {
 				<Button onClick={handleOpenCreateModal}>Create New</Button>
 
 				{!inRoom && 
-				<Button className="m-1" onClick={()=>addUserToRoomFunction("6169c5df2a3204f3be4a26f2")}>
+				<Button className="m-1" onClick={()=>addUserToRoomFunction(dealsRoom)}>
 					Join Room
 				</Button>}
 			</div>
