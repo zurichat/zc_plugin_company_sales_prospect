@@ -535,12 +535,13 @@ def access_endoints(request):
     return render(request, 'index.html', context)
 
 class InstallPlugin(APIView):
+    serializer_class = InstallSerializer
     def post(self, request, *args, **kwargs):
         serializer = InstallSerializer(data=request.data)
         nHeaders = request.headers["Authorization"]
         if serializer.is_valid():
             install_payload = serializer.data
-            org_id = install_payload["organisation_id"]
+            org_id = install_payload["org_id"]
             user_id = install_payload["user_id"]
             print(org_id, user_id)
 
@@ -557,7 +558,14 @@ class InstallPlugin(APIView):
             installed = json.loads(response.text)
             print(installed)
             if installed["status"] == 200:
-
+                room_url = f"https://sales.zuri.chat/api/v1/org/{org_id}/users/{user_id}/room/"
+                room_payload={
+                    "room_name": "sales"
+                }
+                res = requests.request("POST", room_url, data=room_payload)
+                print(res.status_code,res._content,room_payload)
+                if res.status_code in [200,201]:
+                    print("room created")
                 return Response(
                     {
                         "success": True,
