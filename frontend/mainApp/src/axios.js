@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const DEBUG = true;
+const DEBUG = false;
 let API_ENDPOINT = "https://sales.zuri.chat/api/v1";
 
 if (DEBUG) {

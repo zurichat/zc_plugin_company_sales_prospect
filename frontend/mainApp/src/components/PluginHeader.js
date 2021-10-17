@@ -30,7 +30,7 @@ function PluginHeader() {
             userCount: members.length, //User count on header
             hasThumbnail: true,
             roomInfo: {
-                membersList: workspaceUsers.map(user => {
+                membersList: filteredMembers.map(user => {
                     return {
                         ...user,
                         value:user._id,

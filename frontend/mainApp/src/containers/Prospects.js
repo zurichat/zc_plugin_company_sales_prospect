@@ -24,7 +24,7 @@ import customAxios, {
 } from "../axios";
 import FileIcon from "../components/svg/FileIcon";
 // import { Link } from 'react-router-dom'
-import { customAlert, doesProspectExist } from "../utils";
+import { customAlert, doesProspectExist, prospectsRoom } from "../utils";
 import Loader from "../components/svg/Loader.svg";
 
 import { PluginContext } from "../context/store";
@@ -105,7 +105,7 @@ export const Select = ({
 };
 
 function Prospects() {
-  const { prospects, setProspects, members } = useContext(PluginContext);
+  const { prospects, setProspects, addUserToRoomFunction, inRoom, setRoom } = useContext(PluginContext);
 
   const [prospect, setProspect] = useState({
     id: "",
@@ -347,6 +347,7 @@ function Prospects() {
 
   const handleDelete = (e) => {
     e.preventDefault();
+    setRoom(prospectsRoom)
     customAxios
       .delete(`${deleteProspectURL}${prospect._id}/`)
       .then((r) => {
@@ -517,6 +518,9 @@ function Prospects() {
           <Button className="m-1" onClick={handleOpenCreateModal}>
             Create New
           </Button>
+          {!inRoom && <Button className="m-1" onClick={()=>addUserToRoomFunction("6169c5df2a3204f3be4a26f2")}>
+            Join Room
+          </Button>}
         </div>{" "}
       </div>
 

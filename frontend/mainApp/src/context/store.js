@@ -3,7 +3,8 @@ import { createContext, useState } from 'react'
 
 import customAxios, { addToRoomURL, dealsURL, leaveRoomURL, prospectsURL } from '../axios';
 import { useEffect } from 'react';
-import { SubscribeToChannel, GetUserInfo } from "@zuri/control"; 
+import { prospectsRoom } from '../utils';
+// import { SubscribeToChannel, GetUserInfo } from "@zuri/control"; "@zuri/control": "https://zuri.chat/zuri-control.js",
 
 export const PluginContext = createContext(null)
 export const PluginProvider = ({ children }) => {
@@ -24,7 +25,7 @@ export const PluginProvider = ({ children }) => {
     const [currentWorkspace, setCurrentWorkspace] = useState(
         localStorage.getItem("currentWorkspace") || "6169c10ceb5b3de309e7e2a6"
     );
-    const [room, setRoom] = useState("6169c5df2a3204f3be4a26f2");
+    const [room, setRoom] = useState(prospectsRoom);
 
     const [user, setUser] = useState(JSON.parse(sessionStorage.getItem("user")));
 
@@ -32,7 +33,20 @@ export const PluginProvider = ({ children }) => {
         const payload = { 
             members_id:values.map(v => v.value)
         }
-        customAxios.post(`/api/v1/org/${currentWorkspace}/room/${room}/members/${user.id}/`,payload, {
+        customAxios.post(`/org/${currentWorkspace}/room/${room}/members/${user.id}/`,payload, {
+            headers: { Authorization: `Bearer ${user.token}` }
+        })
+        .then(()=> {
+            getMembers()
+        })
+        .catch(e => console.log(e))
+    }
+
+    const addUserToRoomFunction = (_room) => {
+        const payload = { 
+            members_id:[user.id]
+        }
+        customAxios.post(`/org/${currentWorkspace}/room/${_room}/members/${user.id}/`,payload, {
             headers: { Authorization: `Bearer ${user.token}` }
         })
         .then(()=> {
@@ -43,9 +57,9 @@ export const PluginProvider = ({ children }) => {
 
     const removeFromRoomFunction = id => {
         const payload = { 
-            members_id:id
+            members_id:[id]
         }
-        customAxios.post(`/api/v1/org/${currentWorkspace}/room/${room}/members/${user.id}/`,payload,{
+        customAxios.post(`/org/${currentWorkspace}/rroom/${room}/members/${user.id}/`,payload,{
             headers: { Authorization: `Bearer ${user.token}` }
         })
         .then(()=> {
@@ -60,6 +74,9 @@ export const PluginProvider = ({ children }) => {
         })
             .then(r => {
                 setMembers(r.data.members)
+                if(r.data.members.includes(user.id)){
+                    setInRoom(true)
+                }
                 // we need to get full info not just id
             })
     }
@@ -230,8 +247,8 @@ export const PluginProvider = ({ children }) => {
             }
         };
 
-        SubscribeToChannel("Prospects", prospectsSubscriber)
-        SubscribeToChannel("Deals", dealsSubscriber)
+        // SubscribeToChannel("Prospects", prospectsSubscriber)
+        // SubscribeToChannel("Deals", dealsSubscriber)
 
     }, [])
 
@@ -246,7 +263,10 @@ export const PluginProvider = ({ children }) => {
             workspaceUsers,
             setWorkspaceUsers,
             addToRoomFunction,
-            removeFromRoomFunction
+            removeFromRoomFunction,
+            addUserToRoomFunction,
+            inRoom,
+            setRoom
         }}>
             {children}
         </PluginContext.Provider>
