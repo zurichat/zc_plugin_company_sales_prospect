@@ -535,12 +535,13 @@ def access_endoints(request):
     return render(request, 'index.html', context)
 
 class InstallPlugin(APIView):
+    serializer_class = InstallSerializer
     def post(self, request, *args, **kwargs):
         serializer = InstallSerializer(data=request.data)
-        nHeaders = request.headers["Authorization"]
+        nHeaders = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb29raWUiOiJNVFl6TkRRMk5UQXlPWHhIZDNkQlIwUlplRTVxWTNoT2JWRjVUa2RaZDA1cVl6UmFhbXhwV1ZSRmQxcFhXWGxhUVQwOWZMWVltRUxiWDR4S2hUZzlQdHB2eXBOdG9PbXdENDhJYnQtZERXQjYyZXJVIiwiZW1haWwiOiJlb3NhYml5YUBnbWFpbC5jb20iLCJpZCI6IjYxNjcxNmQyNGYwNjc4ZjliYTEwZWYyZCIsIm9wdGlvbnMiOnsiUGF0aCI6Ii8iLCJEb21haW4iOiIiLCJNYXhBZ2UiOjc5NDE2NjQ3MTUsIlNlY3VyZSI6ZmFsc2UsIkh0dHBPbmx5IjpmYWxzZSwiU2FtZVNpdGUiOjB9LCJzZXNzaW9uX25hbWUiOiJmNjgyMmFmOTRlMjliYTExMmJlMzEwZDNhZjQ1ZDVjNyJ9.-W7oFHhtrNd1GxUiffbvC0D9eCnhnzQIMDVRGahnRB4"
         if serializer.is_valid():
             install_payload = serializer.data
-            org_id = install_payload["organisation_id"]
+            org_id = install_payload["org_id"]
             user_id = install_payload["user_id"]
             print(org_id, user_id)
 
@@ -557,7 +558,14 @@ class InstallPlugin(APIView):
             installed = json.loads(response.text)
             print(installed)
             if installed["status"] == 200:
-
+                room_url = f"https://sales.zuri.chat/api/v1/org/{org_id}/users/{user_id}/room/"
+                room_payload={
+                    "room_name": "sales"
+                }
+                res = requests.request("POST", room_url, data=room_payload)
+                print(res.status_code,res._content,room_payload)
+                if res.status_code in [200,201]:
+                    print("room created")
                 return Response(
                     {
                         "success": True,
