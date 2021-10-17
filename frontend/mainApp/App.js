@@ -16,10 +16,10 @@ function App() {
           <Switch>
             <Route exact path="/" component={Prospects} />
             <Route exact path="/prospects" component={Prospects} />
-            <Route exact path="/6169c5df2a3204f3be4a26f2" component={Prospects} />
+            <Route exact path="/616b3c4c03538ad521209450" component={Prospects} />
 
             <Route exact path="/deals" component={Deals} />
-            <Route exact path="/6169c5be2a3204f3be4a26ec" component={Deals} />
+            <Route exact path="/616b55bad7d15e82be61a983" component={Deals} />
 
             <Route exact path="/email" component={Email} />
 
