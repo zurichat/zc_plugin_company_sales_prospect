@@ -518,7 +518,7 @@ function Prospects() {
           <Button className="m-1" onClick={handleOpenCreateModal}>
             Create New
           </Button>
-          {!inRoom && <Button className="m-1" onClick={()=>addUserToRoomFunction("6169c5df2a3204f3be4a26f2")}>
+          {!inRoom && <Button className="m-1" onClick={()=>addUserToRoomFunction(prospectsRoom)}>
             Join Room
           </Button>}
         </div>{" "}
