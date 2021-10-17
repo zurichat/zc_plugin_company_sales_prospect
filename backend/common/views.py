@@ -544,7 +544,7 @@ class InstallPlugin(APIView):
         #     return handle_failed_request(response=None)
 
         user_id = request.data.get("user_id")
-        organisation_id = request.data.get("organisation_id")
+        organisation_id = request.data.get("org_id")
 
         token = request.headers["Authorization"]
 
@@ -555,19 +555,22 @@ class InstallPlugin(APIView):
         payload = {
             "plugin_id": PLUGIN_ID,
             "user_id": user_id,
+            "organisation_id": organisation_id,
         }
 
         response = requests.request("POST", url, json=payload, headers=headers)
-        print(response, "test1")
+        print(url,payload,response, response._content)
 
         if response.status_code==200:
-            create_room_url = f"http://sales.zuri.chat/api/v1/org/{organisation_id}/users/{user_id}/room"
+            create_room_url = f"https://sales.zuri.chat/api/v1/org/{organisation_id}/users/{user_id}/room/"
             create_room_payload = {
-                "room_name": "sales"
+                "room_name": "sales",
+                "room_member_id": [user_id],
             }
-            response = requests.request("POST", create_room_url, json=create_room_payload, headers=headers)
-            # if response.status_code == 200:
-            #     print(response, "test2")
-            return Response({"success": True, "message": "Succesfully installed", "data":{"redirect_url": "/sales"}}, status=status.HTTP_200_OK)
+            res = requests.request("POST", create_room_url, json=create_room_payload, headers=headers)
+            print(res.status_code,res._content)
+            if res.status_code == 200:
+                print("room created")
+            return Response({"success": True, "message": "Succesfully installed", "data":{"redirect_url": "/sales/616b3c4c03538ad521209450"}}, status=status.HTTP_200_OK)
         return Response({"message": "Plugin already installed"}, status=status.HTTP_400_BAD_REQUEST)
         # return Response({"message": "Something went wrong"}, status=status.HTTP_400_BAD_REQUEST)
