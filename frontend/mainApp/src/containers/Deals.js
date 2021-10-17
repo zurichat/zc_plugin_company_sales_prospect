@@ -143,7 +143,8 @@ const Deals = () => {
 
 		const deal = deals.find((x) => x._id === id);
 		const i = deals.indexOf(deal);
-		let dealUpdate = capitalize(deal_stage.droppableId);
+		let dealUpdate = deal;
+		dealUpdate.deal_stage = capitalize(deal_stage.droppableId);
 		delete dealUpdate._id;
 		customAxios.put(`${editDealURL}?id=${id}`, dealUpdate);
 		// const sortedDeals = deals.filter(x => x._id !== id)
