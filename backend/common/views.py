@@ -538,7 +538,7 @@ class InstallPlugin(APIView):
     serializer_class = InstallSerializer
     def post(self, request, *args, **kwargs):
         serializer = InstallSerializer(data=request.data)
-        nHeaders = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb29raWUiOiJNVFl6TkRRMk5UQXlPWHhIZDNkQlIwUlplRTVxWTNoT2JWRjVUa2RaZDA1cVl6UmFhbXhwV1ZSRmQxcFhXWGxhUVQwOWZMWVltRUxiWDR4S2hUZzlQdHB2eXBOdG9PbXdENDhJYnQtZERXQjYyZXJVIiwiZW1haWwiOiJlb3NhYml5YUBnbWFpbC5jb20iLCJpZCI6IjYxNjcxNmQyNGYwNjc4ZjliYTEwZWYyZCIsIm9wdGlvbnMiOnsiUGF0aCI6Ii8iLCJEb21haW4iOiIiLCJNYXhBZ2UiOjc5NDE2NjQ3MTUsIlNlY3VyZSI6ZmFsc2UsIkh0dHBPbmx5IjpmYWxzZSwiU2FtZVNpdGUiOjB9LCJzZXNzaW9uX25hbWUiOiJmNjgyMmFmOTRlMjliYTExMmJlMzEwZDNhZjQ1ZDVjNyJ9.-W7oFHhtrNd1GxUiffbvC0D9eCnhnzQIMDVRGahnRB4"
+        nHeaders = request.headers["Authorization"]
         if serializer.is_valid():
             install_payload = serializer.data
             org_id = install_payload["org_id"]
