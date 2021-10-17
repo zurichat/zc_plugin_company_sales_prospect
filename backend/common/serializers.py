@@ -9,11 +9,7 @@ class RoomCreateSerializer(serializers.Serializer):
     room_name = serializers.CharField(required=True)
 
 class InstallSerializer(serializers.Serializer):
-    org_id=serializers.CharField()
-    user_id=serializers.CharField()
-
-class UninstallSerializer(serializers.Serializer):
-    org_id=serializers.CharField()
+    organisation_id=serializers.CharField()
     user_id=serializers.CharField()
 
 
