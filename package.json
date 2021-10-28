@@ -11,7 +11,7 @@
     "lint-staged": ">=10"
   },
   "lint-staged": {
-    "*.js": "eslint --cache --fix",
+    "/frontend/**/*.js": "eslint --cache --fix",
     "*.py": "pipenv run pylint"
   },
   "scripts": {
