@@ -29,12 +29,12 @@ console.log(templateValues)
                         "subject": templateValues.subject,
                         "mail_body": templateValues.message
 
-     
+
                 })
                 .then(res=>{
                   console.log(res)
                   alert('Email sent successfully')
-                  
+
                 })
                 .catch(error=>{
                   console.log(error)
@@ -43,7 +43,7 @@ console.log(templateValues)
 
     return (
         <>
-       
+
         <div className={styles.selectemailtop}>
             <h3 className={styles.templateTitle} >{templateValues.template_name}</h3>
             <div className={styles.topbuttons}>

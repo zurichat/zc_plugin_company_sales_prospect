@@ -13,7 +13,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-     
+
         # Runs a single command using the runners shell
     - name: Executing remote commands via SSH
       uses: appleboy/ssh-action@master

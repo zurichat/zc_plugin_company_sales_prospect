@@ -14,7 +14,7 @@ export default function PageNotFound() {
                     <p className="max-w-sm py-3 flex-wrap text-sm">
                         Go back to <Link to="/" className="text-green hover:text-green"> contacts list</Link> or  <Link to="/deals/" className="text-green hover:text-green"> deals list</Link>
                     </p>
-                    
+
                 </div>
             </div>
         </div>
