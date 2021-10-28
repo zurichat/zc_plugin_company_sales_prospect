@@ -1,9 +1,6 @@
 from django.urls import path
-
-from syncapp.views import test_function, patch_function
-
 from syncapp.task_handlers import sync_notifier
-
+from syncapp.views import patch_function, test_function
 
 # app_name = "common"
 

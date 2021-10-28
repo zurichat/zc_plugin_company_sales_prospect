@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 
 class ProspectSerializer(serializers.Serializer):
-    """ This is a serializer for the prospects generation
+    """This is a serializer for the prospects generation
 
     Args:
         serializers ([string]): [validated strings]
@@ -15,6 +15,7 @@ class ProspectSerializer(serializers.Serializer):
     Returns:
         [json]: [a json view of the inputs]
     """
+
     name = serializers.CharField(max_length=100)
     email = serializers.EmailField(max_length=100)
     phone_number = serializers.CharField(max_length=100)

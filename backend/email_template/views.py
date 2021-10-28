@@ -1,15 +1,17 @@
 import json
 
 import requests
-
+from common.utils import centrifugo_post, is_authorized, is_valid_organisation
 from django.conf import settings
+from email_template.serializers import (
+    EmailSerializer,
+    EmailUpdateSerializer,
+    SendEmailSerializer,
+)
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from email_template.serializers import (EmailSerializer, EmailUpdateSerializer,
-                          SendEmailSerializer)
-from common.utils import centrifugo_post, is_authorized, is_valid_organisation
 ZURI_API_KEY = settings.ZURI_API_KEY
 CENTRIFUGO_LIVE_ENDPOINT = settings.CENTRIFUGO_LIVE_ENDPOINT
 API_KEY = settings.API_KEY
@@ -29,7 +31,7 @@ class EmailTemplateCreateView(APIView):
 
     Returns:
         [type]: [description]
-    """    
+    """
 
     serializer_class = EmailSerializer
     queryset = None
@@ -42,7 +44,7 @@ class EmailTemplateCreateView(APIView):
 
         Returns:
             [type]: [description]
-        """        
+        """
         # check if user is authenticated
         # if not is_authorized(request):
         #     return Response(data={"message":"Missing Cookie/token header or session expired"}, status=status.HTTP_401_UNAUTHORIZED)
@@ -89,12 +91,12 @@ class EmailTemplateCreateView(APIView):
 
 class EmailTemplateListView(APIView):
     """
-    
+
     [summary]
 
     Returns:
         [type]: [description]
-    """ 
+    """
 
     serializer_class = EmailSerializer
     queryset = None
@@ -107,7 +109,7 @@ class EmailTemplateListView(APIView):
 
         Returns:
             [type]: [description]
-        """        
+        """
         # check if user is authenticated
         if not is_authorized(request):
             return Response(
@@ -126,7 +128,9 @@ class EmailTemplateListView(APIView):
         response = requests.request("GET", url)
         if response.status_code == 200:
             return Response(data=response.json(), status=status.HTTP_200_OK)
-        return Response(data=response.json(), status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return Response(
+            data=response.json(), status=status.HTTP_500_INTERNAL_SERVER_ERROR
+        )
 
 
 class EmailDetailView(APIView):
@@ -134,7 +138,8 @@ class EmailDetailView(APIView):
 
     Args:
         APIView ([type]): [description]
-    """    
+    """
+
     def get(self, _id):
         """[summary]
 
@@ -144,7 +149,7 @@ class EmailDetailView(APIView):
 
         Returns:
             [type]: [description]
-        """    
+        """
         url = "https://api.zuri.chat/data/read"
         data = {
             "plugin_id": PLUGIN_ID,
@@ -158,7 +163,9 @@ class EmailDetailView(APIView):
         print(response.json())
         if response.status_code == 200:
             return Response(data=response.json(), status=status.HTTP_200_OK)
-        return Response(data=response.json(), status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return Response(
+            data=response.json(), status=status.HTTP_500_INTERNAL_SERVER_ERROR
+        )
 
 
 class EmailTemplateUpdateView(APIView):
@@ -169,7 +176,8 @@ class EmailTemplateUpdateView(APIView):
 
     Returns:
         [type]: [description]
-    """    
+    """
+
     serializer_class = EmailUpdateSerializer
     queryset = None
 
@@ -183,7 +191,7 @@ class EmailTemplateUpdateView(APIView):
 
         Returns:
             [type]: [description]
-        """      
+        """
         # check if user is authenticated
         if not is_authorized(request):
             return Response(
@@ -235,7 +243,7 @@ class EmailTemplateDeleteView(APIView):
 
     Args:
         APIView ([type]): [description]
-    """    
+    """
 
     def delete(self, request, template_id):
         """[summary]
@@ -246,7 +254,7 @@ class EmailTemplateDeleteView(APIView):
 
         Returns:
             [type]: [description]
-        """        
+        """
         # check if user is authenticated
         if not is_authorized(request):
             return Response(
@@ -305,7 +313,7 @@ class EmailSendView(APIView):
 
     Returns:
         [type]: [description]
-    """    
+    """
 
     serializer = SendEmailSerializer
     queryset = None
@@ -318,7 +326,7 @@ class EmailSendView(APIView):
 
         Returns:
             [type]: [description]
-        """        
+        """
         if not is_authorized(request):
             return Response(
                 data={"message": "Missing Cookie/token header or session expired"},

@@ -1,16 +1,19 @@
 import json
 
 import requests
+
+# changed the import to a single import
+from common.utils import (
+    centrifugo_post,
+    handle_failed_request,
+    is_authorized,
+    is_valid_organisation,
+)
+from deals.serializers import DealSerializer, DealUpdateSerializer
 from django.conf import settings
 from rest_framework import status as st
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
-# changed the import to a single import
-from common.utils import (centrifugo_post, handle_failed_request, is_authorized,
-                          is_valid_organisation)
-
-from deals.serializers import DealSerializer, DealUpdateSerializer
 
 PLUGIN_ID = settings.PLUGIN_ID
 ORGANISATION_ID = settings.ORGANISATION_ID
@@ -202,6 +205,7 @@ class ReArrangeDeals(APIView):
     """
     This view re-arrange the deals card
     """
+
     serializer_class = DealUpdateSerializer
     queryset = None
 
@@ -361,8 +365,8 @@ class DealsFilterListView(APIView):
 
 
 class DealsBatchDeleteView(APIView):
-    """ This handles the mutiple delete process for deals
-    """ 
+    """This handles the mutiple delete process for deals"""
+
     def post(self, request):
         """
         This handles the post request to the DB

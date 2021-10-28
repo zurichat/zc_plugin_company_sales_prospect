@@ -1,15 +1,13 @@
 import json
 import logging
 from dataclasses import dataclass
+
 import requests  # , time
-
-
 from django.conf import settings
-
-from rest_framework.exceptions import ParseError, AuthenticationFailed
-from rest_framework.views import exception_handler
-from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.exceptions import AuthenticationFailed, ParseError
+from rest_framework.response import Response
+from rest_framework.views import exception_handler
 
 ZURI_API_KEY = settings.ZURI_API_KEY
 CENTRIFUGO_LIVE_ENDPOINT = settings.CENTRIFUGO_LIVE_ENDPOINT
@@ -20,15 +18,14 @@ PLUGIN_ID = settings.PLUGIN_ID
 ORGANISATION_ID = settings.ORGANISATION_ID
 
 
-
-
 @dataclass
 class CustomRequest:
     """[summary]
 
     Returns:
         [type]: [description]
-    """    
+    """
+
     @staticmethod
     def get(org_id, collection_name):
         """[summary]
@@ -39,7 +36,7 @@ class CustomRequest:
 
         Returns:
             [type]: [description]
-        """        
+        """
         url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/{collection_name}/{org_id}"
         response = requests.get(url)  # the important function
         if response.status_code == 200:
@@ -59,7 +56,7 @@ class CustomRequest:
 
         Returns:
             [type]: [description]
-        """        
+        """
         url = "https://api.zuri.chat/data/write"
         data = {
             "plugin_id": PLUGIN_ID,
@@ -82,7 +79,7 @@ class CustomRequest:
 
         Args:
             payload ([type]): [description]
-        """        
+        """
         url = "https://api.zuri.chat/data/write"
         data = {
             "plugin_id": PLUGIN_ID,
@@ -101,7 +98,7 @@ class CustomRequest:
 
         Args:
             payload ([type]): [description]
-        """        
+        """
         url = "https://api.zuri.chat/data/delete"
         data = {
             "plugin_id": PLUGIN_ID,
@@ -124,7 +121,7 @@ def centrifugo_post(room, data):
 
     Returns:
         [type]: [description]
-    """    
+    """
     command = {"method": "publish", "params": {"channel": room, "data": data}}
     data = json.dumps(command)
     headers = {
@@ -150,7 +147,7 @@ def is_authorized(request):
 
     Returns:
         [type]: [description]
-    """    
+    """
     try:
         authorization_content = request.headers["Authorization"]
         url = "https://api.zuri.chat/auth/verify-token/"
@@ -165,10 +162,7 @@ def is_authorized(request):
         raise ParseError(detail="Missing 'Authorization' header.")
 
     except AuthenticationFailed as _e:
-        raise _e
-
-    except:
-        return False
+        return _e
 
 
 def is_valid_organisation(organisation_id, request):
@@ -185,7 +179,7 @@ def is_valid_organisation(organisation_id, request):
 
     Returns:
         [type]: [description]
-    """    
+    """
     try:
         authorization_content = request.headers["Authorization"]
         url = f"https://api.zuri.chat/organizations/{organisation_id}"
@@ -200,10 +194,7 @@ def is_valid_organisation(organisation_id, request):
         raise ParseError(detail="Missing 'Authorization' header.")
 
     except AuthenticationFailed as _e:
-        raise _e
-
-    except:
-        return False
+        return _e
 
 
 def custom_exception_handler(exc, context):
@@ -215,7 +206,7 @@ def custom_exception_handler(exc, context):
 
     Returns:
         [type]: [description]
-    """    
+    """
     response = exception_handler(exc, context)
 
     if isinstance(exc, requests.ConnectionError):
@@ -246,8 +237,8 @@ def sidebar_update(res):
 
     Returns:
         [type]: [description]
-    """    
-    sidebar_updates =  {
+    """
+    sidebar_updates = {
         "event": "sidebar_update",
         "plugin_id": "sales.zuri.chat",
         "data": {
@@ -286,7 +277,7 @@ def handle_failed_request(response=None):
 
     Returns:
         [type]: [description]
-    """    
+    """
     error_message = "Something unexpected happened. Try again later."
 
     if response is None:

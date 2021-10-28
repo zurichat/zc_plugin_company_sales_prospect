@@ -83,7 +83,7 @@ class ProspectTests(APITestCase):
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(res.json()["message"], self.welcome_msg)
 
-    ######   Test Delete Endpoint   ##########
+    # Test Delete Endpoint
 
     def test_delete_valid_data(self):
         """
@@ -109,7 +109,7 @@ class ProspectTests(APITestCase):
         print(res.status_code)
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
 
-    ######   Test Search Endpoint   ##########
+    # Test Search Endpoint
 
     def test_search_valid_data(self):
         """

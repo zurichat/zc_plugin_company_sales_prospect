@@ -1,8 +1,14 @@
 from django.urls import path
-
-from prospect.views import (GetPropects, ProspectsBatchDeleteView, ProspectsCreateView,
-                    ProspectsDeleteView, ProspectsListView,
-                    ProspectsUpdateView, WelcomeView, search_prospects)
+from prospect.views import (
+    GetPropects,
+    ProspectsBatchDeleteView,
+    ProspectsCreateView,
+    ProspectsDeleteView,
+    ProspectsListView,
+    ProspectsUpdateView,
+    WelcomeView,
+    search_prospects,
+)
 
 urlpatterns = [
     path("search/<str:search>/", search_prospects, name="search"),

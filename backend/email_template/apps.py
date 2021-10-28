@@ -6,6 +6,7 @@ class EmailTemplateConfig(AppConfig):
 
     Args:
         AppConfig ([type]): [description]
-    """    
+    """
+
     default_auto_field = "django.db.models.BigAutoField"
     name = "email_template"

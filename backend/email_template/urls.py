@@ -1,11 +1,11 @@
 from django.urls import path
 from email_template.views import (
+    EmailDetailView,
+    EmailSendView,
     EmailTemplateCreateView,
+    EmailTemplateDeleteView,
     EmailTemplateListView,
     EmailTemplateUpdateView,
-    EmailTemplateDeleteView,
-    EmailSendView,
-    EmailDetailView,
 )
 
 urlpatterns = [

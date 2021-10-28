@@ -6,8 +6,9 @@ class CustomCsrfViewMiddleware(CsrfViewMiddleware):
 
     Args:
         CsrfViewMiddleware ([type]): [description]
-    """    
-    def process_view(self, request, callback, callback_args, callback_kwargs):
+    """
+
+    def process_view(self, request):
         """[summary]
 
         Args:
@@ -18,5 +19,5 @@ class CustomCsrfViewMiddleware(CsrfViewMiddleware):
 
         Returns:
             [type]: [description]
-        """        
+        """
         return self._accept(request)

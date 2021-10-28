@@ -1,7 +1,7 @@
 import json
+
 import requests
 from django.conf import settings
-
 
 # from rest_framework.response import Response
 PLUGIN_ID = settings.PLUGIN_ID
@@ -52,7 +52,7 @@ def sidebardealsrooms():
 
     Returns:
         [type]: [description]
-    """    
+    """
     url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/{ROOM_COLLECTION_NAME}/{ORGANISATION_ID}?id={DEALS_ROOM_ID}"
     res = requests.get(url)
     response = json.loads(res.text)
@@ -72,7 +72,7 @@ def sidebarprospectsrooms():
 
     Returns:
         [type]: [description]
-    """    
+    """
     url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/{ROOM_COLLECTION_NAME}/{ORGANISATION_ID}?id={PROSPECTS_ROOM_ID}"
     res = requests.get(url)
     response = json.loads(res.text)
@@ -95,7 +95,7 @@ def success_query():
 
     Returns:
         [type]: [description]
-    """    
+    """
     data = {
         "name": settings.PLUGIN_NAME,
         "plugin_id": settings.PLUGIN_ID,

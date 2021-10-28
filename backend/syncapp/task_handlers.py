@@ -1,7 +1,6 @@
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-
 from syncapp.queue_handlers import get_queue, update_queue_sync
 
 EVENTS = {"enter": "enter_organization", "leave": "leave_organization"}

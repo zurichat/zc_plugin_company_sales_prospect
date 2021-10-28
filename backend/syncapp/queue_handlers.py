@@ -1,6 +1,4 @@
-
 import requests
-
 
 PLUGIN_ID = "6169bdd9eb5b3de309e7e27a"
 

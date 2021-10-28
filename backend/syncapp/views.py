@@ -10,8 +10,6 @@ from rest_framework.response import Response
 # from rest_framework.decorators import api_view
 
 
-
-
 # from common.utils import handle_failed_request, is_valid_organisation, is_authorized
 
 PLUGIN_ID = settings.PLUGIN_ID
@@ -31,7 +29,7 @@ def sync_function(request):
 
     Returns:
         [type]: [description]
-    """    
+    """
     print(request)
     url = "https://api.zuri.chat/marketplace/plugins/6169bdd9eb5b3de309e7e27a/"
     response = requests.get(url)
@@ -50,7 +48,7 @@ def test_function():
 
     Returns:
         [type]: [description]
-    """    
+    """
     # patch_function()
     return Response({"status": True, "message": "OK"}, status=status.HTTP_200_OK)
 
@@ -60,7 +58,7 @@ def patch_function():
 
     Returns:
         [type]: [description]
-    """    
+    """
     url = "https://api.zuri.chat/plugins/6169bdd9eb5b3de309e7e27a/sync"
     response = requests.patch(url, data={"id": []})
     return JsonResponse(response.json())
@@ -77,7 +75,7 @@ def patch(payload):
 
     Args:
         payload ([type]): [description]
-    """    
+    """
     url = "https://api.zuri.chat/data/write"
 
     data = {
@@ -89,4 +87,3 @@ def patch(payload):
     }
     response = requests.request("PUT", url, data=json.dumps(data))
     return response.json()
-

@@ -1,20 +1,25 @@
 import json
 
 import requests
+from common.utils import (
+    CustomRequest,
+    centrifugo_post,
+    handle_failed_request,
+    is_authorized,
+    is_valid_organisation,
+)
+
 # changed the import to a single import
 from django.conf import settings
 from django.core.mail import send_mail
+
 # from django.core.paginator import Paginator
 from django.http import JsonResponse
+from prospect.serializers import ProspectSerializer
 from rest_framework import status
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
-from common.utils import (CustomRequest, centrifugo_post,
-                          handle_failed_request, is_authorized,
-                          is_valid_organisation)
-from prospect.serializers import ProspectSerializer
 
 PLUGIN_ID = settings.PLUGIN_ID
 ORGANISATION_ID = settings.ORGANISATION_ID
@@ -23,10 +28,11 @@ ORGANISATION_ID = settings.ORGANISATION_ID
 
 class WelcomeView(APIView):
     """
-     this functions sends a welcome email to new leads
-        still in development stage
-        would configure it properly during production
+    this functions sends a welcome email to new leads
+       still in development stage
+       would configure it properly during production
     """
+
     def get(self, request):
         """
         this functions sends a welcome email to new leads
@@ -75,17 +81,18 @@ def search_prospects(request, search):
             ):
                 liste.append(i)
         return JsonResponse(liste, safe=False)
-    return JsonResponse({'message':'not found'})
+    return JsonResponse({"message": "not found"})
 
 
 class GetPropects(APIView):
-    '''
+    """
     This class allows the Deals page to get the list of avaliable prospects
-    '''
+    """
+
     def get(self, request):
-        '''
+        """
         this function preforms the get request to the database
-        '''
+        """
         #  check authentication
         if not is_authorized(request):
             return handle_failed_request(response=None)
@@ -102,17 +109,18 @@ class GetPropects(APIView):
 
 
 class ProspectsListView(APIView):
-    '''
+    """
     This class returns a list of avaliable prospects in the DB
-    '''
+    """
+
     serializer_class = ProspectSerializer
     queryset = None
     paginate_by = 20
 
     def get(self, request, org_id):
-        '''
+        """
         this function preforms the get request to the database
-        '''
+        """
         # # check authentication
         if not is_authorized(request):
             return handle_failed_request(response=None)
@@ -172,16 +180,16 @@ class ProspectsListView(APIView):
 
 class ProspectsCreateView(APIView):
     """
-   This Class perfoms the create prospects function
+    This Class perfoms the create prospects function
     """
 
     serializer_class = ProspectSerializer
     queryset = None
 
     def post(self, request, org_id, user_id):
-        '''
+        """
         this function preforms the post request to the database
-        '''
+        """
         # # check authentication
         if not is_authorized(request):
             return handle_failed_request(response=None)
@@ -240,16 +248,17 @@ class ProspectsCreateView(APIView):
 
 
 class ProspectsUpdateView(APIView):
-    '''
+    """
     This class handles the update prospects process
-    '''
+    """
+
     serializer_class = ProspectSerializer
     queryset = None
 
     def put(self, request, org_id):
-        '''
+        """
         this function preforms the put request to the database
-        '''
+        """
         # check authorization
         if not is_authorized(request):
             return handle_failed_request(response=None)
@@ -303,11 +312,12 @@ class ProspectsUpdateView(APIView):
 
 
 class ProspectsBatchDeleteView(APIView):
-    '''This Class handles the batch delete view for prospects '''
+    """This Class handles the batch delete view for prospects"""
+
     def post(self, request):
-        '''
+        """
         this function preforms the put request to the database
-        '''
+        """
         # check authentication
         if not is_authorized(request):
             return handle_failed_request(response=None)
@@ -354,16 +364,17 @@ class ProspectsBatchDeleteView(APIView):
 
 
 class ProspectsDeleteView(APIView):
-    '''
+    """
     this class handles the delete process for each prospect
-    '''
+    """
+
     permission_classes = [AllowAny]
     authentication_classes = []
 
     def delete(self, request, search, **kwargs):
-        '''
+        """
         this function preforms the delete request to the database
-        '''
+        """
         # check authentication
         if not is_authorized(request):
             return handle_failed_request(response=None)
@@ -401,16 +412,17 @@ class ProspectsDeleteView(APIView):
 
 
 class ProspectDetailsView(APIView):
-    '''
+    """
     this class handles the detail view for each prospect
-    '''
+    """
+
     serializer_class = ProspectSerializer
     queryset = None
 
     def put(self, request):
-        '''
+        """
         this function preforms the put request to the database
-        '''
+        """
         # check authorization
         # if not is_authorized(request):
         # return handle_failed_request(response=None)

@@ -1,17 +1,11 @@
-from django.urls import path
-
-from common.views import (
-    SidebarView,
-    InfoView,
-    SearchSalesInfo,
-    InstallPlugin,
-)
 from common.rooms import (
-    CreateRoomApi,
     AddUsersToRoomApi,
+    CreateRoomApi,
     RemoveUserFromRoomApi,
     RoomDetailApi,
 )
+from common.views import InfoView, InstallPlugin, SearchSalesInfo, SidebarView
+from django.urls import path
 
 APP_NAME = "common"
 

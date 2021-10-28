@@ -1,9 +1,8 @@
 import requests
-from faker import Faker
 from django.conf import settings
+from faker import Faker
 from rest_framework import status
 from rest_framework.test import APITestCase
-
 
 PLUGIN_ID = settings.PLUGIN_ID
 ORGANISATION_ID = settings.ORGANISATION_ID
@@ -23,6 +22,7 @@ class DealsTests(APITestCase):
     Args:
         APITestCase ([tests]): handles the tests for the app
     """
+
     def set_up(self):
         """
         This handles mock data for the tests

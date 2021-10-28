@@ -1,6 +1,7 @@
 import json
 
 import requests
+from common.serializers import RoomCreateSerializer, RoomSerializer
 from django.conf import settings
 from rest_framework import status
 from rest_framework.generics import GenericAPIView
@@ -9,7 +10,7 @@ from rest_framework.views import APIView
 
 # from common.utils import centrifugo_post, sidebar_update
 
-from common.serializers import RoomCreateSerializer, RoomSerializer
+
 # from .utils import handle_failed_request, is_authorized, is_valid_organisation
 
 PLUGIN_ID = settings.PLUGIN_ID
@@ -29,7 +30,7 @@ def is_valid(param):
 
     Returns:
         [type]: [description]
-    """    
+    """
     return param != "" and param is not None
 
 
@@ -41,7 +42,8 @@ class CreateRoomApi(APIView):
 
     Returns:
         [type]: [description]
-    """    
+    """
+
     serializer_class = RoomCreateSerializer
 
     def post(self, request, org_id, member_id):
@@ -54,7 +56,7 @@ class CreateRoomApi(APIView):
 
         Returns:
             [type]: [description]
-        """        
+        """
         serializer = RoomCreateSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         room_name = serializer.data.get("room_name")
@@ -123,7 +125,8 @@ class AddUsersToRoomApi(GenericAPIView):
 
     Returns:
         [type]: [description]
-    """    
+    """
+
     serializer_class = RoomSerializer
 
     def post(self, request, **kwargs):
@@ -134,14 +137,14 @@ class AddUsersToRoomApi(GenericAPIView):
 
         Returns:
             [type]: [description]
-        """        
+        """
         org_id = kwargs.get("org_id")
         room_id = kwargs.get("room_id")
-        member_id = kwargs.get("member_id")
+        # member_id = kwargs.get("member_id")
         serializer = RoomSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         _room_id = room_id
-        _member_id = member_id
+        # _member_id = member_id
         members = serializer.data.get("members_id")
         print(members)
         current_users = []
@@ -191,14 +194,7 @@ class AddUsersToRoomApi(GenericAPIView):
                 }
                 return Response(data=response, status=status.HTTP_200_OK)
             else:
-                try:
-                    return Response(
-                        data=resp.json(), status=status.HTTP_400_BAD_REQUEST
-                    )
-                except:
-                    return Response(
-                        data={"message": "SIGH"}, status=status.HTTP_400_BAD_REQUEST
-                    )
+                return Response(data=resp.json(), status=status.HTTP_400_BAD_REQUEST)
         return Response(
             data={"message": "failed"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR
         )
@@ -212,7 +208,8 @@ class RemoveUserFromRoomApi(GenericAPIView):
 
     Returns:
         [type]: [description]
-    """    
+    """
+
     serializer_class = RoomSerializer
     http_method_names = ["get", "post"]
 
@@ -227,7 +224,7 @@ class RemoveUserFromRoomApi(GenericAPIView):
 
         Returns:
             [type]: [description]
-        """        
+        """
         serializer = RoomSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         get_url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/{ROOM_COLLECTION_NAME}/{org_id}/"
@@ -237,7 +234,7 @@ class RemoveUserFromRoomApi(GenericAPIView):
         # checks for the room
         res = requests.request("GET", url=get_url)
         if res.status_code == 200:
-            print("sigh 1")
+            print(_member_id)
             rooms = res.json()["data"]
             current_room = filter(lambda room: room.get("_id") == _room_id, rooms)
             current_room = list(current_room)
@@ -290,7 +287,8 @@ class RoomDetailApi(APIView):
 
     Args:
         APIView ([type]): [description]
-    """    
+    """
+
     def get(self, request, org_id, room_id):
         """[summary]
 
@@ -301,7 +299,7 @@ class RoomDetailApi(APIView):
 
         Returns:
             [type]: [description]
-        """        
+        """
         print(request)
         print(org_id)
         print(room_id)

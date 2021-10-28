@@ -12,6 +12,7 @@ class DealSerializer(serializers.Serializer):
         close_date (string): close_date of the deal
         description (string): description of the deal
     """
+
     prospect_id = serializers.CharField(max_length=100)
     name = serializers.CharField(max_length=100)
     deal_stage = serializers.CharField(max_length=100)
@@ -31,6 +32,7 @@ class DealUpdateSerializer(serializers.Serializer):
         close_date (string): close_date of the deal
         description (string): description of the deal
     """
+
     prospect_id = serializers.CharField(max_length=100, required=False)
     name = serializers.CharField(max_length=100, required=False)
     deal_stage = serializers.CharField(max_length=100, required=False)

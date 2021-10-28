@@ -8,7 +8,7 @@
       "email": "developer@zuri.chat"
     }
   },
-  
+
   "paths": {
 
     "/api/v1/prospects/": {
@@ -559,7 +559,7 @@
             "type": "string",
             "default": "John Doe"
           },
-          
+
           "deal_stage": {
             "type": "string",
             "default": "Prospect"

@@ -8,5 +8,6 @@ class ProspectConfig(AppConfig):
     Args:
         AppConfig ([config]): [configures your auto fields]
     """
+
     default_auto_field = "django.db.models.BigAutoField"
     name = "prospect"

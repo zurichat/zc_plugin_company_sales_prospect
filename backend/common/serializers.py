@@ -6,7 +6,8 @@ class RoomSerializer(serializers.Serializer):
 
     Args:
         serializers ([type]): [description]
-    """    
+    """
+
     members_id = serializers.ListField(required=True)
 
 
@@ -15,7 +16,8 @@ class RoomCreateSerializer(serializers.Serializer):
 
     Args:
         serializers ([type]): [description]
-    """    
+    """
+
     room_name = serializers.CharField(required=True)
 
 
@@ -24,6 +26,7 @@ class InstallSerializer(serializers.Serializer):
 
     Args:
         serializers ([type]): [description]
-    """    
+    """
+
     organisation_id = serializers.CharField()
     user_id = serializers.CharField()

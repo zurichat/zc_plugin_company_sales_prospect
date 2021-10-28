@@ -6,6 +6,7 @@ class CommonConfig(AppConfig):
 
     Args:
         AppConfig ([type]): [description]
-    """    
+    """
+
     default_auto_field = "django.db.models.BigAutoField"
     name = "common"

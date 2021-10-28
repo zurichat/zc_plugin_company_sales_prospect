@@ -1,15 +1,15 @@
 import json
 
 import requests
+from common.serializers import InstallSerializer
+from common.utils import handle_failed_request, is_authorized, is_valid_organisation
 from django.conf import settings
 from django.core.paginator import Paginator
 from rest_framework import status
+
 # from django.views.static import serve as static_serve
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
-from common.serializers import InstallSerializer
-from common.utils import handle_failed_request, is_authorized, is_valid_organisation
 
 # api/v1/sidebar?org=5336&user=Devjoseph&token=FGEZJJ-ZFDGB-FDGG
 PLUGIN_ID = settings.PLUGIN_ID
@@ -25,7 +25,8 @@ class SidebarView(APIView):
 
     Args:
         APIView ([type]): [description]
-    """    
+    """
+
     def get(self, request):
         """[summary]
 
@@ -34,7 +35,7 @@ class SidebarView(APIView):
 
         Returns:
             [type]: [description]
-        """        
+        """
         user = request.GET.get("user")
         org = request.GET.get("org")
 
@@ -134,7 +135,7 @@ def is_valid(param):
 
     Returns:
         [type]: [description]
-    """    
+    """
     return param != "" and param is not None
 
 
@@ -143,7 +144,8 @@ class InfoView(APIView):
 
     Args:
         APIView ([type]): [description]
-    """    
+    """
+
     def get(self):
         """[summary]
 
@@ -172,10 +174,6 @@ class InfoView(APIView):
         return Response(data=data, status=status.HTTP_200_OK)
 
 
-
-
-
-
 class SearchSalesInfo(APIView):
     """
     Filters existing prospect by the provided search criteria.
@@ -193,7 +191,7 @@ class SearchSalesInfo(APIView):
 
         Returns:
             [type]: [description]
-        """        
+        """
         # print(org_id)
         if not is_authorized(request):
             return handle_failed_request(response=None)
@@ -291,8 +289,6 @@ class SearchSalesInfo(APIView):
         return handle_failed_request(response=response)
 
 
-
-
 class InstallPlugin(APIView):
     """[summary]
 
@@ -301,7 +297,8 @@ class InstallPlugin(APIView):
 
     Returns:
         [type]: [description]
-    """    
+    """
+
     serializer_class = InstallSerializer
 
     def post(self, request):
@@ -312,7 +309,7 @@ class InstallPlugin(APIView):
 
         Returns:
             [type]: [description]
-        """        
+        """
         serializer = InstallSerializer(data=request.data)
         n_headers = request.headers["Authorization"]
         if serializer.is_valid():

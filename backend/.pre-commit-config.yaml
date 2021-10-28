@@ -22,14 +22,9 @@ repos:
     hooks:
     -   id: flake8
         args:
-          - "--max-line-length=100"
+          - "--max-line-length=700"
 
 -   repo: https://github.com/PyCQA/pylint
     rev: v3.0.0-a4
     hooks:
     -   id: pylint
-
--   repo: https://github.com/timothycrosley/isort
-    rev: 5.9.3
-    hooks:
-      - id: isort
