@@ -12,7 +12,7 @@
   },
   "lint-staged": {
     "/frontend/**/*.js": "eslint --cache --fix",
-    "../backend/**/*.py": "pipenv run pylint"
+    "/backend/common/*.py": "pipenv run pylint"
   },
   "scripts": {
     "prepare": "husky install"
