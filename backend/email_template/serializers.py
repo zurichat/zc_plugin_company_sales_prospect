@@ -14,7 +14,7 @@ class EmailSerializer(serializers.Serializer):
 
 
 class EmailUpdateSerializer(serializers.Serializer):
-    """[summary]
+    """[EmailUpdateSerializer]
 
     Args:
         serializers ([type]): [description]
