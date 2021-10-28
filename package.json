@@ -11,8 +11,8 @@
     "lint-staged": ">=10"
   },
   "lint-staged": {
-    "/frontend/**/*.js": ["eslint --cache --fix"],
-    "/backend/**/*.py": "pipenv run pylint"
+    "*.js": "eslint --cache --fix",
+    "*.py": "pipenv run pylint"
   },
   "scripts": {
     "prepare": "husky install"
