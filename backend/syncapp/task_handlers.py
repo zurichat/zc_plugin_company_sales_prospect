@@ -1,16 +1,14 @@
-from rest_framework.response import Response
-from rest_framework.decorators import api_view
 from rest_framework import status
-from .queue_handlers import getQueue, update_queue_sync
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
-from apscheduler.schedulers.background import BackgroundScheduler
+from syncapp.queue_handlers import get_queue, update_queue_sync
 
 EVENTS = {"enter": "enter_organization", "leave": "leave_organization"}
 
 
 @api_view(["GET", "POST"])
-def sync_notifier(request):
-    pass
+def sync_notifier():
     """Receives a ping from zc_core about new data to synchronize.
     Then starts a background job to synchorize with the the new data in the queue
     Args:
@@ -18,22 +16,22 @@ def sync_notifier(request):
     Returns:
         Response: The response returned
     """
-    try:
-        scheduler = BackgroundScheduler()
-        scheduler.add_job(
-            job,
-        )
-        scheduler.start()
-        return Response({"status": True, "message": "OK"}, status=status.HTTP_200_OK)
-    except:
-        return Response(
-            {
-                "status": False,
-            },
-            status.HTTP_400_BAD_REQUEST,
-        )
+    # try:
+    #     scheduler = BackgroundScheduler()
+    #     scheduler.add_job(
+    #         job,
+    #     )
+    #     scheduler.start()
+    #     return Response({"status": True, "message": "OK"}, status=status.HTTP_200_OK)
+    # except:
+    #     return Response(
+    #         {
+    #             "status": False,
+    #         },
+    #         status.HTTP_400_BAD_REQUEST,
+    #     )
 
-    return Response(data=request.data, status=status.HTTP_200_OK)
+    # return Response(data=request.data, status=status.HTTP_200_OK)
 
 
 def job():
@@ -42,7 +40,7 @@ def job():
         Response: The response returned
     """
     # Retrieve the queue for synchronization
-    queue = getQueue()
+    queue = get_queue()
     if not queue:
         return Response(data="No data to update", status=status.HTTP_404_NOT_FOUND)
 

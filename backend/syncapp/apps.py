@@ -2,5 +2,10 @@ from django.apps import AppConfig
 
 
 class SyncappConfig(AppConfig):
-    default_auto_field = 'django.db.models.BigAutoField'
-    name = 'syncapp'
+    """[summary]
+
+    Args:
+        AppConfig ([type]): [description]
+    """    
+    default_auto_field = "django.db.models.BigAutoField"
+    name = "syncapp"

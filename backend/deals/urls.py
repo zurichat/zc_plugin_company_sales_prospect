@@ -1,14 +1,9 @@
 from django.urls import path
-from deals.views import (
-    DealCreateView,
-    DealUpdateView,
-    DealsListView,
-    DealsDeleteView,
-    # DealsStageListView,
-    DealsFilterListView,
-    ReArrangeDeals,
-    DealsBatchDeleteView
-)
+
+from deals.views import (DealCreateView,  # DealsStageListView,
+                         DealsBatchDeleteView, DealsDeleteView,
+                         DealsFilterListView, DealsListView, DealUpdateView,
+                         ReArrangeDeals)
 
 urlpatterns = [
     path("create/", DealCreateView.as_view()),

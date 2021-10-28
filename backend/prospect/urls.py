@@ -1,19 +1,11 @@
 from django.urls import path
-from .views import (
-    ProspectsUpdateView,
-    SearchProspects,
-    ProspectsCreateView,
-    WelcomeView,
-    ProspectsListView,
-    ProspectsDeleteView,
-    ProspectsBatchDeleteView,
-    GetPropects,
-    ProspectDetailsView,
-)
 
+from prospect.views import (GetPropects, ProspectsBatchDeleteView, ProspectsCreateView,
+                    ProspectsDeleteView, ProspectsListView,
+                    ProspectsUpdateView, WelcomeView, search_prospects)
 
 urlpatterns = [
-    path("search/<str:search>/", SearchProspects, name="search"),
+    path("search/<str:search>/", search_prospects, name="search"),
     # path("search/<str:search>/", SearchProspects, name="search"),
     path("<str:org_id>/<str:user_id>/create/", ProspectsCreateView.as_view()),
     path("<str:org_id>/", ProspectsListView.as_view(), name="prospects"),
@@ -23,8 +15,6 @@ urlpatterns = [
     path("delete/batch/", ProspectsBatchDeleteView.as_view()),
     path("delete/<str:search>/", ProspectsDeleteView.as_view()),
     # path("details/<str:id>/", ProspectDetailsView.as_view()),
-
 ]
 
 # reminder to remove the org_id
-
