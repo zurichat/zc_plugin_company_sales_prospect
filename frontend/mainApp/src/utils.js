@@ -11,7 +11,9 @@ export const capitalize = (word) => {
 export const doesProspectExist = (contacts, name) => {
   return contacts.filter((x) => x.name === name).length > 0;
 };
-
+export const doesTemplateExist = (contacts, name) => {
+  return contacts.filter((x) => x.name === name).length > 0;
+};
 export const updateProspects = (contacts, id, newDetails) => {
   let p = contacts;
   const prospect = p.find((x) => x.id === id);
@@ -98,4 +100,7 @@ export const dummyProspects = {
   prev: false,
 };
 
-export const pluginID = "614105b66173056af01b4cca";
+export const pluginID = "6169bdd9eb5b3de309e7e27a";
+
+export const dealsRoom = "616b55bad7d15e82be61a983";
+export const prospectsRoom = "616b3c4c03538ad521209450";

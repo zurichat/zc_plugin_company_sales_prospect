@@ -5,6 +5,10 @@ import Prospects from "./containers/Prospects";
 import Deals from "./containers/Deals";
 import { PluginProvider } from "./context/store";
 import PluginHeader from "./components/PluginHeader";
+import EmailTemplate from "./containers/EmailTemplate";
+import EditSendEmail from "./containers/EditSendEmail"
+import PageNotFound from "./containers/404";
+import { dealsRoom, prospectsRoom } from "./utils";
 
 function App() {
   return (
@@ -15,13 +19,16 @@ function App() {
           <Switch>
             <Route exact path="/" component={Prospects} />
             <Route exact path="/prospects" component={Prospects} />
-            <Route exact path="/615832ad87540d8d01ffc700" component={Prospects} />
-
+            <Route exact path={`/${prospectsRoom}`} component={Prospects} />
+            
             <Route exact path="/deals" component={Deals} />
-            <Route exact path="/614f63b8cf2c0f1ad7584ffe" component={Deals} />
-
+            <Route exact path={`/${dealsRoom}`} component={Deals} />
+            <Route exact path="/email" component={EmailTemplate} />
+            <Route exact path="/template" component={EditSendEmail} />
             {/* <Route exact path="/test" component={Test} /> */}
+            <Route component={PageNotFound} />{/* This route must always be the last on the routing list */}
           </Switch>
+
 
         </div>
       </Router>

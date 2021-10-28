@@ -2,20 +2,25 @@ import React, { useContext, useEffect, useState } from "react";
 import Button from "../components/Button";
 import DealCard from "../components/DealCard";
 import Modal from "../components/Modal";
-import customAxios, { createDealURL, dealsURL, prospectsURL } from "../axios";
-
+import customAxios, {
+	createDealURL,
+	dealsURL,
+	editDealURL,
+	prospectsURL,
+} from "../axios";
 import FilterDeal from "../components/FilterDeal";
 import FilterDeals from "../components/FilterDeals";
 import { PluginContext } from "../context/store";
 import Input from "../components/Input";
 import Select from "../components/Select";
 //import { Input, Select } from "./Prospects";
-import { customAlert } from "../utils";
+import { capitalize, customAlert, dealsRoom } from "../utils";
 import FileIcon from "../components/svg/FileIcon";
 import Loader from "../components/svg/Loader.svg";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { DragDropContext, Droppable } from "react-beautiful-dnd";
 
 const schema = yup.object().shape({
 	name: yup.string().required(),
@@ -35,22 +40,10 @@ const Deals = () => {
 	const [loading, setLoading] = useState(true);
 	const [prospectsLoading, setprospectsLoading] = useState(false);
 	const [loadingError, setloadingError] = useState("");
-	const { deals, setDeals, prospects, setProspects } =
+	const { deals, setDeals, prospects, setProspects, inRoom, setRoom } =
 		useContext(PluginContext);
 	const [dealContacts, setdealContacts] = useState([]);
 	const [openCreate, setOpenCreate] = useState(false);
-	const ProspectStage = deals.filter(
-		(x) => x.deal_stage && x.deal_stage.toLowerCase() === "prospect"
-	);
-	const NegotiationStage = deals.filter(
-		(x) => x.deal_stage && x.deal_stage.toLowerCase() === "negotiation"
-	);
-	const ProposalStage = deals.filter(
-		(x) => x.deal_stage && x.deal_stage.toLowerCase() === "proposal"
-	);
-	const ClosedStage = deals.filter(
-		(x) => x.deal_stage && x.deal_stage.toLowerCase() === "closed"
-	);
 
 	const handleOpenCreateModal = () => {
 		setOpenCreate(true);
@@ -80,6 +73,7 @@ const Deals = () => {
 	};
 
 	useEffect(() => {
+		setRoom(dealsRoom);
 		customAxios
 			.get(dealsURL, {
 				headers: { Authorization: `Bearer ${sessionStorage.getItem("token")}` },
@@ -142,8 +136,31 @@ const Deals = () => {
 			});
 	};
 
+	const onDragEnd = (result) => {
+		console.log(result);
+		const { destination: deal_stage, draggableId: id } = result;
+
+		const deal = deals.find((x) => x._id === id);
+		const i = deals.indexOf(deal);
+		let dealUpdate = deal;
+		dealUpdate.deal_stage = capitalize(deal_stage.droppableId);
+		delete dealUpdate._id;
+		customAxios.put(`${editDealURL}?id=${id}`, dealUpdate);
+		// const sortedDeals = deals.filter(x => x._id !== id)
+		// console.log(deal, sortedDeals, i)
+		if (deal && i > 0) {
+			deal.deal_stage = capitalize(deal_stage.droppableId);
+			deals[i] = deal;
+			setDeals(deals);
+		}
+	};
+	const getStage = (stage) => {
+		return deals.filter(
+			(x) => x.deal_stage && x.deal_stage.toLowerCase() === stage
+		);
+	};
 	return (
-		<div className='p-6'>
+		<div className='p-6 pt-5'>
 			<Modal
 				title='Filter deal'
 				description='Filter deal to quickly find your prospects on the deal pipeline.
@@ -192,12 +209,12 @@ const Deals = () => {
 							<option selected disabled value=''>
 								Select a contact
 							</option>
-							{prospectsLoading && dealContacts.length == 0 ? (
+							{prospectsLoading && dealContacts?.length == 0 ? (
 								<option disabled value=''>
 									Fetching all prospects ...
 								</option>
 							) : null}
-							{!prospectsLoading && dealContacts.length == 0 ? (
+							{!prospectsLoading && dealContacts?.length == 0 ? (
 								<option disabled value=''>
 									No Prospects Found
 								</option>
@@ -208,14 +225,15 @@ const Deals = () => {
 								</option>
 							) : null}
 
-							{dealContacts.map((dealContact) => (
-								<option
-									key={dealContact._id}
-									value={`${dealContact.name}, ${dealContact._id}`}
-								>
-									{dealContact.name}
-								</option>
-							))}
+							{dealContacts &&
+								dealContacts?.map((dealContact) => (
+									<option
+										key={dealContact._id}
+										value={`${dealContact.name}, ${dealContact._id}`}
+									>
+										{dealContact.name}
+									</option>
+								))}
 							{/* {prospects.length > 0 && prospects.map((prospect, i) => (
                 <option key={i} value={`${prospect._id}-${prospect.name}`}>{prospect.name}</option>
               ))} */}
@@ -302,6 +320,15 @@ const Deals = () => {
 					Filter
 				</Button>
 				<Button onClick={handleOpenCreateModal}>Create New</Button>
+
+				{!inRoom && (
+					<Button
+						className='m-1'
+						onClick={() => addUserToRoomFunction(dealsRoom)}
+					>
+						Join Room
+					</Button>
+				)}
 			</div>
 
 			{deals.length > 0 && !loading ? (
@@ -313,15 +340,23 @@ const Deals = () => {
 									Prospects
 								</span>
 								<span className='text-sm text-gray-500'>
-									{ProspectStage.length} deals • $ 1,500,000
+									{getStage("prospect").length} deals • ${" "}
+									{getStage("prospect").reduce(
+										(sum, deal) => (sum += +deal.amount),
+										0
+									)}
 								</span>
-							</div>
+							</div>{" "}
 							<div className='px-24 lg:px-8 text-left border-b border-gray-300 py-2'>
 								<span className='block font-bold text-lg text-gray-700'>
 									Proposal
 								</span>
 								<span className='text-sm text-gray-500'>
-									{ProposalStage.length} deals • $ 1,500,000
+									{getStage("proposal").length} deals • ${" "}
+									{getStage("proposal").reduce(
+										(sum, deal) => (sum += +deal.amount),
+										0
+									)}
 								</span>
 							</div>
 							<div className='px-24 lg:px-8 text-left border-b border-gray-300 py-2'>
@@ -329,7 +364,11 @@ const Deals = () => {
 									Negotiation
 								</span>
 								<span className='text-sm text-gray-500'>
-									{NegotiationStage.length} deals • $ 1,500,000
+									{getStage("negotiation").length} deals • ${" "}
+									{getStage("negotiation").reduce(
+										(sum, deal) => (sum += +deal.amount),
+										0
+									)}
 								</span>
 							</div>
 							<div className='px-24 lg:px-8 text-left border-b border-gray-300 py-2'>
@@ -337,54 +376,72 @@ const Deals = () => {
 									Closed
 								</span>
 								<span className='text-sm text-gray-500'>
-									{ClosedStage.length} deals • $ 1,500,000
+									{getStage("closed").length} deals • ${" "}
+									{getStage("closed").reduce(
+										(sum, deal) => (sum += +deal.amount),
+										0
+									)}
 								</span>
 							</div>
 						</div>
+						<DragDropContext onDragEnd={onDragEnd}>
+							<div className='grid grid-cols-4 border border-t-0 border-gray-300 rounded h-screen2'>
+								<Droppable droppableId='prospect'>
+									{(provided, snapshot) => (
+										<div
+											className='border-r border-gray-300 overflow-y-auto rounded py-2 flex flex-col items-center gap-4'
+											ref={provided.innerRef}
+										>
+											{getStage("prospect").map((deal, i) => (
+												<DealCard key={deal._id} deal={deal} index={i} />
+											))}
+											{provided.placeholder}
+										</div>
+									)}
+								</Droppable>
+								<Droppable droppableId='proposal'>
+									{(provided, snapshot) => (
+										<div
+											className='border-r border-gray-300 overflow-y-auto rounded py-2 flex flex-col items-center gap-4'
+											ref={provided.innerRef}
+										>
+											{getStage("proposal").map((deal, i) => (
+												<DealCard key={deal._id} deal={deal} index={i} />
+											))}
+											{provided.placeholder}
+										</div>
+									)}
+								</Droppable>
 
-						<div className='grid grid-cols-4 border border-t-0 border-gray-300 rounded h-screen2'>
-							<div className='border-r border-gray-300 overflow-y-auto rounded py-2 flex flex-col items-center gap-4'>
-								{deals
-									.filter(
-										(x) =>
-											x.deal_stage && x.deal_stage.toLowerCase() === "prospect"
-									)
-									.map((deal, i) => (
-										<DealCard key={deal._id} deal={deal} index={i} />
-									))}
+								<Droppable droppableId='negotiation'>
+									{(provided, snapshot) => (
+										<div
+											className='border-r border-gray-300 overflow-y-auto rounded py-2 flex flex-col items-center gap-4'
+											ref={provided.innerRef}
+										>
+											{getStage("negotiation").map((deal, i) => (
+												<DealCard key={deal._id} deal={deal} index={i} />
+											))}
+											{provided.placeholder}
+										</div>
+									)}
+								</Droppable>
+
+								<Droppable droppableId='closed'>
+									{(provided, snapshot) => (
+										<div
+											className='border-r border-gray-300 overflow-y-auto rounded py-2 flex flex-col items-center gap-4'
+											ref={provided.innerRef}
+										>
+											{getStage("closed").map((deal, i) => (
+												<DealCard key={deal._id} deal={deal} index={i} />
+											))}
+											{provided.placeholder}
+										</div>
+									)}
+								</Droppable>
 							</div>
-							<div className=' border-r border-gray-300 overflow-y-auto rounded py-2 flex flex-col items-center gap-4'>
-								{deals
-									.filter(
-										(x) =>
-											x.deal_stage && x.deal_stage.toLowerCase() === "proposal"
-									)
-									.map((deal, i) => (
-										<DealCard key={deal._id} deal={deal} index={i} />
-									))}
-							</div>
-							<div className=' border-r border-gray-300 overflow-y-auto rounded py-2 flex flex-col items-center gap-4'>
-								{deals
-									.filter(
-										(x) =>
-											x.deal_stage &&
-											x.deal_stage.toLowerCase() === "negotiation"
-									)
-									.map((deal, i) => (
-										<DealCard key={deal._id} deal={deal} index={i} />
-									))}
-							</div>
-							<div className=' border-r border-gray-300 overflow-y-auto rounded py-2 flex flex-col items-center gap-4'>
-								{deals
-									.filter(
-										(x) =>
-											x.deal_stage && x.deal_stage.toLowerCase() === "closed"
-									)
-									.map((deal, i) => (
-										<DealCard key={deal._id} deal={deal} index={i} />
-									))}
-							</div>
-						</div>
+						</DragDropContext>
 					</div>
 				</div>
 			) : (

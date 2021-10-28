@@ -13,6 +13,68 @@ CENTRIFUGO_LIVE_ENDPOINT = settings.CENTRIFUGO_LIVE_ENDPOINT
 API_KEY = settings.API_KEY
 CENTRIFUGO_DEBUG_ENDPOINT = settings.CENTRIFUGO_DEBUG_ENDPOINT
 
+PLUGIN_ID = settings.PLUGIN_ID
+ORGANISATION_ID = settings.ORGANISATION_ID
+
+from dataclasses import dataclass
+
+@dataclass
+class CustomRequest:
+    @staticmethod
+    def get(org_id, collection_name, params=None):
+        url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/{collection_name}/{org_id}"
+        response = requests.get(url) # the important function
+        r = response.json()
+        if response.status_code == 200:
+            result = response.json()
+            result['status_code'] = response.status_code
+            return result # storage of that important result.
+
+    @staticmethod
+    def post(org_id, collection_name, payload):
+        url = f"https://api.zuri.chat/data/write"
+        data = {
+            "plugin_id": PLUGIN_ID,
+            "organization_id": ORGANISATION_ID,
+            "collection_name": collection_name,
+            "bulk_write": False,
+            "payload": payload,
+        }
+
+        response = requests.post(url, data=json.dumps(data))
+        r = response.json()
+        print(r)
+        if response.status_code == 201:
+            result = response.json()
+            result['status_code'] = response.status_code
+            return result
+
+    @staticmethod
+    def put(payload):
+        url = f"https://api.zuri.chat/data/write"
+        data = {
+            "plugin_id": PLUGIN_ID,
+            "organization_id": ORGANISATION_ID,
+            "collection_name": collection_name,
+            "bulk_write": False,
+            "payload": payload,
+        }
+        response = requests.request("PUT", url, data=json.dumps(data))
+        r = response.json()
+
+    @staticmethod
+    def delete(payload):
+        url = f"https://api.zuri.chat/data/delete"
+        data = {
+            "plugin_id": PLUGIN_ID,
+            "organization_id": ORGANISATION_ID,
+            "collection_name": "prospects",
+            "bulk_write": False,
+            "payload": payload,
+        }
+        response = requests.request("DELETE", url, data=json.dumps(data))
+        r = response.json()
+
 def centrifugo_post(room, data):
     command = {
         "method": "publish",
@@ -86,8 +148,20 @@ def custom_exception_handler(exc, context):
 
 
 
-
-
+def sidebar_update(res):
+    {
+                "event": "sidebar_update",
+                "plugin_id": "sales.zuri.chat",
+                "data": {
+                    "name": "Company Sales Prospects",
+                    "group_name": "SALES",
+                    "show_group": False,
+                    "button_url": "/sales",
+                    "public_rooms": [res],
+                    "joined_rooms": [res],
+                }
+            }
+    return sidebar_update
 
 
 
