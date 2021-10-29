@@ -51,7 +51,6 @@ INSTALLED_APPS = [
     # local apps
     "deals",
     "prospect",
-    "onboarding",
     "email_template",
     # Centrifugo
     # "instant",
@@ -60,7 +59,6 @@ INSTALLED_APPS = [
     "syncapp",
     # 'apscheduler',
     # "APscheduler",
-    "social_media_scraping",
 ]
 
 MIDDLEWARE = [
