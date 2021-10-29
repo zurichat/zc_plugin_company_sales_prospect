@@ -11,7 +11,7 @@ export default function Index() {
 
   return (
       <Listbox as="div" value={selected} onChange={setSelected}>
-     
+
         {({ open }) => (
           <>
             <Listbox.Label className="font-medium font-bold text-gray-700 relative top-5 ">
@@ -57,7 +57,7 @@ export default function Index() {
                               className={`${
                                 active ? "text-white" : " border-b-0"
                               } absolute inset-y-0 left-0 flex items-center pl-2`}
-                            >                               
+                            >
                             </span>
                           )}
                         </div>

@@ -103,7 +103,7 @@ function Home(props) {
                 title="company"
                 label="Company Name"
                 placeholder="Type your company name"
-                register={register} 
+                register={register}
                 required
               />
               <p className="text-error text-xs mb-2 -mt-3 capitalize">{errors.company?.message}</p>
@@ -111,7 +111,7 @@ function Home(props) {
               <Select
                 title="sector"
                 label="What sector is your company into?"
-                register={register} 
+                register={register}
                 required
               >
                 <option disabled selected value="">
@@ -131,7 +131,7 @@ function Home(props) {
                   <Select
                     title="position"
                     label="What is your position?"
-                    register={register} 
+                    register={register}
                     required
                   >
                     <option disabled selected value="">
@@ -233,22 +233,22 @@ function Home(props) {
             </div>
 
           </div>
-          
+
           {(document.getElementsByClassName("error")) ? (<button
             onClick={showPageOne}
-            className="flex absolute right-96 bottom-5  w-36 bg-green p-3 text-white rounded-sm border-green  hover:bg-green-300" 
+            className="flex absolute right-96 bottom-5  w-36 bg-green p-3 text-white rounded-sm border-green  hover:bg-green-300"
           >
-           <ArrowLeft />&nbsp; Previous 
+           <ArrowLeft />&nbsp; Previous
           </button>) : null}
           <button
             type="submit"
-            className="absolute right-48 bottom-5 block w-36 bg-green p-3 text-white rounded-sm border-green  hover:bg-green-300" 
+            className="absolute right-48 bottom-5 block w-36 bg-green p-3 text-white rounded-sm border-green  hover:bg-green-300"
           >
             Finish
           </button>
         </div>)}
       </form>
-      
+
     </div>
   );
 }

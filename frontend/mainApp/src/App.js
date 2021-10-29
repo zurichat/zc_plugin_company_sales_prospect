@@ -20,7 +20,7 @@ function App() {
             <Route exact path="/" component={Prospects} />
             <Route exact path="/prospects" component={Prospects} />
             <Route exact path={`/${prospectsRoom}`} component={Prospects} />
-            
+
             <Route exact path="/deals" component={Deals} />
             <Route exact path={`/${dealsRoom}`} component={Deals} />
             <Route exact path="/email" component={EmailTemplate} />

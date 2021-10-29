@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
 from pathlib import Path
+
 from decouple import config
 
 # from corsheaders.defaults import default_headers
@@ -50,16 +51,14 @@ INSTALLED_APPS = [
     # local apps
     "deals",
     "prospect",
-    "onboarding",
     "email_template",
     # Centrifugo
     # "instant",
     # "cent",
     # 'social_media_scraping',
-    'syncapp',
+    "syncapp",
     # 'apscheduler',
     # "APscheduler",
-    "social_media_scraping",
 ]
 
 MIDDLEWARE = [
@@ -178,7 +177,7 @@ STATICFILES_DIRS = [
 ]
 
 
-############### Plugin Details #######################
+# Plugin Details
 PLUGIN_ID = "6169bdd9eb5b3de309e7e27a"
 PLUGIN_NAME = "Company Sales Prospects"
 ORGANISATION_ID = "6169c10ceb5b3de309e7e2a6"

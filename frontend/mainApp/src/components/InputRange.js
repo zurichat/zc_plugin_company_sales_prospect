@@ -8,7 +8,7 @@ export default function Input({ titles, label, placeholder, disabled = false }) 
                 {label}
             </label>
             <input className="border border-gray-500 focus:border-btngreen outline-none rounded-sm h-xl px-3 w-full" id={titles} type="number" placeholder={placeholder}/>
-           
+
         </div>
     )
 }

@@ -30,7 +30,7 @@ export const PluginProvider = ({ children }) => {
     const [user, setUser] = useState(JSON.parse(sessionStorage.getItem("user")));
 
     const addToRoomFunction = (values) => {
-        const payload = { 
+        const payload = {
             members_id:values.map(v => v.value)
         }
         customAxios.post(`/org/${currentWorkspace}/room/${room}/members/${user.id}/`,payload, {
@@ -43,7 +43,7 @@ export const PluginProvider = ({ children }) => {
     }
 
     const addUserToRoomFunction = (_room) => {
-        const payload = { 
+        const payload = {
             members_id:[user.id]
         }
         customAxios.post(`/org/${currentWorkspace}/room/${_room}/members/${user.id}/`,payload, {
@@ -56,7 +56,7 @@ export const PluginProvider = ({ children }) => {
     }
 
     const removeFromRoomFunction = id => {
-        const payload = { 
+        const payload = {
             members_id:[id]
         }
         customAxios.post(`/org/${currentWorkspace}/rroom/${room}/members/${user.id}/`,payload,{
@@ -97,7 +97,7 @@ export const PluginProvider = ({ children }) => {
         //         setCurrentWorkspace(data.currentWorkspace)
         //     })
     }
-    
+
     const getUserInfoWithEmail = email => {
           customAxios.get(`https://api.zuri.chat/organizations/${currentWorkspace}/members/?query=${email}`,{
             headers: { Authorization: `Bearer ${token}` }

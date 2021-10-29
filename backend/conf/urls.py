@@ -13,33 +13,36 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path, include, re_path
-from django.views.generic import TemplateView
 
 from common.views import SidebarView
+from django.conf import settings
 
 # from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 from django.conf.urls.static import static
-from django.conf import settings
+from django.contrib import admin
+from django.urls import include, path, re_path
+from django.views.generic import TemplateView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/v1/", include("common.urls")),
     path("api/v1/", include("syncapp.urls")),
-    
-    path("api/v1/onboarding/", include("onboarding.urls")),
     path("api/v1/deals/", include("deals.urls")),
     path("api/v1/prospects/", include("prospect.urls")),
-    path("api/v1/email-template/",include("email_template.urls")),
+    path("api/v1/email-template/", include("email_template.urls")),
     path("api/v1/api-auth/", include("rest_framework.urls")),
-    path('sidebar', SidebarView.as_view(), name='sidebar'),
-    path("api/v1/scraping/", include("social_media_scraping.urls")),
+    path("sidebar", SidebarView.as_view(), name="sidebar"),
     # DOCUMENTATION
     # path('api/v1/schema/', SpectacularAPIView.as_view(), name='schema'),
     # path('api/v1/swagger-docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
     # path('api/v1/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
-    path('api/v1/docs/', TemplateView.as_view(template_name='swagger.html', extra_context={'schema_url':'openapi-schema'}), name='swagger-ui'),
+    path(
+        "api/v1/docs/",
+        TemplateView.as_view(
+            template_name="swagger.html", extra_context={"schema_url": "openapi-schema"}
+        ),
+        name="swagger-ui",
+    ),
 ]
 
 # urlpatterns += static("zuri-root-config.js", document_root="react-spa/dist/zuri-root-config.js")
