@@ -1,11 +1,9 @@
 # Zuri Chat Company Sales Prospect Plugin
 ## Description
------------------------------
 The sales plugin is a feature that integartes basic CRM functionalities in a particular workspace for an organization. This  helps the organization keep track of essential information, regarding it's customers and their corresponding transactions in a non bloated manner.
 
 
 ## <br>Installation / Configurations
------------------------------
 The following need to be set up before you can run this project
 
 - [Reactjs](https://reactjs.org/docs/getting-started.html)
@@ -16,12 +14,10 @@ The following need to be set up before you can run this project
 
 
 ## <br>Status
------------------------------
 The plugin is currently live 
 
 
 ## <br>Endpoints
------------------------------
 ### Prospects API
     https://sales.zuri.chat/api/v1/propsects/
     https://sales.zuri.chat/api/v1/propsects/create/
@@ -40,20 +36,17 @@ The plugin is currently live
 
 
 ## <br>Goals
------------------------------
 - To keep track of customer informations and their corresponding transaction in an organised manner.
 - To give actionable insight on transaction based on their position in sales pipeline.
 - To achieve the above listed in a workspace
 
 
 ## <br>Technologies Used
------------------------------
 - React (Frontend)
 - Django (Backend)
 
 
 ## <br>How To Setup The Project
------------------------------
 - ### React Server
     Go to the `frontend/mainApp` directory and then run the following:
 
@@ -98,23 +91,28 @@ The plugin is currently live
 
 
 ## <br>Guidelines On How To Contribute
------------------------------
 Contributions are welcome!
 
 Please read [How to contribute](./Contribution.md) which will guide you through the entire workflow of how to build the source code, how to run the tests, and how to contribute changes to the codebase. The "How to contribute" document also contains info on how the contribution process works and contains best practices for creating contributions.
 
 
 ## <br>Credits And Acknowledgement
------------------------------
 We give credits to the following set of individuals that have contributed immensely to design, development and implementation of this plugin
 
 1. Designers
    - Sopuluchukwu Nacheetah  (Product Design Lead, Deputy Team Lead) - nacheetah70@gmail.com
 
 2. Backend Engineers
-   - Mikhail Olusanya (backend team lead) - Mikhail.olusanya@gmail.com
+   - Mikhail Olusanya (Backend team lead) - Mikhail.olusanya@gmail.com
+   - Joseph Chinedu - joseph4jubilant@gmail.com
+   - Chukwunonso Unachukwu - borneanime11@gmail.com
+   - Olatunji Komolafe - iamkomolafe.o.s@gmail.com
+   - Ajibade Abdullah - ajibadeabd@gmail.com
+   - Alashi Muyiwa - alashimuyiwa@gmail.com
+   - Soladoye Elijah - shodown96@gmail.com
 
 3. Frontend Engineers
+   - Khadijah Amusat (Team Lead/ Frontend Lead)- wuraola81@gmail.com	
    - Uzochukwu Precious - p.uzor99@gmail.com
    - Aaron Sunday - aaron_asap@icloud.com
    - Maureen Anyanwu - maureenanyanwu519@gmail.com
@@ -130,7 +128,6 @@ We also acknowledge the following resources which were helpful during the course
 
 
 ## <br>File Manifest
------------------------------
 1. ### Backend: base library folder for all django backend codes 
     - common: this folder contains files that are used by both the frontend and backend folders. It also contains files that are imported in the backend folder.
     - conf: this folder contains the base settings for the backend app.
@@ -170,5 +167,4 @@ We also acknowledge the following resources which were helpful during the course
 
 
 ## <br>Copyright and Licensing
------------------------------
 Check out the [Licence.md](./Licence.md)
