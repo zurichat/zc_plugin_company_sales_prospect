@@ -11,7 +11,7 @@ on:
 jobs:
 
   deploy:
-    
+
 
     runs-on: ubuntu-latest
 
@@ -27,7 +27,7 @@ jobs:
           cd ../../frontend/rootApp
           yarn install
           yarn build
- 
+
       - name: Copy Root dist folder to server
         uses: Creepios/sftp-action@v1.0.1
         with:
@@ -67,5 +67,3 @@ jobs:
             yarn install
             cd ../../frontend/mainApp
             yarn install
-            
-      

@@ -1,16 +1,16 @@
-from rest_framework import status
-from rest_framework.response import Response
-from rest_framework.views import APIView
-from rest_framework.decorators import api_view
-
-
 import json
-import requests
 
+import requests
 from django.conf import settings
 from django.http import JsonResponse
+from rest_framework import status
+from rest_framework.response import Response
 
-from common.utils import handle_failed_request, isValidOrganisation, isAuthorized
+# from rest_framework.views import APIView
+# from rest_framework.decorators import api_view
+
+
+# from common.utils import handle_failed_request, is_valid_organisation, is_authorized
 
 PLUGIN_ID = settings.PLUGIN_ID
 ORGANISATION_ID = settings.ORGANISATION_ID
@@ -21,35 +21,47 @@ DESCRIPTION = settings.DESCRIPTION
 ADDED_ROOM_COLLECTION_NAME = settings.ADDED_ROOM_COLLECTION_NAME
 
 
-
-
 def sync_function(request):
+    """[summary]
+
+    Args:
+        request ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """
     print(request)
-    url = 'https://api.zuri.chat/marketplace/plugins/6169bdd9eb5b3de309e7e27a/'
+    url = "https://api.zuri.chat/marketplace/plugins/6169bdd9eb5b3de309e7e27a/"
     response = requests.get(url)
-    print('response: ')
+    print("response: ")
     print(response)
-    print('response.json(): ')
-    print(response.json()['data']['id'])
+    print("response.json(): ")
+    print(response.json()["data"]["id"])
     return JsonResponse(response.json())
 
-def test_function(request):
+
+def test_function():
+    """[summary]
+
+    Args:
+        request ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """
     # patch_function()
-    return Response({"status": True, "message":"OK"}, status=status.HTTP_200_OK)
-    
+    return Response({"status": True, "message": "OK"}, status=status.HTTP_200_OK)
+
 
 def patch_function():
-    url = 'https://api.zuri.chat/plugins/6169bdd9eb5b3de309e7e27a/sync'
+    """[summary]
+
+    Returns:
+        [type]: [description]
+    """
+    url = "https://api.zuri.chat/plugins/6169bdd9eb5b3de309e7e27a/sync"
     response = requests.patch(url, data={"id": []})
     return JsonResponse(response.json())
-
-
-
-
-
-
-
-
 
 
 # # def test_function_view(request, org_id, member_id, *args, **kwargs):
@@ -58,72 +70,20 @@ def patch_function():
 #     return result
 
 
-
-
-
-
-
-
-
-
-
-
-
 def patch(payload):
-        url = f"https://api.zuri.chat/data/write"
+    """[summary]
 
-        data = {
+    Args:
+        payload ([type]): [description]
+    """
+    url = "https://api.zuri.chat/data/write"
 
-            "plugin_id": PLUGIN_ID,
-            "organization_id": ORGANISATION_ID,
-            "collection_name": collection_name,
-            "bulk_write": False,
-            "payload": payload,
-        }
-        response = requests.request("PUT", url, data=json.dumps(data))
-        r = response.json()
-
-# class ProspectsCreateView(APIView):
-#     """
-#     Documentation here.
-#     """
-
-#     serializer_class = ProspectSerializer
-#     queryset = None
-
-#     def post(self, request, org_id,user_id, *args, **kwargs):
-#         # # check authentication
-#         # if not isAuthorized(request):
-#         #     return handle_failed_request(response=None)
-
-#         # if not isValidOrganisation(ORGANISATION_ID, request):
-#         #     return handle_failed_request(response=None)
-
-#         print(request)
-#         print(org_id)
-
-#         sync_function(request)
-
-#         # serializer = ProspectSerializer(data=request.data)
-#         # print(serializer)
-
-#         serializer.is_valid(raise_exception=True)
-#         print(serializer.is_valid(raise_exception=True))
-        
-#         payload = {
-
-#                 "name": serializer.data.get("name"),
-#                 "email": serializer.data.get("email"),
-#                 "organisation_id": org_id,
-#                 "user_id": user_id,
-#                 "phone_number": serializer.data.get("phone_number"),
-#                 "company": serializer.data.get("company"),
-#                 "twitter": serializer.data.get("twitter"),
-#                 "facebook": serializer.data.get("facebook"),
-#                 "linkedin": serializer.data.get("linkedin"),
-#                 "instagram": serializer.data.get("instagram")
-#         }
-#         print(payload)
-
-#         response = CustomRequest.post(org_id,'prospects', payload)
-#         print(response)
+    data = {
+        "plugin_id": PLUGIN_ID,
+        "organization_id": ORGANISATION_ID,
+        "collection_name": "collection_name",
+        "bulk_write": False,
+        "payload": payload,
+    }
+    response = requests.request("PUT", url, data=json.dumps(data))
+    return response.json()

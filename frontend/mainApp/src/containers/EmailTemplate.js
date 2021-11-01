@@ -88,7 +88,7 @@ export const TextArea = ({
 
 const EmailTemplate = () => {
   // const { templates, setTemplates } = useContext(PluginContext);
-  
+
   const [templates, setTemplates] = useState([]);
   useEffect(()=>{
     customAxios.get(getEmailTemplateURL).then(
@@ -178,7 +178,7 @@ const EmailTemplate = () => {
       alert("Template already exists");
     }
   };
-  
+
   const handleSend = (e) =>{
     e.preventDefault()
     customAxios
@@ -189,7 +189,7 @@ const EmailTemplate = () => {
             })
             .then(res=>{
               console.log(res)
-              
+
             })
             .catch(error=>{
               console.log(error)
@@ -206,7 +206,7 @@ const EmailTemplate = () => {
           <div className="flex justify-between items-center">
             <Button  onClick={handleOpenCreateModal}>Create New</Button>
 
-          
+
           </div>
         </div>
 

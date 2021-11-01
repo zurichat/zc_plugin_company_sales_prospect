@@ -4,7 +4,7 @@ import "../App.css"
 
 export default function HomeCard({ src, text, id,handleClick, register }) {
 
-    return ( 
+    return (
         <label onClick={handleClick}>
             <input type="radio" {...register("position")}  name="position" value={id}className="card-input-element hidden" id={id}/>
 

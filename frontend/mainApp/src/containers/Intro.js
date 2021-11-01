@@ -23,7 +23,7 @@ function Intro(props) {
                    <img src={ActiveProspect} alt="screen" className="m-3 border bg-white border-white shadow-md"/>
                    <img src={EditDeal} alt="screen" className="m-3 border bg-white border-white shadow-md"/>
                 </div>
-                 
+
                 <div className="flex gap-3  mt-16  mb-16 justify-center md:hidden">
                  <img src={ActiveProspectMobile} alt="screen"  className="shadow-md" />
                  <img src={ActiveDealMobile} alt="screen"  className="shadow-md" />
@@ -33,8 +33,8 @@ function Intro(props) {
                     <h2 className="text-black text-lg my-2.5 font-semibold">
                       Redefining sales management in your work space
                     </h2>
-                    <p className="text-gray-400 my-2.5"> 
-                        This is a work space that redefines sales and customer relationship <br/> management. 
+                    <p className="text-gray-400 my-2.5">
+                        This is a work space that redefines sales and customer relationship <br/> management.
                         It helps you track your customer's journey easily and <br/> helps your team track thier sales goals efficiently.
                     </p>
 

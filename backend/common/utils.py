@@ -1,12 +1,13 @@
-import json, requests#, time
+import json
 import logging
+from dataclasses import dataclass
 
+import requests  # , time
 from django.conf import settings
-
-from rest_framework.exceptions import ParseError, AuthenticationFailed
-from rest_framework.views import exception_handler
-from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.exceptions import AuthenticationFailed, ParseError
+from rest_framework.response import Response
+from rest_framework.views import exception_handler
 
 ZURI_API_KEY = settings.ZURI_API_KEY
 CENTRIFUGO_LIVE_ENDPOINT = settings.CENTRIFUGO_LIVE_ENDPOINT
@@ -16,23 +17,47 @@ CENTRIFUGO_DEBUG_ENDPOINT = settings.CENTRIFUGO_DEBUG_ENDPOINT
 PLUGIN_ID = settings.PLUGIN_ID
 ORGANISATION_ID = settings.ORGANISATION_ID
 
-from dataclasses import dataclass
 
 @dataclass
 class CustomRequest:
-    @staticmethod
-    def get(org_id, collection_name, params=None):
-        url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/{collection_name}/{org_id}"
-        response = requests.get(url) # the important function
-        r = response.json()
-        if response.status_code == 200:
-            result = response.json()
-            result['status_code'] = response.status_code
-            return result # storage of that important result.
+    """[summary]
+
+    Returns:
+        [type]: [description]
+    """
 
     @staticmethod
-    def post(org_id, collection_name, payload):
-        url = f"https://api.zuri.chat/data/write"
+    def get(org_id, collection_name):
+        """[summary]
+
+        Args:
+            org_id ([type]): [description]
+            collection_name ([type]): [description]
+
+        Returns:
+            [type]: [description]
+        """
+        url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/{collection_name}/{org_id}"
+        response = requests.get(url)  # the important function
+        if response.status_code == 200:
+            result = response.json()
+            result["status_code"] = response.status_code
+            return result  # storage of that important result.
+        return response
+
+    @staticmethod
+    def post(collection_name, payload):
+        """[summary]
+
+        Args:
+            org_id ([type]): [description]
+            collection_name ([type]): [description]
+            payload ([type]): [description]
+
+        Returns:
+            [type]: [description]
+        """
+        url = "https://api.zuri.chat/data/write"
         data = {
             "plugin_id": PLUGIN_ID,
             "organization_id": ORGANISATION_ID,
@@ -42,29 +67,39 @@ class CustomRequest:
         }
 
         response = requests.post(url, data=json.dumps(data))
-        r = response.json()
-        print(r)
         if response.status_code == 201:
             result = response.json()
-            result['status_code'] = response.status_code
+            result["status_code"] = response.status_code
             return result
+        return response
 
     @staticmethod
     def put(payload):
-        url = f"https://api.zuri.chat/data/write"
+        """[summary]
+
+        Args:
+            payload ([type]): [description]
+        """
+        url = "https://api.zuri.chat/data/write"
         data = {
             "plugin_id": PLUGIN_ID,
             "organization_id": ORGANISATION_ID,
-            "collection_name": collection_name,
+            "collection_name": "collection_name",
             "bulk_write": False,
             "payload": payload,
         }
         response = requests.request("PUT", url, data=json.dumps(data))
-        r = response.json()
+        res = response.json()
+        return res
 
     @staticmethod
     def delete(payload):
-        url = f"https://api.zuri.chat/data/delete"
+        """[summary]
+
+        Args:
+            payload ([type]): [description]
+        """
+        url = "https://api.zuri.chat/data/delete"
         data = {
             "plugin_id": PLUGIN_ID,
             "organization_id": ORGANISATION_ID,
@@ -73,97 +108,149 @@ class CustomRequest:
             "payload": payload,
         }
         response = requests.request("DELETE", url, data=json.dumps(data))
-        r = response.json()
+        res = response.json()
+        return res
+
 
 def centrifugo_post(room, data):
-    command = {
-        "method": "publish",
-        "params": {
-            "channel": room,
-            "data": data
-        }
-    }
+    """[summary]
+
+    Args:
+        room ([type]): [description]
+        data ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """
+    command = {"method": "publish", "params": {"channel": room, "data": data}}
     data = json.dumps(command)
-    headers = {"Content-type": "application/json", "Authorization": "apikey " + ZURI_API_KEY}
+    headers = {
+        "Content-type": "application/json",
+        "Authorization": "apikey " + ZURI_API_KEY,
+    }
     resp = requests.post(CENTRIFUGO_LIVE_ENDPOINT, data=data, headers=headers)
     print(resp)
     # time.sleep(10)
     return resp.json()
 
-def isAuthorized(request):
+
+def is_authorized(request):
+    """[summary]
+
+    Args:
+        request ([type]): [description]
+
+    Raises:
+        AuthenticationFailed: [description]
+        ParseError: [description]
+        e: [description]
+
+    Returns:
+        [type]: [description]
+    """
     try:
-        authorization_content = request.headers['Authorization']
-        url = 'https://api.zuri.chat/auth/verify-token/'
-        headers = {"Authorization":authorization_content}
-        r = requests.request("GET", url=url, headers=headers)
-        print(r.status_code)
-        if r.status_code == 200:
+        authorization_content = request.headers["Authorization"]
+        url = "https://api.zuri.chat/auth/verify-token/"
+        headers = {"Authorization": authorization_content}
+        res = requests.request("GET", url=url, headers=headers)
+        print(res.status_code)
+        if res.status_code == 200:
             return True
         raise AuthenticationFailed(detail="Invalid Authorization type or token.")
 
     except KeyError:
         raise ParseError(detail="Missing 'Authorization' header.")
 
-    except AuthenticationFailed as e:
-        raise e
+    except AuthenticationFailed as _e:
+        return _e
 
-    except:
-        return False
 
-def isValidOrganisation(organisationId, request):
+def is_valid_organisation(organisation_id, request):
+    """[summary]
+
+    Args:
+        organisationId ([type]): [description]
+        request ([type]): [description]
+
+    Raises:
+        AuthenticationFailed: [description]
+        ParseError: [description]
+        e: [description]
+
+    Returns:
+        [type]: [description]
+    """
     try:
-        authorization_content = request.headers['Authorization']
-        url = f"https://api.zuri.chat/organizations/{organisationId}"
-        headers = {"Authorization":authorization_content}
-        r = requests.get(url, headers=headers)
-        print(r.status_code)
-        if r.status_code == 200:
+        authorization_content = request.headers["Authorization"]
+        url = f"https://api.zuri.chat/organizations/{organisation_id}"
+        headers = {"Authorization": authorization_content}
+        res = requests.get(url, headers=headers)
+        print(res.status_code)
+        if res.status_code == 200:
             return True
         raise AuthenticationFailed(detail="Invalid organizationId.")
 
     except KeyError:
         raise ParseError(detail="Missing 'Authorization' header.")
 
-    except AuthenticationFailed as e:
-        raise e
+    except AuthenticationFailed as _e:
+        return _e
 
-    except:
-        return False
 
 def custom_exception_handler(exc, context):
+    """[summary]
+
+    Args:
+        exc ([type]): [description]
+        context ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """
     response = exception_handler(exc, context)
 
     if isinstance(exc, requests.ConnectionError):
-        logging.error("An Error occurred while connecting to ZURI server: {}".format(exc))
+        logging.error(
+            f"An Error occurred while connecting to ZURI server: {exc}".format(exc)
+        )
         response = Response(
-            data={"message": "An Error occurred while connecting to ZURI server. Try again later."},
-            status=status.HTTP_503_SERVICE_UNAVAILABLE)
+            data={
+                "message": "An Error occurred while connecting to ZURI server. Try again later."
+            },
+            status=status.HTTP_503_SERVICE_UNAVAILABLE,
+        )
 
     if not response:
-        logging.error("Something unexpected happened: {}".format(exc))
+        logging.error(f"Something unexpected happened: {exc}".format(exc))
         response = Response(
             data={"message": "Something unexpected happened. Try again later."},
-            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+        )
     return response
 
 
-
 def sidebar_update(res):
-    {
-                "event": "sidebar_update",
-                "plugin_id": "sales.zuri.chat",
-                "data": {
-                    "name": "Company Sales Prospects",
-                    "group_name": "SALES",
-                    "show_group": False,
-                    "button_url": "/sales",
-                    "public_rooms": [res],
-                    "joined_rooms": [res],
-                }
-            }
-    return sidebar_update
+    """[summary]
 
+    Args:
+        res ([type]): [description]
 
+    Returns:
+        [type]: [description]
+    """
+    sidebar_updates = {
+        "event": "sidebar_update",
+        "plugin_id": "sales.zuri.chat",
+        "data": {
+            "name": "Company Sales Prospects",
+            "group_name": "SALES",
+            "show_group": False,
+            "button_url": "/sales",
+            "public_rooms": [res],
+            "joined_rooms": [res],
+        },
+    }
+    return sidebar_updates
 
 
 # write data ( collect_name, objr.ect_) r
@@ -182,35 +269,43 @@ def sidebar_update(res):
 # Centrifugo in Views
 
 
-
-
 def handle_failed_request(response=None):
-    UNEXPECTED_ERROR_MESSAGE = "Something unexpected happened. Try again later."
+    """[summary]
+
+    Args:
+        response ([type], optional): [description]. Defaults to None.
+
+    Returns:
+        [type]: [description]
+    """
+    error_message = "Something unexpected happened. Try again later."
 
     if response is None:
         return Response(
-            data={"message": UNEXPECTED_ERROR_MESSAGE},
-            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            data={"message": error_message},
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+        )
 
     status_code = response.status_code
 
     if status_code >= 500:
         return Response(
-            data={"message": "ZURI server returned a {} error. Try again later.".format(status_code)},
-            status=status.HTTP_502_BAD_GATEWAY)
-
-    try:
-        r = response.json()
-    except:
-        return Response(
-            data={"message": "ZURI server returned an invalid response.".format(status_code)},
-            status=status.HTTP_502_BAD_GATEWAY)
+            data={
+                "message": f"ZURI server returned a {status_code} error. Try again later.".format(
+                    status_code
+                )
+            },
+            status=status.HTTP_502_BAD_GATEWAY,
+        )
 
     if status_code >= 400:
         Response(
-            data={"message": "Something was wrong with your request. Check your payload."},
-            status=status_code)
+            data={
+                "message": "Something was wrong with your request. Check your payload."
+            },
+            status=status_code,
+        )
     return Response(
-            data={"message": UNEXPECTED_ERROR_MESSAGE},
-            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
+        data={"message": error_message},
+        status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+    )
