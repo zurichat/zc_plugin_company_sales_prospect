@@ -11,52 +11,40 @@ on:
 jobs:
 
   deploy:
-    
+
 
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
-      - name: Use cached node_modules
-        uses: c-hive/gha-yarn-cache@v2
-        with:
-          directory: react-spa
+
+
       - name: Install yarn dependencies and build react-spa project
         run: |
-          cd react-spa
+          cd frontend/mainApp/
           yarn install
           yarn build
-          cd epictetus
+          cd ../../frontend/rootApp
           yarn install
           yarn build
- 
+
+      - name: Copy Root dist folder to server
+        uses: Creepios/sftp-action@v1.0.1
+        with:
+          password: ${{ secrets.SSH_PASS }}
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          localPath: './frontend/rootApp/dist/'
+          remotePath: '/var/www/zc_plugin_company_sales_prospect/backend/build/root/'
+
       - name: Copy Epictetus dist folder to server
         uses: Creepios/sftp-action@v1.0.1
         with:
           password: ${{ secrets.SSH_PASS }}
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
-          localPath: './react-spa/epictetus/dist/'
-          remotePath: '/var/www/zc_plugin_company_sales_prospect/react-spa/epictetus/dist/'
-
-      - name: Copy dist folder to server
-        uses: Creepios/sftp-action@v1.0.1
-        with:
-          password: ${{ secrets.SSH_PASS }}
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          localPath: './react-spa/dist/'
-          remotePath: '/var/www/zc_plugin_company_sales_prospect/react-spa/dist/'
-
-
-      - name: Copy static folder to server
-        uses: Creepios/sftp-action@v1.0.1
-        with:
-          password: ${{ secrets.SSH_PASS }}
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          localPath: './static/'
-          remotePath: '/var/www/zc_plugin_company_sales_prospect/static/'
+          localPath: './frontend/mainApp/dist/'
+          remotePath: '/var/www/zc_plugin_company_sales_prospect/backend/build/main/'
 
 
       - name: Deployment
@@ -70,9 +58,12 @@ jobs:
             git checkout dev
             git stash
             git pull origin dev
+            cd backend
             pip install -r requirements.txt
             python manage.py collectstatic --noinput
-            cd react-spa/epictetus
+            pkill -u ${{ secrets.SSH_USER }} gunicorn
+            gunicorn --bind 0.0.0.0:8200 conf.wsgi --daemon
+            cd ../frontend/rootApp
             yarn install
-            #systemctl daemon-reload
-      
+            cd ../../frontend/mainApp
+            yarn install

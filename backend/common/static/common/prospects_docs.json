@@ -1,0 +1,277 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Sales Prospects API (Prospect endpoints)",
+    "description": "Sales prospects is a plugin that lets you to keep track of your organization’s prospects and deals.",
+    "version": "1.0.0",
+    "contact": {
+      "email": "developer@zuri.chat"
+    }
+  },
+  "tags": [
+    {
+      "name": "Prospects"
+    }
+  ],
+  "paths": {
+    "/api/v1/prospects/": {
+      "get": {
+        "tags": [
+          "Prospects"
+        ],
+        "description": "Reads data from ZuriCore DB and return list of available prospects.",
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/prospect"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/_id"
+          },
+          {
+            "$ref": "#/components/parameters/first_name"
+          },
+          {
+            "$ref": "#/components/parameters/last_name"
+          },
+          {
+            "$ref": "#/components/parameters/company"
+          },
+          {
+            "$ref": "#/components/parameters/title"
+          },
+          {
+            "$ref": "#/components/parameters/email"
+          },
+          {
+            "$ref": "#/components/parameters/deal_stages"
+          }
+        ]
+      }
+    },
+    "/api/v1/prospects/{id}/": {
+      "get": {
+        "tags": [
+          "Prospects"
+        ],
+        "description": "Fetches prospect with the specified id from the DB",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of prospect to fetch",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/prospect"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/prospects/create/": {
+      "post": {
+        "tags": [
+          "Prospects"
+        ],
+        "description": "Creates a new prospect",
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/prospect"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "title": "Prospect",
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "default": "John Doe"
+                  },
+                  "email": {
+                    "type": "string",
+                    "default": "example@mail.com"
+                  },
+                  "phone_number": {
+                    "type": "integer",
+                    "default": 1234567890
+                  },
+                  "deal_stages": {
+                    "type": "string",
+                    "enum": [
+                      "prospect",
+                      "proposal",
+                      "negotiation",
+                      "closed"
+                    ],
+                    "default": "proposal"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/prospects/update/{id}/": {
+      "put": {
+        "tags": [
+          "Prospects"
+        ],
+        "description": "Edits a prospect with specified id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of prospect to be edited",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/prospect"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "app_id": []
+    }
+  ],
+  "components": {
+    "schemas": {
+      "prospect": {
+        "title": "Prospect",
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "title": "id",
+            "default": "123abc456def"
+          },
+          "name": {
+            "type": "string",
+            "default": "John Doe"
+          },
+          "email": {
+            "type": "string",
+            "default": "example@mail.com"
+          },
+          "deal_stages": {
+            "type": "string",
+            "enum": [
+              "prospect",
+              "proposal",
+              "negotiation",
+              "closed"
+            ],
+            "default": "proposal"
+          }
+        }
+      }
+    },
+    "parameters": {
+      "_id": {
+        "name": "_id",
+        "in": "query",
+        "description": "**_id**. *Example: 23142dfdwr432*. You can fetch prospects by their id.",
+        "schema": {
+          "type": "string",
+          "default": "123abc456def"
+        },
+        "required": true
+      },
+      "name": {
+        "name": "last_name",
+        "in": "query",
+        "description": "**Name Last name**. *Example: John Doe*. This contains the name of the prospect",
+        "schema": {
+          "type": "string",
+          "default": "Doe"
+        },
+        "required": true
+      },
+      "email": {
+        "name": "email",
+        "in": "query",
+        "description": "**Email**. *Example: example@email.com*. This is the email of the propsect",
+        "schema": {
+          "type": "string",
+          "default": "example@mail.com"
+        },
+        "required": true
+      },
+      "deal_stages": {
+        "name": "deals_stages",
+        "in": "query",
+        "description": "**Deal stages**. *Example: prospect*. This is the stage of a prospect deal",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "prospect",
+            "proposal",
+            "negotiation",
+            "closed"
+          ],
+          "default": "proposal"
+        },
+        "required": true
+      }
+    },
+    "securitySchemes": {
+      "app_id": {
+        "type": "apiKey",
+        "description": "API key to authorize requests.",
+        "name": "Session",
+        "in": "cookie"
+      }
+    }
+  },
+  "servers": [
+    {
+      "description": "Sales Prospects API",
+      "url": "https://sales.zuri.chat/"
+    }
+  ]
+}
