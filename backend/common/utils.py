@@ -15,7 +15,9 @@ API_KEY = settings.API_KEY
 CENTRIFUGO_DEBUG_ENDPOINT = settings.CENTRIFUGO_DEBUG_ENDPOINT
 
 PLUGIN_ID = settings.PLUGIN_ID
-ORGANISATION_ID = settings.ORGANISATION_ID
+WRITE = settings.WRITE
+READ = settings.READ
+DELETE = settings.DELETE
 
 
 @dataclass
@@ -27,7 +29,7 @@ class CustomRequest:
     """
 
     @staticmethod
-    def get(org_id, collection_name):
+    def get(org_id, collection_name, data=None):
         """[summary]
 
         Args:
@@ -37,8 +39,10 @@ class CustomRequest:
         Returns:
             [type]: [description]
         """
-        url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/{collection_name}/{org_id}"
-        response = requests.get(url)  # the important function
+        
+        url = f"{READ}/{PLUGIN_ID}/{collection_name}/{org_id}"
+        response = requests.get(url)# the important function
+        print (data)
         if response.status_code == 200:
             result = response.json()
             result["status_code"] = response.status_code
@@ -46,7 +50,7 @@ class CustomRequest:
         return response
 
     @staticmethod
-    def post(collection_name, payload):
+    def post(org_id, collection_name, payload):
         """[summary]
 
         Args:
@@ -57,16 +61,15 @@ class CustomRequest:
         Returns:
             [type]: [description]
         """
-        url = "https://api.zuri.chat/data/write"
         data = {
             "plugin_id": PLUGIN_ID,
-            "organization_id": ORGANISATION_ID,
+            "organization_id": org_id,
             "collection_name": collection_name,
             "bulk_write": False,
             "payload": payload,
         }
 
-        response = requests.post(url, data=json.dumps(data))
+        response = requests.post(WRITE, data=json.dumps(data))
         if response.status_code == 201:
             result = response.json()
             result["status_code"] = response.status_code
@@ -74,42 +77,47 @@ class CustomRequest:
         return response
 
     @staticmethod
-    def put(payload):
+    def put(org_id, collection_name, payload, object_id):
         """[summary]
 
         Args:
             payload ([type]): [description]
         """
-        url = "https://api.zuri.chat/data/write"
         data = {
             "plugin_id": PLUGIN_ID,
-            "organization_id": ORGANISATION_ID,
-            "collection_name": "collection_name",
+            "organization_id": org_id,
+            "collection_name": collection_name,
+            "object_id": object_id,
             "bulk_write": False,
             "payload": payload,
         }
-        response = requests.request("PUT", url, data=json.dumps(data))
-        res = response.json()
-        return res
+        response = requests.put(WRITE, data=json.dumps(data))
+        if response.status_code == 200:
+            result = response.json()
+            result["status_code"] = response.status_code
+            return result
+        return response
 
     @staticmethod
-    def delete(payload):
+    def delete(org_id, collection_name, object_id):
         """[summary]
 
         Args:
             payload ([type]): [description]
         """
-        url = "https://api.zuri.chat/data/delete"
         data = {
             "plugin_id": PLUGIN_ID,
-            "organization_id": ORGANISATION_ID,
-            "collection_name": "prospects",
-            "bulk_write": False,
-            "payload": payload,
+            "organization_id": org_id,
+            "collection_name": collection_name,
+            "object_id": object_id,
         }
-        response = requests.request("DELETE", url, data=json.dumps(data))
-        res = response.json()
-        return res
+        print(data)
+        response = requests.post(DELETE, data=json.dumps(data))
+        if response.status_code == 200:
+            result = response.json()
+            result["status_code"] = response.status_code
+            return result
+        return response
 
 
 def centrifugo_post(room, data):
@@ -165,7 +173,7 @@ def is_authorized(request):
         return _e
 
 
-def is_valid_organisation(organisation_id, request):
+def is_valid_organisation(org_id, request):
     """[summary]
 
     Args:
@@ -182,7 +190,7 @@ def is_valid_organisation(organisation_id, request):
     """
     try:
         authorization_content = request.headers["Authorization"]
-        url = f"https://api.zuri.chat/organizations/{organisation_id}"
+        url = f"https://api.zuri.chat/organizations/{org_id}"
         headers = {"Authorization": authorization_content}
         res = requests.get(url, headers=headers)
         print(res.status_code)

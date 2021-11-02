@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "drf_spectacular",
     "corsheaders",
+    "drf_yasg",
     # local apps
     "deals",
     "prospect",
@@ -171,7 +172,6 @@ USE_TZ = True
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "common/static/common"),
     os.path.join(BASE_DIR, "build/root"),  # root_DIST
     os.path.join(BASE_DIR, "build/main"),  # main_DIST
 ]
@@ -182,6 +182,10 @@ PLUGIN_ID = "6169bdd9eb5b3de309e7e27a"
 PLUGIN_NAME = "Company Sales Prospects"
 ORGANISATION_ID = "6169c10ceb5b3de309e7e2a6"
 DESCRIPTION = "We provide a list of potential clients for your business"
+
+WRITE = "https://api.zuri.chat/data/write"
+READ = "https://api.zuri.chat/data/read"
+DELETE = "https://api.zuri.chat/data/delete"
 
 PROSPECTS_COLLECTION_NAME = "prospects"
 DEALS_COLLECTION_NAME = "deals"

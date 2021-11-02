@@ -10,12 +10,12 @@ from deals.views import (
 from django.urls import path
 
 urlpatterns = [
-    path("create/", DealCreateView.as_view()),
-    path("update/", DealUpdateView.as_view()),
-    path("", DealsListView.as_view()),
-    path("re-arrange/", ReArrangeDeals.as_view()),
-    path("delete/", DealsDeleteView.as_view()),
-    path("delete/batch/", DealsBatchDeleteView.as_view()),
+    path("deals/org/<str:org_id>/create/", DealCreateView.as_view()),
+    path("deals/org/<str:org_id>/update/", DealUpdateView.as_view()),
+    path("deals/org/<str:org_id>/", DealsListView.as_view()),
+    path("deals/org/<str:org_id>/re-arrange/", ReArrangeDeals.as_view()),
+    path("deals/org/<str:org_id>/delete/", DealsDeleteView.as_view()),
+    path("deals/org/<str:org_id>/delete/batch/", DealsBatchDeleteView.as_view()),
     # path("stage/", DealsStageListView.as_view()),
-    path("filter/", DealsFilterListView.as_view()),
+    path("deals/org/<str:org_id>/filter/", DealsFilterListView.as_view()),
 ]
