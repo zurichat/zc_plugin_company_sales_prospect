@@ -180,8 +180,40 @@ class ProspectsBatchDeleteView(APIView):
 
         filter_data = request.data.get("filter")
 
-        response = requests.delete(org_id, "prospects", filter_data=filter_data)
-        return Response({"contact": response}, status=response["status_code"])
+        url = "https://api.zuri.chat/data/delete"
+        data = {
+            "bulk_delete": True,
+            "plugin_id": PLUGIN_ID,
+            "organization_id": org_id,
+            "collection_name": "prospects",
+            "filter": {"email": {"$in": filter_data}},
+        }
+
+        response = requests.request("POST", url, data=json.dumps(data))
+        if response.status_code == 200:
+            res = response.json()
+            if res["data"]["deleted_count"] == 0:
+                return Response(
+                    data={
+                        "message": "There is no prospect matching the 'filter' you supplied."
+                    },
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+            centrifugo_post(
+                "Prospects",
+                {
+                    "event": "delete_prospect",
+                    "token": "elijah",
+                    "object": {
+                        "data": filter_data,
+                    },
+                },
+            )
+            return Response(
+                data={"message": " Prospect list  deleted successful."},
+                status=status.HTTP_200_OK,
+            )
+        return handle_failed_request(response=response)
 
 
 class ProspectsDeleteView(APIView):
@@ -203,7 +235,7 @@ class ProspectsDeleteView(APIView):
         if not is_valid_organisation(org_id, request):
             return handle_failed_request(response=None)
 
-        response = CustomRequest.delete(org_id, "prospects", object_id=object_id)
+        response = CustomRequest.delete(org_id, "prospects", object_id)
         return Response({"message": response}, status=response["status_code"])
 
 
