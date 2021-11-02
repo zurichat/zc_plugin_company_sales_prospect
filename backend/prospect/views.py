@@ -22,7 +22,6 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 PLUGIN_ID = settings.PLUGIN_ID
-ORGANISATION_ID = settings.ORGANISATION_ID
 # Create your views here.
 
 
@@ -59,14 +58,14 @@ def search_prospects(request, search):
             status=status.HTTP_401_UNAUTHORIZED,
         )
 
-    if not is_valid_organisation(ORGANISATION_ID, request):
+    if not is_valid_organisation(org_id, request):
         return Response(
             data={"message": "Invalid/Missing organization id"},
             status=status.HTTP_401_UNAUTHORIZED,
         )
 
     # import requests
-    url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/prospects/{ORGANISATION_ID}/"
+    url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/prospects/{org_id}/"
     response = requests.request("GET", url)
     res = response.json()
     # response code should be 200
@@ -89,7 +88,7 @@ class GetPropects(APIView):
     This class allows the Deals page to get the list of avaliable prospects
     """
 
-    def get(self, request):
+    def get(self, request, org_id):
         """
         this function preforms the get request to the database
         """
@@ -97,9 +96,9 @@ class GetPropects(APIView):
         if not is_authorized(request):
             return handle_failed_request(response=None)
 
-        if not is_valid_organisation(ORGANISATION_ID, request):
+        if not is_valid_organisation(org_id, request):
             return handle_failed_request(response=None)
-        url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/prospects/{ORGANISATION_ID}"
+        url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/prospects/{org_id}"
         response = requests.request("GET", url)
         if response.status_code == 200:
             response = response.json()
@@ -125,10 +124,10 @@ class ProspectsListView(APIView):
         if not is_authorized(request):
             return handle_failed_request(response=None)
 
-        if not is_valid_organisation(ORGANISATION_ID, request):
+        if not is_valid_organisation(org_id, request):
             return handle_failed_request(response=None)
 
-        # url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/prospects/{ORGANISATION_ID}"
+        # url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/prospects/{org_id}"
         # response = requests.request("GET", url)
         print(request)
         print(org_id)
@@ -194,7 +193,7 @@ class ProspectsCreateView(APIView):
         if not is_authorized(request):
             return handle_failed_request(response=None)
 
-        if not is_valid_organisation(ORGANISATION_ID, request):
+        if not is_valid_organisation(org_id, request):
             return handle_failed_request(response=None)
 
         print(request)
@@ -209,7 +208,7 @@ class ProspectsCreateView(APIView):
         payload = {
             "name": serializer.data.get("name"),
             "email": serializer.data.get("email"),
-            "organisation_id": org_id,
+            "org_id": org_id,
             "user_id": user_id,
             "phone_number": serializer.data.get("phone_number"),
             "company": serializer.data.get("company"),
@@ -263,7 +262,7 @@ class ProspectsUpdateView(APIView):
         if not is_authorized(request):
             return handle_failed_request(response=None)
 
-        if not is_valid_organisation(ORGANISATION_ID, request):
+        if not is_valid_organisation(org_id, request):
             return handle_failed_request(response=None)
         url = "https://api.zuri.chat/data/write"
 
@@ -314,7 +313,7 @@ class ProspectsUpdateView(APIView):
 class ProspectsBatchDeleteView(APIView):
     """This Class handles the batch delete view for prospects"""
 
-    def post(self, request):
+    def post(self, request, org_id):
         """
         this function preforms the put request to the database
         """
@@ -322,7 +321,7 @@ class ProspectsBatchDeleteView(APIView):
         if not is_authorized(request):
             return handle_failed_request(response=None)
 
-        if not is_valid_organisation(ORGANISATION_ID, request):
+        if not is_valid_organisation(org_id, request):
             return handle_failed_request(response=None)
 
         filter_data = request.data.get("filter")
@@ -331,7 +330,7 @@ class ProspectsBatchDeleteView(APIView):
         data = {
             "bulk_delete": True,
             "plugin_id": PLUGIN_ID,
-            "organization_id": ORGANISATION_ID,
+            "organization_id": org_id,
             "collection_name": "prospects",
             "filter": {"email": {"$in": filter_data}},
         }
@@ -371,7 +370,7 @@ class ProspectsDeleteView(APIView):
     permission_classes = [AllowAny]
     authentication_classes = []
 
-    def delete(self, request, search, **kwargs):
+    def delete(self, request, org_id, search):
         """
         this function preforms the delete request to the database
         """
@@ -379,13 +378,13 @@ class ProspectsDeleteView(APIView):
         if not is_authorized(request):
             return handle_failed_request(response=None)
 
-        if not is_valid_organisation(ORGANISATION_ID, request):
+        if not is_valid_organisation(org_id, request):
             return handle_failed_request(response=None)
 
         url = "https://api.zuri.chat/data/delete"
         data = {
             "plugin_id": PLUGIN_ID,
-            "organization_id": ORGANISATION_ID,
+            "organization_id": org_id,
             "collection_name": "prospects",
             "object_id": search,
         }
@@ -419,7 +418,7 @@ class ProspectDetailsView(APIView):
     serializer_class = ProspectSerializer
     queryset = None
 
-    def put(self, request):
+    def put(self, request, org_id):
         """
         this function preforms the put request to the database
         """
@@ -427,7 +426,7 @@ class ProspectDetailsView(APIView):
         # if not is_authorized(request):
         # return handle_failed_request(response=None)
 
-        # if not is_valid_organisation(ORGANISATION_ID, request):
+        # if not is_valid_organisation(org_id, request):
         # return handle_failed_request(response=None)
 
         url = "https://api.zuri.chat/data/write"
@@ -437,7 +436,7 @@ class ProspectDetailsView(APIView):
         object_id = request.data.get("object_id")
         data = {
             "plugin_id": PLUGIN_ID,
-            "organization_id": ORGANISATION_ID,
+            "organization_id": org_id,
             "collection_name": "prospects",
             "bulk_write": False,
             "object_id": object_id,

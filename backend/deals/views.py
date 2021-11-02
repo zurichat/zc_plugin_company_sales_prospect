@@ -16,7 +16,6 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 PLUGIN_ID = settings.PLUGIN_ID
-ORGANISATION_ID = settings.ORGANISATION_ID
 
 
 class DealCreateView(APIView):
@@ -28,7 +27,7 @@ class DealCreateView(APIView):
     serializer_class = DealSerializer
     queryset = None
 
-    def post(self, request):
+    def post(self, request, org_id):
         """
         This handles the post request to the DB
         """
@@ -36,7 +35,7 @@ class DealCreateView(APIView):
         if not is_authorized(request):
             return handle_failed_request(response=None)
 
-        if not is_valid_organisation(ORGANISATION_ID, request):
+        if not is_valid_organisation(org_id, request):
             return handle_failed_request(response=None)
 
         serializer = DealSerializer(data=request.data)
@@ -44,7 +43,7 @@ class DealCreateView(APIView):
         url = "https://api.zuri.chat/data/write"
         data = {
             "plugin_id": PLUGIN_ID,
-            "organization_id": ORGANISATION_ID,
+            "organization_id": org_id,
             "collection_name": "deals",
             "bulk_write": False,
             "payload": {
@@ -58,7 +57,7 @@ class DealCreateView(APIView):
         }
         prospect = serializer.data.get("prospect_id")
 
-        urlprospect = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/prospects/{ORGANISATION_ID}?_id={prospect}"
+        urlprospect = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/prospects/{org_id}?_id={prospect}"
         responseprospect = requests.request("GET", urlprospect)
         if responseprospect.status_code == 200:
             rprospect = responseprospect.json()
@@ -101,7 +100,7 @@ class DealUpdateView(APIView):
     serializer_class = DealSerializer
     queryset = None
 
-    def put(self, request):
+    def put(self, request, org_id):
         """
         This handles the put request to the DB
         """
@@ -109,7 +108,7 @@ class DealUpdateView(APIView):
         if not is_authorized(request):
             return handle_failed_request(response=None)
 
-        if not is_valid_organisation(ORGANISATION_ID, request):
+        if not is_valid_organisation(org_id, request):
             return handle_failed_request(response=None)
 
         _id = self.request.query_params.get("id")
@@ -124,7 +123,7 @@ class DealUpdateView(APIView):
         serializer.is_valid(raise_exception=True)
         data = {
             "plugin_id": PLUGIN_ID,
-            "organization_id": ORGANISATION_ID,
+            "organization_id": org_id,
             "collection_name": "deals",
             "bulk_write": False,
             "object_id": _id,
@@ -177,7 +176,7 @@ class DealsListView(APIView):
     serializer_class = DealSerializer
     queryset = None
 
-    def get(self, request):
+    def get(self, request, org_id):
         """
         This handles the get request to the DB
         """
@@ -185,11 +184,11 @@ class DealsListView(APIView):
         if not is_authorized(request):
             return handle_failed_request(response=None)
 
-        if not is_valid_organisation(ORGANISATION_ID, request):
+        if not is_valid_organisation(org_id, request):
             return handle_failed_request(response=None)
 
         centrifugo_post("Deals", {"event": "join", "token": "elijah"})
-        url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/deals/{ORGANISATION_ID}"
+        url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/deals/{org_id}"
         response = requests.request("GET", url)
         res = response.json()
         if response.status_code == 200:
@@ -209,7 +208,7 @@ class ReArrangeDeals(APIView):
     serializer_class = DealUpdateSerializer
     queryset = None
 
-    def put(self, request):
+    def put(self, request, org_id):
         """
         This handles the put request to the DB
         """
@@ -217,7 +216,7 @@ class ReArrangeDeals(APIView):
         if not is_authorized(request):
             return handle_failed_request(response=None)
 
-        if not is_valid_organisation(ORGANISATION_ID, request):
+        if not is_valid_organisation(org_id, request):
             return handle_failed_request(response=None)
 
         _id = self.request.query_params.get("id")
@@ -235,7 +234,7 @@ class ReArrangeDeals(APIView):
         if serializer.data.get("close_date"):
             data = {
                 "plugin_id": PLUGIN_ID,
-                "organization_id": ORGANISATION_ID,
+                "organization_id": org_id,
                 "collection_name": "deals",
                 "bulk_write": False,
                 "object_id": _id,
@@ -280,7 +279,7 @@ class ReArrangeDeals(APIView):
         else:  # the deal card has not been drag to close deal section
             data = {
                 "plugin_id": PLUGIN_ID,
-                "organization_id": ORGANISATION_ID,
+                "organization_id": org_id,
                 "collection_name": "deals",
                 "bulk_write": False,
                 "object_id": _id,
@@ -329,7 +328,7 @@ class DealsFilterListView(APIView):
     filter params can be anything on the deal name,stage,etc.
     """
 
-    def get(self, request):
+    def get(self, request, org_id):
         """
         This handles the put request to the DB
         """
@@ -337,7 +336,7 @@ class DealsFilterListView(APIView):
         if not is_authorized(request):
             return handle_failed_request(response=None)
 
-        if not is_valid_organisation(ORGANISATION_ID, request):
+        if not is_valid_organisation(org_id, request):
             return handle_failed_request(response=None)
 
         search = self.request.query_params.get("filter")
@@ -345,7 +344,7 @@ class DealsFilterListView(APIView):
         data = {
             "plugin_id": PLUGIN_ID,
             "collection_name": "deals",
-            "organization_id": ORGANISATION_ID,
+            "organization_id": org_id,
             "filter": {
                 "$or": [
                     {"name": {"$regex": search}},
@@ -367,7 +366,7 @@ class DealsFilterListView(APIView):
 class DealsBatchDeleteView(APIView):
     """This handles the mutiple delete process for deals"""
 
-    def post(self, request):
+    def post(self, request, org_id):
         """
         This handles the post request to the DB
         """
@@ -375,7 +374,7 @@ class DealsBatchDeleteView(APIView):
         if not is_authorized(request):
             return handle_failed_request(response=None)
 
-        if not is_valid_organisation(ORGANISATION_ID, request):
+        if not is_valid_organisation(org_id, request):
             return handle_failed_request(response=None)
 
         filter_data = request.data.get("filter")
@@ -384,7 +383,7 @@ class DealsBatchDeleteView(APIView):
         data = {
             "bulk_delete": True,
             "plugin_id": PLUGIN_ID,
-            "organization_id": ORGANISATION_ID,
+            "organization_id": org_id,
             "collection_name": "deals",
             "filter": {"prospect_id": {"$in": filter_data}},
         }
@@ -420,7 +419,7 @@ class DealsDeleteView(APIView):
     Pass the id as a parameter eg https://sales.zuri.chat/deals/delete/?id=123234555
     """
 
-    def post(self, request):
+    def post(self, request, org_id):
         """
         This handles the post request to the DB
         """
@@ -428,7 +427,7 @@ class DealsDeleteView(APIView):
         if not is_authorized(request):
             return handle_failed_request(response=None)
 
-        if not is_valid_organisation(ORGANISATION_ID, request):
+        if not is_valid_organisation(org_id, request):
             return handle_failed_request(response=None)
 
         _id = self.request.query_params.get("id")
@@ -436,7 +435,7 @@ class DealsDeleteView(APIView):
         url = "https://api.zuri.chat/data/delete"
         data = {
             "plugin_id": PLUGIN_ID,
-            "organization_id": ORGANISATION_ID,
+            "organization_id": org_id,
             "collection_name": "deals",
             "bulk_write": False,
             "object_id": _id,
