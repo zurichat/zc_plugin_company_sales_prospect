@@ -39,10 +39,10 @@ class CustomRequest:
         Returns:
             [type]: [description]
         """
-        
+
         url = f"{READ}/{PLUGIN_ID}/{collection_name}/{org_id}"
-        response = requests.get(url)# the important function
-        print (data)
+        response = requests.get(url)  # the important function
+        print(data)
         if response.status_code == 200:
             result = response.json()
             result["status_code"] = response.status_code
@@ -99,18 +99,23 @@ class CustomRequest:
         return response
 
     @staticmethod
-    def delete(org_id, collection_name, object_id):
+    def delete(org_id, collection_name, object_id=None, filter_data=None):
         """[summary]
 
         Args:
             payload ([type]): [description]
         """
+
         data = {
             "plugin_id": PLUGIN_ID,
             "organization_id": org_id,
             "collection_name": collection_name,
-            "object_id": object_id,
         }
+        if filter_data is not None:
+            data["bulk_delete"] = True
+            data["filter"] = {"email": {"$in": filter_data}}
+        if object_id is not None:
+            data["object_id"] = object_id
         print(data)
         response = requests.post(DELETE, data=json.dumps(data))
         if response.status_code == 200:
