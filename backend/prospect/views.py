@@ -52,17 +52,17 @@ def search_prospects(request, search):
     this fuction will allow the user to search for a prospects
     """
     # # check authentication
-    if not is_authorized(request):
-        return Response(
-            data={"message": "Missing Cookie/token header or session expired"},
-            status=status.HTTP_401_UNAUTHORIZED,
-        )
+    # if not is_authorized(request):
+    #     return Response(
+    #         data={"message": "Missing Cookie/token header or session expired"},
+    #         status=status.HTTP_401_UNAUTHORIZED,
+    #     )
 
-    if not is_valid_organisation(org_id, request):
-        return Response(
-            data={"message": "Invalid/Missing organization id"},
-            status=status.HTTP_401_UNAUTHORIZED,
-        )
+    # if not is_valid_organisation(org_id, request):
+    #     return Response(
+    #         data={"message": "Invalid/Missing organization id"},
+    #         status=status.HTTP_401_UNAUTHORIZED,
+    #     )
 
     # import requests
     url = f"https://api.zuri.chat/data/read/{PLUGIN_ID}/prospects/{org_id}/"
@@ -370,7 +370,7 @@ class ProspectsDeleteView(APIView):
     permission_classes = [AllowAny]
     authentication_classes = []
 
-    def delete(self, request, org_id, search):
+    def delete(self, request, org_id, search,**kwargs):
         """
         this function preforms the delete request to the database
         """
