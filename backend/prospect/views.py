@@ -1,9 +1,6 @@
-import json
-
 import requests
 from common.utils import (
     CustomRequest,
-    centrifugo_post,
     handle_failed_request,
     is_authorized,
     is_valid_organisation,
@@ -83,26 +80,7 @@ def search_prospects(request, org_id, search):
     return JsonResponse({"message": "not found"})
 
 
-class ProspectsListView(APIView):
-    """
-    This class returns a list of avaliable prospects in the DB
-    """
-
-    def get(self, request, org_id):
-        """
-        this function preforms the get request to the database
-        """
-        # check authentication
-        if not is_authorized(request):
-            return handle_failed_request(response=None)
-
-        if not is_valid_organisation(org_id, request):
-            return handle_failed_request(response=None)
-        response = CustomRequest.get(org_id, "prospects")
-        return Response({"contact": response}, status=response["status_code"])
-
-
-class ProspectsCreateView(APIView):
+class Prospects(APIView):
     """
     This Class perfoms the create prospects function
     """
@@ -110,16 +88,31 @@ class ProspectsCreateView(APIView):
     serializer_class = ProspectSerializer
     queryset = None
 
+    def get(self, request, org_id):
+        """
+        this function preforms the get request to the database
+        """
+        # check authentication
+        # if not is_authorized(request):
+        #     return handle_failed_request(response=None)
+
+        # if not is_valid_organisation(org_id, request):
+        #     return handle_failed_request(response=None)
+
+        print(request)
+        response = CustomRequest.get(org_id, "prospects")
+        return Response({"contact": response}, status=response["status_code"])
+
     def post(self, request, org_id):
         """
         this function preforms the post request to the database
         """
         # # check authentication
-        if not is_authorized(request):
-            return handle_failed_request(response=None)
+        # if not is_authorized(request):
+        #     return handle_failed_request(response=None)
 
-        if not is_valid_organisation(org_id, request):
-            return handle_failed_request(response=None)
+        # if not is_valid_organisation(org_id, request):
+        #     return handle_failed_request(response=None)
 
         serializer = ProspectSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -138,10 +131,13 @@ class ProspectsCreateView(APIView):
         return Response({"contact": response}, status=response["status_code"])
 
 
-class ProspectsUpdateView(APIView):
+class ProspectDetail(APIView):
     """
-    This class handles the update prospects process
+    This class handles the update/delete prospects process
     """
+
+    permission_classes = [AllowAny]
+    authentication_classes = []
 
     serializer_class = ProspectSerializer
     queryset = None
@@ -163,11 +159,25 @@ class ProspectsUpdateView(APIView):
         response = CustomRequest.put(org_id, "prospects", payload, object_id)
         return Response({"contact": response}, status=response["status_code"])
 
+    def delete(self, request, org_id, object_id):
+        """
+        this function preforms the delete request to the database
+        """
+        # check authentication
+        if not is_authorized(request):
+            return handle_failed_request(response=None)
+
+        if not is_valid_organisation(org_id, request):
+            return handle_failed_request(response=None)
+
+        response = CustomRequest.delete(org_id, "prospects", object_id=object_id)
+        return Response({"message": response}, status=response["status_code"])
+
 
 class ProspectsBatchDeleteView(APIView):
     """This Class handles the batch delete view for prospects"""
 
-    def post(self, request, org_id):
+    def delete(self, request, org_id):
         """
         this function preforms the put request to the database
         """
@@ -180,123 +190,5 @@ class ProspectsBatchDeleteView(APIView):
 
         filter_data = request.data.get("filter")
 
-        url = "https://api.zuri.chat/data/delete"
-        data = {
-            "bulk_delete": True,
-            "plugin_id": PLUGIN_ID,
-            "organization_id": org_id,
-            "collection_name": "prospects",
-            "filter": {"email": {"$in": filter_data}},
-        }
-
-        response = requests.request("POST", url, data=json.dumps(data))
-        if response.status_code == 200:
-            res = response.json()
-            if res["data"]["deleted_count"] == 0:
-                return Response(
-                    data={
-                        "message": "There is no prospect matching the 'filter' you supplied."
-                    },
-                    status=status.HTTP_400_BAD_REQUEST,
-                )
-            centrifugo_post(
-                "Prospects",
-                {
-                    "event": "delete_prospect",
-                    "token": "elijah",
-                    "object": {
-                        "data": filter_data,
-                    },
-                },
-            )
-            return Response(
-                data={"message": " Prospect list  deleted successful."},
-                status=status.HTTP_200_OK,
-            )
-        return handle_failed_request(response=response)
-
-
-class ProspectsDeleteView(APIView):
-    """
-    this class handles the delete process for each prospect
-    """
-
-    permission_classes = [AllowAny]
-    authentication_classes = []
-
-    def delete(self, request, org_id, object_id):
-        """
-        this function preforms the delete request to the database
-        """
-        # check authentication
-        if not is_authorized(request):
-            return handle_failed_request(response=None)
-
-        if not is_valid_organisation(org_id, request):
-            return handle_failed_request(response=None)
-
-        response = CustomRequest.delete(org_id, "prospects", object_id)
+        response = CustomRequest.delete(org_id, "prospects", filter_data=filter_data)
         return Response({"message": response}, status=response["status_code"])
-
-
-class ProspectDetailsView(APIView):
-    """
-    this class handles the detail view for each prospect
-    """
-
-    serializer_class = ProspectSerializer
-    queryset = None
-
-    def put(self, request, org_id):
-        """
-        this function preforms the put request to the database
-        """
-        # check authorization
-        # if not is_authorized(request):
-        # return handle_failed_request(response=None)
-
-        # if not is_valid_organisation(org_id, request):
-        # return handle_failed_request(response=None)
-
-        url = "https://api.zuri.chat/data/write"
-        serializer = ProspectSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-
-        object_id = request.data.get("object_id")
-        data = {
-            "plugin_id": PLUGIN_ID,
-            "organization_id": org_id,
-            "collection_name": "prospects",
-            "bulk_write": False,
-            "object_id": object_id,
-            "payload": serializer.data,
-        }
-        response = requests.put(url, data=json.dumps(data))
-
-        if response.status_code in [200, 201]:
-            res = response.json()
-            if res["data"]["matched_documents"] == 0:
-                return Response(
-                    data={
-                        "message": "There is no prospect with the 'object_id' you supplied."
-                    },
-                    status=status.HTTP_400_BAD_REQUEST,
-                )
-
-            if res["data"]["modified_documents"] == 0:
-                return Response(
-                    data={
-                        "message": "Prospect update failed. Empty data or invalid values was passed."
-                    },
-                    status=status.HTTP_400_BAD_REQUEST,
-                )
-            centrifugo_post(
-                "Prospects",
-                {
-                    "event": "edit_prospect",
-                    "token": "elijah",
-                    "object": serializer.data,
-                },
-            )
-            return Response(data=res, status=status.HTTP_200_OK)
-        return handle_failed_request(response=response)
