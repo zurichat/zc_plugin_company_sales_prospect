@@ -29,7 +29,7 @@ class CustomRequest:
     """
 
     @staticmethod
-    def get(org_id, collection_name, data=None):
+    def get(org_id, collection_name, object_id=None):
         """[summary]
 
         Args:
@@ -41,16 +41,31 @@ class CustomRequest:
         """
 
         url = f"{READ}/{PLUGIN_ID}/{collection_name}/{org_id}"
-        response = requests.get(url)  # the important function
-        print(data)
-        if response.status_code == 200:
-            result = response.json()
-            result["status_code"] = response.status_code
-            return result  # storage of that important result.
-        return response
+
+        if object_id is not None:
+            data = {
+                "plugin_id": PLUGIN_ID,
+                "organization_id": org_id,
+                "collection_name": "email_template",
+                "object_id": object_id,
+            }
+
+            response = requests.post(url, data=json.dumps(data))
+            if response.status_code == 200:
+                result = response.json()
+                result["status_code"] = response.status_code
+                return result  # storage of that important result.
+            return response
+        else:
+            response = requests.get(url)
+            if response.status_code == 200:
+                result = response.json()
+                result["status_code"] = response.status_code
+                return result  # storage of that important result.
+            return response
 
     @staticmethod
-    def post(org_id, collection_name, payload):
+    def post(org_id, collection_name, payload, filter=None):
         """[summary]
 
         Args:
@@ -61,15 +76,26 @@ class CustomRequest:
         Returns:
             [type]: [description]
         """
-        data = {
-            "plugin_id": PLUGIN_ID,
-            "organization_id": org_id,
-            "collection_name": collection_name,
-            "bulk_write": False,
-            "payload": payload,
-        }
 
-        response = requests.post(WRITE, data=json.dumps(data))
+        if filter is not None:
+            data = {
+                "plugin_id": PLUGIN_ID,
+                "organization_id": org_id,
+                "collection_name": collection_name,
+                "filter": filter,
+            }
+            response = requests.post(READ, data=json.dumps(data))
+
+        else:
+            data = {
+                "plugin_id": PLUGIN_ID,
+                "organization_id": org_id,
+                "collection_name": collection_name,
+                "bulk_write": False,
+                "payload": payload,
+            }
+
+            response = requests.post(WRITE, data=json.dumps(data))
         if response.status_code == 201:
             result = response.json()
             result["status_code"] = response.status_code
@@ -121,6 +147,13 @@ class CustomRequest:
         if response.status_code == 200:
             result = response.json()
             result["status_code"] = response.status_code
+            if result["data"]["matched_documents"] == 0:
+                return Response(
+                    data={
+                        "message": f"There is/are no {collection_name} with the 'id(s)' you supplied."
+                    },
+                    status=status.HTTP_404_NOT_FOUND,
+                )
             return result
         return response
 
