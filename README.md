@@ -23,7 +23,7 @@ To actually build run `yarn build`
 
 ## Django server
 
-Go back to the root directory and runthe following to start the django server
+Go back to the root directory and run the following to start the django server
 
 Create a file names .env in the `backend` root directory of the cloned repo. <br/>
 Then store your SECREY_KEY KEY and DEBUG variables in the file
